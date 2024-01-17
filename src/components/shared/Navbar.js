@@ -2,8 +2,25 @@ import React from 'react';
 import Theme from './Theme';
 import logo from './../../assets/img/logo.png'
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar = () => {
+  const navItem = [
+    {
+    route: "Home",
+    pathName: "/"
+    },
+    
+    {
+    route: "About Us",
+    pathName: "/aboutUs"
+    },
+    
+    {
+    route: "Contact Us",
+    pathName: "/contactUs"
+    },
+  ]
     return (
       <div>
         <div className="navbar bg-base-100">
@@ -33,52 +50,32 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
               >
-                <li>
-                  <a>Item 1</a>
-                </li>
-                <li>
-                  <a>Parent</a>
-                  <ul className="p-2">
-                    <li>
-                      <a>Submenu 1</a>
-                    </li>
-                    <li>
-                      <a>Submenu 2</a>
-                    </li>
-                  </ul>
-                </li>
+                {navItem.map((item) => (
+                  <Link key={item} href={item.pathName}>
+                    <li className="mr-5">{item.route}</li>
+                  </Link>
+                ))}
                 <li>
                   <Theme />
                 </li>
               </ul>
             </div>
-            <Image src={logo} alt="Logo" className='w-48'/>
+            <Image src={logo} alt="Logo" className="w-48" />
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <details>
-                  <summary>Parent</summary>
-                  <ul className="p-2">
-                    <li>
-                      <a>Submenu 1</a>
-                    </li>
-                    <li>
-                      <a>Submenu 2</a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
+            <ul className="menu menu-horizontal px-1 items-center">
+              {navItem.map((item) => (
+                <Link key={item} href={item.pathName}>
+                  <li className="mr-5">{item.route}</li>
+                </Link>
+              ))}
               <li>
                 <Theme />
               </li>
             </ul>
           </div>
           <div className="navbar-end">
-            <a className="btn">Button</a>
+            <a className="btn">Login</a>
           </div>
         </div>
       </div>
