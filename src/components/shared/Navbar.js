@@ -1,4 +1,5 @@
 import React from 'react';
+import Theme from './Theme';
 
 const Navbar = () => {
     return (
@@ -45,7 +46,7 @@ const Navbar = () => {
                   </ul>
                 </li>
                 <li>
-                  <a>Item 3</a>
+                  <Theme/>
                 </li>
               </ul>
             </div>
@@ -70,7 +71,7 @@ const Navbar = () => {
                 </details>
               </li>
               <li>
-                <a>Item 3</a>
+                <Theme/>
               </li>
             </ul>
           </div>
