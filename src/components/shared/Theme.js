@@ -4,22 +4,31 @@ import { useEffect, useState } from "react";
 
 const Theme = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem("theme") || "light"
+      : "light"
   );
 
   const handleToggle = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
+    if (typeof localStorage !== "undefined") {
+      if (e.target.checked) {
+        setTheme("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        setTheme("light");
+        localStorage.setItem("theme", "light");
+      }
     }
   };
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html").setAttribute("data-theme", localTheme);
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("theme", theme);
+      const localTheme = localStorage.getItem("theme");
+      document.querySelector("html").setAttribute("data-theme", localTheme);
+    }
   }, [theme]);
+
   return (
     <div>
       <label className="swap swap-rotate">
