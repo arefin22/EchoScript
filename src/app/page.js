@@ -1,13 +1,14 @@
 import Article from "@/components/Article/Article";
 import Banner from "@/components/Banner/Banner";
+import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 
 const page = () => {
   return (
     <div>
       <Banner></Banner>
-      <div className="my-5">
+      <div className="my-24">
         <h1 className="text-center text-3xl font-extrabold mb-5">
-          Article Section
+          Latest Article
         </h1>
         <Article
           authorName={"Abdullah Al Fahim"}
@@ -101,7 +102,7 @@ const page = () => {
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
         />
         <div className=" text-center mx-auto">
-          <button className="btn btn-info">See More</button>
+          <ButtonWithBgColor name={"Explore More"} />
         </div>
       </div>
     </div>
