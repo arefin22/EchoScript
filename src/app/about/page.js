@@ -33,22 +33,35 @@ const AboutPage = () => {
       <div className="bg-[url('https://i.ibb.co/9GVrc95/kaleb-tapp-J59w-WPn09-BE-unsplash.jpg')] bg-cover bg-no-repeat bg-center bg-fixed h-[70vh] text-white flex items-center justify-center ">
         <div className="text-white ">
           <h1 className="text-4xl text-center font-semibold">About us</h1>
-          <p className="text-center">
-            Lorem Ipsum is simply dummy text of the <br /> printing and
-            typesetting industry.
+          <p className="text-center mt-4">
+            Publish, Grow and Manage your Written Stories <br /> All in One
+            Place
           </p>
         </div>
       </div>
       <div className="w-11/12 mx-auto">
-        <p className="text-center text-3xl font-semibold pt-5">Our History</p>
-        <h1 className="text-sm text-center py-5 text-[#616161]">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-        </h1>
+        <div className="my-6 py-7">
+          {/* <p className="text-center text-3xl font-semibold pt-5">Our History</p> */}
+          <h2 className="text-3xl font-bold text-center py-5 text-[#616161]">
+            Welcome to EchoScript
+          </h2>
+          <p className="text-justify">
+            At EchoScript, we are passionate about making comfort for publishing
+            articles. Our mission is to Help you publishing your thoughts and
+            brings those to life with other peoples. Whether you are an avid
+            reader, a content creator, or someone looking for any articles, we
+            have something for everyone. Our platform is a hub of creativity,
+            knowledge, and inspiration. We believe in the power of words to
+            connect, inform, and entertain. EchoScript is more than just a
+            content publishing website; it is a community where ideas flourish,
+            stories unfold, and voices are heard. What sets us apart is our
+            commitment to evaluate your thought to the great taste. We strive to
+            create an inclusive and welcoming space where diverse perspectives
+            thrive. Our team of talented creators brings you thought-provoking
+            articles, engaging stories, and valuable insights on a wide range of
+            topics.
+          </p>
+        </div>
         <div>
           <div className="flex justify-center items-center gap-10">
             <div>
@@ -64,9 +77,9 @@ const AboutPage = () => {
               <h1 className="text-center text-3xl font-semibold py-3">
                 Our Team
               </h1>
-              <p className="text-[#616161]">
+              <p className="text-[#616161] text-justify">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
+                industry. Lorem Ipsum has been the industry is standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen book. It has
                 survived not only five centuries, but also the leap into
@@ -75,15 +88,7 @@ const AboutPage = () => {
                 containing Lorem Ipsum passages, and more recently with desktop
                 publishing software like Aldus PageMaker including versions of
                 Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing
-                and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also
-                the leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more
-                recently with desktop publishing software like Aldus PageMaker
-                including versions of Lorem Ipsum.
+                and typesetting industry. Lorem Ipsum has
               </p>
             </div>
           </div>
@@ -93,9 +98,9 @@ const AboutPage = () => {
             <h1 className="text-center text-3xl font-semibold pb-6">
               Our Services
             </h1>
-            <p>
+            <p className="text-justify">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
+              industry. Lorem Ipsum has been the industry is standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries, but also the leap into
