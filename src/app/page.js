@@ -1,13 +1,10 @@
-      
-import Article from "@/components/Article/Article";
-import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
-import ButtonWithoutBgColor from "@/components/Button/ButtonWithoutBgColor";
-import Card from "@/components/Card/Card";
+import Banner from "@/components/Banner/Banner";
 
 const page = () => {
   return (
-    <div>    
-        <h1>Welcome to EchoScript</h1>
+    <div>  
+        <Banner></Banner>  
+        
     </div>
   );
 };
