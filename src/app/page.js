@@ -1,4 +1,4 @@
-      
+
 import Article from "@/components/Article/Article";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import ButtonWithoutBgColor from "@/components/Button/ButtonWithoutBgColor";
