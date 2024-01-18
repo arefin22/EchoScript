@@ -13,12 +13,12 @@ const Navbar = () => {
     
     {
     route: "About Us",
-    pathName: "/aboutUs"
+    pathName: "/about"
     },
     
     {
-    route: "Contact Us",
-    pathName: "/contactUs"
+    route: "All Article",
+    pathName: "/article"
     },
   ]
     return (
