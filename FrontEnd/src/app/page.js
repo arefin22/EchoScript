@@ -1,6 +1,7 @@
 import Article from "@/components/Article/Article";
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
+import TextEditor from "@/components/TextEditor/TextEditor";
 
 const page = () => {
   return (
@@ -104,6 +105,9 @@ const page = () => {
         <div className=" text-center mx-auto">
           <ButtonWithBgColor name={"Explore More"} />
         </div>
+      </div>
+      <div>
+        <TextEditor/>
       </div>
     </div>
   );
