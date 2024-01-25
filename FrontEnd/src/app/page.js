@@ -1,5 +1,6 @@
 import Article from "@/components/Article/Article";
 import Banner from "@/components/Banner/Banner";
+import Recomendation from "@/components/Recomendation/page";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import TextEditor from "@/components/TextEditor/TextEditor";
 
@@ -7,6 +8,7 @@ const page = () => {
   return (
     <div>
       <Banner></Banner>
+      <Recomendation />
       <div className="my-24">
         <h1 className="text-center text-3xl font-extrabold mb-5">
           Latest Article
