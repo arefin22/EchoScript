@@ -1,36 +1,68 @@
-import Image from "next/image";
 import { FaUser } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
+import { BiSolidLike } from "react-icons/bi";
+import { MdComment } from "react-icons/md";
 
-const Card = ({article, title, image, authorName, view}) => {
+import Image from "next/image";
+
+const Card = ({
+  article,
+  tags,
+  title,
+  image,
+  authorName,
+  date,
+  likes,
+  comments,
+}) => {
   return (
-    <div>
-      <div className="w-72 h-96 bg-[#D9D9D9] border-2 rounded-2xl">
-        <Image
-          src={image}
-          height={200}
-          width={500}
-          style={{
-            minWidth: "100%",
-            maxWidth: "100%",
-            objectFit: "cover",
-          }}
-          className="rounded-t-2xl"
-          alt="article iamge"
-        />
-        <div className="px-2 text-[#025]">
-          <h1 className="text-3xl py-2 font-bold">{title}</h1>
-          <p className="text-sm">
-            {article}
-          </p>
-          <div className="flex justify-between pt-4">
+    <div className="card w-full h-[400px] shadow-2xl">
+      <figure className="p-4">
+        <div>
+          <Image
+            src={image}
+            height={500}
+            width={1000}
+            className="rounded-xl"
+            alt="article image"
+          />
+        </div>
+      </figure>
+
+      <div className="text-start px-6 py-1">
+        <div className="flex space-x-2">
+          {tags.length > 0 &&
+            tags.map((tag, index) => (
+              <p
+                key={index}
+                className="text-xs bg-[#C4B4A4] text-white px-3 py-2 rounded-lg"
+              >
+                {tag}
+              </p>
+            ))}
+        </div>
+        <h2 className="card-title text-[20px] py-2 mb-4 font-medium">
+          {title}
+        </h2>
+        <p className="text-[12px]">{article}</p>
+        <div className="flex justify-between py-4 text-[12px]">
+          <div className="flex items-center gap-1">
+            <FaUser />
+            {authorName}
+          </div>
+          <div className="flex gap-2">
             <div className="flex items-center gap-1">
-              <FaUser />
-              {authorName}
+              <BiSolidLike />
+              {likes}
             </div>
             <div className="flex items-center gap-1">
-              <FaEye /> {view}
+              <MdComment />
+
+              {comments}
             </div>
+          </div>
+          <div className="flex items-center gap-1">
+            <FaEye /> {date}
           </div>
         </div>
       </div>
