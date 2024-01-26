@@ -21,7 +21,7 @@ const page = () => {
         <Title title="Recommendation"></Title>
         <div className="my-32 grid grid-cols-1 md:grid-cols-3 gap-10">
           {cardData.map((card, index) => (
-            <Link href="/singlearticle">
+            <Link key={index} href="/singlearticle">
               <Card
                 key={index}
                 tags={card.tags}

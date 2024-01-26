@@ -1,15 +1,14 @@
-"use client"
+"use client";
 import React from "react";
 import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from '@/context/authContext';
-import person from "@/assets/img/person-removebg-preview.png"
-
+import { useAuth } from "@/context/authContext";
+import person from "@/assets/img/person-removebg-preview.png";
 
 const Navbar = () => {
-  const {  user,loader,logout }= useAuth();
+  const { user, loader, logout } = useAuth();
   const navItem = [
     {
       route: "Home",
@@ -27,8 +26,8 @@ const Navbar = () => {
     },
     {
       route: "Dashboard",
-      pathName: "/dashboard"
-      },
+      pathName: "/dashboard",
+    },
   ];
   return (
     <div>
@@ -56,29 +55,37 @@ const Navbar = () => {
                   ))}
                 </ul>
               </div>
-
             </div>
             <div className="flex-none gap-2">
               <div>
                 <Theme />
               </div>
               <div>
-                {
-              user?.email?(
-               <div className='flex gap-2'>
-                <Image src={user.photoURL} width={20} height={20} alt={"user"}/>
-                <button onClick={logout} className="btn btn-error inline-block">LogOut</button>
-               </div>
-              )
-              :(
-                <div>
+                {user?.email ? (
+                  <div className="flex gap-2">
+                    <Image
+                      src={user.photoURL}
+                      width={20}
+                      height={20}
+                      alt={"user"}
+                    />
+                    <button
+                      onClick={logout}
+                      className="btn btn-error inline-block"
+                    >
+                      LogOut
+                    </button>
+                  </div>
+                ) : (
+                  <div>
                     <Link href={"/login"} className="btn">
-            <Image src={person} width={20} height={20} alt='demo'/>Log In</Link>
-                </div>
-              )
-             }
+                      <Image src={person} width={20} height={20} alt="demo" />
+                      Log In
+                    </Link>
+                  </div>
+                )}
               </div>
-            </div>           
+            </div>
           </div>
         </div>
       </div>

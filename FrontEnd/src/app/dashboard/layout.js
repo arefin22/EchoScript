@@ -1,5 +1,5 @@
 
-import DashNavbar from "./DashNavbar/page"
+import DashNavbar from "./dashnavbar/page"
 const dashbordlayout = ({children}) => {
     return (
         <div className="flex">
