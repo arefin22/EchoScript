@@ -5,6 +5,8 @@ import { IoSearch } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import React, { Component, useState } from "react";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -88,6 +90,7 @@ const ArticlePage = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="text-center relative flex items-center">
         <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
@@ -216,6 +219,7 @@ const ArticlePage = () => {
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
         />
       </div>
+      <Footer></Footer>
     </div>
   );
 };

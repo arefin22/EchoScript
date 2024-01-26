@@ -20,9 +20,10 @@ export default function RootLayout({ children }) {
       <AuthProvider>
       <div><Toaster/></div>
         <div className="max-w-screen-full mx-auto">
-          <Navbar />
-          <div className='mx-auto'>{children}</div>
-          <Footer />
+          {/* <Navbar /> */}
+          <div className=' mx-auto'>{children}</div>
+          {/* <Footer /> */}
+
         </div>
         </AuthProvider>
       </body>

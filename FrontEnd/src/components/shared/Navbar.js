@@ -24,6 +24,10 @@ const Navbar = () => {
       route: "All Article",
       pathName: "/article",
     },
+    {
+      route: "Dashboard",
+      pathName: "/dashboard"
+      },
   ];
   return (
     <div>
@@ -51,6 +55,7 @@ const Navbar = () => {
                   ))}
                 </ul>
               </div>
+
             </div>
             <div className="flex-none gap-2">
               <div>
