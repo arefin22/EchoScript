@@ -3,8 +3,12 @@ import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from '@/context/authContext';
+import person from "@/assets/img/person-removebg-preview.png"
+
 
 const Navbar = () => {
+  const {  user,loader,logout }= useAuth();
   const navItem = [
     {
       route: "Home",
@@ -53,11 +57,22 @@ const Navbar = () => {
                 <Theme />
               </div>
               <div>
-                <Link href="#">
-                  <button className="btn btn-ghost">Log In</button>
-                </Link>
+                {
+              user?.email?(
+               <div className='flex gap-2'>
+                <Image src={user.photoURL} width={20} height={20} alt={"user"}/>
+                <button onClick={logout} className="btn btn-error inline-block">LogOut</button>
+               </div>
+              )
+              :(
+                <div>
+                    <Link href={"/signup"} className="btn">
+            <Image src={person} width={20} height={20} alt='demo'/>Sign Up</Link>
+                </div>
+              )
+             }
               </div>
-            </div>
+            </div>           
           </div>
         </div>
       </div>
