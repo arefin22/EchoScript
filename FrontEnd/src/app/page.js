@@ -1,14 +1,19 @@
 import Article from "@/components/Article/Article";
 import Banner from "@/components/Banner/Banner";
+import Recomendation from "@/components/Recomendation/page";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
 import TextEditor from "@/components/TextEditor/TextEditor";
 import cardData from "../utils/cardData";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const page = () => {
   return (
     <div>
+      <Navbar />
       <Banner></Banner>
+
       {/* popular cards */}
       <div className="my-24">
       <h1 className="text-start text-[#4C2F17] text-3xl font-light mb-5">
@@ -31,11 +36,14 @@ const page = () => {
         ))}
       </div>
     </div>
+
+      <Recomendation />
+
       <div className="my-24">
         <h1 className="text-center text-3xl font-extrabold mb-5">
           Latest Article
         </h1>
-        <Article
+        {/* <Article
           authorName={"Abdullah Al Fahim"}
           authorImage={"https://i.ibb.co/nnZwqDB/download-1.jpg"}
           category={"Sports"}
@@ -125,14 +133,14 @@ const page = () => {
           view={"200k"}
           date={"16 feb, 2024"}
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
-        />
+        /> */}
         <div className=" text-center mx-auto">
           <ButtonWithBgColor name={"Explore More"} />
         </div>
       </div>
       <div>
-        <TextEditor />
       </div>
+      <Footer></Footer>
     </div>
   );
 };

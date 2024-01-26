@@ -1,3 +1,5 @@
+import Footer from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
 import Image from "next/image";
 
 const AboutPage = () => {
@@ -30,6 +32,7 @@ const AboutPage = () => {
 
   return (
     <div className="bg-gray-100 ">
+      <Navbar />
       <div className="bg-[url('https://i.ibb.co/9GVrc95/kaleb-tapp-J59w-WPn09-BE-unsplash.jpg')] bg-cover bg-no-repeat bg-center bg-fixed h-[70vh] text-white flex items-center justify-center ">
         <div className="text-white ">
           <h1 className="text-4xl text-center font-semibold">About us</h1>
@@ -133,6 +136,7 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
