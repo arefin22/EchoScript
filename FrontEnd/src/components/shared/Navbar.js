@@ -20,6 +20,10 @@ const Navbar = () => {
     route: "All Article",
     pathName: "/article"
     },
+    {
+      route: "Dashboard",
+      pathName: "/dashboard"
+      },
   ]
     return (
       <div>
@@ -55,6 +59,7 @@ const Navbar = () => {
                     <li className="mr-5">{item.route}</li>
                   </Link>
                 ))}
+               
                 <li>
                   <Theme />
                 </li>
