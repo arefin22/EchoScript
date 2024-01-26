@@ -113,7 +113,10 @@ const page = () => {
       </div>
       <div>
         {/* <TextEditor/> */}
+      <p>Arefin</p>
       </div>
+      <p>Arefin</p>
+      <p>Arefin</p>
       <Footer></Footer>
     </div>
   );
