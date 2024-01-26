@@ -1,6 +1,3 @@
-
-"use client"
-
 import Image from "next/image";
 import { FaEye } from "react-icons/fa";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -8,8 +5,6 @@ import { MdAccessTime } from "react-icons/md";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { FaRegCommentDots, FaRegHeart } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
-import { useState } from "react";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 const Article = ({
   authorName,
@@ -21,11 +16,7 @@ const Article = ({
   date,
   image,
   authorImage,
-  handleCollectComment,
-  articleId
 }) => {
-
-
   return (
     <div className="w-3/4 mx-auto">
       <div className="flex items-center justify-between text-[#025]">
@@ -71,38 +62,9 @@ const Article = ({
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <FaRegHeart fontSize={"1.5rem"} />
               </button>
-              <button
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
-                className="hover:bg-[#ddd4d4] p-2 rounded-full"
-              >
-                <div className="indicator">
-                  <FaRegCommentDots fontSize={"1.5rem"} />
-                  <span className="badge badge-sm indicator-item">8</span>
-                </div>
+              <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
+                <FaRegCommentDots fontSize={"1.5rem"} />
               </button>
-              <dialog id="my_modal_3" className="modal">
-                <div className="modal-box">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                      ✕
-                    </button>
-                  </form>
-                  <h3 className="font-bold text-lg">Comments</h3>
-                  <p className="py-4">Add your comment</p>
-                  <form onSubmit={(e) => handleCollectComment(e)}>
-                    <input
-                      className="outline-none border-2 py-3 w-full pl-5 rounded-lg"
-                      name="comment"
-                      placeholder="Write your comment..."
-                    />
-                    <button className="bg-[#1F883D] text-white  px-4 rounded-xl mt-5 btn-sm">
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              </dialog>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <FiShare2 fontSize={"1.5rem"} />
               </button>

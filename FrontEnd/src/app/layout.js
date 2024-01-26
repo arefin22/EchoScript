@@ -12,6 +12,7 @@ export const metadata = {
   description: 'EchoScript: Empowering Voices, Enriching Minds.',
 }
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
       <AuthProvider>
       <div><Toaster/></div>
         <div className="max-w-screen-full mx-auto">
+
           {/* <Navbar /> */}
           <div className=' mx-auto'>{children}</div>
           {/* <Footer /> */}
+
 
         </div>
         </AuthProvider>
