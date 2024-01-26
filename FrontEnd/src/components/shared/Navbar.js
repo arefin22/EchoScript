@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
@@ -71,8 +72,8 @@ const Navbar = () => {
               )
               :(
                 <div>
-                    <Link href={"/signup"} className="btn">
-            <Image src={person} width={20} height={20} alt='demo'/>Sign Up</Link>
+                    <Link href={"/login"} className="btn">
+            <Image src={person} width={20} height={20} alt='demo'/>Log In</Link>
                 </div>
               )
              }
