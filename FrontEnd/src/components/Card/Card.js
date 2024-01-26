@@ -18,11 +18,11 @@ const Card = ({
   return (
     <div className="card w-full h-[400px] shadow-2xl">
       <figure className="p-4">
-        <div>
+        <div className="rounded-2xl">
           <Image
             src={image}
             height={500}
-            width={1000}
+            width={500}
             className="rounded-xl"
             alt="article image"
           />

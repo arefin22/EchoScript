@@ -8,7 +8,6 @@ const recomendation = async () => {
   const ranDom = fav.sort(() => Math.random() - 0.5);
   return (
     <div>
-      <h1 className="text-center text-3xl font-extrabold mt-5">For you</h1>
       {ranDom.slice(1, 4).map((art) => (
         <Article
           category={art.Category}
