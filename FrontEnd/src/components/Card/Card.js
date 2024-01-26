@@ -16,17 +16,20 @@ const Card = ({
   comments,
 }) => {
   return (
-    <div className="card w-full shadow-2xl">
+    <div className="card w-full h-[400px] shadow-2xl">
       <figure className="p-4">
-        <Image
-          src={image}
-          height={100}
-          width={500}
-          className="rounded-xl"
-          alt="article image"
-        />
+        <div>
+          <Image
+            src={image}
+            height={500}
+            width={1000}
+            className="rounded-xl"
+            alt="article image"
+          />
+        </div>
       </figure>
-      <div className=" text-start px-6 py-1">
+
+      <div className="text-start px-6 py-1">
         <div className="flex space-x-2">
           {tags.length > 0 &&
             tags.map((tag, index) => (
