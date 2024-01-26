@@ -7,6 +7,7 @@ import {
   MdOutlineKeyboardArrowLeft,
 } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
 import React, { Component, useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import {
@@ -18,6 +19,9 @@ import {
 import { FiShare2 } from "react-icons/fi";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
+
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -104,6 +108,7 @@ const ArticlePage = () => {
   const handlePrev = () => {
     setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
   };
+
 
   useEffect(() => {
     axiosSecure.get("/article").then((res) => {
@@ -311,8 +316,14 @@ const ArticlePage = () => {
          </div>
        </dialog>
        <hr className="border-1 border-[#F2F2F2] my-3" />
+
+<Footer></Footer>
      </div>
    );
+
+ 
+
+
 };
 
 export default ArticlePage;

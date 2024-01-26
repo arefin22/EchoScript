@@ -1,4 +1,6 @@
-"use client";
+
+"use client"
+
 import Image from "next/image";
 import { FaEye } from "react-icons/fa";
 import { FaRegCalendarAlt } from "react-icons/fa";

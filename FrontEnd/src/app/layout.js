@@ -1,9 +1,11 @@
 import Footer from '@/components/shared/Footer'
-import Navbar from '@/components/shared/Navbar'
-import { Inter } from 'next/font/google'
+// import { Inter } from '@next/font/google'
 import './globals.css'
+import Navbar from '@/components/shared/Navbar';
+import { AuthProvider } from '@/context/authContext';
+import { Toaster } from 'react-hot-toast';
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'EchoScript',
@@ -14,14 +16,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      {/* <body className={inter.className}> */}
+      <body>
+      <AuthProvider>
+      <div><Toaster/></div>
         <div className="max-w-screen-full mx-auto">
-          <Navbar />
-          <div className='container mx-auto'>
-              {children}
-          </div>
-          <Footer />
+
+          {/* <Navbar /> */}
+          <div className=' mx-auto'>{children}</div>
+          {/* <Footer /> */}
+
+
         </div>
+        </AuthProvider>
       </body>
     </html>
   );
