@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
       <body>
         <div className="max-w-screen-full mx-auto">
           <Navbar />
-          <div className='container mx-auto'>{children}</div>
+          <div className='mx-auto'>{children}</div>
           <Footer />
         </div>
       </body>
