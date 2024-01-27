@@ -10,13 +10,16 @@ export const metadata = {
   description: 'EchoScript: Empowering Voices, Enriching Minds.',
 }
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
         <div className="max-w-screen-full mx-auto">
           <Navbar />
-          <div className='container mx-auto'>{children}</div>
+          <div className='container mx-auto'>
+              {children}
+          </div>
           <Footer />
         </div>
       </body>

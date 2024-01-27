@@ -10,7 +10,7 @@ const page = () => {
         <h1 className="text-center text-3xl font-extrabold mb-5">
           Latest Article
         </h1>
-        <Article
+        {/* <Article
           authorName={"Abdullah Al Fahim"}
           authorImage={"https://i.ibb.co/nnZwqDB/download-1.jpg"}
           category={"Sports"}
@@ -100,7 +100,7 @@ const page = () => {
           view={"200k"}
           date={"16 feb, 2024"}
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
-        />
+        /> */}
         <div className=" text-center mx-auto">
           <ButtonWithBgColor name={"Explore More"} />
         </div>
