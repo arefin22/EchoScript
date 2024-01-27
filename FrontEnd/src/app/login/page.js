@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 
-import { LuLogIn } from "react-icons/lu";
+// import { LuLogIn } from "react-icons/lu";
 
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 import { useAuth } from "@/context/authContext";
 
@@ -26,7 +26,7 @@ const LogIn = () => {
           image: res.user?.photoURL,
           role: "guest",
         };
-        router.push("/");
+        // router.push("/");
         console.log(res.user);
       });
 
@@ -107,7 +107,7 @@ const LogIn = () => {
                   type="submit"
                   data-ripple-light="true"
                 >
-                  <LuLogIn className="text-2xl" />
+                  {/* <LuLogIn className="text-2xl" /> */}
                   Log In
                 </button>
               </div>
@@ -117,7 +117,7 @@ const LogIn = () => {
                 onClick={handleGoogle}
                 className="btn btn-outline btn-block btn-info border-[#025]"
               >
-                LOG IN WITH <FcGoogle className="text-2xl" />
+                {/* LOG IN WITH  // <FcGoogle className="text-2xl" /> */}
                 GOOGLE
               </button>
             </div>

@@ -1,7 +1,7 @@
 "use client";
 import Lottie from "lottie-react";
 import animation from "@/assets/img/animation/SignUp.json";
-import { LuLogIn } from "react-icons/lu";
+// import { LuLogIn } from "react-icons/lu";
 
 import React from "react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 
 const SignUp = () => {
   const { createUser, handleUpdateProfile } = useAuth();
-  const router = useRouter();
+  const router = useRouter;
   const handleSignUp = async (e) => {
     try {
       e.preventDefault();
@@ -118,7 +118,7 @@ const SignUp = () => {
                     data-ripple-light="true"
                   >
                     <div className="flex justify-center items-center">
-                      <LuLogIn className="text-2xl" /> Sign Up
+                      {/* <LuLogIn className="text-2xl" /> Sign Up */}
                     </div>
                   </button>
                 </div>

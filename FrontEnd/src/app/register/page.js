@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
