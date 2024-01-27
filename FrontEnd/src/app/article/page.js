@@ -1,22 +1,22 @@
 "use client";
 
-// import { IoSearch } from "react-icons/io5";
-// import {
-  // MdAccessTime,
-//   MdOutlineBookmarkAdd,
-//   MdOutlineKeyboardArrowLeft,
-// } from "react-icons/md";
-// import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
+import {
+  MdAccessTime,
+  MdOutlineBookmarkAdd,
+  MdOutlineKeyboardArrowLeft,
+} from "react-icons/md";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import React, { Component, useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-// import {
-//   FaEye,
-//   FaRegCalendarAlt,
-//   FaRegCommentDots,
-//   FaRegHeart,
-// } from "react-icons/fa";
-// import { FiShare2 } from "react-icons/fi";
+import {
+  FaEye,
+  FaRegCalendarAlt,
+  FaRegCommentDots,
+  FaRegHeart,
+} from "react-icons/fa";
+import { FiShare2 } from "react-icons/fi";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import Navbar from "@/components/shared/Navbar";
@@ -116,6 +116,7 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
+
   const handleGetId = (commentId) => {
     const comment = {
       commentId,
@@ -152,19 +153,19 @@ const ArticlePage = () => {
            type="text"
            placeholder="Search your article here"
          />
-         {/* <IoSearch
+         <IoSearch
            fontSize={"2.3rem"}
            className="absolute right-60 bg-[#F2F2F2] hover:bg-[#ddd4d4] p-2 rounded-full"
-         /> */}
+         />
        </div>
        <div className="flex gap-5 justify-center pt-3 items-center">
          <button
            className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
            onClick={handlePrev}
          >
-           {/* <MdOutlineKeyboardArrowLeft fontSize={"1.5rem"} /> */}
+           <MdOutlineKeyboardArrowLeft fontSize={"1.5rem"} />
          </button>
-         {category?.slice(startIdx, startIdx + 5).map((item) => (
+         {category?.slice(startIdx, startIdx + 5).map((item, index) => (
            <button
              onClick={() => handleCategory(`${item?.category}`)}
              className="bg-[#D9D9D9] px-5 py-2 rounded-2xl text-sm hover:bg-[#bdb8b8]"
@@ -177,7 +178,7 @@ const ArticlePage = () => {
            className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
            onClick={handleNext}
          >
-           {/* <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} /> */}
+           <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
          </button>
        </div>
        <div className="py-10">
@@ -205,7 +206,7 @@ const ArticlePage = () => {
                      </p>
                    </div>
                    <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-                     {/* <MdOutlineBookmarkAdd fontSize={"1.5rem"} /> */}
+                     <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
                    </button>
                  </div>
                  <h1 className="text-2xl font-semibold pb-2">{item.title}</h1>
@@ -213,13 +214,13 @@ const ArticlePage = () => {
                  <div className="flex justify-between w-[80%] pt-4 items-center">
                    <div className="flex items-center gap-5">
                      <span className="flex items-center gap-1">
-                       {/* <MdAccessTime /> {item.postedDate.slice(0, 10)} */}
+                       <MdAccessTime /> {item.postedDate.slice(0, 10)}
                      </span>
                      <span className="flex items-center gap-1">
-                       {/* <FaEye /> {item.view} */}
+                       <FaEye /> {item.view}
                      </span>
                      <span className="flex items-center gap-1">
-                       {/* <FaRegCalendarAlt /> {item.date} */}
+                       <FaRegCalendarAlt /> {item.date}
                      </span>
                    </div>
                    <div>
@@ -236,7 +237,7 @@ const ArticlePage = () => {
                          {/* fontSize={"1.5rem"} */}
                          {/* /> */}
                          {/* ) : ( */}
-                         {/* <FaRegHeart fontSize={"1.5rem"} /> */}
+                         <FaRegHeart fontSize={"1.5rem"} />
                          {/* )} */}
                          <span className="badge badge-sm indicator-item">
                            {item.likes.length}
@@ -251,14 +252,14 @@ const ArticlePage = () => {
                        className="hover:bg-[#ddd4d4] p-2 rounded-full"
                      >
                        <div className="indicator">
-                         {/* <FaRegCommentDots fontSize={"1.5rem"} /> */}
+                         <FaRegCommentDots fontSize={"1.5rem"} />
                          <span className="badge badge-sm indicator-item">
                            {item.comments.length}
                          </span>
                        </div>
                      </button>
                      <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                       {/* <FiShare2 fontSize={"1.5rem"} /> */}
+                       <FiShare2 fontSize={"1.5rem"} />
                      </button>
                    </div>
                  </div>

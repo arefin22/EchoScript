@@ -10,7 +10,6 @@ const recomendation = async () => {
     <div>
       {ranDom.slice(1, 4).map((art) => (
         <Article
-          key={Math.random()}
           category={art.Category}
           authorName={"Shawal Ahmed S.k"}
           authorImage={"https://i.ibb.co/nnZwqDB/download-1.jpg"}

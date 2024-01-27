@@ -4,13 +4,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "i.ibb.co",
       },
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-      }
-    
+        hostname: "miro.medium.com",
+      },
     ],
   },
 };

@@ -1,8 +1,18 @@
 const express = require("express");
 const connectDB = require("./db/connectDB");
+const applyMiddleware = require("./middlewares/applyMiddleware");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
+const getAllArticle = require("./routes/article/index")
+const addAUser = require("./routes/user/index")
+
+// middlewares
+applyMiddleware(app)
+
+// routes
+app.use(getAllArticle);
+app.use(addAUser);
 
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");
