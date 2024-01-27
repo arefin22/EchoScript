@@ -41,7 +41,6 @@ const SocialLogin = () => {
       <div className="flex justify-center items-center space-x-12 m-4 p-3 border-gray-300 rounded">
         <div style={iconStyle} className="hover:bg-gray-200">
           <button onClick={handleGoogle}>
-
           <FcGoogle size={24} className="text-black text-center" />
           </button>
         </div>

@@ -114,7 +114,8 @@ const ArticlePage = () => {
     axiosSecure.get("/article").then((res) => {
       setData(res.data);
     });
-  }, []);
+  }, [axiosSecure]);
+
 
   const handleGetId = (commentId) => {
     const comment = {

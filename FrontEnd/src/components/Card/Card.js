@@ -2,7 +2,6 @@ import { FaUser } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
 import { MdComment } from "react-icons/md";
-
 import Image from "next/image";
 
 const Card = ({
@@ -57,7 +56,6 @@ const Card = ({
             </div>
             <div className="flex items-center gap-1">
               <MdComment />
-
               {comments}
             </div>
           </div>

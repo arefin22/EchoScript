@@ -1,5 +1,9 @@
 "use client";
 
+import Lottie from "lottie-react";
+import animation from "@/assets/img/animation/SignUp.json";
+// import { LuLogIn } from "react-icons/lu";
+
 
 import React from "react";
 import Link from "next/link";
@@ -145,74 +149,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-
-
-
-
-
-// new code
-{/* <div >
-<div >
-
-</div>
-<div >
-  <form
-    onSubmit={handleSubmit(onSubmit)}
-    noValidate=""
-    action=""
-    className="space-y-6 ng-untouched ng-pristine ng-valid"
-  >
-    <div >
-      <div >
-        <input
-          type="text"
-          {...register("fullName", { required: true })}
-          
-        />
-        {errors.fullName && (
-          <span className="text-red-500">Full Name is required</span>
-        )}
-      </div>
-      <div className="md:w-2/5 mx-auto">
-        <input
-          type="email"
-          {...register("email", { required: true })}
-          name="email"
-          required
-          placeholder="Email"
-          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
-          data-temp-mail-org="0"
-        />
-        {errors.email && (
-          <span className="text-red-500">Email is required</span>
-        )}
-      </div>
-      <div className="md:w-2/5 mx-auto">
-        <input
-          type="password"
-          {...register("password", {
-            required: true,
-            minLength: 6,
-            maxLength: 20,
-            pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-          })}
-          name="password"
-          autoComplete="new-password"
-          required
-          placeholder="Password"
-          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
-        />
-        {errors.password?.type === "required" && (
-          <p className="text-red-500">Password is required</p>
-        )}
-      </div>
-    </div>
-
-   
-    </div>
-    <SocialLogin />
-   
-  </form>
-</div>
-</div> */}
