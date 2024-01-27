@@ -2,12 +2,12 @@
 "use client"
 
 import Image from "next/image";
-import { FaEye } from "react-icons/fa";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { MdAccessTime } from "react-icons/md";
-import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { FaRegCommentDots, FaRegHeart } from "react-icons/fa";
-import { FiShare2 } from "react-icons/fi";
+// import { FaEye } from "react-icons/fa";
+// import { FaRegCalendarAlt } from "react-icons/fa";
+// import { MdAccessTime } from "react-icons/md";
+// import { MdOutlineBookmarkAdd } from "react-icons/md";
+// import { FaRegCommentDots, FaRegHeart } from "react-icons/fa";
+// import { FiShare2 } from "react-icons/fi";
 import { useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 
@@ -50,7 +50,7 @@ const Article = ({
               </p>
             </div>
             <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-              <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
+              {/* <MdOutlineBookmarkAdd fontSize={"1.5rem"} /> */}
             </button>
           </div>
           <h1 className="text-2xl font-semibold pb-2">{title}</h1>
@@ -58,18 +58,18 @@ const Article = ({
           <div className="flex justify-between w-[80%] pt-4 items-center">
             <div className="flex items-center gap-5">
               <span className="flex items-center gap-1">
-                <MdAccessTime /> {postedDate}
+                {/* <MdAccessTime /> {postedDate} */}
               </span>
               <span className="flex items-center gap-1">
-                <FaEye /> {view}
+                {/* <FaEye /> {view} */}
               </span>
               <span className="flex items-center gap-1">
-                <FaRegCalendarAlt /> {date}
+                {/* <FaRegCalendarAlt /> {date} */}
               </span>
             </div>
             <div className="flex gap-3">
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FaRegHeart fontSize={"1.5rem"} />
+                {/* <FaRegHeart fontSize={"1.5rem"} /> */}
               </button>
               <button
                 onClick={() =>
@@ -78,7 +78,7 @@ const Article = ({
                 className="hover:bg-[#ddd4d4] p-2 rounded-full"
               >
                 <div className="indicator">
-                  <FaRegCommentDots fontSize={"1.5rem"} />
+                  {/* <FaRegCommentDots fontSize={"1.5rem"} /> */}
                   <span className="badge badge-sm indicator-item">8</span>
                 </div>
               </button>
@@ -104,7 +104,7 @@ const Article = ({
                 </div>
               </dialog>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FiShare2 fontSize={"1.5rem"} />
+                {/* <FiShare2 fontSize={"1.5rem"} /> */}
               </button>
             </div>
           </div>

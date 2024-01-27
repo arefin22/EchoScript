@@ -1,7 +1,7 @@
-import { FaUser } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
-import { BiSolidLike } from "react-icons/bi";
-import { MdComment } from "react-icons/md";
+// import { FaUser } from "react-icons/fa6";
+// import { FaEye } from "react-icons/fa";
+// import { BiSolidLike } from "react-icons/bi";
+// import { MdComment } from "react-icons/md";
 
 import Image from "next/image";
 
@@ -47,22 +47,22 @@ const Card = ({
         <p className="text-[12px]">{article}</p>
         <div className="flex justify-between py-4 text-[12px]">
           <div className="flex items-center gap-1">
-            <FaUser />
+            {/* <FaUser /> */}
             {authorName}
           </div>
           <div className="flex gap-2">
             <div className="flex items-center gap-1">
-              <BiSolidLike />
+              {/* <BiSolidLike /> */}
               {likes}
             </div>
             <div className="flex items-center gap-1">
-              <MdComment />
+              {/* <MdComment /> */}
 
               {comments}
             </div>
           </div>
           <div className="flex items-center gap-1">
-            <FaEye /> {date}
+            {/* <FaEye /> {date} */}
           </div>
         </div>
       </div>

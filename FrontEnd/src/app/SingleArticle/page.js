@@ -1,11 +1,11 @@
-// Import Image component from Next.js
+
 import Image from "next/image";
 import articleData from "../../utils/articleData";
-import { AiFillLike } from "react-icons/ai";
-import { MdComment } from "react-icons/md";
-import { FaBookmark } from "react-icons/fa";
-import { FaShareAlt } from "react-icons/fa";
-import { FaEllipsisH } from "react-icons/fa";
+// import { AiFillLike } from "react-icons/ai";
+// import { MdComment } from "react-icons/md";
+// import { FaBookmark } from "react-icons/fa";
+// import { FaShareAlt } from "react-icons/fa";
+// import { FaEllipsisH } from "react-icons/fa";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 
@@ -76,21 +76,21 @@ const SingleArticle = () => {
           <div className="flex mb-4">
             <div className="mr-12">
               <p className="flex items-center gap-1">
-                <AiFillLike size={24} /> 100
+                {/* <AiFillLike size={24} /> 100 */}
               </p>
             </div>
             <div>
               <p className="flex items-center gap-1">
-                <MdComment size={24} />
+                {/* <MdComment size={24} /> */}
                 30
               </p>
             </div>
           </div>
           <div>
             <div className="flex gap-1">
-              <FaBookmark size={24} />
+              {/* <FaBookmark size={24} />
               <FaShareAlt size={24} />
-              <FaEllipsisH size={24} />
+              <FaEllipsisH size={24} /> */}
             </div>
           </div>
         </div>
