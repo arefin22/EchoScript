@@ -1,10 +1,14 @@
 const express = require("express");
 const connectDB = require("./db/connectDB");
+<<<<<<< HEAD
 const applyMiddleware = require("./middlewares/applyMiddleware");
+=======
+>>>>>>> 20289b0bb3249059b3066a4f0ee2f23eaf4daffd
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+<<<<<<< HEAD
 const getAllArticle = require("./routes/article/index")
 const addAUser = require("./routes/user/index")
 
@@ -16,6 +20,8 @@ app.use(getAllArticle);
 app.use(addAUser);
 
 
+=======
+>>>>>>> 20289b0bb3249059b3066a4f0ee2f23eaf4daffd
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");
 });
