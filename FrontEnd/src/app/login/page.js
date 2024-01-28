@@ -6,7 +6,6 @@ import { useAuth } from "@/context/authContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 import { MdOutlineCancel } from "react-icons/md";
@@ -61,12 +60,11 @@ const LogIn = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-       
-          <div className="flex flex-col justify-center items-center mb-7 gap-7">
-            <h2 className="text-7xl font-extralight">Log In Now</h2>
-            <p className="border-2 border-[#4C2F17] w-[200px] "></p>
-          </div>
-      
+        <div className="flex flex-col justify-center items-center mb-7 gap-7">
+          <h2 className="text-7xl font-extralight">Log In Now</h2>
+          <p className="border-2 border-[#4C2F17] w-[200px] "></p>
+        </div>
+
         <div className="w-full">
           <form
             onSubmit={handlelogin}
@@ -118,4 +116,3 @@ const LogIn = () => {
 };
 
 export default LogIn;
-
