@@ -3,7 +3,8 @@ import { usePathname } from "next/navigation";
 import logo from "./../../../assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-const page = () => {
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+const DashNavbar = () => {
   const pathname = usePathname();
   const navs = [
     {
@@ -34,6 +35,7 @@ const page = () => {
     },
   ];
   return (
+    <PrivateRoute>
     <div>
       <div className="w-64 border-r-2 border-black min-h-screen  flex flex-col    ">
         <div>
@@ -77,7 +79,8 @@ const page = () => {
         </div>
       </div>
     </div>
+    </PrivateRoute>
   );
 };
 
-export default page;
+export default DashNavbar;

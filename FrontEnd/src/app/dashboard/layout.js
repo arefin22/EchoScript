@@ -1,14 +1,18 @@
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
+import DashNavbar from "./DashNavbar/page";
 
 
-import DashNavbar from "./dashnavbar/page"
+
 const dashbordlayout = ({children}) => {
     return (
+        <PrivateRoute>
         <div className="flex">
             <DashNavbar></DashNavbar>
             <div className="p-8">
                 {children}
             </div>
         </div>
+        </PrivateRoute>
     );
 };
 

@@ -1,3 +1,4 @@
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import Image from "next/image";
@@ -31,6 +32,7 @@ const AboutPage = () => {
   ];
 
   return (
+    <PrivateRoute>
     <div className="bg-gray-100 ">
       <Navbar />
       <div className="bg-[url('https://i.ibb.co/9GVrc95/kaleb-tapp-J59w-WPn09-BE-unsplash.jpg')] bg-cover bg-no-repeat bg-center bg-fixed h-[70vh] text-white flex items-center justify-center ">
@@ -138,6 +140,7 @@ const AboutPage = () => {
       </div>
       <Footer></Footer>
     </div>
+    </PrivateRoute>
   );
 };
 
