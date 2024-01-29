@@ -1,11 +1,10 @@
 "use client";
 
-import Lottie from "lottie-react";
-import animation from "@/assets/img/animation/SignUp.json";
-// import { LuLogIn } from "react-icons/lu";
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 import { useAuth } from "@/context/authContext";
@@ -17,7 +16,25 @@ import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, handleUpdateProfile } = useAuth();
+  const [favourite,useFavourite]=useState([]);
   const router = useRouter();
+  const options = [
+    { value: 'Tech', label: 'Tech' },
+    { value: 'Business', label: 'Business' },
+    { value: 'sports', label: 'sports' },
+    {value:'Health',label:'Health'},
+    { value:'Travels',label:'Travels'},
+    {value:'Photograph',label:'Photograph'},
+    {value:'Food',label:'Food'},
+    {value:'Relationship',label:'Relationship'},
+    {value:'Design',label:'Design'},
+    {value:'Arts',label:'Arts'},
+    {value:'Vehicles',label:'Vehicles'},
+  ];
+  const animatedComponents = makeAnimated();
+  const handleFavourite =(selectedValues)=>{
+      useFavourite(selectedValues)
+  }
   const cencleStyle = {
     borderRadius: "50%",
 
@@ -52,6 +69,7 @@ const SignUp = () => {
           name: name,
           image: photoURL,
           role: "guest",
+          recommandation:favourite,
         };
         console.log(userInfo);
       } catch (err) {
@@ -99,10 +117,24 @@ const SignUp = () => {
                 </div>
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
-                   <input type="file" name="file"
+                   <input type="file" name="image"
                   
                       placeholder="Image"
                          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
+
+                  </div>
+                </div>
+                <div className="space-y-6 my-6">
+                  <div className="md:w-2/5 mx-auto">
+                  <Select
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      isMulti
+      options={options}
+      value={favourite}
+        onChange={handleFavourite}
+        className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
+    />
 
                   </div>
                 </div>
