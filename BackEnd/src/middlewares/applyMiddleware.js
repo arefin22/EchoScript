@@ -3,5 +3,7 @@ const cors = require("cors")
 
 const applyMiddleware = (app) =>{
     app.use(cors())
-    app
+    app.use(express.json())
 }
+
+module.exports = applyMiddleware
