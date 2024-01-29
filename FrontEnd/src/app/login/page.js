@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 
@@ -11,8 +11,13 @@ import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import { MdOutlineCancel } from "react-icons/md";
 
 const LogIn = () => {
-  const { logIn } = useAuth();
+  const { logIn,loader,user } = useAuth();
   const router = useRouter();
+  useEffect(() => {
+    if (!loader && user) {
+      router.replace('/dashboard'); // Redirect to dashboard if user is already logged in
+    }
+  }, [user, loader, router]);
   const cencleStyle = {
     borderRadius: "50%",
 

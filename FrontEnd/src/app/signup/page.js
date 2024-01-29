@@ -2,11 +2,8 @@
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
-
 import React, { useState } from "react";
 import Link from "next/link";
-
 import { useAuth } from "@/context/authContext";
 import { imageUpload } from "@/utils/imageUpload";
 import toast from "react-hot-toast";
@@ -15,7 +12,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
-  const { createUser, handleUpdateProfile } = useAuth();
+  const { createUser, handleUpdateProfile,user ,loader } = useAuth();
   const [favourite,useFavourite]=useState([]);
   const router = useRouter();
   const options = [
@@ -35,6 +32,11 @@ const SignUp = () => {
   const handleFavourite =(selectedValues)=>{
       useFavourite(selectedValues)
   }
+  useEffect(() => {
+    if (!loader && user) {
+      router.replace('/dashboard'); // Redirect to dashboard if user is already logged in
+    }
+  }, [user, loader, router]);
   const cencleStyle = {
     borderRadius: "50%",
 

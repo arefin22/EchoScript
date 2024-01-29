@@ -1,8 +1,11 @@
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Image from "next/image";
 
 const page = () => {
   return (
+    <PrivateRoute>
     <div className="ml-10">
+     
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -55,6 +58,7 @@ const page = () => {
         </table>
       </div>
     </div>
+    </PrivateRoute>
   );
 };
 

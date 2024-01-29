@@ -21,6 +21,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 
 
 const ArticlePage = () => {
@@ -146,6 +147,7 @@ const ArticlePage = () => {
   }
 
    return (
+    <PrivateRoute>
      <div>
        <div className="text-center relative flex items-center">
          <input
@@ -320,6 +322,7 @@ const ArticlePage = () => {
 
 <Footer></Footer>
      </div>
+     </PrivateRoute>
    );
 
  
