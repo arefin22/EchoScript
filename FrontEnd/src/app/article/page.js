@@ -28,9 +28,6 @@ const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
-  const [_id, set_id] = useState("");
-  const [commentText, setCommentText] = useState("");
-  const [likes, setLikes] = useState(0);
 
   const category = [
     {

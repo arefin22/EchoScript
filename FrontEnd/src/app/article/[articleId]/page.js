@@ -28,7 +28,7 @@ const SingleArticle = ({ params }) => {
 
   const handleInputChange = (e) => {
     const newText = e.target.value;
-    setText(newText);
+    setText(newText); 
   };
 
   const formatDateAgo = (date) => {
