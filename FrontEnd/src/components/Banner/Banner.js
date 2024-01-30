@@ -1,35 +1,21 @@
-'use client'
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
-import ButtonWithBgColor from "../Button/ButtonWithBgColor";
+"use client";
+
 const Banner = () => {
   return (
-    <div className="max-w-full min-h-screen mx-auto bg-[#A0AECD] flex justify-evenly items-center">
-      <div className="flex flex-row items-center justify-center gap-8 max-w-7xl">
+    <div
+      className="hero w-full"
+      style={{
+        backgroundImage: "url(https://i.ibb.co/wz43pyS/banner.png)",
+      }}
+    >
+      {/* <div className="hero-overlay bg-opacity-60"></div> */}
+      <div className="w-full p-8 md:p-28 lg:p-32 xl:p-48">
         <div className="">
-          <h1 className="text-8xl font-bold">Tell Stories...</h1>
-          <p className="mt-4 text-xl mb-4">
-            Publish, Grow and manage your written <br></br> stories all in one
-            place
+          <h1 className="mb-5 text-4xl lg:text-6xl xl:text-8xl text-[#C8B7A5] font-bold">Let Your Story Shine</h1>
+          <p className="mb-5 text-lg lg:text-2xl text-[#C8B7A5] -mt-6">
+          The Cozy Corner for Sharing Life Tales!
           </p>
-          {/* Todo:   Button from components */}
-          <ButtonWithBgColor name={"Explore More"} />
-          {/* <h1 className="btn  border rounded-lg p-2 w-40 text-center mt-2">
-       Explore More
-     </h1> */}
-        </div>
-        <div className="">
-          {/* player from lottie player */}
-          <Player
-            autoplay
-            loop
-            src="https://lottie.host/0691843e-fabe-4711-87ce-ae863b6ee983/zxFxYeAWxQ.json"
-            style={{ height: "300px", width: "300px" }}
-          >
-            <Controls
-              visible={false}
-              buttons={["play", "repeat", "frame", "debug"]}
-            />
-          </Player>
+          <button className="w-64 h-16 bg-[#C4B4A4] text-[#40220A] hover:bg-[#40220A] text-2xl hover:text-[#C4B4A4]  rounded-full mt-24 ">Explore Now</button>
         </div>
       </div>
     </div>
