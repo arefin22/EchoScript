@@ -45,10 +45,10 @@ const SocialLogin = () => {
           </button>
         </div>
         <div style={iconStyle} className="hover:bg-gray-200">
-          <FaFacebookF size={24} className="text-black" />
+          {/* <FaFacebookF size={24} className="text-black" /> */}
         </div>
         <div style={iconStyle} className="hover:bg-gray-200">
-          <FaXTwitter size={24} className="text-black" />
+          {/* <FaXTwitter size={24} className="text-black" /> */}
         </div>
       </div>
     </div>

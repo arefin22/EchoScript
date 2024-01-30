@@ -1,5 +1,5 @@
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import DashNavbar from "./DashNavbar/page";
+import DashNavbar from "./dashNavbar/page";
 
 
 

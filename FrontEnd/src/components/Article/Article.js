@@ -1,5 +1,4 @@
-
-"use client"
+"use client";
 
 import Image from "next/image";
 import { FaEye } from "react-icons/fa";
@@ -22,7 +21,8 @@ const Article = ({
   image,
   authorImage,
   handleCollectComment,
-  articleId
+  articleId,
+  commentCount
 }) => {
 
 
@@ -33,7 +33,7 @@ const Article = ({
           <div className="flex w-[80%] justify-between items-center">
             <div className="flex gap-2 pb-4 items-center">
               <Image
-                src={authorImage}
+                src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
                 height={40}
                 width={40}
                 className="rounded-[50%] h-12 w-12 object-cover"
@@ -71,38 +71,14 @@ const Article = ({
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 {/* <FaRegHeart fontSize={"1.5rem"} /> */}
               </button>
-              <button
-                onClick={() =>
-                  document.getElementById("my_modal_3").showModal()
-                }
-                className="hover:bg-[#ddd4d4] p-2 rounded-full"
-              >
+              <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
                   <FaRegCommentDots fontSize={"1.5rem"} />
-                  <span className="badge badge-sm indicator-item">8</span>
+                  <span className="badge badge-sm indicator-item">
+                    {commentCount}
+                  </span>
                 </div>
               </button>
-              <dialog id="my_modal_3" className="modal">
-                <div className="modal-box">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                      ✕
-                    </button>
-                  </form>
-                  <h3 className="font-bold text-lg">Comments</h3>
-                  <p className="py-4">Add your comment</p>
-                  <form onSubmit={(e) => handleCollectComment(e)}>
-                    <input
-                      className="outline-none border-2 py-3 w-full pl-5 rounded-lg"
-                      name="comment"
-                      placeholder="Write your comment..."
-                    />
-                    <button className="bg-[#1F883D] text-white  px-4 rounded-xl mt-5 btn-sm">
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              </dialog>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 {/* <FiShare2 fontSize={"1.5rem"} /> */}
               </button>
@@ -111,7 +87,7 @@ const Article = ({
         </div>
         <div>
           <Image
-            src={image}
+            src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
             height={200}
             width={200}
             alt="article image"

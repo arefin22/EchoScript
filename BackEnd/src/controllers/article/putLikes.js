@@ -3,7 +3,7 @@ const Article = require("../../models/Article");
 
 const putLikes = async (req, res) => {
   const { id } = req.params;
-  const { like } = req.body;
+  const {email, name, like} = req.body;
   const query = { _id: new mongoose.Types.ObjectId(id) };
   const options = { upsert: true };
 
@@ -14,16 +14,18 @@ const putLikes = async (req, res) => {
   }
 
   const newTotalLikes =
-    existingArticle.likes.reduce((total, like) => total + like.likesCount, 0) +
+    existingArticle.likes.reduce((total, likes) => total + likes.likesCount, 0) +
     like;
   const updateDoc = {
     $push: {
       likes: {
         likesCount: like,
+        email: email,
+        name: name
       },
     },
   };
-  console.log(newTotalLikes);
+  console.log(newTotalLikes, existingArticle);
   const result = await Article.updateOne(query, updateDoc, options);
   res.send(result);
 };

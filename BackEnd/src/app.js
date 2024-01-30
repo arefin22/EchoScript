@@ -14,6 +14,17 @@ applyMiddleware(app)
 app.use(getAllArticle);
 app.use(addAUser);
 
+const getAllArticle = require("./routes/article/index")
+const addAUser = require("./routes/user/index")
+
+// middlewares
+applyMiddleware(app)
+
+// routes
+app.use(getAllArticle);
+app.use(addAUser);
+
+
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");
 });
