@@ -2,7 +2,7 @@
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 import { imageUpload } from "@/utils/imageUpload";

@@ -8,7 +8,7 @@ const dashbordlayout = ({children}) => {
         <PrivateRoute>
         <div className="flex">
             <DashNavbar></DashNavbar>
-            <div className="p-8">
+            <div className="p-8 w-full">
                 {children}
             </div>
         </div>
