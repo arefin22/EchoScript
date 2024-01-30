@@ -14,6 +14,9 @@ const DashNavbar = () => {
     {
       path: "/dashboard/articles",
       route: "Articles",
+    },{
+      path:"/dashboard/History",
+      route:"History"
     },
     {
       path: "/dashboard/write",
