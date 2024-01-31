@@ -13,11 +13,21 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { formatDistanceToNow } from "date-fns";
+import { FaFacebookF, FaXTwitter, FaInstagram } from "react-icons/fa6";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from "react-share";
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
+  const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
   const { user } = useAuth();
   const maxLength = 100;
   useEffect(() => {
@@ -26,9 +36,11 @@ const SingleArticle = ({ params }) => {
     });
   }, [axiosSecure]);
 
+  console.log(data);
+
   const handleInputChange = (e) => {
     const newText = e.target.value;
-    setText(newText); 
+    setText(newText);
   };
 
   const formatDateAgo = (date) => {
@@ -74,11 +86,26 @@ const SingleArticle = ({ params }) => {
       image: user?.photoURL,
       likeCount: 1,
     };
-    axiosSecure
-      .put(`/article/${comment._id}`, likeOfComment)
-      .then((res) => {
-        console.log(res.data);
-      });
+    axiosSecure.put(`/article/${comment._id}`, likeOfComment).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  const handleShare = () => {
+    setShareDropdownOpen(!isShareDropdownOpen);
+  };
+
+  const shareUrl = `https://echoscript-front.vercel.app/`;
+
+  const handleLike = (item) => {
+    const likeDetails = {
+      email: user?.email,
+      name: user?.displayName,
+      like: 1,
+    };
+    axiosSecure.put(`/article/${item?._id}/like`, likeDetails).then((res) => {
+      console.log(res.data);
+    });
   };
 
   return (
@@ -138,7 +165,23 @@ const SingleArticle = ({ params }) => {
           <div className="flex mb-4">
             <div className="mr-12">
               <p className="flex items-center gap-1">
-                <AiFillLike size={24} /> 100
+                {data?.likes?.map((item) =>
+                  item.email === user?.email ? (
+                    <AiFillLike
+                      className=" cursor-pointer"
+                      color="green"
+                      onClick={() => handleLike(data)}
+                      size={24}
+                    />
+                  ) : (
+                    <AiFillLike
+                      className=" cursor-pointer"
+                      color="black"
+                      onClick={() => handleLike(data)}
+                      size={24}
+                    />
+                  )
+                )}
               </p>
             </div>
             <div className="drawer drawer-end overflow-x-hidden z-50 bg-[#F2F2F2]">
@@ -243,7 +286,27 @@ const SingleArticle = ({ params }) => {
           <div>
             <div className="flex gap-1">
               <FaBookmark size={24} />
-              <FaShareAlt size={24} />
+              <button onClick={handleShare}>
+                <FaShareAlt size={24} />
+              </button>
+              {isShareDropdownOpen && (
+                <div className="absolute right-0 mt-6 p-2 rounded shadow-md bg-white w-52 h-28">
+                  <p className="text-2xl font font-semibold text-center">
+                    Share via
+                  </p>
+                  <div className="flex justify-center gap-2 items-center">
+                    <FacebookShareButton url={shareUrl}>
+                      <FacebookIcon size={40} round={true} />
+                    </FacebookShareButton>
+                    <WhatsappShareButton url={shareUrl}>
+                      <WhatsappIcon size={40} round={true} />
+                    </WhatsappShareButton>
+                    <TwitterShareButton url={shareUrl}>
+                      <TwitterIcon size={40} round={true} />
+                    </TwitterShareButton>
+                  </div>
+                </div>
+              )}
               <FaEllipsisH size={24} />
             </div>
           </div>

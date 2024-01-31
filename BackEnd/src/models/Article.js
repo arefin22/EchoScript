@@ -16,8 +16,8 @@ const LikeOfCommentSchema = new Schema({
   likeCount: {
     type: Number,
     required: true,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
 const CommentSchema = new Schema({
@@ -50,16 +50,9 @@ const CommentSchema = new Schema({
 });
 
 const LikesSchema = new Schema({
-  id: { type: Types.ObjectId, required: true },
-  likesCount: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  totalLikes: {
-    type: Number,
-    required: true,
-  },
+  email: { type: String, required: true },
+  name: { type: String, required: true },
+  likesCount: { type: Number, required: true },
 });
 
 const ArticleSchema = new Schema({

@@ -112,8 +112,7 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
-
-  const like = (item) => {
+  const handleLike = (item) => {
     const likeDetails = {
       like: 1,
     };
@@ -255,12 +254,11 @@ const ArticlePage = () => {
           //    </div>
           //    <hr className="my-5" />
           //  </div>
-          <Link href={`/article/${item._id}`}>
+          <Link key={item._id} href={`/article/${item._id}`}>
             <Article
-              key={item._id}
               commentCount={item.comments.length}
               authorName={item.authorName}
-              category={item.category}
+             category={item.category}
               title={item.title}
               postedDate={item.postedDate}
               view={item.view}

@@ -7,7 +7,7 @@ const getSingleItemById = require("../../controllers/article/singleArticleById")
 const router = require("express").Router();
 
 router.get("/article", getAllArticle)
-router.get("/article/:id", getSingleItemById);
+router.get("/article/:id",  getSingleItemById);
 router.put("/article/:id", addAComment);
 router.put("/article/:id/like", putLikes)
 // like of comment
