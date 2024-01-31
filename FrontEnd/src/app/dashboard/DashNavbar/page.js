@@ -62,7 +62,7 @@ const DashNavbar = () => {
             </p>
           </Link>
         </div>
-        <div className="flex flex-col gap-6 mt-5  mx-auto text-black text-[16px] text-center">
+        <div className="flex flex-col gap-6 mt-5 text-left  mx-auto text-black text-[16px] ">
           {navs.map((nav, idx) => (
             <Link
               key={idx}
