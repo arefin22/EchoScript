@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import profile from '../../../assets/img/profile.png'
 import Link from 'next/link';
+import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 const page = () => {
     return (
+        <PrivateRoute>
         <div className='ml-96'>
             <div>
                 <div className='avatar'>
@@ -23,6 +25,7 @@ const page = () => {
             <Link className="border border-black w-60  rounded-xl px-4 py-1" href="/editprofile">Edit Profile</Link>
             </div>
         </div>
+        </PrivateRoute>
     );
 };
 

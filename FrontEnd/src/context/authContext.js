@@ -4,14 +4,13 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { auth, googleProvider } from "@/firebase";
 
 
-const AuthContext = createContext(null);
 
+const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [ loader, setLoader] =useState(true);
-  
- 
-    const googleLogIn =  () => {
+   console.log(user)
+      const googleLogIn =  () => {
         try {
           setLoader(true);
          return signInWithPopup(auth,googleProvider);

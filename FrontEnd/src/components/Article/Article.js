@@ -50,7 +50,7 @@ const Article = ({
               </p>
             </div>
             <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-              <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
+              {/* <MdOutlineBookmarkAdd fontSize={"1.5rem"} /> */}
             </button>
           </div>
           <h1 className="text-2xl font-semibold pb-2">{title}</h1>
@@ -58,18 +58,18 @@ const Article = ({
           <div className="flex justify-between w-[80%] pt-4 items-center">
             <div className="flex items-center gap-5">
               <span className="flex items-center gap-1">
-                <MdAccessTime /> {postedDate}
+                {/* <MdAccessTime /> {postedDate} */}
               </span>
               <span className="flex items-center gap-1">
-                <FaEye /> {view}
+                {/* <FaEye /> {view} */}
               </span>
               <span className="flex items-center gap-1">
-                <FaRegCalendarAlt /> {date}
+                {/* <FaRegCalendarAlt /> {date} */}
               </span>
             </div>
             <div className="flex gap-3">
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FaRegHeart fontSize={"1.5rem"} />
+                {/* <FaRegHeart fontSize={"1.5rem"} /> */}
               </button>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
@@ -80,7 +80,7 @@ const Article = ({
                 </div>
               </button>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FiShare2 fontSize={"1.5rem"} />
+                {/* <FiShare2 fontSize={"1.5rem"} /> */}
               </button>
             </div>
           </div>
