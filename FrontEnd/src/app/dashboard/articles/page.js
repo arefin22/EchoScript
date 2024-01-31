@@ -1,7 +1,7 @@
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Image from "next/image";
 
-const page = () => {
+const article = () => {
   return (
     <PrivateRoute>
     <div className="ml-10">
@@ -62,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default article;
