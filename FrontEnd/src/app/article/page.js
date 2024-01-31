@@ -116,7 +116,9 @@ const ArticlePage = () => {
   
 
   return (
+    <PrivateRoute>
     <div>
+      
       <Navbar />
       <div className="text-center relative flex items-center pt-5">
         <input
@@ -175,6 +177,7 @@ const ArticlePage = () => {
 
       <Footer></Footer>
     </div>
+    </PrivateRoute>
   );
 };
 
