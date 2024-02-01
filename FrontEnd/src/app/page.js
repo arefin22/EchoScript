@@ -15,7 +15,10 @@ const page = () => {
     <div>
       <Navbar />
       <Banner></Banner>
-       <Recomendation />
+
+      <div className="container mx-auto my-24">
+        <Recomendation />
+      </div>
       {/* popular cards */}
       <div className="container mx-auto my-24">
         <Title title="Latest Article"></Title>
@@ -38,8 +41,6 @@ const page = () => {
           ))}
         </div>
         <div className="my-24">
-        
-          
           <div className=" text-center mx-auto">
             <ButtonWithBgColor name={"Explore More"} />
           </div>
