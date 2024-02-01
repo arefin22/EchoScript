@@ -1,37 +1,4 @@
-.editor-container {
-  position: relative;
+.codex-editor__redactor{
+     /* min-height: 10px !important; */
+     padding-bottom: 100px !important;
 }
-
-.main-button {
-  font-size: 1.5rem;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-.additional-buttons {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  z-index: 1;
-}
-
-.image-input,
-.code-input {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  z-index: 1;
-}
-
-/* Add more styles as needed */

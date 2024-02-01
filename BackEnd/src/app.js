@@ -14,6 +14,7 @@ applyMiddleware(app)
 app.use(getAllArticle);
 app.use(addAUser);
 
+
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");
 });
