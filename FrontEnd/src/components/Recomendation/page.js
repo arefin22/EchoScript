@@ -1,4 +1,6 @@
 import Article from "../Article/Article";
+import Card from "../Card/Card";
+import Title from "../shared/ReusableComponents/Title";
 const recomendation = async () => {
   const userFav = ["Books", "Weather", "Technology", "Coding"];
   const res = await fetch("https://api.publicapis.org/entries");
@@ -8,20 +10,26 @@ const recomendation = async () => {
   const ranDom = fav.sort(() => Math.random() - 0.5);
   return (
     <div>
+      <div>
+         <Title title="For you"></Title>
+      </div>
+      <div className="my-20 grid grid-cols-1 md:grid-cols-3 gap-10">
       {ranDom.slice(1, 4).map((art) => (
-        <Article
+        <Card
           key={Math.random()}
+          tags={art}
           category={art.Category}
           authorName={"Shawal Ahmed S.k"}
           authorImage={"https://i.ibb.co/nnZwqDB/download-1.jpg"}
           title={art.API}
           article={art.article}
-          postedDate={"24-01-24"}
-          view={"200"}
+          likes={"20k"}
+          comments={"Comments"}
           date={"26-01-24"}
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
         />
       ))}
+      </div>
     </div>
   );
 };
