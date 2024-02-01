@@ -1,5 +1,6 @@
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import DashNavbar from "./dashnavbar/page";
+import DashNavbar from "./DashNavbar/page";
+
 
 const dashbordlayout = ({ children }) => {
   return (
