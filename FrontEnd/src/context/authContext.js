@@ -1,5 +1,5 @@
 "use client"
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged,GithubAuthProvider, FacebookAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, TwitterAuthProvider } from "firebase/auth";
 import { createContext, useEffect, useState, useContext } from "react";
 import { auth, googleProvider } from "@/firebase";
 
@@ -18,6 +18,35 @@ export const AuthProvider = ({ children }) => {
           console.error('Google sign-in error:', error.message);
         }
       };
+      const facebookProvider = new FacebookAuthProvider();
+      const githubProvider = new GithubAuthProvider();
+      const twitterProvider = new TwitterAuthProvider();
+      const twitterLogIn = async () => {
+        try {
+          setLoader(true);
+          await signInWithPopup(auth, twitterProvider);
+        } catch (error) {
+          console.error('Twitter sign-in error:', error.message);
+        }
+      };
+
+      const githubLogIn = async () => {
+        try {
+          setLoader(true);
+          await signInWithPopup(auth, githubProvider);
+        } catch (error) {
+          console.error('GitHub sign-in error:', error.message);
+        }
+      };
+const facebookLogIn = async () => {
+  try {
+    setLoader(true);
+    await signInWithPopup(auth, facebookProvider);
+  } catch (error) {
+    console.error('Facebook sign-in error:', error.message);
+  }
+};
+      
   
       const createUser =  (email, password) => {
         try {
@@ -75,9 +104,9 @@ export const AuthProvider = ({ children }) => {
       
   
     const value = {
-      user,
-      googleLogIn,
-      createUser,
+      user,githubLogIn,
+      googleLogIn,facebookLogIn,
+      createUser,twitterLogIn,
       logIn,
       logout,loader,handleUpdateProfile
     };
