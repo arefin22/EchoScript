@@ -6,6 +6,7 @@ import { useAuth } from "@/context/authContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { FaTwitter } from "react-icons/fa6";
+import { axiosPublic } from "@/utils/useAxiosPublic";
 
 const SocialLogin = () => {
   const {googleLogIn,facebookLogIn,githubLogIn,twitterLogIn} = useAuth();
@@ -25,8 +26,11 @@ const SocialLogin = () => {
         image: res.user?.photoURL,
         role: "guest",
       };
+      axiosPublic.post('/user',userInfo)
+      .then(res=>{console.log(res.data)});
+      toast.success('user login successfully')
       router.push("/dashboard");
-      console.log(userInfo);
+     
       toast.success("User login successfully"); 
     } catch (error) {
       toast.error(error.message);
@@ -41,8 +45,11 @@ const SocialLogin = () => {
         image: res.user?.photoURL,
         role: "guest",
       };
+      axiosPublic.post('/user',userInfo)
+      .then(res=>{console.log(res.data)});
+      toast.success('user login successfully')
       router.push("/dashboard");
-      console.log(userInfo);
+     
       toast.success("User login successfully");
     } catch (error) {
       toast.error(error.message);
@@ -57,8 +64,11 @@ const SocialLogin = () => {
         image: res.user?.photoURL,
         role: "guest",
       };
+      axiosPublic.post('/user',userInfo)
+                .then(res=>{console.log(res.data)});
+                toast.success('user login successfully')
       router.push("/dashboard");
-      console.log(userInfo); 
+      
       toast.success("User login successfully");
     } catch (error) {
       toast.error(error.message);
@@ -73,6 +83,9 @@ const SocialLogin = () => {
         image: res.user?.photoURL,
         role: "guest",
       };
+      axiosPublic.post('/user',userInfo)
+                .then(res=>{console.log(res.data)});
+                toast.success('user login successfully')
       router.push("/dashboard");
       console.log(userInfo);
       toast.success("User login successfully");
