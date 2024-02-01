@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { MdOutlineCancel } from "react-icons/md";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
+import { axiosPublic } from '@/utils/useAxiosPublic';
+import { saveUser } from '@/utils/useSaveUser';
 
 const SignUp = () => {
   const { createUser, handleUpdateProfile,user ,loader } = useAuth();
@@ -73,7 +75,15 @@ const SignUp = () => {
           role: "guest",
           recommandation:favourite,
         };
-        console.log(userInfo);
+        await axiosPublic.post('/user',userInfo)
+        toast.success('user login successfully')
+        .then(res=>{console.log(res.data)});
+       
+        toast.success('user created successfully')
+          
+             console.log(result)
+        const DBresponse = await saveUser(result?.user)
+        console.log(DBresponse)
       } catch (err) {
         console.log(err);
       }
