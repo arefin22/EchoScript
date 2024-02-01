@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 import { MdOutlineCancel } from "react-icons/md";
+import { axiosPublic } from "@/utils/useAxiosPublic";
 
 const LogIn = () => {
   const { logIn,loader,user } = useAuth();
@@ -44,8 +45,11 @@ const LogIn = () => {
           image: res.user?.photoURL,
           role: "guest",
         };
+        axiosPublic.post('/user',userInfo)
+        toast.success('user login successfully')
+        .then(res=>{console.log(res.data)});
         router.push("/");
-        console.log(userInfo);
+      
         toast.success("User login successfully");
       })
       .catch((err) => {
