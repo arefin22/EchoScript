@@ -154,21 +154,21 @@ const ArticlePage = () => {
       </div>
       <div className="py-10">
         {data?.map((item) => (
-          <Link key={item._id} href={`/article/${item._id}`}>
             <Article
               commentCount={item.comments.length}
+              key={item._id}
               authorName={item.authorName}
              category={item.category}
               title={item.title}
               postedDate={item.postedDate}
               view={item.view}
+              article={item.article}
               image={item.image}
               authorImage={item.authorImage}
               date={item.date}
               articleId={item._id}
               data={data}
             />
-          </Link>
         ))}
       </div>
       <hr className="border-1 border-[#F2F2F2] my-3" />

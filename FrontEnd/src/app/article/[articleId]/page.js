@@ -27,6 +27,7 @@ const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
+  const [forceUpdate, setForceUpdate] = useState(Date.now());
   const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
   const { user } = useAuth();
   const maxLength = 100;
@@ -34,9 +35,7 @@ const SingleArticle = ({ params }) => {
     axiosSecure.get(`/article/${params.articleId}`).then((res) => {
       setData(res.data);
     });
-  }, [axiosSecure]);
-
-  console.log(data);
+  }, [forceUpdate]);
 
   const handleInputChange = (e) => {
     const newText = e.target.value;
@@ -44,7 +43,7 @@ const SingleArticle = ({ params }) => {
   };
 
   const formatDateAgo = (date) => {
-    return formatDistanceToNow(new Date(date), { addSuffix: true });
+    return formatDistanceToNow(new Date(date));
   };
 
   const handleSubmitComment = (data) => {
@@ -59,6 +58,7 @@ const SingleArticle = ({ params }) => {
     };
     axiosSecure.put(`/article/${data._id}`, comment).then((res) => {
       if (res.data.modifiedCount > 0) {
+        setForceUpdate(Date.now());
         Swal.fire({
           title: "Good job!",
           text: "successfylly added a comment!",
@@ -68,6 +68,7 @@ const SingleArticle = ({ params }) => {
       }
     });
   };
+
 
   const {
     coverImage,
@@ -87,7 +88,9 @@ const SingleArticle = ({ params }) => {
       likeCount: 1,
     };
     axiosSecure.put(`/article/${comment._id}`, likeOfComment).then((res) => {
-      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        setForceUpdate(Date.now());
+      }
     });
   };
 
@@ -104,9 +107,13 @@ const SingleArticle = ({ params }) => {
       like: 1,
     };
     axiosSecure.put(`/article/${item?._id}/like`, likeDetails).then((res) => {
-      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        setForceUpdate(Date.now());
+      }
     });
   };
+
+  const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
 
   return (
     <div>
@@ -163,26 +170,16 @@ const SingleArticle = ({ params }) => {
         </div>
         <div className="flex justify-between">
           <div className="flex mb-4">
-            <div className="mr-12">
+            <div className="mr-12 flex items-center gap-2">
               <p className="flex items-center gap-1">
-                {data?.likes?.map((item) =>
-                  item.email === user?.email ? (
-                    <AiFillLike
-                      className=" cursor-pointer"
-                      color="green"
-                      onClick={() => handleLike(data)}
-                      size={24}
-                    />
-                  ) : (
-                    <AiFillLike
-                      className=" cursor-pointer"
-                      color="black"
-                      onClick={() => handleLike(data)}
-                      size={24}
-                    />
-                  )
-                )}
+                <AiFillLike
+                  className="cursor-pointer"
+                  color={hasUserLiked ? "green" : "black"}
+                  onClick={() => handleLike(data)}
+                  size={24}
+                />
               </p>
+              <span>{data?.likes?.length}</span>
             </div>
             <div className="drawer drawer-end overflow-x-hidden z-50 bg-[#F2F2F2]">
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
