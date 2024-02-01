@@ -96,11 +96,11 @@ const LogIn = () => {
                 />
               </div>
               <div className="md:w-1/4 mx-auto">
-                <button
+                <button disabled={loader}
                   type="submit"
                   className="w-full rounded-3xl py-3 border-2 border-[#4C2F17] text-[#4C2F17] md:text-lg transition-all duration-300 hover:bg-[#4C2F17] hover:text-white"
                 >
-                  Login
+                  {loader?(<span className="loading loading-bars loading-lg"></span>):(<span>Sign In</span>)}
                 </button>
               </div>
             </div>

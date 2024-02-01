@@ -150,11 +150,10 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div className="md:w-1/4 mx-auto">
-      <button
-        type="submit"
+      <button disabled={loader} 
         className="w-full rounded-3xl py-3 border-2 border-[#4C2F17] text-[#4C2F17] md:text-lg transition-all duration-300 hover:bg-[#4C2F17] hover:text-white"
-      >
-        Sign Up
+      > 
+        {loader?(<span className="loading loading-bars loading-lg"></span>):(<span>Sign Up</span>)}
       </button>
       </div>
                </form>
