@@ -32,7 +32,7 @@ const Payment = () => {
           <h2>Best Package</h2>
           <hr />
           <div className="text-left">
-            <p className="text-xl pl-3 text-green-600">22.00</p>
+            <p className="text-xl text-green-600">$22.00</p>
             <p className="text-xl text-black">
               $<del>29.00</del>
               <span className="text-xs">/6 month</span>

@@ -9,7 +9,9 @@ const page = () => {
     <div>
       <Navbar />
       <div className="container mx-auto py-32">
-        <Title title="Membership Packages" />
+        <div className="mb-10">
+          <Title title="Membership Packages" />
+        </div>
         <Payment />
       </div>
       <Footer />
