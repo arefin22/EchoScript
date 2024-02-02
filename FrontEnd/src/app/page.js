@@ -9,6 +9,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Title from "@/components/shared/ReusableComponents/Title";
 import Link from "next/link";
+import Payment from "@/components/Payment/Payment";
 
 const page = () => {
   return (
@@ -45,6 +46,11 @@ const page = () => {
             <ButtonWithBgColor name={"Explore More"} />
           </div>
         </div>
+      </div>
+
+      <div className="container mx-auto my-24">
+        <Title title="Packages"></Title>
+        <Payment />
       </div>
 
       <Footer></Footer>
