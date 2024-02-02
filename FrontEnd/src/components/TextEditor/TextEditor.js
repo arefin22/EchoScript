@@ -163,33 +163,35 @@ const TextEditor = () => {
     });
   };
 
-  useEffect(() => {
-    if (ejInstance.current === null) {
-      initEditor();
-    }
+  // useEffect(() => {
+  //   if (ejInstance.current === null) {
+  //     initEditor();
+  //   }
 
-    return () => {
-      ejInstance?.current?.destroy();
-      ejInstance.current = null;
-    };
-  }, []);
+  //   return () => {
+  //     ejInstance?.current?.destroy();
+  //     ejInstance.current = null;
+  //   };
+  // }, []);
 
-    const handleSave = async () => {
-      const content = await ejInstance.current.saver.save();
-      console.log(content);
+  initEditor();
 
-      try {
-        const response = await axios.post("/api/saveArticle", { content });
+  const handleSave = async () => {
+    const content = await ejInstance.current.saver.save();
+    console.log(content);
 
-        if (response.data.success) {
-          console.log("Article saved successfully.");
-        } else {
-          console.error("Failed to save article.");
-        }
-      } catch (error) {
-        console.error("Error saving article:", error);
+    try {
+      const response = await axios.post("/api/saveArticle", { content });
+
+      if (response.data.success) {
+        console.log("Article saved successfully.");
+      } else {
+        console.error("Failed to save article.");
       }
-    };
+    } catch (error) {
+      console.error("Error saving article:", error);
+    }
+  };
   // const handleSave = async () => {
   //   if (ejInstance.current) {
   //     const content = await ejInstance.current.saver.save();
@@ -201,15 +203,14 @@ const TextEditor = () => {
 
   return (
     <>
-      <div id="editorjs"></div>
+      <div id="editorjs" className="border-black-500 border-2"></div>
       <div className="w-full text-center">
         <button
-          className="bg-[#025] text-white px-12 py-3 rounded-3xl"
+          className="bg-[#025] text-white px-12 py-3 rounded-3xl mt-3"
           onClick={handleSave}
         >
           Save Data
         </button>
-       
       </div>
     </>
   );
