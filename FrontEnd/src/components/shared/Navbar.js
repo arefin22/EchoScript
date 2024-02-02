@@ -19,6 +19,10 @@ const Navbar = () => {
       route: "About Us",
       pathName: "/about",
     },
+    {
+      route: "Subscriptions",
+      pathName: "/packages",
+    },
 
     {
       route: "All Article",
@@ -96,14 +100,15 @@ const Navbar = () => {
                 {user?.email ? (
                   <div className="flex gap-2">
                     <div className="avatar online">
-                        <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                           <Image
-                                 src={user.photoURL}
-                                    width={12}
-                                    height={12}
-                                       alt={"user"} />
-                                    </div>
-                                 </div>
+                      <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <Image
+                          src={user.photoURL}
+                          width={12}
+                          height={12}
+                          alt={"user"}
+                        />
+                      </div>
+                    </div>
                     <button
                       onClick={logout}
                       className="btn btn-error inline-block"
@@ -129,8 +134,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
-
-
