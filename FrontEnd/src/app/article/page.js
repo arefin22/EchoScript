@@ -1,29 +1,14 @@
 "use client";
 
 import { IoSearch } from "react-icons/io5";
-import {
-  MdAccessTime,
-  MdOutlineBookmarkAdd,
-  MdOutlineKeyboardArrowLeft,
-} from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import {
-  FaEye,
-  FaRegCalendarAlt,
-  FaRegCommentDots,
-  FaRegHeart,
-} from "react-icons/fa";
-import { FiShare2 } from "react-icons/fi";
-import Image from "next/image";
-import Swal from "sweetalert2";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
-import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Article from "@/components/Article/Article";
-import Link from "next/link";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -113,12 +98,8 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
-  
-
   return (
-    <PrivateRoute>
     <div>
-      
       <Navbar />
       <div className="text-center relative flex items-center pt-5">
         <input
@@ -156,28 +137,27 @@ const ArticlePage = () => {
       </div>
       <div className="py-10">
         {data?.map((item) => (
-            <Article
-              commentCount={item.comments.length}
-              key={item._id}
-              authorName={item.authorName}
-             category={item.category}
-              title={item.title}
-              postedDate={item.postedDate}
-              view={item.view}
-              article={item.article}
-              image={item.image}
-              authorImage={item.authorImage}
-              date={item.date}
-              articleId={item._id}
-              data={data}
-            />
+          <Article
+            commentCount={item.comments.length}
+            key={item._id}
+            authorName={item.authorName}
+            category={item.category}
+            title={item.title}
+            postedDate={item.postedDate}
+            view={item.view}
+            article={item.article}
+            image={item.image}
+            authorImage={item.authorImage}
+            date={item.date}
+            articleId={item._id}
+            data={data}
+          />
         ))}
       </div>
       <hr className="border-1 border-[#F2F2F2] my-3" />
 
       <Footer></Footer>
     </div>
-    </PrivateRoute>
   );
 };
 

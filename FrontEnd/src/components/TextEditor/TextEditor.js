@@ -15,7 +15,7 @@ const TextEditor = () => {
   const initEditor = () => {
     const editor = new EditorJS({
       holder: "editorjs",
-      // minHeight : "220px",
+      minHeight : "200px",
       onReady: () => {
         ejInstance.current = editor;
       },

@@ -2,7 +2,7 @@ import React from "react";
 
 const Payment = () => {
   return (
-    <div className="flex flex-row justify-center items-center gap-10">
+    <div className="flex flex-col lg:flex-row justify-center items-center gap-10 lg:gap-6 xl:gap-10">
       {/* card 1 */}
       <div className="border-2 p-10 w-80 border-black rounded-3xl h-[600px] text-center flex flex-col items-center justify-between">
         <div className="flex flex-col gap-4">
