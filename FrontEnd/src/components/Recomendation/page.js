@@ -1,7 +1,7 @@
 import Article from "../Article/Article";
 import Card from "../Card/Card";
 import Title from "../shared/ReusableComponents/Title";
-const recomendation = async () => {
+const Recomendation = async () => {
   const userFav = ["Books", "Weather", "Technology", "Coding"];
   const res = await fetch("https://api.publicapis.org/entries");
   const article = await res.json();
@@ -34,4 +34,4 @@ const recomendation = async () => {
   );
 };
 
-export default recomendation;
+export default Recomendation;

@@ -36,7 +36,13 @@ const Navbar = () => {
   return (
     <div>
       <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
-        <Image src={logo} alt="Logo" className="w-96" />
+        <Image
+          src={logo}
+          alt="Logo"
+          width={100}
+          height={100}
+          className="w-96"
+        />
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
@@ -102,7 +108,7 @@ const Navbar = () => {
                     <div className="avatar online">
                       <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <Image
-                          src={user.photoURL}
+                          src={user?.photoURL || person}
                           width={12}
                           height={12}
                           alt={"user"}
