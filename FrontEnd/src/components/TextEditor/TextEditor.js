@@ -21,12 +21,13 @@ const TextEditor = () => {
       minHeight: "200px",
       onReady: () => {
         ejInstance.current = editor;
+        loadDraft(); 
+      },
+
+      onChange: async () => {
+        saveDraft(); 
       },
       autofocus: true,
-      // onChange: async () => {
-      //   let content = await editor.saver.save();
-      //   console.log(content);
-      // },
       tools: {
         paragraph: {
           class: Paragraph,
@@ -117,7 +118,6 @@ const TextEditor = () => {
                       },
                     }
                   );
-
                   if (response.data.success === true) {
                     return {
                       success: 1,
@@ -175,12 +175,42 @@ const TextEditor = () => {
     });
   };
 
+  const saveDraft = async () => {
+    try {
+      if (ejInstance.current) {
+        const content = await ejInstance.current.saver.save();
+        localStorage.setItem("editorDraft", JSON.stringify(content));
+      } else {
+        console.error("Editor instance is undefined. Cannot save draft.");
+      }
+    } catch (error) {
+      console.error("Error saving draft:", error);
+    }
+  };
+
+  const loadDraft = () => {
+    const draftContent = localStorage.getItem("editorDraft");
+    if (draftContent && ejInstance.current) {
+      try {
+        const parsedContent = JSON.parse(draftContent);
+        ejInstance.current.render({
+          blocks: parsedContent.blocks,
+          time: parsedContent.time,
+          version: parsedContent.version,
+        });
+      } catch (error) {
+        console.error("Error parsing draft content:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (ejInstance.current === null) {
       initEditor();
     }
 
     return () => {
+      saveDraft(); 
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
@@ -192,26 +222,24 @@ const TextEditor = () => {
     const content = await ejInstance.current.saver.save();
     console.log(content);
 
-    try {
-      // const response = await axios.post("/api/saveArticle", { content });
+      try {
+        // const response = await axios.post("/api/saveArticle", { content });
 
-      if (response.data.success) {
-        console.log("Article saved successfully.");
-      } else {
-        console.error("Failed to save article.");
+        // if (response.data.success) {
+        //   console.log("Article saved successfully.");
+
+        //   // Clear local storage after successful submission
+        //   localStorage.removeItem("editorDraft");
+        // } else {
+        //   console.error("Failed to save article.");
+        // }
+
+        console.log("Article successful submission.");
+        localStorage.removeItem("editorDraft");
+      } catch (error) {
+        console.error("Error saving article:", error);
       }
-    } catch (error) {
-      console.error("Error saving article:", error);
-    }
   };
-  // const handleSave = async () => {
-  //   if (ejInstance.current) {
-  //     const content = await ejInstance.current.saver.save();
-  //     console.log(content);
-  //   } else {
-  //     console.error("Editor instance not available.");
-  //   }
-  // };
 
   return (
     <>
