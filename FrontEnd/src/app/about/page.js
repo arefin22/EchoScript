@@ -1,4 +1,3 @@
-import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import Image from "next/image";
@@ -32,7 +31,6 @@ const AboutPage = () => {
   ];
 
   return (
-    <PrivateRoute>
     <div className="bg-gray-100 ">
       <Navbar />
       <div className="bg-[url('https://i.ibb.co/9GVrc95/kaleb-tapp-J59w-WPn09-BE-unsplash.jpg')] bg-cover bg-no-repeat bg-center bg-fixed h-[70vh] text-white flex items-center justify-center ">
@@ -68,7 +66,7 @@ const AboutPage = () => {
           </p>
         </div>
         <div>
-          <div className="flex justify-center items-center gap-10">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-10">
             <div>
               <Image
                 className=" object-cover hover:scale-105 transition-all duration-200 w-80 h-96 border rounded-2xl"
@@ -98,7 +96,7 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center p-10 gap-5">
+        <div className="flex flex-col lg:flex-row items-center justify-center p-10 gap-5">
           <div className="w-[50%]">
             <h1 className="text-center text-3xl font-semibold pb-6">
               Our Services
@@ -140,7 +138,6 @@ const AboutPage = () => {
       </div>
       <Footer></Footer>
     </div>
-    </PrivateRoute>
   );
 };
 

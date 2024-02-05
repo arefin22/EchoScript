@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 import { MdOutlineCancel } from "react-icons/md";
+import { axiosPublic } from "@/utils/useAxiosPublic";
 
 const LogIn = () => {
   const { logIn,loader,user } = useAuth();
@@ -44,8 +45,11 @@ const LogIn = () => {
           image: res.user?.photoURL,
           role: "guest",
         };
+        axiosPublic.post('/user',userInfo)
+        toast.success('user login successfully')
+        .then(res=>{console.log(res.data)});
         router.push("/");
-        console.log(userInfo);
+      
         toast.success("User login successfully");
       })
       .catch((err) => {
@@ -96,11 +100,11 @@ const LogIn = () => {
                 />
               </div>
               <div className="md:w-1/4 mx-auto">
-                <button
+                <button disabled={loader}
                   type="submit"
                   className="w-full rounded-3xl py-3 border-2 border-[#4C2F17] text-[#4C2F17] md:text-lg transition-all duration-300 hover:bg-[#4C2F17] hover:text-white"
                 >
-                  Login
+                  {loader?(<span className="loading loading-bars loading-lg"></span>):(<span>Sign In</span>)}
                 </button>
               </div>
             </div>

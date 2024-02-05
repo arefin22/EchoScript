@@ -7,7 +7,7 @@ const connectDB = async () => {
   uri = uri.replace("<username>", process.env.DB_NAME);
   uri = uri.replace("<password>", process.env.DB_PASS);
   await mongoose.connect(uri, { dbName: "EchoScript" });
-  console.log("connected to database!!!");
+  console.log("connected to database!!!");  
 };
 
 module.exports = connectDB

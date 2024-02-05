@@ -46,12 +46,12 @@ const Card = ({
         <p className="text-[12px]">{article}</p>
         <div className="flex justify-between py-4 text-[12px]">
           <div className="flex items-center gap-1">
-            <FaUser />
+            {/* <FaUser /> */}
             {authorName}
           </div>
           <div className="flex gap-2">
             <div className="flex items-center gap-1">
-              <BiSolidLike />
+              {/* <BiSolidLike /> */}
               {likes}
             </div>
             <div className="flex items-center gap-1">
@@ -60,7 +60,7 @@ const Card = ({
             </div>
           </div>
           <div className="flex items-center gap-1">
-            <FaEye /> {date}
+            {/* <FaEye /> {date} */}
           </div>
         </div>
       </div>

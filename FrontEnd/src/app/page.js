@@ -9,6 +9,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Title from "@/components/shared/ReusableComponents/Title";
 import Link from "next/link";
+import Payment from "@/components/Payment/Payment";
 
 const page = () => {
   return (
@@ -16,9 +17,12 @@ const page = () => {
       <Navbar />
       <Banner></Banner>
 
+      <div className="container mx-auto my-24">
+        <Recomendation />
+      </div>
       {/* popular cards */}
       <div className="container mx-auto my-24">
-        <Title title="Recommendation"></Title>
+        <Title title="Latest Article"></Title>
         <div className="my-32 grid grid-cols-1 md:grid-cols-3 gap-10">
           {cardData.map((card, index) => (
             <Link key={index} href="/singlearticle">
@@ -37,14 +41,16 @@ const page = () => {
             </Link>
           ))}
         </div>
-
         <div className="my-24">
-          <Title title="Latest Article" />
-          <Recomendation />
           <div className=" text-center mx-auto">
             <ButtonWithBgColor name={"Explore More"} />
           </div>
         </div>
+      </div>
+
+      <div className="container mx-auto my-24">
+        <Title title="Packages"></Title>
+        <Payment />
       </div>
 
       <Footer></Footer>

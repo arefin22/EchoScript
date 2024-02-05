@@ -7,23 +7,7 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
-
-// import ImageTool from "@editorjs/image";
-// import CodeTool from "@editorjs/code";
-
-
-const DEFAULT_INITIAL_DATA = {
-  time: new Date().getTime(),
-  blocks: [
-    {
-      type: "header",
-      data: {
-        level: 1,
-        text: "Hello EchoScript",
-      },
-    },
-  ],
-};
+import "./TextEditor.css";
 
 const TextEditor = () => {
   const ejInstance = useRef();
@@ -31,15 +15,15 @@ const TextEditor = () => {
   const initEditor = () => {
     const editor = new EditorJS({
       holder: "editorjs",
+      minHeight : "200px",
       onReady: () => {
         ejInstance.current = editor;
       },
       autofocus: true,
-      onChange: async () => {
-        let content = await editor.saver.save();
-
-        console.log(content);
-      },
+      // onChange: async () => {
+      //   let content = await editor.saver.save();
+      //   console.log(content);
+      // },
       tools: {
         paragraph: {
           class: Paragraph,
@@ -72,6 +56,46 @@ const TextEditor = () => {
           },
         },
         code: CodeTool,
+        // image: {
+        //   class: ImageTool,
+        //   config: {
+        //     uploader: {
+        //       async uploadByFile(file) {
+        //         const formData = new FormData();
+        //         formData.append("file", file);
+        //         const response = await axios.post(
+        //           `https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd`,
+        //           formData,
+        //           {
+        //             headers: {
+        //               "Content-Type": "multipart/form-data",
+        //             },
+        //             withCredentials: false,
+        //           }
+        //         );
+
+        //         if (response.data.success === 1) {
+        //           return response.data;
+        //         }
+        //       },
+        //       async uploadByUrl(url) {
+        //         const response = await axios.post(
+        //           `https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd`,
+        //           {
+        //             url,
+        //           }
+        //         );
+
+        //         if (response.data.success === 1) {
+        //           return response.data;
+        //         }
+        //       },
+        //     },
+        //     inlineToolbar: true,
+        //   },
+
+        // },
+
         image: {
           class: ImageTool,
           config: {
@@ -81,7 +105,7 @@ const TextEditor = () => {
                 formData.append("file", file);
 
                 const response = await axios.post(
-                  `http://localhost:4001/api/uploadImage/create`,
+                  "https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd",
                   formData,
                   {
                     headers: {
@@ -92,19 +116,43 @@ const TextEditor = () => {
                 );
 
                 if (response.data.success === 1) {
-                  return response.data;
+                  return {
+                    success: 1,
+                    file: {
+                      url: response.data.data.url,
+                    },
+                  };
+                } else {
+                  return {
+                    success: 0,
+                    file: {
+                      url: null,
+                    },
+                  };
                 }
               },
               async uploadByUrl(url) {
                 const response = await axios.post(
-                  `http://localhost:4001/api/uploadImage/createByUrl`,
+                  "https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd",
                   {
                     url,
                   }
                 );
 
                 if (response.data.success === 1) {
-                  return response.data;
+                  return {
+                    success: 1,
+                    file: {
+                      url: response.data.data.url,
+                    },
+                  };
+                } else {
+                  return {
+                    success: 0,
+                    file: {
+                      url: null,
+                    },
+                  };
                 }
               },
             },
@@ -112,161 +160,60 @@ const TextEditor = () => {
           },
         },
       },
-      // data: DEFAULT_INITIAL_DATA,
     });
   };
 
-  useEffect(() => {
-    if (ejInstance.current === null) {
-      initEditor();
-    }
+  // useEffect(() => {
+  //   if (ejInstance.current === null) {
+  //     initEditor();
+  //   }
 
-    return () => {
-      ejInstance?.current?.destroy();
-      ejInstance.current = null;
-    };
-  }, []);
+  //   return () => {
+  //     ejInstance?.current?.destroy();
+  //     ejInstance.current = null;
+  //   };
+  // }, []);
+
+  initEditor();
+
+  const handleSave = async () => {
+    const content = await ejInstance.current.saver.save();
+    console.log(content);
+
+    try {
+      const response = await axios.post("/api/saveArticle", { content });
+
+      if (response.data.success) {
+        console.log("Article saved successfully.");
+      } else {
+        console.error("Failed to save article.");
+      }
+    } catch (error) {
+      console.error("Error saving article:", error);
+    }
+  };
+  // const handleSave = async () => {
+  //   if (ejInstance.current) {
+  //     const content = await ejInstance.current.saver.save();
+  //     console.log(content);
+  //   } else {
+  //     console.error("Editor instance not available.");
+  //   }
+  // };
 
   return (
     <>
-      <div class="content">
-        <div
-          id="editorjs"
-          className="border-solid border-2 border-gray-500 w-3/4 mx-auto p-10"
-        ></div>
+      <div id="editorjs" className="border-black-500 border-2"></div>
+      <div className="w-full text-center">
+        <button
+          className="bg-[#025] text-white px-12 py-3 rounded-3xl mt-3"
+          onClick={handleSave}
+        >
+          Save Data
+        </button>
       </div>
     </>
   );
 };
-
-
-// const DEFAULT_INITIAL_DATA = {
-//   time: new Date().getTime(),
-//   blocks: [
-//     {
-//       type: "header",
-//       data: {
-//         level: 1,
-//         text: "Hello EchoScript",
-//       },
-//     },
-//   ],
-// };
-
-// const TextEditor = () => {
-//     const ejInstance = useRef();
-
-//   const initEditor = () => {
-//     const editor = new EditorJS({
-//       holder: "editorjs",
-//       onReady: () => {
-//         ejInstance.current = editor;
-//       },
-//       autofocus: true,
-//       onChange: async () => {
-//         let content = await editor.saver.save();
-
-//         console.log(content);
-//       },
-//       tools: {
-//         paragraph: {
-//           class: Paragraph,
-//           inlineToolbar: true,
-//           config: {
-//             placeholder: "Enter a Paragraph",
-//           },
-//         },
-//         header: {
-//           class: Header,
-//           config: {
-//             placeholder: "Enter a header",
-//             levels: [1, 2, 3, 4, 5, 6],
-//             defaultLevel: 3,
-//           },
-//         },
-//         quote: {
-//           class: Quote,
-//           inlineToolbar: true,
-//           shortcut: "CMD+SHIFT+O",
-//           config: {
-//             quotePlaceholder: "Enter a quote",
-//             captionPlaceholder: "Quote's author",
-//           },
-//         },
-//         list: {
-//           class: List,
-//           inlineToolbar: true,
-//           config: {
-//             defaultStyle: "unordered",
-//           },
-//         },
-//         code: CodeTool,
-//         // image: {
-//         //   class: ImageTool,
-//         //   config: {
-//         //     uploader: {
-//         //       async uploadByFile(file) {
-//         //         const formData = new FormData();
-//         //         formData.append("file", file);
-
-//         //         const response = await axios.post(
-//         //           `http://localhost:4001/api/uploadImage/create`,
-//         //           formData,
-//         //           {
-//         //             headers: {
-//         //               "Content-Type": "multipart/form-data",
-//         //             },
-//         //             withCredentials: false,
-//         //           }
-//         //         );
-
-//         //         if (response.data.success === 1) {
-//         //           return response.data;
-//         //         }
-//         //       },
-//         //       async uploadByUrl(url) {
-//         //         const response = await axios.post(
-//         //           `http://localhost:4001/api/uploadImage/createByUrl`,
-//         //           {
-//         //             url,
-//         //           }
-//         //         );
-
-//         //         if (response.data.success === 1) {
-//         //           return response.data;
-//         //         }
-//         //       },
-//         //     },
-//         //     inlineToolbar: true,
-//         //   },
-//         // },
-//       },
-//       // data: DEFAULT_INITIAL_DATA,
-//     });
-//   };
-    
-
-//     useEffect(() => {
-//       if (ejInstance.current === null) {
-//         initEditor();
-//       }
-
-//       return () => {
-//         ejInstance?.current?.destroy();
-//         ejInstance.current = null;
-//       };
-//     }, []);
-
-//   return (
-//     <>
-//       <div class="content">
-//         <div
-//           id="editorjs"
-//           className="border-solid border-2 border-gray-500 w-3/4 mx-auto p-10"
-//         ></div>
-//       </div>
-//     </>
-//   );
-// };
 
 export default TextEditor;
