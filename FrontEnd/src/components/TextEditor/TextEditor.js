@@ -21,12 +21,13 @@ const TextEditor = () => {
       minHeight: "200px",
       onReady: () => {
         ejInstance.current = editor;
+        loadDraft();
+      },
+
+      onChange: async () => {
+        saveDraft();
       },
       autofocus: true,
-      // onChange: async () => {
-      //   let content = await editor.saver.save();
-      //   console.log(content);
-      // },
       tools: {
         paragraph: {
           class: Paragraph,
@@ -59,46 +60,6 @@ const TextEditor = () => {
           },
         },
         code: CodeTool,
-        // image: {
-        //   class: ImageTool,
-        //   config: {
-        //     uploader: {
-        //       async uploadByFile(file) {
-        //         const formData = new FormData();
-        //         formData.append("file", file);
-        //         const response = await axios.post(
-        //           `https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd`,
-        //           formData,
-        //           {
-        //             headers: {
-        //               "Content-Type": "multipart/form-data",
-        //             },
-        //             withCredentials: false,
-        //           }
-        //         );
-
-        //         if (response.data.success === 1) {
-        //           return response.data;
-        //         }
-        //       },
-        //       async uploadByUrl(url) {
-        //         const response = await axios.post(
-        //           `https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd`,
-        //           {
-        //             url,
-        //           }
-        //         );
-
-        //         if (response.data.success === 1) {
-        //           return response.data;
-        //         }
-        //       },
-        //     },
-        //     inlineToolbar: true,
-        //   },
-
-        // },
-
         image: {
           class: ImageTool,
           config: {
@@ -107,7 +68,6 @@ const TextEditor = () => {
                 try {
                   const formData = new FormData();
                   formData.append("image", file);
-
                   const response = await axiosPublic.post(
                     image_hosting_api,
                     formData,
@@ -117,7 +77,6 @@ const TextEditor = () => {
                       },
                     }
                   );
-
                   if (response.data.success === true) {
                     return {
                       success: 1,
@@ -143,30 +102,46 @@ const TextEditor = () => {
                   };
                 }
               },
-              // async uploadByUrl(url) {
-              //   const response = await axios.post(
-              //     "https://api.imgbb.com/1/upload?key=a5d06824c299fd320f49135dcd5fa3dd",
-              //     {
-              //       url,
-              //     }
-              //   );
+              async uploadByUrl(url) {
+                try {
+                  const formData = new FormData();
+                  formData.append("image", url);
+                  const response = await axiosPublic.post(
+                    image_hosting_api,
+                    formData,
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                      url,
+                    }
+                  );
 
-              //   if (response.data.success === 1) {
-              //     return {
-              //       success: 1,
-              //       file: {
-              //         url: response.data.data.url,
-              //       },
-              //     };
-              //   } else {
-              //     return {
-              //       success: 0,
-              //       file: {
-              //         url: null,
-              //       },
-              //     };
-              //   }
-              // },
+                  if (response.data.success === true) {
+                    return {
+                      success: 1,
+                      file: {
+                        url: response.data.data.display_url,
+                      },
+                    };
+                  } else {
+                    return {
+                      success: 0,
+                      file: {
+                        url: null,
+                      },
+                    };
+                  }
+                } catch (error) {
+                  console.error("Error uploading image by URL:", error);
+                  return {
+                    success: 0,
+                    file: {
+                      url: null,
+                    },
+                  };
+                }
+              },
             },
             inlineToolbar: true,
           },
@@ -175,12 +150,42 @@ const TextEditor = () => {
     });
   };
 
+  const saveDraft = async () => {
+    try {
+      if (ejInstance.current) {
+        const content = await ejInstance.current.saver.save();
+        localStorage.setItem("editorDraft", JSON.stringify(content));
+      } else {
+        // console.error("Editor instance is undefined. Cannot save draft.");
+      }
+    } catch (error) {
+      console.error("Error saving draft:", error);
+    }
+  };
+
+  const loadDraft = () => {
+    const draftContent = localStorage.getItem("editorDraft");
+    if (draftContent && ejInstance.current) {
+      try {
+        const parsedContent = JSON.parse(draftContent);
+        ejInstance.current.render({
+          blocks: parsedContent.blocks,
+          time: parsedContent.time,
+          version: parsedContent.version,
+        });
+      } catch (error) {
+        console.error("Error parsing draft content:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (ejInstance.current === null) {
       initEditor();
     }
 
     return () => {
+      saveDraft(); 
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
@@ -191,27 +196,27 @@ const TextEditor = () => {
   const handleSave = async () => {
     const content = await ejInstance.current.saver.save();
     console.log(content);
-
+        
     try {
+      // const response = await axios.post("/api/saveArticle", { content });
       const response = await axiosPublic.post("/textArticle", { content });
 
-      if (response.data.success) {
-        console.log("Article saved successfully.");
-      } else {
-        console.error("Failed to save article.");
+
+        // if (response.data.success) {
+        //   console.log("Article saved successfully.");
+
+        //   // Clear local storage after successful submission
+        //   localStorage.removeItem("editorDraft");
+        // } else {
+        //   console.error("Failed to save article.");
+        // }
+
+        console.log("Article successful submission.");
+        localStorage.removeItem("editorDraft");
+      } catch (error) {
+        console.error("Error saving article:", error);
       }
-    } catch (error) {
-      console.error("Error saving article:", error);
-    }
   };
-  // const handleSave = async () => {
-  //   if (ejInstance.current) {
-  //     const content = await ejInstance.current.saver.save();
-  //     console.log(content);
-  //   } else {
-  //     console.error("Editor instance not available.");
-  //   }
-  // };
 
   return (
     <>
