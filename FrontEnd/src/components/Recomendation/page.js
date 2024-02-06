@@ -1,5 +1,6 @@
 import Article from "../Article/Article";
 import Card from "../Card/Card";
+import TextToSpeech from "../TextToSpeech/page"
 import Title from "../shared/ReusableComponents/Title";
 const Recomendation = async () => {
   const userFav = ["Books", "Weather", "Technology", "Coding"];
@@ -29,6 +30,7 @@ const Recomendation = async () => {
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
         />
       ))}
+     
       </div>
     </div>
   );
