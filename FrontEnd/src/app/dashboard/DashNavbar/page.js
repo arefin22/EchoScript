@@ -5,7 +5,7 @@ import logo from "./../../../assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import { GrOverview , GrArticle,GrHistory  } from "react-icons/gr";
+import { GrOverview , GrArticle,GrHistory ,GrBookmark } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
 import { IoHomeOutline,IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
@@ -26,6 +26,10 @@ const DashNavbar = () => {
       path:"/dashboard/History",
       route:"History",
       icon:GrHistory 
+    },{
+      path:"/dashboard/bookmarks",
+      route:"Bookmarks",
+      icon:GrBookmark
     },
     {
       path: "/dashboard/write",
