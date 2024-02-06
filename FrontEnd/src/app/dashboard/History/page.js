@@ -2,14 +2,13 @@
 import Title from '@/components/shared/ReusableComponents/Title';
 import { useAuth } from '@/context/authContext';
 import Image from 'next/image';
-import React from 'react';
 
 const HistoryPage = () => {
     const {user } =useAuth();
     return (
         <div>
-            <div className='w-2/5 mx-auto h-14'>
-                <h1>History of {user.displayName}</h1>
+            <div className='text-center mx-auto h-14'>
+                <h1 className='text-[20px]'>History of <span className='text-[20px] text-green-500'>{user.displayName}</span> </h1>
             </div>
            
             <div className='w-full mx-auto mt-9'>
@@ -18,11 +17,6 @@ const HistoryPage = () => {
     {/* head */}
     <thead>
       <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
         <th>History</th>
         <th>Tittle</th>
         <th>Date</th>
@@ -30,13 +24,9 @@ const HistoryPage = () => {
       </tr>
     </thead>
     <tbody>
-      {/* row 1 */}
+     
       <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
+       
         <td>
           <div className="flex items-center gap-3">
             <div className="avatar">
@@ -59,6 +49,9 @@ const HistoryPage = () => {
           <button className="btn btn-ghost btn-xs">delete</button>
         </th>
       </tr>
+<<<<<<< HEAD
+      
+=======
       {/* row 2 */}
       <tr>
         <th>
@@ -91,6 +84,7 @@ const HistoryPage = () => {
         </th>
       </tr>
      
+>>>>>>> e1ffb5a15b51727bdcdedb2801f63db6fe35a474
       
     </tbody>
     {/* foot */}
