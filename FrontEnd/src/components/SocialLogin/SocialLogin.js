@@ -23,7 +23,7 @@ const SocialLogin = () => {
       const userInfo = {
         email: res.user?.email,
         name: res.user?.displayName,
-        image: res.user?.photoURL,
+        image: res.user?.photoURL || '',
         role: "guest",
       };
       axiosPublic.post('/user',userInfo)
@@ -42,7 +42,7 @@ const SocialLogin = () => {
       const userInfo = {
         email: res.user?.email,
         name: res.user?.displayName,
-        image: res.user?.photoURL,
+        image: res.user?.photoURL || '',
         role: "guest",
       };
       axiosPublic.post('/user',userInfo)
@@ -61,7 +61,7 @@ const SocialLogin = () => {
       const userInfo = {
         email: res.user?.email,
         name: res.user?.displayName,
-        image: res.user?.photoURL,
+        image: res.user?.photoURL || '',
         role: "guest",
       };
       axiosPublic.post('/user',userInfo)
@@ -80,7 +80,7 @@ const SocialLogin = () => {
       const userInfo = {
         email: res.user?.email,
         name: res.user?.displayName,
-        image: res.user?.photoURL,
+        image: res.user?.photoURL || '',
         role: "guest",
       };
       axiosPublic.post('/user',userInfo)
