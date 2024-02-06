@@ -9,6 +9,7 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
+import { axiosSecure } from "@/utils/useAxiosSecure";
 
 const TextEditor = () => {
   const ejInstance = useRef();
@@ -196,7 +197,15 @@ const TextEditor = () => {
   const handleSave = async () => {
     const content = await ejInstance.current.saver.save();
     console.log(content);
+
+
+    const texteditor = content?.blocks
+
+    axiosSecure.post("/textArticle", { texteditor });
+
+
         
+
     try {
       // const response = await axios.post("/api/saveArticle", { content });
       const response = await axiosPublic.post("/textArticle", { content });

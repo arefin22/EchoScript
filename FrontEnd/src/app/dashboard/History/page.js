@@ -41,7 +41,7 @@ const HistoryPage = () => {
           <div className="flex items-center gap-3">
             <div className="avatar">
               <div className="mask mask-squircle w-12 h-12">
-                <Image src={user.photoURL} alt="
+                <Image src={user.photoURL || ''} alt="
                 history" width={20} height={20} />
               </div>
             </div>
@@ -70,7 +70,7 @@ const HistoryPage = () => {
           <div className="flex items-center gap-3">
             <div className="avatar">
               <div className="mask mask-squircle w-12 h-12">
-              <Image src={user.photoURL} alt="
+              <Image src={user.photoURL || ''} alt="
                 history" width={20} height={20} />
               </div>
             </div>

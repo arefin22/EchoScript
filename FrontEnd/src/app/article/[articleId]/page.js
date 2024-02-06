@@ -52,7 +52,7 @@ const SingleArticle = ({ params }) => {
     const comment = {
       email: user?.email,
       name: user?.displayName,
-      image: user?.photoURL,
+      image: user?.photoURL || '',
       id: data?._id,
       commentText: text,
       date: d,
@@ -85,7 +85,7 @@ const SingleArticle = ({ params }) => {
     const likeOfComment = {
       email: user?.email,
       name: user?.displayName,
-      image: user?.photoURL,
+      image: user?.photoURL || '',
       likeCount: 1,
     };
     axiosSecure.put(`/article/${comment._id}`, likeOfComment).then((res) => {
@@ -208,7 +208,7 @@ const SingleArticle = ({ params }) => {
                           className="rounded-full w-12 h-12 object-cover"
                           width={50}
                           height={50}
-                          src={user?.photoURL}
+                          src={user?.photoURL || ''}
                           alt="comment img"
                         />
                         <p className="ml-3">{user?.displayName}</p>
