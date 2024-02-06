@@ -9,7 +9,6 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
-import axios from "axios";
 
 const TextEditor = () => {
   const ejInstance = useRef();
