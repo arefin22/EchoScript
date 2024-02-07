@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 
@@ -10,23 +10,31 @@ import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 import { MdOutlineCancel } from "react-icons/md";
 import { axiosPublic } from "@/utils/useAxiosPublic";
+import VoiceButton from "@/components/shared/VoiceButton/VoiceButton";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
+
 
 const LogIn = () => {
-  const { logIn,loader,user } = useAuth();
+  const { logIn, loader, user } = useAuth();
   const router = useRouter();
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const inputRefs = [emailInputRef, passwordInputRef];
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     if (!loader && user) {
-      router.replace('/dashboard'); // Redirect to dashboard if user is already logged in
+      router.replace("/dashboard"); // Redirect to dashboard if user is already logged in
     }
   }, [user, loader, router]);
+
   const cencleStyle = {
     borderRadius: "50%",
-
     padding: "16px",
     cursor: "pointer",
   };
 
-  const handlelogin = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -45,16 +53,19 @@ const LogIn = () => {
           image: res.user?.photoURL || '',
           role: "guest",
         };
-        axiosPublic.post('/user',userInfo)
-        toast.success('user login successfully')
-        .then(res=>{console.log(res.data)});
-        router.push("/");
-      
+        axiosPublic.post("/user", userInfo).then((res) => {
+          console.log(res.data);
+        });
         toast.success("User login successfully");
+        router.push("/dashboard");
       })
       .catch((err) => {
         toast.error(err.message);
       });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
   return (
@@ -76,7 +87,7 @@ const LogIn = () => {
 
         <div className="w-full">
           <form
-            onSubmit={handlelogin}
+            onSubmit={handleLogin}
             className="space-y-6 ng-untouched ng-pristine ng-valid"
           >
             <div className="space-y-6">
@@ -84,32 +95,46 @@ const LogIn = () => {
                 <input
                   type="email"
                   name="email"
+                  ref={emailInputRef}
                   required
                   placeholder="Email"
-                  className="w-full 
-                 px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
                 />
               </div>
-              <div className="md:w-2/5 mx-auto">
+              <div className="md:w-2/5 mx-auto relative ">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
+                  ref={passwordInputRef}
                   required
                   className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
                   placeholder="Password"
                 />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sm mt-1 mr-3 text-gray-600 hover:underline focus:outline-none"
+                >
+                  {showPassword ? <FaEyeSlash className="mb-2 mr-2 h-6 w-6" /> : <FaEye className="mb-2 mr-2 h-6 w-6" />}
+                </button>
               </div>
               <div className="md:w-1/4 mx-auto">
-                <button disabled={loader}
+                <button
+                  disabled={loader}
                   type="submit"
                   className="w-full rounded-3xl py-3 border-2 border-[#4C2F17] text-[#4C2F17] md:text-lg transition-all duration-300 hover:bg-[#4C2F17] hover:text-white"
                 >
-                  {loader?(<span className="loading loading-bars loading-lg"></span>):(<span>Sign In</span>)}
+                  {loader ? (
+                    <span className="loading loading-bars loading-lg"></span>
+                  ) : (
+                    <span>Sign In</span>
+                  )}
                 </button>
               </div>
             </div>
           </form>
         </div>
+        <VoiceButton inputRefs={inputRefs} />
         <SocialLogin />
         <div className="text-center">
           <p className="pb-6">
@@ -125,3 +150,4 @@ const LogIn = () => {
 };
 
 export default LogIn;
+

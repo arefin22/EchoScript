@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import TextToSpeech from "./../../../components/TextToSpeech/page"
 import { AiFillLike } from "react-icons/ai";
 import { MdComment } from "react-icons/md";
 import { FaBookmark } from "react-icons/fa";
@@ -280,6 +281,11 @@ const SingleArticle = ({ params }) => {
               </div>
             </div>
           </div>
+          <div>
+            
+                        <TextToSpeech title={title} desc={contentFirstHalf }/>
+           
+           </div>
           <div>
             <div className="flex gap-1">
               <FaBookmark size={24} />
