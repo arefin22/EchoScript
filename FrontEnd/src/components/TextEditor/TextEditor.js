@@ -196,32 +196,16 @@ const TextEditor = () => {
 
   const handleSave = async () => {
     const content = await ejInstance.current.saver.save();
-    console.log(content);
-
-
-    const texteditor = content?.blocks
-
-    axiosSecure.post("/textArticle", { texteditor });
-
-
-        
-
     try {
       // const response = await axios.post("/api/saveArticle", { content });
       const response = await axiosPublic.post("/textArticle", { content });
-
-
-        // if (response.data.success) {
-        //   console.log("Article saved successfully.");
-
-        //   // Clear local storage after successful submission
-        //   localStorage.removeItem("editorDraft");
-        // } else {
-        //   console.error("Failed to save article.");
-        // }
-
-        console.log("Article successful submission.");
-        localStorage.removeItem("editorDraft");
+      console.log(response);
+        if (response.data.success) {
+          console.log("Article saved successfully.");
+          localStorage.removeItem("editorDraft");
+        } else {
+          console.error("Failed to save article.");
+        }
       } catch (error) {
         console.error("Error saving article:", error);
       }
