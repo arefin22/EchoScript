@@ -196,6 +196,14 @@ const TextEditor = () => {
 
   const handleSave = async () => {
     const content = await ejInstance.current.saver.save();
+
+    console.log(content);
+
+
+    axiosSecure.post("/textArticle", { content });
+
+
+
     try {
       // const response = await axios.post("/api/saveArticle", { content });
       const response = await axiosPublic.post("/textArticle", { content });
