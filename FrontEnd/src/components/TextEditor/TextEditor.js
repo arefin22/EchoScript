@@ -196,18 +196,11 @@ const TextEditor = () => {
 
   const handleSave = async () => {
     const content = await ejInstance.current.saver.save();
-
-    console.log(content);
     const texteditor = content
 
-    axiosSecure.post("/textArticle", { texteditor });
-
-
-
     try {
-      // const response = await axios.post("/api/saveArticle", { content });
-      const response = await axiosPublic.post("/textArticle", { content });
-      console.log(response);
+      const response = await axiosPublic.post("/textArticle", { texteditor });
+      console.log(response.data);
         if (response.data.success) {
           console.log("Article saved successfully.");
           localStorage.removeItem("editorDraft");
