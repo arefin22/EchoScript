@@ -122,13 +122,13 @@ const ArticlePage = () => {
     }
   };
 
+  const filterWithSearch = data?.filter((item) =>
+    item?.title.toLowerCase()?.includes(searchQuery.toLowerCase())
+  );
   useEffect(() => {
+    // setGetDataBySearch(filterWithSearch);
+  }, 1000);
     const timer = setTimeout(() => {
-      const filterWithSearch = data?.filter((item) =>
-        item?.title.toLowerCase()?.includes(searchQuery.toLowerCase())
-      );
-      setGetDataBySearch(filterWithSearch);
-    }, 1000);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
@@ -198,7 +198,7 @@ const ArticlePage = () => {
         </button>
       </div>
       <div className="py-10">
-        {getDataBySearch?.map((item) => (
+        {filterWithSearch?.map((item) => (
           <Article
             commentCount={item.comments.length}
             key={item._id}
