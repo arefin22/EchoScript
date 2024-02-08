@@ -39,7 +39,7 @@
     "react-select": "^5.8.0",
     "react-share": "^5.0.3",
     "react-slick": "^0.29.0",
-    "react-text-to-speech": "^0.8.0",
+    "react-text-to-speech": "^0.8.2",
     "sharp": "^0.33.2",
     "stripe": "^14.14.0",
     "sweetalert2": "^11.4.8",
