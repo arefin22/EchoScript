@@ -1,19 +1,25 @@
 "use client";
 
-import { IoSearch } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
+import useAxiosPublic from "@/utils/useAxiosPublic";
+import Link from "next/link";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [getDataBySearch, setGetDataBySearch] = useState([]);
+  const dropdownRef = useRef(null)
 
   const category = [
     {
@@ -98,6 +104,47 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
+  const handleSearchChange = async (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    try {
+      if (query.trim() === "") {
+        return;
+      } else if (query.trim().length < searchQuery.trim().length) {
+        return;
+      } else {
+        const response = await axiosPublic.get(`/search?query=${query}`);
+        setSuggestions(response.data);
+      }
+    } catch (error) {
+      console.error("Error searching items:", error);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const filterWithSearch = data?.filter((item) =>
+        item?.title.toLowerCase()?.includes(searchQuery.toLowerCase())
+      );
+      setGetDataBySearch(filterWithSearch);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+   useEffect(() => {
+     const handleClickOutside = (event) => {
+       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+         setSuggestions([]);
+       }
+     };
+
+     document.addEventListener("mousedown", handleClickOutside);
+     return () => {
+       document.removeEventListener("mousedown", handleClickOutside);
+     };
+   }, []);
+
   return (
     <div>
       <Navbar />
@@ -105,12 +152,27 @@ const ArticlePage = () => {
         <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
           type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
           placeholder="Search your article here"
         />
-        <IoSearch
-          fontSize={"2.3rem"}
-          className="absolute right-60 bg-[#F2F2F2] hover:bg-[#ddd4d4] p-2 rounded-full"
-        />
+      </div>
+      <div className="flex justify-center w-3/4" ref={dropdownRef}>
+        {suggestions?.length > 0 && searchQuery?.length > 0 && (
+          <div className="absolute mt-2 p-2 bg-white shadow rounded-lg border border-gray-300 w-96 cursor-pointer">
+            {suggestions?.map((item) => (
+              <p
+                onClick={() => {
+                  setSearchQuery(item.title);
+                  setSuggestions([]);
+                }}
+                key={item._id}
+              >
+                {item.title}
+              </p>
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex gap-5 justify-center pt-3 items-center">
         <button
@@ -136,7 +198,7 @@ const ArticlePage = () => {
         </button>
       </div>
       <div className="py-10">
-        {data?.map((item) => (
+        {getDataBySearch?.map((item) => (
           <Article
             commentCount={item.comments.length}
             key={item._id}
