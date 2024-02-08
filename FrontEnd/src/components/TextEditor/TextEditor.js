@@ -198,9 +198,9 @@ const TextEditor = () => {
     const content = await ejInstance.current.saver.save();
 
     console.log(content);
+    const texteditor = content
 
-
-    axiosSecure.post("/textArticle", { content });
+    axiosSecure.post("/textArticle", { texteditor });
 
 
 

@@ -1,15 +1,18 @@
 const Article = require("../../models/Article");
+const User = require("../../models/User");
 
 const getItemBySearch = async (req, res) => {
   const searchQuery = req.query.query;
 
   try {
     if (searchQuery) {
-      let query = {};
-      query = { title: { $regex: new RegExp(searchQuery, "i") } };
+      const articleQuery = { title: { $regex: new RegExp(searchQuery, "i") } };
+      const articles = await Article.find(articleQuery);
 
-      const suggestions = await Article.find(query);
-      res.send(suggestions);
+      const userQuery = { name: { $regex: new RegExp(searchQuery, "i") } };
+      const user = await User.find(userQuery);
+
+      res.status(200).send({ articles, user });
     }
   } catch (error) {
     res.status(500).json({ error: "Invalid search" });
@@ -17,6 +20,3 @@ const getItemBySearch = async (req, res) => {
 };
 
 module.exports = getItemBySearch;
-// hashtag
-// name
-// title
