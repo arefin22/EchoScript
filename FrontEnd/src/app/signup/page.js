@@ -2,7 +2,7 @@
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 import { imageUpload } from "@/utils/imageUpload";
@@ -11,12 +11,23 @@ import { useRouter } from "next/navigation";
 import { MdOutlineCancel } from "react-icons/md";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import { axiosPublic } from '@/utils/useAxiosPublic';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { saveUser } from '@/utils/useSaveUser';
+import VoiceButton from '@/components/shared/VoiceButton/VoiceButton';
+
 
 const SignUp = () => {
   const { createUser, handleUpdateProfile,user ,loader } = useAuth();
   const [favourite,useFavourite]=useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const nameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const inputRefs = [nameInputRef, emailInputRef, passwordInputRef];
   const router = useRouter();
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   const options = [
     { value: 'Tech', label: 'Tech' },
     { value: 'Business', label: 'Business' },
@@ -112,7 +123,7 @@ const SignUp = () => {
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
                    <input type="text" name="name"
-                  
+                       ref={nameInputRef}
                       placeholder="Name"
                          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
 
@@ -121,7 +132,7 @@ const SignUp = () => {
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
                    <input type="email" name="email"
-                  
+                         ref={emailInputRef}
                       placeholder="Email"
                          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
 
@@ -151,13 +162,23 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div className="space-y-6 my-6">
-                  <div className="md:w-2/5 mx-auto">
-                   <input type="password" name="password"
-                  
-                      placeholder="Password"
-                         className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
-
-                  </div>
+                <div className="md:w-2/5 mx-auto relative ">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  ref={passwordInputRef}
+                  required
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
+                  placeholder="Password"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sm mt-1 mr-3 text-gray-600 hover:underline focus:outline-none"
+                >
+                  {showPassword ? <FaEyeSlash className="mb-2 mr-2 h-6 w-6" /> : <FaEye className="mb-2 mr-2 h-6 w-6" />}
+                </button>
+              </div>
                 </div>
                 <div className="md:w-1/4 mx-auto">
       <button disabled={loader} 
@@ -167,7 +188,7 @@ const SignUp = () => {
       </button>
       </div>
                </form>
-
+                   <VoiceButton className="btn btn-outline" inputRefs={inputRefs} />
                <div>
                 <SocialLogin/>
                </div>
