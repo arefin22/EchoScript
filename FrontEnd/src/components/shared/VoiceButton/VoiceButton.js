@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { VscUnmute } from "react-icons/vsc";
+import { FaMicrophoneAlt } from 'react-icons/fa';
+
 
 const VoiceButton = ({ inputRefs }) => {
     const [recognition, setRecognition] = useState(null);
@@ -50,7 +51,7 @@ const VoiceButton = ({ inputRefs }) => {
 
     return (
         <div className='mx-auto w-10 h-10 mt-2'>
-        <button className='btn btn-outline' onClick={toggleListening}>{listening ? (<span className="loading loading-bars loading-lg"></span>) : <VscUnmute/>}</button>
+        <button className='btn btn-circle btn-outline' onClick={toggleListening}>{listening ? (<span className="loading loading-bars loading-lg"></span>) : <FaMicrophoneAlt/>}</button>
       </div>
     );
 };
