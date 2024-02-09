@@ -8,6 +8,7 @@ import { useAuth } from "@/context/authContext";
 import person from "@/assets/img/person-removebg-preview.png";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/utils/useAxiosPublic";
+import VoiceButton from "./VoiceButton/VoiceButton";
 
 const Navbar = () => {
   const { user, loader, logout } = useAuth();
@@ -17,6 +18,8 @@ const Navbar = () => {
   const axiosPublic = useAxiosPublic();
   const [data, setData] = useState([]);
   const dropdownRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const inputRefs = [nameInputRef];
 
   const navItem = [
     {
@@ -109,13 +112,17 @@ const Navbar = () => {
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
-        <input
+       <div className="flex justify-center items-center gap-5">
+       <input
           type="text"
+          ref={nameInputRef}
           placeholder="Search"
           value={searchQuery}
           onChange={handleSearchChange}
           className="input input-bordered w-full mt-4 bg-white md:w-auto"
         />
+        <VoiceButton className="btn ml-5" inputRefs={inputRefs}/>
+       </div>
       </div>
       <div className="flex justify-center w-3/4 " ref={dropdownRef}>
         {suggestions?.length > 0 && searchQuery?.length > 0 && (
