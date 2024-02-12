@@ -11,8 +11,11 @@ import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 
+
 const TextEditor = () => {
   const ejInstance = useRef();
+  const nameInputRef = useRef(null);
+  const inputRefs = [nameInputRef];
 
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
 
@@ -214,14 +217,17 @@ const TextEditor = () => {
 
   return (
     <>
-      <div id="editorjs" className="border-black-500 border-2"></div>
+      <div id="editorjs"
+      ref={nameInputRef} className="border-black-500 border-2"></div>
       <div className="w-full text-center">
+
         <button
           className="bg-[#025] text-white px-12 py-3 rounded-3xl mt-3"
           onClick={handleSave}
         >
           Save Data
         </button>
+        
       </div>
     </>
   );
