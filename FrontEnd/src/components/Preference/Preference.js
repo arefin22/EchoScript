@@ -173,7 +173,7 @@ const Preference = () => {
               isButtonDisabled ? { opacity: 0.5, cursor: "not-allowed" } : {}
             }
           >
-            Save Data
+            Publish Article
           </button>
         </div>
       </div>
