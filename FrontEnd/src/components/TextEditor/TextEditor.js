@@ -200,8 +200,9 @@ const TextEditor = () => {
 
   return (
     <>
-      <div id="editorjs"
-      ref={nameInputRef} className="border-black-500 border-2"></div>
+
+      <div id="editorjs" className="border-black-500"></div>
+
       <div className="w-full text-center">
         <Link href="/dashboard/preference">
           <button

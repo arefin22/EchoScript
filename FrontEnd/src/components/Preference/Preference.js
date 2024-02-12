@@ -8,11 +8,16 @@ import Swal from "sweetalert2";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+
+
 const Preference = () => {
   const [category, setCategory] = useState(null);
   const [inputValue, setInputValue] = useState("");
     const [tags, setTags] = useState([]);
      const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    const Router = useRouter();
 
   const user = useAuth();
   const options = [
@@ -74,9 +79,7 @@ const Preference = () => {
       // Prepare data object to send to the server
       const articleInfo = {
         authorEmail: user.user?.email,
-        like: 0,
-        comment: 0,
-        share: 0,
+
         category: category.value,
         tags: tags,
       };
@@ -97,7 +100,9 @@ const Preference = () => {
         localStorage.removeItem("editorDraft");
         setCategory(null);
             setTags([]);
-            revalidatePath("/dashboard/write");
+
+            Router.replace("/dashboard/write");
+          stage
       } else {
         console.error("Failed to save data.");
       }
@@ -171,7 +176,9 @@ const Preference = () => {
               isButtonDisabled ? { opacity: 0.5, cursor: "not-allowed" } : {}
             }
           >
-            Save Data
+
+            Publish Article
+
           </button>
         </div>
       </div>
