@@ -131,29 +131,29 @@ const Navbar = () => {
             className="absolute mt-2 p-2 bg-white shadow rounded-lg border z-50 border-gray-300 w-96 cursor-pointer"
           >
             {suggestions?.map((item) => (
-              // <Link href={`/article/${item._id}`}>
-              <p
-                onClick={() => {
-                  setSearchQuery(item.title || item.name);
-                  setSuggestions([]);
-                }}
-                className="flex justify-center items-center"
-                key={item._id}
-              >
-                {item.photoURL ? (
-                  <Image
-                    className="rounded-full"
-                    src={item.photoURL}
-                    width={50}
-                    height={50}
-                    alt="user image"
-                  />
-                ) : (
-                  ""
-                )}
-                {item.title || item.name}
-              </p>
-              // </Link>
+              <Link href={`/article/${item._id}`}>
+                <p
+                  onClick={() => {
+                    setSearchQuery(item.title || item.name);
+                    setSuggestions([]);
+                  }}
+                  className="flex justify-start items-center"
+                  key={item._id}
+                >
+                  {item.photoURL ? (
+                    <Image
+                      // className="rounded-full"
+                      src={item.photoURL}
+                      width={30}
+                      height={30}
+                      alt="user image"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {item.title || item.name}
+                </p>
+              </Link>
             ))}
           </div>
         )}
