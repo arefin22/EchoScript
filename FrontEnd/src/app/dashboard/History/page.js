@@ -1,103 +1,93 @@
 "use client"
+import Loader from '@/components/shared/Loader/Loader';
 import Title from '@/components/shared/ReusableComponents/Title';
 import { useAuth } from '@/context/authContext';
+import useAxiosPublic from '@/utils/useAxiosPublic';
 import Image from 'next/image';
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 const HistoryPage = () => {
-    const {user } =useAuth();
+  const {user}=useAuth();
+  const axiosPublic = useAxiosPublic();
+  const [historyData, setHistoryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+      const fetchHistory = async () => {
+          try {
+              const historyResponse = await axiosPublic.get('/history');
+              const userHistory = historyResponse.data.filter(history => history.user === user.email);
+              setHistoryData(userHistory);
+              setLoading(false);
+          } catch (error) {
+              setError(error);
+              setLoading(false);
+          }
+      };
+
+      fetchHistory();
+
+      // Cleanup function
+      return () => {
+          // Any cleanup code if needed
+      };
+  }, [axiosPublic, user]);
+
+  if (loading) {
+      return <Loader />;
+  }
+
+  if (error) {
+      return <div><Title title={`${error.message}`}/></div>;
+  }
+
     return (
         <div>
-            <div className='w-2/5 mx-auto h-14'>
-                <h1>History of {user.displayName}</h1>
+            <div className='text-center mx-auto h-14'>
+                <h1 className='text-[20px]'>History of <span className='text-[20px] text-green-500'>{user.displayName}</span> </h1>
             </div>
            
             <div className='w-full mx-auto mt-9'>
-            <div className="overflow-x-auto">
-  <table className="table">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <th>History</th>
-        <th>Tittle</th>
-        <th>Date</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {/* row 1 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle w-12 h-12">
-                <Image src={user.photoURL} alt="
-                history" width={20} height={20} />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Hart Hagerty</div>
-             
-            </div>
-          </div>
-        </td>
-        <td>
-         Title
-        </td>
-        <td>time</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">delete</button>
-        </th>
-      </tr>
-      {/* row 2 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle w-12 h-12">
-              <Image src={user.photoURL} alt="
-                history" width={20} height={20} />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Brice Swyre</div>
-              <div className="text-sm opacity-50">China</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Carroll Group
-          <br/>
-          <span className="badge badge-ghost badge-sm">Tax Accountant</span>
-        </td>
-        <td>Red</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-     
-      
-    </tbody>
-    {/* foot */}
-   
-    
-  </table>
-</div>
+            {historyData.length === 0 && <div><Title title={'No history has been added'}/></div>}
+            {historyData.length > 0 && (
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr>
+                                    <th>History</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {historyData.map(history => (
+                                    <tr key={history.id}>
+                                        <td>
+                                            <div className="flex items-center gap-3">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle w-12 h-12">
+                                                        <img src={history.userAvatar} alt="History" />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold">{history.userName}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{history.title}</td>
+                                        <td>{history.date}</td>
+                                        <td>
+                                            <button className="btn btn-ghost btn-xs">delete</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
 
             </div>
         </div>

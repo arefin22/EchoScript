@@ -1,6 +1,5 @@
 "use client";
 
-import { IoSearch } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
@@ -98,19 +97,18 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
+
   return (
     <div>
       <Navbar />
       <div className="text-center relative flex items-center pt-5">
-        <input
+        {/* <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
           type="text"
-          placeholder="Search your article here"
-        />
-        <IoSearch
-          fontSize={"2.3rem"}
-          className="absolute right-60 bg-[#F2F2F2] hover:bg-[#ddd4d4] p-2 rounded-full"
-        />
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search your article here" */}
+        {/* /> */}
       </div>
       <div className="flex gap-5 justify-center pt-3 items-center">
         <button

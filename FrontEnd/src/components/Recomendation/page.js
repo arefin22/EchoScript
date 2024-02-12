@@ -1,7 +1,8 @@
 import Article from "../Article/Article";
 import Card from "../Card/Card";
+import TextToSpeech from "../TextToSpeech/page"
 import Title from "../shared/ReusableComponents/Title";
-const recomendation = async () => {
+const Recomendation = async () => {
   const userFav = ["Books", "Weather", "Technology", "Coding"];
   const res = await fetch("https://api.publicapis.org/entries");
   const article = await res.json();
@@ -29,9 +30,10 @@ const recomendation = async () => {
           image={"https://i.ibb.co/1dWtPt3/download.jpg"}
         />
       ))}
+     
       </div>
     </div>
   );
 };
 
-export default recomendation;
+export default Recomendation;

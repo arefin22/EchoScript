@@ -1,14 +1,26 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/context/authContext";
 import person from "@/assets/img/person-removebg-preview.png";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useAxiosPublic from "@/utils/useAxiosPublic";
+import VoiceButton from "./VoiceButton/VoiceButton";
 
 const Navbar = () => {
   const { user, loader, logout } = useAuth();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  const [data, setData] = useState([]);
+  const dropdownRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const inputRefs = [nameInputRef];
+
   const navItem = [
     {
       route: "Home",
@@ -33,18 +45,118 @@ const Navbar = () => {
       pathName: "/dashboard",
     },
   ];
+
+  useEffect(() => {
+    axiosSecure.get("/article").then((res) => {
+      setData(res.data);
+    });
+  }, [axiosSecure]);
+
+  const handleSearchChange = async (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    try {
+      if (query.trim() === "") {
+        setSuggestions([]);
+        return;
+      } else if (query.trim().length < searchQuery.trim().length) {
+        return;
+      } else {
+        const response = await axiosPublic.get(`/search?query=${query}`);
+        const { articles, user } = response.data;
+        const combinedSuggestions = [
+          ...(articles
+            ? articles?.map((article) => ({
+                title: article.title,
+                _id: article._id,
+              }))
+            : []),
+          ...(user
+            ? user?.map((Suser) => ({
+                name: Suser?.name,
+                photoURL: Suser?.photoURL,
+              }))
+            : []),
+        ];
+        setSuggestions(combinedSuggestions);
+      }
+    } catch (error) {
+      console.error("Error searching items:", error);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
-        <Image src={logo} alt="Logo" className="w-96" />
+        <Image
+          src={logo}
+          alt="Logo"
+          width={100}
+          height={100}
+          className="w-96"
+        />
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
-        <input
+       <div className="flex justify-center items-center gap-5">
+       <input
           type="text"
+          ref={nameInputRef}
           placeholder="Search"
+          value={searchQuery}
+          onChange={handleSearchChange}
           className="input input-bordered w-full mt-4 bg-white md:w-auto"
         />
+        <VoiceButton className="btn ml-5" inputRefs={inputRefs}/>
+       </div>
+      </div>
+      <div className="flex justify-center w-3/4 " ref={dropdownRef}>
+        {suggestions?.length > 0 && searchQuery?.length > 0 && (
+          <div
+            key={Math.random()}
+            className="absolute mt-2 p-2 bg-white shadow rounded-lg border z-50 border-gray-300 w-96 cursor-pointer"
+          >
+            {suggestions?.map((item) => (
+              // <Link href={`/article/${item._id}`}>
+              <p
+                onClick={() => {
+                  setSearchQuery(item.title || item.name);
+                  setSuggestions([]);
+                }}
+                className="flex justify-center items-center"
+                key={item._id}
+              >
+                {item.photoURL ? (
+                  <Image
+                    className="rounded-full"
+                    src={item.photoURL}
+                    width={50}
+                    height={50}
+                    alt="user image"
+                  />
+                ) : (
+                  ""
+                )}
+                {item.title || item.name}
+              </p>
+              // </Link>
+            ))}
+          </div>
+        )}
       </div>
       <div className="navbar text-white bg-[#282C32]">
         <div className="container mx-auto">
@@ -102,7 +214,7 @@ const Navbar = () => {
                     <div className="avatar online">
                       <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <Image
-                          src={user.photoURL}
+                          src={user?.photoURL || person}
                           width={12}
                           height={12}
                           alt={"user"}

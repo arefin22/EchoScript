@@ -1,30 +1,29 @@
-import Article from "@/components/Article/Article";
 import Banner from "@/components/Banner/Banner";
-import Recomendation from "@/components/Recomendation/page";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
-import TextEditor from "@/components/TextEditor/TextEditor";
-import cardData from "../utils/cardData";
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
-import Title from "@/components/shared/ReusableComponents/Title";
-import Link from "next/link";
 import Payment from "@/components/Payment/Payment";
+import Recomendation from "@/components/Recomendation/page";
+import Footer from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
+import Title from "@/components/shared/ReusableComponents/Title";
+import cardData from "@/utils/cardData";
+import Link from "next/link";
+
 
 const page = () => {
   return (
     <div>
-      <Navbar />
-      <Banner></Banner>
+      <Navbar/>
+      <Banner/>
 
       <div className="container mx-auto my-24">
-        <Recomendation />
+        <Recomendation/>
       </div>
       {/* popular cards */}
       <div className="container mx-auto my-24">
         <Title title="Latest Article"></Title>
         <div className="my-32 grid grid-cols-1 md:grid-cols-3 gap-10">
-          {cardData.map((card, index) => (
+          {cardData?.map((card, index) => (
             <Link key={index} href="/singlearticle">
               <Card
                 key={index}
@@ -53,7 +52,7 @@ const page = () => {
         <Payment />
       </div>
 
-      <Footer></Footer>
+      <Footer/>
     </div>
   );
 };

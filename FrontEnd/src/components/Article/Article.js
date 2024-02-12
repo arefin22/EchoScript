@@ -40,6 +40,7 @@ const Article = ({
           <div className="flex w-[80%] justify-between items-center">
             <Link href={`/writer`}>
               <div className="flex gap-2 pb-4 items-center">
+              
                 <Image
                   src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
                   height={40}

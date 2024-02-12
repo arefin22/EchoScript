@@ -6,6 +6,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const getAllArticle = require("./routes/article/index")
 const addAUser = require("./routes/user/index")
+const textArticle = require("./routes/textArticle/index")
+const search = require("./routes/search/index")
 
 // middlewares
 applyMiddleware(app)
@@ -13,6 +15,8 @@ applyMiddleware(app)
 // routes
 app.use(getAllArticle);
 app.use(addAUser);
+app.use(textArticle);
+app.use(search)
 
 
 app.get("/", (req, res) => {
