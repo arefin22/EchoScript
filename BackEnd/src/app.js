@@ -8,6 +8,7 @@ const getAllArticle = require("./routes/article/index")
 const addAUser = require("./routes/user/index")
 const textArticle = require("./routes/textArticle/index")
 const search = require("./routes/search/index")
+const history = require("./routes/history/index")
 
 // middlewares
 applyMiddleware(app)
@@ -17,6 +18,7 @@ app.use(getAllArticle);
 app.use(addAUser);
 app.use(textArticle);
 app.use(search)
+app.use(history)
 
 
 app.get("/", (req, res) => {

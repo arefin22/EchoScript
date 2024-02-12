@@ -13,17 +13,14 @@ import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import { axiosPublic } from '@/utils/useAxiosPublic';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { saveUser } from '@/utils/useSaveUser';
-import VoiceButton from '@/components/shared/VoiceButton/VoiceButton';
+
 
 
 const SignUp = () => {
   const { createUser, handleUpdateProfile,user ,loader } = useAuth();
   const [favourite,useFavourite]=useState([]);
   const [showPassword, setShowPassword] = useState(false);
-  const nameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
-  const inputRefs = [nameInputRef, emailInputRef, passwordInputRef];
+
   const router = useRouter();
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -97,6 +94,7 @@ const SignUp = () => {
         console.log(DBresponse)
       } catch (err) {
         console.log(err);
+        form.reset();
       }
     } catch (err) {
       console.log(err);
@@ -123,7 +121,7 @@ const SignUp = () => {
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
                    <input type="text" name="name"
-                       ref={nameInputRef}
+                       
                       placeholder="Name"
                          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
 
@@ -132,7 +130,7 @@ const SignUp = () => {
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
                    <input type="email" name="email"
-                         ref={emailInputRef}
+                         
                       placeholder="Email"
                          className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black" />
 
@@ -166,7 +164,7 @@ const SignUp = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  ref={passwordInputRef}
+               
                   required
                   className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
                   placeholder="Password"
@@ -188,7 +186,7 @@ const SignUp = () => {
       </button>
       </div>
                </form>
-                   <VoiceButton className="btn btn-outline" inputRefs={inputRefs} />
+                  
                <div>
                 <SocialLogin/>
                </div>

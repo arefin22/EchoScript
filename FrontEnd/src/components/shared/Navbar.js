@@ -112,16 +112,16 @@ const Navbar = () => {
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
-       <div className="flex justify-center items-center gap-5">
+       <div className="relative  mx-auto flex gap-4 justify-center items-center">
        <input
           type="text"
           ref={nameInputRef}
           placeholder="Search"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="input input-bordered w-full mt-4 bg-white md:w-auto"
+          className="input  mx-auto input-bordered w-full mt-4 bg-white md:w-auto"
         />
-        <VoiceButton className="btn ml-5" inputRefs={inputRefs}/>
+        <VoiceButton className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sm mt-1 mr-3 text-gray-600 hover:underline focus:outline-none" inputRefs={inputRefs}/>
        </div>
       </div>
       <div className="flex justify-center w-3/4 " ref={dropdownRef}>
@@ -131,29 +131,29 @@ const Navbar = () => {
             className="absolute mt-2 p-2 bg-white shadow rounded-lg border z-50 border-gray-300 w-96 cursor-pointer"
           >
             {suggestions?.map((item) => (
-              // <Link href={`/article/${item._id}`}>
-              <p
-                onClick={() => {
-                  setSearchQuery(item.title || item.name);
-                  setSuggestions([]);
-                }}
-                className="flex justify-center items-center"
-                key={item._id}
-              >
-                {item.photoURL ? (
-                  <Image
-                    className="rounded-full"
-                    src={item.photoURL}
-                    width={50}
-                    height={50}
-                    alt="user image"
-                  />
-                ) : (
-                  ""
-                )}
-                {item.title || item.name}
-              </p>
-              // </Link>
+              <Link href={`/article/${item._id}`}>
+                <p
+                  onClick={() => {
+                    setSearchQuery(item.title || item.name);
+                    setSuggestions([]);
+                  }}
+                  className="flex justify-start items-center"
+                  key={item._id}
+                >
+                  {item.photoURL ? (
+                    <Image
+                      // className="rounded-full"
+                      src={item.photoURL}
+                      width={30}
+                      height={30}
+                      alt="user image"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {item.title || item.name}
+                </p>
+              </Link>
             ))}
           </div>
         )}

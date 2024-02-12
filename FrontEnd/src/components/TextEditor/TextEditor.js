@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph";
 import Header from "@editorjs/header";
@@ -9,14 +9,12 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
-import { axiosSecure } from "@/utils/useAxiosSecure";
+import Link from "next/link";
 
 
 const TextEditor = () => {
   const ejInstance = useRef();
-  const nameInputRef = useRef(null);
-  const inputRefs = [nameInputRef];
-
+  const [isDraftExist, setIsDraftExist] = useState(false);
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
 
   const initEditor = () => {
@@ -159,6 +157,7 @@ const TextEditor = () => {
       if (ejInstance.current) {
         const content = await ejInstance.current.saver.save();
         localStorage.setItem("editorDraft", JSON.stringify(content));
+        setIsDraftExist(content.blocks.length > 0);
       } else {
         // console.error("Editor instance is undefined. Cannot save draft.");
       }
@@ -177,6 +176,7 @@ const TextEditor = () => {
           time: parsedContent.time,
           version: parsedContent.version,
         });
+        setIsDraftExist(parsedContent.blocks.length > 0);
       } catch (error) {
         console.error("Error parsing draft content:", error);
       }
@@ -197,37 +197,23 @@ const TextEditor = () => {
 
   // initEditor();
 
-  const handleSave = async () => {
-    const content = await ejInstance.current.saver.save();
-    const texteditor = content
-
-    try {
-      const response = await axiosPublic.post("/textArticle", { texteditor });
-      console.log(response.data);
-        if (response.data.success) {
-          console.log("Article saved successfully.");
-          localStorage.removeItem("editorDraft");
-        } else {
-          console.error("Failed to save article.");
-        }
-      } catch (error) {
-        console.error("Error saving article:", error);
-      }
-  };
 
   return (
     <>
       <div id="editorjs"
       ref={nameInputRef} className="border-black-500 border-2"></div>
       <div className="w-full text-center">
-
-        <button
-          className="bg-[#025] text-white px-12 py-3 rounded-3xl mt-3"
-          onClick={handleSave}
-        >
-          Save Data
-        </button>
-        
+        <Link href="/dashboard/preference">
+          <button
+            className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
+              !isDraftExist ? "disabled" : ""
+            }`}
+            disabled={!isDraftExist}
+            style={!isDraftExist ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+          >
+            Next
+          </button>
+        </Link>
       </div>
     </>
   );

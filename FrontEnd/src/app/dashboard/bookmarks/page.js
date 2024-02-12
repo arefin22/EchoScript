@@ -1,4 +1,5 @@
 "use client"
+import DeleteButton from '@/components/shared/DeleteButton/DeleteButton';
 import Loader from '@/components/shared/Loader/Loader';
 import Title from '@/components/shared/ReusableComponents/Title';
 import { useAuth } from '@/context/authContext';
@@ -52,17 +53,49 @@ const bookmarks = () => {
    <div className='w-2/3 h-24 mx-auto'>
      <h1>{user.displayName}'s bookmarked articles:</h1>
      {bookmarkedData?.length === 0 && <div>No bookmarked articles found.</div>}
-     {bookmarkedData?.length > 0 && (
-                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto gap-5'>
-                                {bookmarkedArticles.reverse().map(article => (
-                                    <div key={article.id}>{article.title}</div>
+     {bookmarkedData.length > 0 && (
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr>
+                                    <th>History</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {bookmarkedData?.reverse().map(bookmark => (
+                                    <tr key={bookmark.id}>
+                                        <td>
+                                            <div className="flex items-center gap-3">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle w-12 h-12">
+                                                        <img src={bookmark.img} alt="bookmark" />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold">{bookmark.userName}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{bookmark.title}</td>
+                                        <td>{bookmark.date}</td>
+                                        <td>
+                                        <DeleteButton className="btn btn-ghost btn-xs" api={'/bookmark'} id={bookmark.id} />
+                                        </td>
+                                    </tr>
                                 ))}
-                            </div>
-                        )}
+                            </tbody>
+                        </table>
+                      
+                    </div>
+                )}
                         
    
    </div>
-  
+ 
   </div> 
   
 </div>

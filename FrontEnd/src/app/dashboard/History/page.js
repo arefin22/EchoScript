@@ -1,4 +1,5 @@
 "use client"
+import DeleteButton from '@/components/shared/DeleteButton/DeleteButton';
 import Loader from '@/components/shared/Loader/Loader';
 import Title from '@/components/shared/ReusableComponents/Title';
 import { useAuth } from '@/context/authContext';
@@ -47,6 +48,9 @@ const HistoryPage = () => {
             <div className='text-center mx-auto h-14'>
                 <h1 className='text-[20px]'>History of <span className='text-[20px] text-green-500'>{user.displayName}</span> </h1>
             </div>
+            <div>
+                            
+                        </div>
            
             <div className='w-full mx-auto mt-9'>
             {historyData.length === 0 && <div><Title title={'No history has been added'}/></div>}
@@ -63,7 +67,7 @@ const HistoryPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {historyData.map(history => (
+                                {historyData?.reverse().map(history => (
                                     <tr key={history.id}>
                                         <td>
                                             <div className="flex items-center gap-3">
@@ -80,12 +84,13 @@ const HistoryPage = () => {
                                         <td>{history.title}</td>
                                         <td>{history.date}</td>
                                         <td>
-                                            <button className="btn btn-ghost btn-xs">delete</button>
+                                        <DeleteButton className="btn btn-ghost btn-xs" api={'/history'} id={history.id} />
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                      
                     </div>
                 )}
 
