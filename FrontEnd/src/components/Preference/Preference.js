@@ -76,9 +76,6 @@ const Preference = () => {
       // Prepare data object to send to the server
       const articleInfo = {
         authorEmail: user.user?.email,
-        like: 0,
-        comment: 0,
-        share: 0,
         category: category.value,
         tags: tags,
       };
