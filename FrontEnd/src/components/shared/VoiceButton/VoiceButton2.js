@@ -1,9 +1,8 @@
 "use client"
-// VoiceButton.js
 import React, { useEffect, useState } from 'react';
 import { FaMicrophoneAlt } from 'react-icons/fa';
 
-const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) => {
+const VoiceButton2 = ({ onSpeechRecognition }) => {
   const [recognition, setRecognition] = useState(null);
   const [listening, setListening] = useState(false);
 
@@ -14,17 +13,17 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      fillActiveInputField(transcript);
+      onSpeechRecognition(transcript);
+      stopListening();
     };
 
     setRecognition(recognition);
-  }, []);
+  }, [onSpeechRecognition]);
 
   const startListening = () => {
     if (recognition) {
       recognition.start();
       setListening(true);
-      toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
 
@@ -32,7 +31,6 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
     if (recognition) {
       recognition.stop();
       setListening(false);
-      toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
 
@@ -44,20 +42,13 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
     }
   };
 
-  const fillActiveInputField = (text) => {
-    const activeInputField = inputRefs.find((ref) => ref.current === document.activeElement);
-    if (activeInputField) {
-      activeInputField.current.value = text;
-    }
-  };
-
   return (
     <div className='mx-auto w-10 h-10 mt-2'>
-      <button className={`btn btn-circle btn-outline ${voiceButtonActive ? 'active' : ''}`} onClick={toggleListening}>
-        {listening ? <span className="loading loading-bars loading-lg"></span> : <FaMicrophoneAlt />}
+      <button className='btn btn-circle btn-outline' onClick={toggleListening}>
+        {listening ? (<span className="loading loading-bars loading-lg"></span>) : <FaMicrophoneAlt/>}
       </button>
     </div>
   );
 };
 
-export default VoiceButton;
+export default VoiceButton2;

@@ -10,16 +10,14 @@ import SocialLogin from "@/components/SocialLogin/SocialLogin";
 
 import { MdOutlineCancel } from "react-icons/md";
 import { axiosPublic } from "@/utils/useAxiosPublic";
-import VoiceButton from "@/components/shared/VoiceButton/VoiceButton";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 
 const LogIn = () => {
   const { logIn, loader, user } = useAuth();
   const router = useRouter();
-  const emailInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
-  const inputRefs = [emailInputRef, passwordInputRef];
+  
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -60,7 +58,9 @@ const LogIn = () => {
         router.push("/dashboard");
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error('user or password invaild');
+        form.reset();
+
       });
   };
 
@@ -95,7 +95,7 @@ const LogIn = () => {
                 <input
                   type="email"
                   name="email"
-                  ref={emailInputRef}
+                 
                   required
                   placeholder="Email"
                   className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
@@ -105,7 +105,7 @@ const LogIn = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  ref={passwordInputRef}
+                 
                   required
                   className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black"
                   placeholder="Password"
@@ -134,7 +134,7 @@ const LogIn = () => {
             </div>
           </form>
         </div>
-        <VoiceButton inputRefs={inputRefs} />
+      
         <SocialLogin />
         <div className="text-center">
           <p className="pb-6">
