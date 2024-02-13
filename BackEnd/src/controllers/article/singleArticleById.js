@@ -1,10 +1,10 @@
 const { default: mongoose } = require("mongoose");
-const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 
 const getSingleItemById = async (req, res) => {
   const id = req.params.id;
   const filter = { _id: new mongoose.Types.ObjectId(id) };
-  const result = await Article.findOne(filter);
+  const result = await TextEditor.findOne(filter);
   res.send(result);
 };
 

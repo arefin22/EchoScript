@@ -57,7 +57,7 @@ const LikesSchema = new Schema({
 
 const TextEditorSchema = new Schema({
   texteditor: {
-    type: [Object],
+    type: Object,
   },
   comments: [CommentSchema],
   likes: [LikesSchema],

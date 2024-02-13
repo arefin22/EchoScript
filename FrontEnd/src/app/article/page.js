@@ -92,8 +92,10 @@ const ArticlePage = () => {
   };
 
   useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
+    axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      console.log(res.data)
+
     });
   }, [axiosSecure]);
 
@@ -135,20 +137,21 @@ const ArticlePage = () => {
       </div>
       <div className="py-10">
         {data?.map((item) => (
+          // console.log(item)
           <Article
-            commentCount={item.comments.length}
+            // commentCount={item.comments}
             key={item._id}
-            authorName={item.authorName}
-            category={item.category}
-            title={item.title}
-            postedDate={item.postedDate}
-            view={item.view}
-            article={item.article}
-            image={item.image}
-            authorImage={item.authorImage}
-            date={item.date}
+            // authorName={item.authorName}
+            // category={item.category}
+            // title={item.title}
+            // postedDate={item.postedDate}
+            // view={item.view}
+            // article={item.article}
+            // image={item.image}
+            // authorImage={item.authorImage}
+            // date={item.date}
             articleId={item._id}
-            data={data}
+            // data={data}
           />
         ))}
       </div>
