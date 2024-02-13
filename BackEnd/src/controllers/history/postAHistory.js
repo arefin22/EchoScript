@@ -2,7 +2,7 @@ const History = require("../../models/History");
 
 const postAHistory = async (req, res) => {
   const body = req.body;
-
+  console.log(body)
   let existingHistory;
   try {
     existingHistory = await History.findOne();

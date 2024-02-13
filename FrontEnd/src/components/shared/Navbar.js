@@ -46,7 +46,7 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
+    axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
     });
   }, [axiosSecure]);
