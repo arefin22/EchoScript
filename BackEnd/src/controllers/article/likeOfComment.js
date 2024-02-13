@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 
 const likeOfComment = async (req, res) => {
   try {
@@ -26,7 +27,7 @@ const likeOfComment = async (req, res) => {
       },
     };
 
-    const result = await Article.updateOne(query, updateDoc, options);
+    const result = await TextEditor.updateOne(query, updateDoc, options);
 
     console.log("MongoDB update result:", result);
 
