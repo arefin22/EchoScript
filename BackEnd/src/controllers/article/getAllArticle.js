@@ -1,8 +1,8 @@
-const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 
 const getAllArticle = async (req, res, next) => {
   try {
-    const result = await Article.find();
+    const result = await TextEditor.find();
     res.send(result);
   } catch (err) {
     next(err);
