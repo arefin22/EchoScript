@@ -1,5 +1,4 @@
 const { default: mongoose } = require("mongoose");
-const Article = require("../../models/Article");
 
 const putLikes = async (req, res) => {
   const { id } = req.params;

@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
@@ -20,13 +20,13 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const nameInputRef = useRef(null);
   const inputRefs = [nameInputRef];
+  const [voiceButtonActive, setVoiceButtonActive] = useState(false); // New state variable
 
   const navItem = [
     {
       route: "Home",
       pathName: "/",
     },
-
     {
       route: "About Us",
       pathName: "/about",
@@ -35,7 +35,6 @@ const Navbar = () => {
       route: "Subscriptions",
       pathName: "/packages",
     },
-
     {
       route: "All Article",
       pathName: "/article",
@@ -99,9 +98,21 @@ const Navbar = () => {
     };
   }, []);
 
+  // Function to toggle voice button active state
+  const toggleVoiceButtonActive = () => {
+    setVoiceButtonActive(prevState => !prevState);
+  };
+
+  // useEffect to focus input when voice button is activated
+  useEffect(() => {
+    if (voiceButtonActive) {
+      nameInputRef.current.focus();
+    }
+  }, [voiceButtonActive]);
+
   return (
     <div>
-      <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
+      <div className="flex  flex-col gap-3 items-center justify-center p-16 bg-white w-full">
         <Image
           src={logo}
           alt="Logo"
@@ -112,17 +123,23 @@ const Navbar = () => {
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
-       <div className="relative  mx-auto flex gap-4 justify-center items-center">
-       <input
-          type="text"
-          ref={nameInputRef}
-          placeholder="Search"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="input  mx-auto input-bordered w-full mt-4 bg-white md:w-auto"
-        />
-        <VoiceButton className="absolute right-0 top-1/2 transform -translate-y-1/2 text-sm mt-1 mr-3 text-gray-600 hover:underline focus:outline-none" inputRefs={inputRefs}/>
-       </div>
+        <div className="relative w-full mx-auto flex gap-1 justify-center items-center">
+          <input
+            type="text"
+            ref={nameInputRef}
+            placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="input mx-auto input-bordered w-full mt-4 bg-white md:w-5/6 "
+          />
+          <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
+            <VoiceButton
+              inputRefs={inputRefs}
+              toggleVoiceButtonActive={toggleVoiceButtonActive}
+              voiceButtonActive={voiceButtonActive}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex justify-center w-3/4 " ref={dropdownRef}>
         {suggestions?.length > 0 && searchQuery?.length > 0 && (

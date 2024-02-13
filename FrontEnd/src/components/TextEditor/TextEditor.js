@@ -11,7 +11,6 @@ import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
 import Link from "next/link";
 
-
 const TextEditor = () => {
   const ejInstance = useRef();
   const [isDraftExist, setIsDraftExist] = useState(false);
@@ -200,8 +199,7 @@ const TextEditor = () => {
 
   return (
     <>
-      <div id="editorjs"
-      ref={nameInputRef} className="border-black-500 border-2"></div>
+      <div id="editorjs" className="border-black-500"></div>
       <div className="w-full text-center">
         <Link href="/dashboard/preference">
           <button
