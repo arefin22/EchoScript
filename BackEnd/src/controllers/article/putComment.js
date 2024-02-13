@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 
 const addAComment = async (req, res) => {
   const id = req.params.id;
@@ -18,7 +18,7 @@ const addAComment = async (req, res) => {
       },
     },
   };
-  const result = await Article.updateOne(query, updateDoc, options);
+  const result = await TextEditor.updateOne(query, updateDoc, options);
   res.send(result);
 };
 
