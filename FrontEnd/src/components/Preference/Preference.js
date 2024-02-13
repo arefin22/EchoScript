@@ -7,13 +7,15 @@ import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Preference = () => {
   const [category, setCategory] = useState(null);
   const [inputValue, setInputValue] = useState("");
     const [tags, setTags] = useState([]);
      const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
+    const Router = useRouter();
+    
   const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
@@ -94,7 +96,7 @@ const Preference = () => {
         localStorage.removeItem("editorDraft");
         setCategory(null);
             setTags([]);
-            revalidatePath("/dashboard/write");
+            Router.replace("/dashboard/write");
       } else {
         console.error("Failed to save data.");
       }
@@ -168,7 +170,7 @@ const Preference = () => {
               isButtonDisabled ? { opacity: 0.5, cursor: "not-allowed" } : {}
             }
           >
-            Save Data
+            Publish Article
           </button>
         </div>
       </div>
