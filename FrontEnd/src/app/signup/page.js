@@ -123,7 +123,7 @@ const SignUp = () => {
                       type="text"
                       name="name"
                       placeholder="Name"
-                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                     />
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const SignUp = () => {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                     />
                   </div>
                 </div>
@@ -141,7 +141,7 @@ const SignUp = () => {
                   <div className="md:w-2/5 mx-auto">
                     <input
                       type="file"
-                      className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                      className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                     />
                   </div>
                 </div>
@@ -162,14 +162,14 @@ const SignUp = () => {
                           ...provided,
                           border: state.isFocused
                             ? "2px solid #4C2F17"
-                            : "2px solid #4C2F17",
+                            : "2px solid #ccc",
                           borderRadius: "24px",
-                          padding: "6px",
+                          padding: "7px",
                           boxShadow: "none",
                           "&:hover": {
-                            borderColor: state.isFocused ? "#4C2F17" : "#ccc",
+                            borderColor: "#4C2F17",
                           },
-                        }),
+                        })
                       }}
                     />
                   </div>
@@ -180,7 +180,7 @@ const SignUp = () => {
                       type={showPassword ? "text" : "password"}
                       name="password"
                       required
-                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                      className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                       placeholder="Password"
                     />
                     <button

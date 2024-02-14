@@ -97,7 +97,7 @@ const LogIn = () => {
                   name="email"
                   required
                   placeholder="Email"
-                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 />
               </div>
               <div className="md:w-2/5 mx-auto relative ">
@@ -105,7 +105,7 @@ const LogIn = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
-                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#4C2F17] text-black hover:border-[#ccc]"
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                   placeholder="Password"
                 />
                 <button
