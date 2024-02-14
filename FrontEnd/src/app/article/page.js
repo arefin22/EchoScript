@@ -157,7 +157,7 @@ console.log(data)
             // article={item.article}
             // image={item.image}
             // authorImage={item.authorImage}
-            // date={item.date}
+            date={item.date}
             articleId={item._id}
             // data={data}
             // data={data}
