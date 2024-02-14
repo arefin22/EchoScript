@@ -30,19 +30,19 @@ const TextEditor = () => {
       },
       autofocus: true,
       tools: {
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-          config: {
-            placeholder: "Enter a Paragraph",
-          },
-        },
         header: {
           class: Header,
           config: {
             placeholder: "Enter a header",
             levels: [1, 2, 3, 4, 5, 6],
             defaultLevel: 3,
+          },
+        },
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true,
+          config: {
+            placeholder: "Enter a Paragraph",
           },
         },
         quote: {
