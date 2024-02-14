@@ -47,7 +47,7 @@ const Article = () => {
                 <tr key={article._id} className="text-center">
                   <td>{index + 1}</td>
                   <td>
-                    <Link href={`/dashboard/articles/${article._id}`}>
+                    <Link href={`/articles/${article._id}`}>
                       {article?.texteditor?.editorContent?.blocks[0].data?.text}
                     </Link>
                   </td>
