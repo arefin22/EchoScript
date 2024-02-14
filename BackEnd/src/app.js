@@ -4,7 +4,6 @@ const applyMiddleware = require("./middlewares/applyMiddleware");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
-const getAllArticle = require("./routes/article/index")
 const addAUser = require("./routes/user/index")
 const textArticle = require("./routes/textArticle/index")
 const search = require("./routes/search/index")
@@ -14,7 +13,6 @@ const history = require("./routes/history/index")
 applyMiddleware(app)
 
 // routes
-app.use(getAllArticle);
 app.use(addAUser);
 app.use(textArticle);
 app.use(search)
