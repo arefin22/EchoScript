@@ -8,6 +8,7 @@ const addAUser = require("./routes/user/index")
 const textArticle = require("./routes/textArticle/index")
 const search = require("./routes/search/index")
 const history = require("./routes/history/index")
+const bookmark = require("./routes/bookmark/index")
 
 // middlewares
 applyMiddleware(app)
@@ -17,7 +18,7 @@ app.use(addAUser);
 app.use(textArticle);
 app.use(search)
 app.use(history)
-
+app.use(bookmark)
 
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");

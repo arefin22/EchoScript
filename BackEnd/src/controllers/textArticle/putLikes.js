@@ -6,7 +6,7 @@ const putLikes = async (req, res) => {
   const { email, name } = req.body;
 
   const existingArticle = await TextEditor.findById(id);
-
+  console.log(existingArticle)
   if (!existingArticle) {
     return res.status(404).json({ error: "Article not found" });
   }

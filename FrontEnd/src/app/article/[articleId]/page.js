@@ -58,7 +58,7 @@ const SingleArticle = ({ params }) => {
       commentText: text,
       date: d,
     };
-    axiosSecure.put(`/textArticle/${data._id}`, comment).then((res) => {
+    axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
       if (res.data.modifiedCount > 0) {
         setForceUpdate(Date.now());
         Swal.fire({
@@ -108,7 +108,7 @@ const SingleArticle = ({ params }) => {
       name: user?.displayName,
       like: 1,
     };
-    axiosSecure.put(`/article/${item?._id}/like`, likeDetails).then((res) => {
+    axiosSecure.put(`/textArticle/${item?._id}/like`, likeDetails).then((res) => {
       if (res.data.modifiedCount > 0) {
         setForceUpdate(Date.now());
       }

@@ -79,10 +79,11 @@ const SignUp = () => {
         const userInfo = {
           email: email,
           name: name,
-          image: photoURL,
+          photoURL: photoURL,
           role: "guest",
-          recommandation:favourite,
+          favourite: favourite,
         };
+        console.log(userInfo)
         await axiosPublic.post('/user',userInfo)
         toast.success('user login successfully')
         .then(res=>{console.log(res.data)});
