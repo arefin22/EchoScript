@@ -46,11 +46,11 @@ const Navbar = () => {
     },
   ];
 
-  useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
-      setData(res.data);
-    });
-  }, [axiosSecure]);
+  // useEffect(() => {
+  //   axiosSecure.get("/article").then((res) => {
+  //     setData(res.data);
+  //   });
+  // }, [axiosSecure]);
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
