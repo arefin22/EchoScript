@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 import Theme from "./Theme";
 import logo from "./../../assets/img/logo.png";
@@ -8,6 +8,7 @@ import { useAuth } from "@/context/authContext";
 import person from "@/assets/img/person-removebg-preview.png";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/utils/useAxiosPublic";
+import VoiceButton from "./VoiceButton/VoiceButton";
 
 const Navbar = () => {
   const { user, loader, logout } = useAuth();
@@ -17,13 +18,15 @@ const Navbar = () => {
   const axiosPublic = useAxiosPublic();
   const [data, setData] = useState([]);
   const dropdownRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const inputRefs = [nameInputRef];
+  const [voiceButtonActive, setVoiceButtonActive] = useState(false); // New state variable
 
   const navItem = [
     {
       route: "Home",
       pathName: "/",
     },
-
     {
       route: "About Us",
       pathName: "/about",
@@ -32,7 +35,6 @@ const Navbar = () => {
       route: "Subscriptions",
       pathName: "/packages",
     },
-
     {
       route: "All Article",
       pathName: "/article",
@@ -44,7 +46,7 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
+    axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
     });
   }, [axiosSecure]);
@@ -96,9 +98,21 @@ const Navbar = () => {
     };
   }, []);
 
+  // Function to toggle voice button active state
+  const toggleVoiceButtonActive = () => {
+    setVoiceButtonActive(prevState => !prevState);
+  };
+
+  // useEffect to focus input when voice button is activated
+  useEffect(() => {
+    if (voiceButtonActive) {
+      nameInputRef.current.focus();
+    }
+  }, [voiceButtonActive]);
+
   return (
     <div>
-      <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
+      <div className="flex  flex-col gap-3 items-center justify-center p-16 bg-white w-full">
         <Image
           src={logo}
           alt="Logo"
@@ -109,13 +123,23 @@ const Navbar = () => {
         <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
           Empowering Voices, Enriching Minds.
         </h2>
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="input input-bordered w-full mt-4 bg-white md:w-auto"
-        />
+        <div className="relative w-full mx-auto flex gap-1 justify-center items-center">
+          <input
+            type="text"
+            ref={nameInputRef}
+            placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="input mx-auto input-bordered w-full mt-4 bg-white md:w-5/6 "
+          />
+          <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
+            <VoiceButton
+              inputRefs={inputRefs}
+              toggleVoiceButtonActive={toggleVoiceButtonActive}
+              voiceButtonActive={voiceButtonActive}
+            />
+          </div>
+        </div>
       </div>
       <div className="flex justify-center w-3/4 " ref={dropdownRef}>
         {suggestions?.length > 0 && searchQuery?.length > 0 && (
@@ -124,29 +148,29 @@ const Navbar = () => {
             className="absolute mt-2 p-2 bg-white shadow rounded-lg border z-50 border-gray-300 w-96 cursor-pointer"
           >
             {suggestions?.map((item) => (
-              // <Link href={`/article/${item._id}`}>
-              <p
-                onClick={() => {
-                  setSearchQuery(item.title || item.name);
-                  setSuggestions([]);
-                }}
-                className="flex justify-center items-center"
-                key={item._id}
-              >
-                {item.photoURL ? (
-                  <Image
-                    className="rounded-full"
-                    src={item.photoURL}
-                    width={50}
-                    height={50}
-                    alt="user image"
-                  />
-                ) : (
-                  ""
-                )}
-                {item.title || item.name}
-              </p>
-              // </Link>
+              <Link href={`/article/${item._id}`}>
+                <p
+                  onClick={() => {
+                    setSearchQuery(item.title || item.name);
+                    setSuggestions([]);
+                  }}
+                  className="flex justify-start items-center"
+                  key={item._id}
+                >
+                  {item.photoURL ? (
+                    <Image
+                      // className="rounded-full"
+                      src={item.photoURL}
+                      width={30}
+                      height={30}
+                      alt="user image"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {item.title || item.name}
+                </p>
+              </Link>
             ))}
           </div>
         )}

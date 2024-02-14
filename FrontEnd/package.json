@@ -40,9 +40,10 @@
     "react-share": "^5.0.3",
     "react-slick": "^0.29.0",
     "react-text-to-speech": "^0.8.2",
+    "sass": "^1.70.0",
     "sharp": "^0.33.2",
     "stripe": "^14.14.0",
-    "sweetalert2": "^11.4.8",
+    "sweetalert2": "^11.10.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {

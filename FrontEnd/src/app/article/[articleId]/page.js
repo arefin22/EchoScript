@@ -34,8 +34,9 @@ const SingleArticle = ({ params }) => {
   const maxLength = 100;
   const id = params.articleId
   useEffect(() => {
-    axiosSecure.get(`/textArticle/${id}`).then((res) => {
+    axiosSecure.get(`/textArticle/${params.articleId}`).then((res) => {
       setData(res.data);
+      console.log(res.data)
     });
   }, [forceUpdate]);
 
