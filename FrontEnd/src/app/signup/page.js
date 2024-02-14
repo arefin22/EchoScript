@@ -77,20 +77,20 @@ const SignUp = () => {
         const userInfo = {
           email: email,
           name: name,
-          image: photoURL,
+          photoURL: photoURL,
           role: "guest",
-          recommandation: favourite,
+          favourite: favourite,
         };
-        await axiosPublic.post("/user", userInfo);
-        toast.success("user login successfully").then((res) => {
-          console.log(res.data);
-        });
-
-        toast.success("user created successfully");
-
-        console.log(result);
-        const DBresponse = await saveUser(result?.user);
-        console.log(DBresponse);
+        console.log(userInfo)
+        await axiosPublic.post('/user',userInfo)
+        toast.success('user login successfully')
+        .then(res=>{console.log(res.data)});
+       
+        toast.success('user created successfully')
+          
+             console.log(result)
+        const DBresponse = await saveUser(result?.user)
+        console.log(DBresponse)
       } catch (err) {
         console.log(err);
         form.reset();

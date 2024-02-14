@@ -1,4 +1,4 @@
-const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 const User = require("../../models/User");
 
 const getItemBySearch = async (req, res) => {
@@ -7,7 +7,7 @@ const getItemBySearch = async (req, res) => {
   try {
     if (searchQuery) {
       const articleQuery = { title: { $regex: new RegExp(searchQuery, "i") } };
-      const articles = await Article.find(articleQuery);
+      const articles = await TextEditor.find(articleQuery);
 
       const userQuery = { name: { $regex: new RegExp(searchQuery, "i") } };
       const user = await User.find(userQuery);
