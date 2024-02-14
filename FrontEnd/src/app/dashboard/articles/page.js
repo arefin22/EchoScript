@@ -6,6 +6,7 @@ import { useAuth } from "@/context/authContext";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
+import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
@@ -54,12 +55,16 @@ const Article = () => {
                   <td>{article?.comments.length}</td>
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td>
-                    <button className="btn btn-sm btn-primary mr-2">
+                    <Link
+                      href={`/dashboard/articles/${article._id}/edit`}
+                      className="btn btn-sm btn-primary mr-2"
+                    >
                       <FaEdit />
-                    </button>
-                    <button className="btn btn-sm btn-error">
+                    </Link>
+                    {/* <button className="btn btn-sm btn-error">
                       <FaTrash />
-                    </button>
+                    </button> */}
+                    <DeleteButton api="/textArticle" id={article._id} />
                   </td>
                 </tr>
               ))}
