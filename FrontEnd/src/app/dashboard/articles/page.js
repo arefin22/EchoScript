@@ -6,7 +6,6 @@ import { useAuth } from "@/context/authContext";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
-import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
@@ -61,10 +60,10 @@ const Article = () => {
                     >
                       <FaEdit />
                     </Link>
-                    {/* <button className="btn btn-sm btn-error">
+                    <button className="btn btn-sm btn-error">
                       <FaTrash />
-                    </button> */}
-                    <DeleteButton api="/textArticle" id={article._id} />
+                    </button>
+                    
                   </td>
                 </tr>
               ))}

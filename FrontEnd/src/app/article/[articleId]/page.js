@@ -61,7 +61,7 @@ const SingleArticle = ({ params }) => {
       commentText: text,
       date: d,
     };
-    axiosSecure.put(`/article/${data._id}`, comment).then((res) => {
+    axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
       if (res.data.modifiedCount > 0) {
         setForceUpdate(Date.now());
         Swal.fire({

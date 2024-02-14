@@ -149,7 +149,17 @@ console.log(data)
             image={item.texteditor?.editorContent?.blocks.map((img)=>img.type ==="image" && img.data.file.url)}
             // authorImage={item.authorImage}
             // date={item.date}
+            // authorName={item.authorName}
+            // category={item.category}
+            // title={item.title}
+            // postedDate={item.postedDate}
+            // view={item.view}
+            // article={item.article}
+            // image={item.image}
+            // authorImage={item.authorImage}
+            // date={item.date}
             articleId={item._id}
+            // data={data}
             // data={data}
           />
         ))}
@@ -160,5 +170,4 @@ console.log(data)
     </div>
   );
 };
-
 export default ArticlePage;

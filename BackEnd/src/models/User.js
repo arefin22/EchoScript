@@ -11,14 +11,13 @@ const UserSchema = new Schema({
   },
   photoURL: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
     default: 'user'
   },
   favourite: {
-    type: [String],
+    type: [Object],
     default: [],
     required: true
   },

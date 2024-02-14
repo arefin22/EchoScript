@@ -1,25 +1,5 @@
 const { model, Schema, Types } = require("mongoose");
 
-const LikeOfCommentSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  likeCount: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-});
-
 const CommentSchema = new Schema({
   id: {
     type: Types.ObjectId,
@@ -46,7 +26,6 @@ const CommentSchema = new Schema({
     required: true,
     default: new Date(),
   },
-  likesofcomment: [LikeOfCommentSchema],
 });
 
 const LikesSchema = new Schema({
