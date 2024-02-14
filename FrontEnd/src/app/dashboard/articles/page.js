@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import axios from "axios";
 import { useAuth } from "@/context/authContext";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
@@ -24,7 +23,6 @@ const Article = () => {
 
     fetchArticles();
   }, []); 
-  // console.log(articles);
 
   return (
     <PrivateRoute>
@@ -46,7 +44,7 @@ const Article = () => {
                 <tr key={article._id} className="text-center">
                   <td>{index + 1}</td>
                   <td>
-                    <Link href={`/articles/${article._id}`}>
+                    <Link href={`/dashboard/articles/${article._id}`}>
                       {article?.texteditor?.editorContent?.blocks[0].data?.text}
                     </Link>
                   </td>
@@ -55,7 +53,7 @@ const Article = () => {
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td>
                     <Link
-                      href={`/dashboard/articles/${article._id}/edit`}
+                      href={`/dashboard/articleEdit/${article._id}`}
                       className="btn btn-sm btn-primary mr-2"
                     >
                       <FaEdit />
