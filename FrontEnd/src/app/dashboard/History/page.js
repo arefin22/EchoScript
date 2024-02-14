@@ -7,11 +7,11 @@ const HistoryPage = () => {
     const {user } =useAuth();
     return (
         <div>
-            <div className='text-center mx-auto h-14'>
+            <div className='text-center mx-auto'>
                 <h1 className='text-[20px]'>History of <span className='text-[20px] text-green-500'>{user.displayName}</span> </h1>
             </div>
            
-            <div className='w-full mx-auto mt-9'>
+            <div className='w-full mx-auto mt-2'>
             <div className="overflow-x-auto">
   <table className="table">
     {/* head */}

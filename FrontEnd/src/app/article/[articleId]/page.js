@@ -32,11 +32,14 @@ const SingleArticle = ({ params }) => {
   const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
   const { user } = useAuth();
   const maxLength = 100;
+  const id = params.articleId
   useEffect(() => {
-    axiosSecure.get(`/article/${params.articleId}`).then((res) => {
+    axiosSecure.get(`/textArticle/${id}`).then((res) => {
       setData(res.data);
     });
   }, [forceUpdate]);
+
+  console.log(data)
 
   const handleInputChange = (e) => {
     const newText = e.target.value;
@@ -69,7 +72,8 @@ const SingleArticle = ({ params }) => {
       }
     });
   };
-
+  
+  
 
   const {
     coverImage,
@@ -99,7 +103,7 @@ const SingleArticle = ({ params }) => {
     setShareDropdownOpen(!isShareDropdownOpen);
   };
 
-  const shareUrl = `https://echoscript-front.vercel.app/`;
+  const shareUrl = `https://echoscript-front.vercel.app`;
 
   const handleLike = (item) => {
     const likeDetails = {
@@ -117,9 +121,12 @@ const SingleArticle = ({ params }) => {
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
 
   return (
-    <div>
+     <div>
       <Navbar />
-      <div className="container mx-auto p-4 relative">
+      <div>
+        {
+          data && (
+            <div className="container mx-auto p-4 relative">
         <div
           className="mb-4 relative"
           style={{
@@ -134,15 +141,21 @@ const SingleArticle = ({ params }) => {
           ></div>
 
           <div className="absolute bottom-4 left-4 text-white text-[40px] font-bold w-1/2 z-10">
-            {title}
+            {data?.texteditor?.editorContent?.blocks[0].data?.text}
           </div>
-
-          <Image
-            src={coverImage}
+         {
+          data?.texteditor?.editorContent?.blocks.map((block)=>{
+            block.type ==='image' && (
+              <Image
+            src={block.data.file.url}
             alt="Cover Image"
             layout="fill"
             objectFit="cover"
           />
+            )
+          })
+         }
+          
         </div>
 
         <div className="mb-4 flex items-center border-b border-black pb-4">
@@ -158,7 +171,7 @@ const SingleArticle = ({ params }) => {
 
           <div className="flex flex-col">
             <div>
-              <h2 className="text-lg font-bold">{author}</h2>
+              <h2 className="text-lg font-bold">{data?.texteditor?.authorEmail}</h2>
               <p className="text-sm text-gray-500">22-oct-24</p>
             </div>
           </div>
@@ -283,7 +296,15 @@ const SingleArticle = ({ params }) => {
           </div>
           <div>
             
-                        <TextToSpeech title={title} desc={contentFirstHalf }/>
+                        <TextToSpeech title={data?.texteditor?.editorContent?.blocks[0].data?.text} desc={data?.texteditor?.editorContent?.blocks.map((block)=>{
+                           {block.type === "paragraph" && block.data.text}
+                           {block.type === "header" && block.data.text}
+                           {block.type === "quote" && <>{block.data.text}
+                           {block.data.caption}</>
+                           
+                           }
+                           
+                        })}/>
            
            </div>
           <div>
@@ -315,7 +336,14 @@ const SingleArticle = ({ params }) => {
           </div>
         </div>
         <div className="mb-12 border-t border-black">
-          <p className="mt-12">{contentFirstHalf}</p>
+          {
+            data?.texteditor?.editorContent?.blocks.map((block)=>{
+              {block.type === "paragraph" && <p className="mt-12">{block.data.text}</p> }
+              
+            })
+              
+          }
+          
         </div>
 
         {/* article image */}
@@ -333,6 +361,9 @@ const SingleArticle = ({ params }) => {
         <div className="mb-4">
           <p>{contentSecondHalf}</p>
         </div>
+      </div>
+          )
+        }
       </div>
       <Footer />
     </div>

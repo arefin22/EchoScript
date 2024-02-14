@@ -92,12 +92,14 @@ const ArticlePage = () => {
   };
 
   useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
+    axiosSecure.get("/textArticle").then((res) => {
+
+   console.log(res.data);
       setData(res.data);
     });
   }, [axiosSecure]);
 
-
+console.log(data)
   return (
     <div>
       <Navbar />
@@ -134,21 +136,21 @@ const ArticlePage = () => {
         </button>
       </div>
       <div className="py-10">
-        {data?.map((item) => (
+      {data?.map((item) => (
           <Article
             commentCount={item.comments.length}
             key={item._id}
-            authorName={item.authorName}
-            category={item.category}
-            title={item.title}
-            postedDate={item.postedDate}
-            view={item.view}
-            article={item.article}
-            image={item.image}
-            authorImage={item.authorImage}
-            date={item.date}
+            authorName={item.texteditor.authorEmail}
+            category={item.texteditor.category}
+            title={item.texteditor?.editorContent?.blocks[0].data?.text}
+            // postedDate={item.postedDate}
+            view={item.likes.length}
+            // article={item.article}
+            image={item.texteditor?.editorContent?.blocks.map((img)=>img.type ==="image" && img.data.file.url)}
+            // authorImage={item.authorImage}
+            // date={item.date}
             articleId={item._id}
-            data={data}
+            // data={data}
           />
         ))}
       </div>

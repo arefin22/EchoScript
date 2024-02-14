@@ -4,13 +4,13 @@ import Image from "next/image";
 const article = () => {
   return (
     <PrivateRoute>
-    <div className="ml-10">
+    <div className="">
      
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
-            <tr className="text-center">
+            <tr className="">
               <th>#</th>
               <th>images</th>
               <th>Author Name</th>
@@ -26,7 +26,7 @@ const article = () => {
             <tr>
               <td>1</td>
               <td>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center  gap-3">
                   <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">
                       <Image
