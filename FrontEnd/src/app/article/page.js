@@ -94,11 +94,9 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
-      console.log(res.data)
-
+      console.log(res.data);
     });
   }, [axiosSecure]);
-
 
   return (
     <div>
@@ -139,8 +137,17 @@ const ArticlePage = () => {
         {data?.map((item) => (
           // console.log(item)
           <Article
-            // commentCount={item.comments}
+            // commentCount={item.comments.length}
             key={item._id}
+            // authorName={item.authorName}
+            // category={item.category}
+            // title={item.title}
+            // postedDate={item.postedDate}
+            // view={item.view}
+            // article={item.article}
+            // image={item.image}
+            // authorImage={item.authorImage}
+            // date={item.date}
             // authorName={item.authorName}
             // category={item.category}
             // title={item.title}
@@ -152,6 +159,7 @@ const ArticlePage = () => {
             // date={item.date}
             articleId={item._id}
             // data={data}
+            // data={data}
           />
         ))}
       </div>
@@ -161,5 +169,4 @@ const ArticlePage = () => {
     </div>
   );
 };
-
 export default ArticlePage;

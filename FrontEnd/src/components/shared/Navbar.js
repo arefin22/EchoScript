@@ -45,11 +45,19 @@ const Navbar = () => {
     },
   ];
 
+<<<<<<< HEAD
+  // useEffect(() => {
+  //   axiosSecure.get("/article").then((res) => {
+  //     setData(res.data);
+  //   });
+  // }, [axiosSecure]);
+=======
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
     });
   }, [axiosSecure]);
+>>>>>>> dd9aae1f789598b6939d37b1a00fe57c4ba17f4f
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
