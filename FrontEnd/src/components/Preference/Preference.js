@@ -96,7 +96,7 @@ const Preference = () => {
         localStorage.removeItem("editorDraft");
         setCategory(null);
             setTags([]);
-            Router.replace("/dashboard/write");
+            Router.replace("/dashboard/articles");
       } else {
         console.error("Failed to save data.");
       }
