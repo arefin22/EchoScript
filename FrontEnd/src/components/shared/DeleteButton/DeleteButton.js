@@ -6,7 +6,7 @@ import { MdDeleteForever } from "react-icons/md";
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss'
 
-const DeleteButton = ({api,id}) => {
+const DeleteButton = ({api,id,setUpdate}) => {
     const [loading, setLoading] = useState(false);
     const handleDelete =  () => {
         try {
@@ -21,7 +21,8 @@ const DeleteButton = ({api,id}) => {
             confirmButtonText: "Yes, delete it!"
           }).then((result) => {
             if (result.isConfirmed) {
-               Delete({api:api,id:id});
+               Delete({api:api,id:id,setUpdate:setUpdate} );
+              
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",

@@ -5,9 +5,11 @@ import { useAuth } from "@/context/authContext";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
+import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
+  const [update,setUpdate]=useState(Date.now())
   const user = useAuth();
   const authEmail = user.user.email;
 
@@ -22,7 +24,7 @@ const Article = () => {
     };
 
     fetchArticles();
-  }, []); 
+  }, [update]); 
 
   return (
     <PrivateRoute>
@@ -51,7 +53,7 @@ const Article = () => {
                   <td>{article?.likes.length}</td>
                   <td>{article?.comments.length}</td>
                   <td>{article?.texteditor?.tags.join(", ")}</td>
-                  <td>
+                  <td className="flex justify-center items-center">
                     <Link
                       href={`/dashboard/articleEdit/${article._id}`}
                       className="btn btn-sm btn-primary mr-2"
@@ -59,7 +61,7 @@ const Article = () => {
                       <FaEdit />
                     </Link>
                     <button className="btn btn-sm btn-error">
-                      <FaTrash />
+                   <DeleteButton setUpdate={setUpdate} api={"textArticle"} id={article._id}/>
                     </button>
                     
                   </td>
