@@ -14,13 +14,22 @@ import makeAnimated from "react-select/animated";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 
 const TextEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const ejInstance = useRef();
   const [isDraftExist, setIsDraftExist] = useState(false);
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
+
+  // Preference part
+  const [category, setCategory] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [tags, setTags] = useState([]);
+  const [mainTitle, setMainTitle] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const Router = useRouter();
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -164,7 +173,7 @@ const TextEditor = () => {
         localStorage.setItem("editorDraft", JSON.stringify(content));
         setIsDraftExist(content.blocks.length > 0);
       } else {
-        // console.error("Editor instance is undefined. Cannot save draft.");
+        console.error("Editor instance is undefined. Cannot save draft.");
       }
     } catch (error) {
       console.error("Error saving draft:", error);
@@ -203,15 +212,6 @@ const TextEditor = () => {
   // initEditor();
 
   // Preference part
-  const [category, setCategory] = useState(null);
-  const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState([]);
-  const [mainTitle, setMainTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const Router = useRouter();
-
   const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
@@ -226,16 +226,6 @@ const TextEditor = () => {
     { value: "Arts", label: "Arts" },
     { value: "Vehicles", label: "Vehicles" },
   ];
-
-  const handleCategory = (selectedOption) => {
-    setCategory(selectedOption);
-    checkButtonState(selectedOption, tags);
-  };
-  const animatedComponents = makeAnimated();
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === ",") {
@@ -257,18 +247,13 @@ const TextEditor = () => {
     );
   };
 
-  const checkButtonState = (category, tags) => {
-    if (mainTitle && thumbnail && category && tags.length > 0) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   const handleThumbnailChange = async (e) => {
     const selectedFile = e.target.files[0];
     setThumbnail(selectedFile);
-
     try {
       const formData = new FormData();
       formData.append("image", selectedFile);
@@ -278,14 +263,59 @@ const TextEditor = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
       console.log("Image uploaded successfully:", response.data);
-      // Set the uploaded image URL in state
       setThumbnailUrl(response.data.data.display_url);
-      // Handle the response here
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Handle error
+    }
+  };
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const storedMainTitle = localStorage.getItem("mainTitle");
+    const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
+    const storedCategory = JSON.parse(localStorage.getItem("category")); // Deserialize category
+    const storedTags = JSON.parse(localStorage.getItem("tags")); // Deserialize tags
+
+    if (storedMainTitle) setMainTitle(storedMainTitle);
+    if (storedThumbnailUrl) setThumbnailUrl(storedThumbnailUrl);
+    if (storedCategory) setCategory(storedCategory);
+    if (storedTags) setTags(storedTags);
+  }, []);
+
+  // Save data to localStorage whenever it changes
+  useEffect(() => {
+    if (mainTitle) localStorage.setItem("mainTitle", mainTitle);
+    if (thumbnailUrl) localStorage.setItem("thumbnailUrl", thumbnailUrl);
+    if (category) localStorage.setItem("category", JSON.stringify(category));
+    if (tags.length > 0) localStorage.setItem("tags", JSON.stringify(tags));
+  }, [mainTitle, thumbnailUrl, category, tags]);
+
+  // category select
+  const handleCategory = (selectedOption) => {
+    setCategory(selectedOption);
+    checkButtonState(selectedOption, tags);
+  };
+
+  // Save thumbnail data to localStorage whenever it changes
+  useEffect(() => {
+    if (thumbnail) {
+      const thumbnailUrl = URL.createObjectURL(thumbnail);
+      localStorage.setItem("thumbnailUrl", thumbnailUrl);
+      setThumbnailUrl(thumbnailUrl);
+    }
+  }, [thumbnail]);
+
+  const animatedComponents = makeAnimated();
+
+
+  
+  const checkButtonState = (
+    category, tags) => {
+    if (mainTitle && thumbnail && category && tags.length > 0) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
     }
   };
   const saveData = async () => {
@@ -337,7 +367,7 @@ const TextEditor = () => {
         <div id="editorjs" className="lg:w-2/3"></div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
-            <h2>Select Title, Thumbnail, Category & Tags</h2>
+            <h2>Important Info</h2>
             <div>
               <input
                 type="text"
@@ -355,6 +385,7 @@ const TextEditor = () => {
                 className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 onChange={handleThumbnailChange}
               />
+              {thumbnailUrl && <img src={thumbnailUrl} alt="Thumbnail" />}
             </div>
             <div>
               <Select
@@ -413,25 +444,34 @@ const TextEditor = () => {
                 </div>
               </div>
             </div>
+            <div className="w-full text-center">
+              <button
+                className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
+                    ? "disabled"
+                    : ""
+                }`}
+                disabled={
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
+                }
+                onClick={saveData}
+                style={
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
+                    ? { opacity: 0.5, cursor: "not-allowed" }
+                    : {}
+                }
+              >
+                {isLoading ? "Publishing Article..." : "Published Article"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="w-full text-center">
-        <button
-          className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
-            !isDraftExist || isButtonDisabled || isLoading ? "disabled" : ""
-          }`}
-          disabled={!isDraftExist || isButtonDisabled || isLoading}
-          onClick={saveData}
-          style={
-            !isDraftExist || isButtonDisabled || isLoading
-              ? { opacity: 0.5, cursor: "not-allowed" }
-              : {}
-          }
-        >
-          {isLoading ? "Publishing Article..." : "Published Article"}
-        </button>
       </div>
     </>
   );
