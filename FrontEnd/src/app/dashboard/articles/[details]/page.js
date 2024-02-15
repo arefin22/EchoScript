@@ -43,6 +43,12 @@ const page = ({ params }) => {
                 </span>
               ))}
             </p>
+            <h1>{articles?.texteditor?.articleTitle}</h1>
+            <img
+              src={articles?.texteditor?.thumbnail}
+              alt="Thumbnail"
+              className="image"
+            />
             {articles.texteditor.editorContent.blocks.map((block, index) => (
               <div key={index} className="block">
                 {block.type === "paragraph" && <p>{block.data.text}</p>}

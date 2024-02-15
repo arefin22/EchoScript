@@ -15,6 +15,7 @@ const Article = () => {
     const fetchArticles = async () => {
       try {
         const response = await axiosSecure.get(`/textArticleByEmail?email=${authEmail}`);
+        console.log(response);
         setArticles(response.data);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -24,6 +25,11 @@ const Article = () => {
     fetchArticles();
   }, []); 
 
+  const handleEdit = (article) => {
+    localStorage.setItem("editArticle", JSON.stringify(article));
+  };
+
+  // console.log(articles);
   return (
     <PrivateRoute>
       <div className="ml-10">
@@ -45,7 +51,7 @@ const Article = () => {
                   <td>{index + 1}</td>
                   <td>
                     <Link href={`/dashboard/articles/${article._id}`}>
-                      {article?.texteditor?.editorContent?.blocks[0].data?.text}
+                      {article?.texteditor?.articleTitle}
                     </Link>
                   </td>
                   <td>{article?.likes.length}</td>
@@ -55,13 +61,13 @@ const Article = () => {
                     <Link
                       href={`/dashboard/articleEdit/${article._id}`}
                       className="btn btn-sm btn-primary mr-2"
+                      onClick={() => handleEdit(article.texteditor)}
                     >
                       <FaEdit />
                     </Link>
                     <button className="btn btn-sm btn-error">
                       <FaTrash />
                     </button>
-                    
                   </td>
                 </tr>
               ))}
