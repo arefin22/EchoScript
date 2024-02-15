@@ -3,11 +3,18 @@
 import { axiosSecure } from '@/utils/useAxiosSecure';
 import toast from 'react-hot-toast';
 
-const Delete = async ({api,id}) => {
+const Delete =  ({api,id,setUpdate}) => {
   try {
-    const response = await axiosSecure.delete(`/${api}/${id}`);
-    toast.success('Article deleted successfully');
-    return response.data;
+     axiosSecure.delete(`/${api}/${id}`).then(res=>{
+     
+    console.log(res.data)
+    if(res.data.deletedCount>0){
+      toast.success('Article deleted successfully');
+      setUpdate(Date.now())
+    }
+     })
+    
+    
   } catch (error) {
     toast.error('Failed to delete article');
     throw error;
