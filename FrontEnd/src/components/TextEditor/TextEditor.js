@@ -28,7 +28,7 @@ const TextEditor = () => {
   const [mainTitle, setMainTitle] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const Router = useRouter();
 
   const initEditor = () => {
@@ -305,14 +305,17 @@ const TextEditor = () => {
       setThumbnailUrl(thumbnailUrl);
     }
   }, [thumbnail]);
-  
+
   const animatedComponents = makeAnimated();
 
-  const checkButtonState = (category, tags) => {
+
+  
+  const checkButtonState = (
+    category, tags) => {
     if (mainTitle && thumbnail && category && tags.length > 0) {
-      setIsButtonDisabled(false);
-    } else {
       setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
     }
   };
   const saveData = async () => {
@@ -444,14 +447,22 @@ const TextEditor = () => {
             <div className="w-full text-center">
               <button
                 className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
-                  !isDraftExist || isButtonDisabled || isLoading
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
                     ? "disabled"
                     : ""
                 }`}
-                disabled={!isDraftExist || isButtonDisabled || isLoading}
+                disabled={
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
+                }
                 onClick={saveData}
                 style={
-                  !isDraftExist || isButtonDisabled || isLoading
+                  !isDraftExist ||
+                  !isButtonDisabled ||
+                  isLoading 
                     ? { opacity: 0.5, cursor: "not-allowed" }
                     : {}
                 }
