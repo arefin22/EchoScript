@@ -9,15 +9,14 @@ import Title from "@/components/shared/ReusableComponents/Title";
 import cardData from "@/utils/cardData";
 import Link from "next/link";
 
-
 const page = () => {
   return (
     <div>
-      <Navbar/>
-      <Banner/>
+      <Navbar />
+      <Banner />
 
       <div className="container mx-auto my-24">
-        <Recomendation/>
+        <Recomendation />
       </div>
       {/* popular cards */}
       <div className="container mx-auto my-24">
@@ -46,13 +45,7 @@ const page = () => {
           </div>
         </div>
       </div>
-
-      <div className="container mx-auto my-24">
-        <Title title="Packages"></Title>
-        <Payment />
-      </div>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };
