@@ -7,9 +7,6 @@ const updateATextArticle = require("../../controllers/textArticle/updateATextArt
 const addAComment = require("../../controllers/textArticle/putComment");
 const putLikes = require("../../controllers/textArticle/putLikes");
 
-const addAComment = require("../../controllers/textArticle/putComment");
-const putLikes = require("../../controllers/textArticle/putLikes");
-
 
 const router = require("express").Router();
 
