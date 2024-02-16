@@ -1,31 +1,30 @@
 "use client";
 import EditData from "@/components/ui/EditData";
 import { useRouter } from "next/navigation";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-import {  FaUserEdit } from "react-icons/fa";
+import { FaUserEdit } from "react-icons/fa";
 
-const UserUpdate = ({id,setUpdate}) => {
-  
- 
+const UserUpdate = ({ id, setUpdate }) => {
   const router = useRouter();
-  const handleSubmit=(e)=>{
-    try{
+  const handleSubmit = (e) => {
+    try {
       e.preventDefault();
       const form = e.target;
       const email = form.email.value;
       const role = form.role.value;
       const membership = form.membership.value;
       const name = form.name.value;
-      const userData= {email , name , membership , role};
-      EditData({id:id,setUpdate:setUpdate,data:userData});
-      toast('user updated ')
-      router.replace('/dashboard/users')
+      const userData = { email, name, membership, role };
+      EditData({ id: id, setUpdate: setUpdate, data: userData });
+      toast("user updated ");
+      document.getElementById("my_modal_1").close();
+      router.replace("/dashboard");
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div>
@@ -61,12 +60,16 @@ const UserUpdate = ({id,setUpdate}) => {
             </div>
             <div className="space-y-6 my-6">
               <div className="md:w-2/5 mx-auto">
-                <input
-                placeholder="Role"
-                  type="text"
+                <label htmlFor="role">Role:</label>
+                <select
+                  id="role"
                   name="role"
-                  className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
-                />
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="writer">Writer</option>
+                  <option value="user">User</option>
+                </select>
               </div>
             </div>
 
@@ -75,13 +78,15 @@ const UserUpdate = ({id,setUpdate}) => {
             </div>
             <div className="space-y-6 my-6">
               <div className="md:w-2/5 mx-auto relative ">
-                <input
-                  type="text"
+                <label htmlFor="membership">Membership:</label>
+                <select
+                  id="membership"
                   name="membership"
-                  required
                   className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
-                  placeholder="membership"
-                />
+                >
+                  <option value="active">Active</option>
+                  <option value="suspended">Suspended</option>
+                </select>
               </div>
             </div>
             <div className="md:w-1/4 mx-auto">
