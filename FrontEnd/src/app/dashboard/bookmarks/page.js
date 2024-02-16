@@ -1,6 +1,8 @@
 "use client"
+
 import DeleteButton from '@/components/shared/DeleteButton/DeleteButton';
 import Loader from '@/components/shared/Loader/Loader';
+import Pagination from '@/components/shared/Pagination/Pagination';
 import Title from '@/components/shared/ReusableComponents/Title';
 import { useAuth } from '@/context/authContext';
 import useAxiosPublic from '@/utils/useAxiosPublic';
@@ -8,20 +10,33 @@ import React, { useEffect, useState } from 'react';
 
 const bookmarks = () => {
     const {user}=useAuth();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const itemsPerPage = 10;
     const axiosPublic = useAxiosPublic();
     const [bookmarkedData, setBookmarkedData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
     useEffect(() => {
       const fetchBookmarks = async () => {
           try {
               const articlesResponse = await axiosPublic.get('/bookmark');
-            
+              const articleCount = articlesResponse.data.length;
+        const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
+        setTotalPages(totalPagesCount);
 
-              const userArticles = articlesResponse.data.filter(article => article.user === user.email);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, articleCount);
+        
+        
+        const userArticles = articlesResponse.data.filter(article => article.user === user.email);
+        const articlesData = userArticles.slice(startIndex, endIndex);
               
 
-              setBookmarkedData(userArticles);
+              setBookmarkedData(articlesData);
              
               setLoading(false);
           } catch (error) {
@@ -89,7 +104,13 @@ const bookmarks = () => {
                                 ))}
                             </tbody>
                         </table>
-                      
+                        <div className="mt-2 flex justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
                     </div>
                 )}
                         

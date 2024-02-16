@@ -1,6 +1,7 @@
 "use client";
 import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 import Loader from "@/components/shared/Loader/Loader";
+import Pagination from "@/components/shared/Pagination/Pagination";
 import Title from "@/components/shared/ReusableComponents/Title";
 import UserUpdate from "@/components/shared/UserUpdate/UserUpdate";
 
@@ -10,18 +11,30 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
-  const [usersData, setUsersData] = useState([]);
   const [update, setUpdate] = useState(Date.now());
+  const [allUsersData, setAllUsersData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
   const axiosPublic = useAxiosPublic();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const usersResponse = await axiosPublic.get("/user");
+        const usersCount = usersResponse.data.length;
+        const totalPagesCount = Math.ceil(usersCount / itemsPerPage);
+        setTotalPages(totalPagesCount);
 
-        setUsersData(usersResponse.data);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, usersCount);
+        const usersData = usersResponse.data.slice(startIndex, endIndex);
 
+        setAllUsersData(usersData);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -30,10 +43,7 @@ const page = () => {
     };
 
     fetchUsers();
-    return () => {
-      // Any cleanup code if needed
-    };
-  }, [axiosPublic]);
+  }, [axiosPublic, currentPage]);
   if (loading) {
     return (
       <div>
@@ -54,23 +64,23 @@ const page = () => {
       <div className="flex flex-col  w-full">
         <div className="grid  card   rounded-box ">
           <div className="mx-auto">
-            {usersData?.length === 0 && <div>No Users found.</div>}
-            {usersData.length > 0 && (
+          {allUsersData?.length === 0 && <div>No Users found.</div>}
+          {allUsersData?.length > 0 && (
               <div className="overflow-x-auto">
                 <table className="table">
                   {/* head */}
                   <thead>
                     <tr>
                       <th>Photo</th>
-                      <th>Name</th>
                       <th>Email</th>
                       <th>Role</th>
+                      <th>Membership</th>
                       <th></th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {usersData?.reverse().map((user) => (
+                    {allUsersData?.map((user) => (
                       <tr key={user.id}>
                         <td>
                           <div className="flex items-center gap-3">
@@ -79,11 +89,14 @@ const page = () => {
                                 <img src={user.photoURL} alt="bookmark" />
                               </div>
                             </div>
+                            <div>
+                              <p>{user.name}</p>
+                            </div>
                           </div>
                         </td>
-                        <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
+                        <td> {user.membership}</td>
                         {/* <td></td>
                                         <td>
                                        
@@ -106,8 +119,16 @@ const page = () => {
                 </table>
               </div>
             )}
+             <div className="mt-2 flex justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
