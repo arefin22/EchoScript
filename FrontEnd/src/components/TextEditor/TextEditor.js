@@ -29,6 +29,7 @@ const TextEditor = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const user = useAuth();
   const Router = useRouter();
 
   const initEditor = () => {
@@ -215,7 +216,6 @@ const TextEditor = () => {
   // initEditor();
 
   // Preference part
-  const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
     { value: "Business", label: "Business" },
@@ -230,11 +230,46 @@ const TextEditor = () => {
     { value: "Vehicles", label: "Vehicles" },
   ];
 
-  // For tags section
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  // Main title section
+  const handleMainTextInputChange = (e) => {
+    const newMainTitle = e.target.value.trim();
+    setMainTitle(newMainTitle);
+
+    if (newMainTitle.length === 0) {
+      localStorage.removeItem("mainTitle");
+    } else {
+      localStorage.setItem("mainTitle", newMainTitle);
+    }
   };
 
+  // Article thumbnail section
+  const handleThumbnailChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    setThumbnail(selectedFile);
+    try {
+      const formData = new FormData();
+      formData.append("image", selectedFile);
+
+      const response = await axiosPublic.post(image_hosting_api, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Image uploaded successfully:", response.data);
+      setThumbnailUrl(response.data.data.display_url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  // Category select
+  const handleCategory = (selectedOption) => {
+    setCategory(selectedOption);
+    // checkButtonState(selectedOption, tags);
+  };
+  const animatedComponents = makeAnimated();
+
+  // For tags section
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
@@ -258,48 +293,18 @@ const TextEditor = () => {
     } else {
       localStorage.setItem("tags", JSON.stringify(updatedTags));
     }
-
-    if (updatedTags.length !== 1) {
-      setIsButtonDisabled(true);
-    }
   };
 
-  const handleMainTextInputChange = (e) => {
-    const newMainTitle = e.target.value.trim();
-    setMainTitle(newMainTitle);
-
-    if (newMainTitle.length === 0) {
-      localStorage.removeItem("mainTitle");
-    } else {
-      localStorage.setItem("mainTitle", newMainTitle);
-    }
-  };
-
-  const handleThumbnailChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    setThumbnail(selectedFile);
-    try {
-      const formData = new FormData();
-      formData.append("image", selectedFile);
-
-      const response = await axiosPublic.post(image_hosting_api, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Image uploaded successfully:", response.data);
-      setThumbnailUrl(response.data.data.display_url);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   // Load data from localStorage on component mount
   useEffect(() => {
     const storedMainTitle = localStorage.getItem("mainTitle");
     const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
-    const storedCategory = JSON.parse(localStorage.getItem("category")); // Deserialize category
-    const storedTags = JSON.parse(localStorage.getItem("tags")); // Deserialize tags
+    const storedCategory = JSON.parse(localStorage.getItem("category"));
+    const storedTags = JSON.parse(localStorage.getItem("tags"));
 
     if (storedMainTitle) setMainTitle(storedMainTitle);
     if (storedThumbnailUrl) setThumbnailUrl(storedThumbnailUrl);
@@ -315,12 +320,6 @@ const TextEditor = () => {
     if (tags.length > 0) localStorage.setItem("tags", JSON.stringify(tags));
   }, [mainTitle, thumbnailUrl, category, tags]);
 
-  // Category select
-  const handleCategory = (selectedOption) => {
-    setCategory(selectedOption);
-    // checkButtonState(selectedOption, tags);
-  };
-
   // Save thumbnail data to localStorage whenever it changes
   useEffect(() => {
     if (thumbnail) {
@@ -329,8 +328,6 @@ const TextEditor = () => {
       setThumbnailUrl(thumbnailUrl);
     }
   }, [thumbnail]);
-
-  const animatedComponents = makeAnimated();
 
   // Function to check if all required data is present in local storage
   const checkLocalStorageData = () => {
@@ -509,7 +506,7 @@ const TextEditor = () => {
                     : {}
                 }
               >
-                {isLoading ? "Publishing Article..." : "Published Article"}
+                {isLoading ? "Publishing Article..." : "Publish Article"}
               </button>
             </div>
           </div>
