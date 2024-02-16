@@ -1,4 +1,5 @@
-'use client'
+"use client";
+import Link from "next/link";
 import React from "react";
 
 const Payment = () => {
@@ -72,13 +73,15 @@ const Payment = () => {
                 <span className="text-xs">/{item.duration} month</span>
               </p>
               <hr />
-              <button
-                className="p-5 mt-10 rounded-xl drop-shadow-lg hover:drop-shadow-2xl text-white px-16"
-                style={{ backgroundColor: `${item.color}` }}
-                onClick={() => handlePayment(item)}
-              >
-                {item.button}
-              </button>
+              <Link href="/dashboard/payment">
+                <button
+                  className="p-5 mt-10 rounded-xl drop-shadow-lg hover:drop-shadow-2xl text-white px-16"
+                  style={{ backgroundColor: `${item.color}` }}
+                  onClick={() => handlePayment(item)}
+                >
+                  {item.button}
+                </button>
+              </Link>
             </div>
             <div className="flex flex-col gap-4">
               {item.features.map((feature, idx) => (

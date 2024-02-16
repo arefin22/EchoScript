@@ -19,6 +19,8 @@
     "@hookform/resolvers": "^3.3.4",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@reduxjs/toolkit": "^2.0.1",
+    "@stripe/react-stripe-js": "^2.5.0",
+    "@stripe/stripe-js": "^3.0.3",
     "axios": "^1.6.6",
     "babel-eslint": "^10.1.0",
     "date-fns": "^3.3.1",
