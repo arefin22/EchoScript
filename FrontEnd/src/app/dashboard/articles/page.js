@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import axios from "axios";
@@ -16,7 +16,9 @@ const Article = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axiosSecure.get(`/textArticleByEmail?email=${authEmail}`);
+        const response = await axiosSecure.get(
+          `/textArticleByEmail?email=${authEmail}`
+        );
         setArticles(response.data);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -24,7 +26,7 @@ const Article = () => {
     };
 
     fetchArticles();
-  }, []); 
+  }, []);
   // console.log(articles);
 
   return (
@@ -56,7 +58,7 @@ const Article = () => {
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td>
                     <Link
-                      href={`/dashboard/articles/${article._id}/edit`}
+                      href={`/dashboard/edit/${article._id}`}
                       className="btn btn-sm btn-primary mr-2"
                     >
                       <FaEdit />
