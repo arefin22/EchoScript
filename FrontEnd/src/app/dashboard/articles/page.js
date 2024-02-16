@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import axios from "axios";
 import { useAuth } from "@/context/authContext";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
@@ -10,15 +9,15 @@ import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
+  const [update,setUpdate]=useState(Date.now())
   const user = useAuth();
   const authEmail = user.user.email;
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axiosSecure.get(
-          `/textArticleByEmail?email=${authEmail}`
-        );
+        const response = await axiosSecure.get(`/textArticleByEmail?email=${authEmail}`);
+        console.log(response);
         setArticles(response.data);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -26,9 +25,18 @@ const Article = () => {
     };
 
     fetchArticles();
+
   }, []);
   // console.log(articles);
 
+  }, [update]); 
+
+  const handleEdit = (article) => {
+    localStorage.setItem("editArticle", JSON.stringify(article));
+  };
+
+
+  // console.log(articles);
   return (
     <PrivateRoute>
       <div className="ml-10">
@@ -50,23 +58,27 @@ const Article = () => {
                   <td>{index + 1}</td>
                   <td>
                     <Link href={`/dashboard/articles/${article._id}`}>
-                      {article?.texteditor?.editorContent?.blocks[0].data?.text}
+                      {article?.texteditor?.articleTitle}
                     </Link>
                   </td>
                   <td>{article?.likes.length}</td>
                   <td>{article?.comments.length}</td>
                   <td>{article?.texteditor?.tags.join(", ")}</td>
-                  <td>
+                  <td className="flex justify-center items-center">
                     <Link
+
                       href={`/dashboard/edit/${article._id}`}
+
+                      href={`/dashboard/articleEdit/${article._id}`}
+
                       className="btn btn-sm btn-primary mr-2"
+                      onClick={() => handleEdit(article.texteditor)}
                     >
                       <FaEdit />
                     </Link>
-                    {/* <button className="btn btn-sm btn-error">
-                      <FaTrash />
-                    </button> */}
-                    <DeleteButton api="/textArticle" id={article._id} />
+                    <button className="btn btn-sm btn-error">
+                   <DeleteButton setUpdate={setUpdate} api={"textArticle"} id={article._id}/>
+                    </button>
                   </td>
                 </tr>
               ))}
