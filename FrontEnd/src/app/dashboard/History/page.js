@@ -91,7 +91,7 @@ const HistoryPage = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="min-h-[70vh]">
                 {historyData?.reverse().map((history) => (
                   <tr key={history.id}>
                     <td>

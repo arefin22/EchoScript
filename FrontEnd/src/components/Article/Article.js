@@ -11,8 +11,10 @@ import { useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Link from "next/link";
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import BookmarkButton from "../BookmarkButton/BookmarkButton";
 
 const Article = ({
+  data,
   authorName,
   category,
   title,
@@ -58,7 +60,7 @@ const Article = ({
               </div>
             </Link>
             <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-              <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
+             <BookmarkButton data={data}/>
             </button>
           </div>
           <Link href={`/article/${articleId}`}>

@@ -44,12 +44,12 @@ const Article = () => {
     localStorage.setItem("editArticle", JSON.stringify(article));
   };
 
-  // console.log(articles);
+  
   return (
     <PrivateRoute>
-      <div className="ml-10">
+      <div className="ml-10 ">
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table ">
             <thead>
               <tr className="text-center">
                 <th>#</th>
@@ -60,7 +60,7 @@ const Article = () => {
                 <th>Details</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="min-h-[70vh]">
               {articles.map((article, index) => (
                 <tr key={article._id} className="text-center">
                   <td>{index + 1}</td>
