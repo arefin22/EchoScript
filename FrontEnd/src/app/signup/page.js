@@ -140,6 +140,7 @@ const SignUp = () => {
                 <div className="space-y-6 my-6">
                   <div className="md:w-2/5 mx-auto">
                     <input
+                    name="image"
                       type="file"
                       className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                     />
