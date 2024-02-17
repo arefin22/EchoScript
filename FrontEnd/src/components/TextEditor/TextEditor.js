@@ -29,6 +29,7 @@ const TextEditor = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const user = useAuth();
   const Router = useRouter();
 
   const initEditor = () => {
@@ -173,7 +174,7 @@ const TextEditor = () => {
         localStorage.setItem("editorDraft", JSON.stringify(content));
         setIsDraftExist(content.blocks.length > 0);
       } else {
-        console.error("Editor instance is undefined. Cannot save draft.");
+        // console.error("Editor instance is undefined. Cannot save draft.");
       }
     } catch (error) {
       console.error("Error saving draft:", error);
@@ -203,7 +204,10 @@ const TextEditor = () => {
     }
 
     return () => {
-      saveDraft();
+      // Check if the current route is not the articles route
+      if (window.location.pathname !== "/dashboard/articles") {
+        saveDraft();
+      }
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
@@ -212,7 +216,6 @@ const TextEditor = () => {
   // initEditor();
 
   // Preference part
-  const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
     { value: "Business", label: "Business" },
@@ -227,30 +230,19 @@ const TextEditor = () => {
     { value: "Vehicles", label: "Vehicles" },
   ];
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      const tag = inputValue.trim();
-      if (tag) {
-        setTags([...tags, tag]);
-        setInputValue("");
-        checkButtonState(category, [...tags, tag]);
-      }
+  // Main title section
+  const handleMainTextInputChange = (e) => {
+    const newMainTitle = e.target.value.trim();
+    setMainTitle(newMainTitle);
+
+    if (newMainTitle.length === 0) {
+      localStorage.removeItem("mainTitle");
+    } else {
+      localStorage.setItem("mainTitle", newMainTitle);
     }
   };
 
-  const handleRemoveTag = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-    checkButtonState(
-      category,
-      tags.filter((tag) => tag !== tagToRemove)
-    );
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
+  // Article thumbnail section
   const handleThumbnailChange = async (e) => {
     const selectedFile = e.target.files[0];
     setThumbnail(selectedFile);
@@ -270,12 +262,49 @@ const TextEditor = () => {
     }
   };
 
+  // Category select
+  const handleCategory = (selectedOption) => {
+    setCategory(selectedOption);
+    // checkButtonState(selectedOption, tags);
+  };
+  const animatedComponents = makeAnimated();
+
+  // For tags section
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const tag = inputValue.trim();
+      if (tag) {
+        const updatedTags = [...tags, tag];
+        setTags(updatedTags);
+        setInputValue("");
+        setIsButtonDisabled(false);
+      }
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove) => {
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
+    setTags(updatedTags);
+
+    if (updatedTags.length === 0) {
+      localStorage.removeItem("tags");
+      setIsButtonDisabled(true);
+    } else {
+      localStorage.setItem("tags", JSON.stringify(updatedTags));
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
   // Load data from localStorage on component mount
   useEffect(() => {
     const storedMainTitle = localStorage.getItem("mainTitle");
     const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
-    const storedCategory = JSON.parse(localStorage.getItem("category")); // Deserialize category
-    const storedTags = JSON.parse(localStorage.getItem("tags")); // Deserialize tags
+    const storedCategory = JSON.parse(localStorage.getItem("category"));
+    const storedTags = JSON.parse(localStorage.getItem("tags"));
 
     if (storedMainTitle) setMainTitle(storedMainTitle);
     if (storedThumbnailUrl) setThumbnailUrl(storedThumbnailUrl);
@@ -291,12 +320,6 @@ const TextEditor = () => {
     if (tags.length > 0) localStorage.setItem("tags", JSON.stringify(tags));
   }, [mainTitle, thumbnailUrl, category, tags]);
 
-  // category select
-  const handleCategory = (selectedOption) => {
-    setCategory(selectedOption);
-    checkButtonState(selectedOption, tags);
-  };
-
   // Save thumbnail data to localStorage whenever it changes
   useEffect(() => {
     if (thumbnail) {
@@ -306,18 +329,27 @@ const TextEditor = () => {
     }
   }, [thumbnail]);
 
-  const animatedComponents = makeAnimated();
+  // Function to check if all required data is present in local storage
+  const checkLocalStorageData = () => {
+    const storedMainTitle = localStorage.getItem("mainTitle");
+    const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
+    const storedCategory = JSON.parse(localStorage.getItem("category"));
+    const storedTags = JSON.parse(localStorage.getItem("tags"));
+    const storedEditorDraft = localStorage.getItem("editorDraft");
 
-
-  
-  const checkButtonState = (
-    category, tags) => {
-    if (mainTitle && thumbnail && category && tags.length > 0) {
-      setIsButtonDisabled(true);
-    } else {
-      setIsButtonDisabled(false);
-    }
+    // Check if all required data is present
+    return (
+      storedMainTitle &&
+      storedThumbnailUrl &&
+      storedCategory &&
+      storedTags &&
+      storedEditorDraft
+    );
   };
+
+  // Call the checkLocalStorageData function to determine button disabled state
+  const isButtonDisabledLocal = !checkLocalStorageData();
+
   const saveData = async () => {
     try {
       setIsLoading(true);
@@ -348,10 +380,13 @@ const TextEditor = () => {
           showConfirmButton: false,
           timer: 3000,
         });
-        localStorage.removeItem("editorDraft");
-        setCategory(null);
-        setTags([]);
         Router.replace("/dashboard/articles");
+        // Remove draft content from localStorage
+        localStorage.removeItem("editorDraft");
+        localStorage.removeItem("thumbnailUrl");
+        localStorage.removeItem("category");
+        localStorage.removeItem("mainTitle");
+        localStorage.removeItem("tags");
       } else {
         console.error("Failed to save data.");
       }
@@ -371,10 +406,11 @@ const TextEditor = () => {
             <div>
               <input
                 type="text"
+                onChange={handleMainTextInputChange}
                 placeholder="Type you Main Title (required)"
                 className="w-full mt-5 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 value={mainTitle}
-                onChange={(e) => setMainTitle(e.target.value)}
+                // onChange={(e) => setMainTitle(e.target.value)}
               />
             </div>
             <br />
@@ -423,7 +459,7 @@ const TextEditor = () => {
                   value={inputValue}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Type tags and press Enter or comma (required)"
+                  placeholder="Add tags and press Enter or comma (required)"
                   className="w-full mt-10 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 />
                 <div className="flex flex-row gap-5 p-5 w-full flex-wrap">
@@ -448,26 +484,29 @@ const TextEditor = () => {
               <button
                 className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
                   !isDraftExist ||
-                  !isButtonDisabled ||
-                  isLoading 
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
                     ? "disabled"
                     : ""
                 }`}
                 disabled={
                   !isDraftExist ||
-                  !isButtonDisabled ||
-                  isLoading 
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
                 }
                 onClick={saveData}
                 style={
                   !isDraftExist ||
-                  !isButtonDisabled ||
-                  isLoading 
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
                     ? { opacity: 0.5, cursor: "not-allowed" }
                     : {}
                 }
               >
-                {isLoading ? "Publishing Article..." : "Published Article"}
+                {isLoading ? "Publishing Article..." : "Publish Article"}
               </button>
             </div>
           </div>
