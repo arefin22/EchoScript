@@ -12,6 +12,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { MdArticle } from "react-icons/md";
 import { useAuth } from '@/context/authContext';
+import { FaUsers } from "react-icons/fa6";
 const DashNavbar = () => {
   const pathname = usePathname();
   const {user} =useAuth();
@@ -26,6 +27,10 @@ const DashNavbar = () => {
       path: "/dashboard/articles",
       route: "Articles",
       icon:GrArticle
+    },{
+      path:"/dashboard/users",
+      route:"Users",
+      icon:FaUsers
     },{
       path:"/dashboard/History",
       route:"History",

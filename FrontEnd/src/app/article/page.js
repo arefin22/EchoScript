@@ -8,11 +8,13 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
+import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
+  const [audience, setAudience] = useState([]);
 
   const category = [
     {
@@ -98,8 +100,18 @@ const ArticlePage = () => {
       setData(res.data);
     });
   }, [axiosSecure]);
+  useEffect(() => {
+    axiosSecure.get("/user").then((res) => {
 
+   console.log(res.data);
+   
+      setAudience(res.data);
+    });
+  }, [axiosSecure]);
+
+console.log(audience)
 console.log(data)
+
   return (
     <div>
       <Navbar />
@@ -134,34 +146,40 @@ console.log(data)
         >
           <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
         </button>
+       
       </div>
       <div className="py-10">
       {data?.map((item) => (
+        <div>
           <Article
+                 data={item}
             commentCount={item.comments.length}
             key={item._id}
-            authorName={item.texteditor.authorEmail}
+            authorName={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.name)     }
             category={item.texteditor.category}
-            title={item.texteditor?.editorContent?.blocks[0].data?.text}
+            title={item.texteditor?.articleTitle}
             // postedDate={item.postedDate}
+            
             view={item.likes.length}
+            likeCount={item.likes.length}
+            
             // article={item.article}
-            image={item.texteditor?.editorContent?.blocks.map((img)=>img.type ==="image" && img.data.file.url)}
+            image={item.texteditor?.thumbnail}
             // authorImage={item.authorImage}
-            // date={item.date}
-            // authorName={item.authorName}
             // category={item.category}
             // title={item.title}
             // postedDate={item.postedDate}
             // view={item.view}
             // article={item.article}
             // image={item.image}
-            // authorImage={item.authorImage}
+            authorImage={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.photoURL) }
             date={item.date}
             articleId={item._id}
-            // data={data}
-            // data={data}
+            
           />
+          
+         
+          </div>
         ))}
       </div>
       <hr className="border-1 border-[#F2F2F2] my-3" />

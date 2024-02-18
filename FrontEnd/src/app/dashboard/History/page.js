@@ -1,6 +1,8 @@
 "use client";
+
 import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 import Loader from "@/components/shared/Loader/Loader";
+import Pagination from "@/components/shared/Pagination/Pagination";
 import Title from "@/components/shared/ReusableComponents/Title";
 import { useAuth } from "@/context/authContext";
 import useAxiosPublic from "@/utils/useAxiosPublic";
@@ -9,19 +11,31 @@ import { useEffect, useState } from "react";
 
 const HistoryPage = () => {
   const { user } = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
   const axiosPublic = useAxiosPublic();
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   useEffect(() => {
     const fetchHistory = async () => {
       try {
         const historyResponse = await axiosPublic.get("/history");
+        const historyCount = historyResponse.data.length;
+        const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
+        setTotalPages(totalPagesCount);
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, historyCount);
         const userHistory = historyResponse.data.filter(
           (history) => history.user === user.email
-        );
-        setHistoryData(userHistory);
+          );
+          const historyData = userHistory.slice(startIndex, endIndex);
+        setHistoryData(historyData);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -77,7 +91,7 @@ const HistoryPage = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="min-h-[70vh]">
                 {historyData?.reverse().map((history) => (
                   <tr key={history.id}>
                     <td>
@@ -107,6 +121,13 @@ const HistoryPage = () => {
             </table>
           </div>
         )}
+        <div className="mt-2 flex justify-center">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
       </div>
     </div>
   );

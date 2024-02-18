@@ -14,13 +14,23 @@ import makeAnimated from "react-select/animated";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 
 const TextEditor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const ejInstance = useRef();
   const [isDraftExist, setIsDraftExist] = useState(false);
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
+
+  // Preference part
+  const [category, setCategory] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [tags, setTags] = useState([]);
+  const [mainTitle, setMainTitle] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const user = useAuth();
+  const Router = useRouter();
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -194,7 +204,10 @@ const TextEditor = () => {
     }
 
     return () => {
-      saveDraft();
+      // Check if the current route is not the articles route
+      if (window.location.pathname !== "/dashboard/articles") {
+        saveDraft();
+      }
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
@@ -203,16 +216,6 @@ const TextEditor = () => {
   // initEditor();
 
   // Preference part
-  const [category, setCategory] = useState(null);
-  const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState([]);
-  const [mainTitle, setMainTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const Router = useRouter();
-
-  const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
     { value: "Business", label: "Business" },
@@ -227,48 +230,22 @@ const TextEditor = () => {
     { value: "Vehicles", label: "Vehicles" },
   ];
 
-  const handleCategory = (selectedOption) => {
-    setCategory(selectedOption);
-    checkButtonState(selectedOption, tags);
-  };
-  const animatedComponents = makeAnimated();
+  // Main title section
+  const handleMainTextInputChange = (e) => {
+    const newMainTitle = e.target.value.trim();
+    setMainTitle(newMainTitle);
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      const tag = inputValue.trim();
-      if (tag) {
-        setTags([...tags, tag]);
-        setInputValue("");
-        checkButtonState(category, [...tags, tag]);
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-    checkButtonState(
-      category,
-      tags.filter((tag) => tag !== tagToRemove)
-    );
-  };
-
-  const checkButtonState = (category, tags) => {
-    if (mainTitle && thumbnail && category && tags.length > 0) {
-      setIsButtonDisabled(false);
+    if (newMainTitle.length === 0) {
+      localStorage.removeItem("mainTitle");
     } else {
-      setIsButtonDisabled(true);
+      localStorage.setItem("mainTitle", newMainTitle);
     }
   };
 
+  // Article thumbnail section
   const handleThumbnailChange = async (e) => {
     const selectedFile = e.target.files[0];
     setThumbnail(selectedFile);
-
     try {
       const formData = new FormData();
       formData.append("image", selectedFile);
@@ -278,16 +255,101 @@ const TextEditor = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
       console.log("Image uploaded successfully:", response.data);
-      // Set the uploaded image URL in state
       setThumbnailUrl(response.data.data.display_url);
-      // Handle the response here
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Handle error
     }
   };
+
+  // Category select
+  const handleCategory = (selectedOption) => {
+    setCategory(selectedOption);
+    // checkButtonState(selectedOption, tags);
+  };
+  const animatedComponents = makeAnimated();
+
+  // For tags section
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const tag = inputValue.trim();
+      if (tag) {
+        const updatedTags = [...tags, tag];
+        setTags(updatedTags);
+        setInputValue("");
+        setIsButtonDisabled(false);
+      }
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove) => {
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
+    setTags(updatedTags);
+
+    if (updatedTags.length === 0) {
+      localStorage.removeItem("tags");
+      setIsButtonDisabled(true);
+    } else {
+      localStorage.setItem("tags", JSON.stringify(updatedTags));
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const storedMainTitle = localStorage.getItem("mainTitle");
+    const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
+    const storedCategory = JSON.parse(localStorage.getItem("category"));
+    const storedTags = JSON.parse(localStorage.getItem("tags"));
+
+    if (storedMainTitle) setMainTitle(storedMainTitle);
+    if (storedThumbnailUrl) setThumbnailUrl(storedThumbnailUrl);
+    if (storedCategory) setCategory(storedCategory);
+    if (storedTags) setTags(storedTags);
+  }, []);
+
+  // Save data to localStorage whenever it changes
+  useEffect(() => {
+    if (mainTitle) localStorage.setItem("mainTitle", mainTitle);
+    if (thumbnailUrl) localStorage.setItem("thumbnailUrl", thumbnailUrl);
+    if (category) localStorage.setItem("category", JSON.stringify(category));
+    if (tags.length > 0) localStorage.setItem("tags", JSON.stringify(tags));
+  }, [mainTitle, thumbnailUrl, category, tags]);
+
+  // Save thumbnail data to localStorage whenever it changes
+  useEffect(() => {
+    if (thumbnail) {
+      const thumbnailUrl = URL.createObjectURL(thumbnail);
+      localStorage.setItem("thumbnailUrl", thumbnailUrl);
+      setThumbnailUrl(thumbnailUrl);
+    }
+  }, [thumbnail]);
+
+  // Function to check if all required data is present in local storage
+  const checkLocalStorageData = () => {
+    const storedMainTitle = localStorage.getItem("mainTitle");
+    const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
+    const storedCategory = JSON.parse(localStorage.getItem("category"));
+    const storedTags = JSON.parse(localStorage.getItem("tags"));
+    const storedEditorDraft = localStorage.getItem("editorDraft");
+
+    // Check if all required data is present
+    return (
+      storedMainTitle &&
+      storedThumbnailUrl &&
+      storedCategory &&
+      storedTags &&
+      storedEditorDraft
+    );
+  };
+
+  // Call the checkLocalStorageData function to determine button disabled state
+  const isButtonDisabledLocal = !checkLocalStorageData();
+
   const saveData = async () => {
     try {
       setIsLoading(true);
@@ -318,10 +380,13 @@ const TextEditor = () => {
           showConfirmButton: false,
           timer: 3000,
         });
-        localStorage.removeItem("editorDraft");
-        setCategory(null);
-        setTags([]);
         Router.replace("/dashboard/articles");
+        // Remove draft content from localStorage
+        localStorage.removeItem("editorDraft");
+        localStorage.removeItem("thumbnailUrl");
+        localStorage.removeItem("category");
+        localStorage.removeItem("mainTitle");
+        localStorage.removeItem("tags");
       } else {
         console.error("Failed to save data.");
       }
@@ -337,14 +402,15 @@ const TextEditor = () => {
         <div id="editorjs" className="lg:w-2/3"></div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
-            <h2>Select Title, Thumbnail, Category & Tags</h2>
+            <h2>Important Info</h2>
             <div>
               <input
                 type="text"
+                onChange={handleMainTextInputChange}
                 placeholder="Type you Main Title (required)"
                 className="w-full mt-5 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 value={mainTitle}
-                onChange={(e) => setMainTitle(e.target.value)}
+                // onChange={(e) => setMainTitle(e.target.value)}
               />
             </div>
             <br />
@@ -355,6 +421,7 @@ const TextEditor = () => {
                 className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 onChange={handleThumbnailChange}
               />
+              {thumbnailUrl && <img src={thumbnailUrl} alt="Thumbnail" />}
             </div>
             <div>
               <Select
@@ -392,7 +459,7 @@ const TextEditor = () => {
                   value={inputValue}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Type tags and press Enter or comma (required)"
+                  placeholder="Add tags and press Enter or comma (required)"
                   className="w-full mt-10 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 />
                 <div className="flex flex-row gap-5 p-5 w-full flex-wrap">
@@ -413,25 +480,37 @@ const TextEditor = () => {
                 </div>
               </div>
             </div>
+            <div className="w-full text-center">
+              <button
+                className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                    ? "disabled"
+                    : ""
+                }`}
+                disabled={
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                }
+                onClick={saveData}
+                style={
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                    ? { opacity: 0.5, cursor: "not-allowed" }
+                    : {}
+                }
+              >
+                {isLoading ? "Publishing Article..." : "Publish Article"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="w-full text-center">
-        <button
-          className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
-            !isDraftExist || isButtonDisabled || isLoading ? "disabled" : ""
-          }`}
-          disabled={!isDraftExist || isButtonDisabled || isLoading}
-          onClick={saveData}
-          style={
-            !isDraftExist || isButtonDisabled || isLoading
-              ? { opacity: 0.5, cursor: "not-allowed" }
-              : {}
-          }
-        >
-          {isLoading ? "Publishing Article..." : "Published Article"}
-        </button>
       </div>
     </>
   );

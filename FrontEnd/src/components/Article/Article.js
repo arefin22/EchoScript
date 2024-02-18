@@ -11,8 +11,10 @@ import { useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Link from "next/link";
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import BookmarkButton from "../BookmarkButton/BookmarkButton";
 
 const Article = ({
+  data,
   authorName,
   category,
   title,
@@ -24,7 +26,8 @@ const Article = ({
   authorImage,
   handleCollectComment,
   articleId,
-  commentCount
+  commentCount,
+  likeCount
 }) => {
 
 
@@ -42,7 +45,7 @@ const Article = ({
               <div className="flex gap-2 pb-4 items-center">
               
                 <Image
-                  src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
+                  src={authorImage}
                   height={40}
                   width={40}
                   className="rounded-[50%] h-12 w-12 object-cover"
@@ -57,7 +60,7 @@ const Article = ({
               </div>
             </Link>
             <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-              <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
+             <BookmarkButton data={data}/>
             </button>
           </div>
           <Link href={`/article/${articleId}`}>
@@ -78,7 +81,12 @@ const Article = ({
             </div>
             <div className="flex gap-3">
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
+                <div className="indicator">
                 <FaRegHeart fontSize={"1.5rem"} />
+                <span className="badge badge-sm indicator-item">
+                    {likeCount}
+                  </span>
+                </div>
               </button>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
@@ -97,7 +105,7 @@ const Article = ({
         <div>
           <Link href={`/article/${articleId}`}>
             <Image
-              src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
+              src={image}
               height={200}
               width={200}
               alt="article image"
