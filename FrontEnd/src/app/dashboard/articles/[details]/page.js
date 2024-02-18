@@ -1,12 +1,14 @@
 "use client";
 import { useAuth } from "@/context/authContext";
 import { axiosSecure } from "@/utils/useAxiosSecure";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect } from "react";
+import { useState } from "react";
 
 
 const page = ({ params }) => {
-  const [articles, setArticles] = useState();
-  const {user} = useAuth();
+  const [articles, setArticles] = useState(null);
+  const {user} = useAuth("");
 
   const id = params.details;
   console.log(id);
@@ -29,7 +31,7 @@ const page = ({ params }) => {
     if (id) {
       fetchArticleDetails();
     }
-  }, [id]);
+  }, [id, user]);
 
   return (
     <div>
@@ -51,10 +53,12 @@ const page = ({ params }) => {
               ))}
             </p>
             <h1>{articles?.texteditor?.articleTitle}</h1>
-            <img
+            <Image
               src={articles?.texteditor?.thumbnail}
               alt="Thumbnail"
               className="image"
+              width={200}
+              height={200}
             />
             {articles.texteditor.editorContent.blocks.map((block, index) => (
               <div key={index} className="block">
@@ -75,10 +79,12 @@ const page = ({ params }) => {
                   </ul>
                 )}
                 {block.type === "image" && (
-                  <img
-                    src={block.data.file.url}
+                  <Image
+                    src={block?.data?.file?.url}
                     alt={block.data.caption}
                     className="image"
+                    width={200}
+                    height={200}
                   />
                 )}
               </div>

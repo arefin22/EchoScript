@@ -51,7 +51,7 @@ const HistoryPage = () => {
     return () => {
       
     };
-  }, [axiosPublic, user]);
+  }, [axiosPublic, user, currentPage]);
 
   if (loading) {
     return <Loader />;
@@ -100,7 +100,12 @@ const HistoryPage = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
-                            <img src={history.userAvatar} alt="History" />
+                            <Image
+                              src={history?.userAvatar}
+                              alt="History"
+                              width={200}
+                              height={200}
+                            />
                           </div>
                         </div>
                         <div>
@@ -124,12 +129,12 @@ const HistoryPage = () => {
           </div>
         )}
         <div className="mt-2 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );

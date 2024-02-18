@@ -48,7 +48,7 @@ const Navbar = () => {
 
   useEffect(() => {
     axiosSecure.get("/article").then((res) => {
-      setData(res.data);
+      setData(res?.data);
     });
   }, [axiosSecure]);
 
@@ -143,7 +143,7 @@ const Navbar = () => {
                 {item.photoURL ? (
                   <Image
                     className="rounded-full"
-                    src={item.photoURL}
+                    src={item?.photoURL}
                     width={50}
                     height={50}
                     alt="user image"

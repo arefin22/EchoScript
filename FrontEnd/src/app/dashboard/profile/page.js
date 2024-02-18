@@ -11,7 +11,7 @@ const page = () => {
         <div className=''>
             <div className='flex flex-col items-center'>
                 <div className='w-[160px] avatar'>
-                    <Image src={user.photoURL} width='60' height='0'  className=' rounded-full' alt='Profile image' ></Image>
+                    <Image src={user?.photoURL} width='60' height='0'  className=' rounded-full' alt='Profile image' />
                 </div>
                 <div className="text-center mt-4">
                 <h2 className='text-xl font-bold'>{user.displayName}</h2>
