@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import { useAuth } from "@/context/authContext";
@@ -32,24 +32,33 @@ const Article = () => {
       const articleData = response.data.slice(startIndex, endIndex);
       setTotalPages(totalPagesCount);
       setArticles(articleData);
+      
+     
       } catch (error) {
         console.error("Error fetching articles:", error);
       }
     };
 
     fetchArticles();
+
+
+  }, []);
+  // console.log(articles);
+
+  }, [update]); 
+
   }, [update, currentPage]); 
+
 
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
   };
 
-  // console.log(articles);
   return (
     <PrivateRoute>
-      <div className="ml-10">
+      <div className="ml-10 ">
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table ">
             <thead>
               <tr className="text-center">
                 <th>#</th>
@@ -60,7 +69,7 @@ const Article = () => {
                 <th>Details</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="min-h-[70vh]">
               {articles.map((article, index) => (
                 <tr key={article._id} className="text-center">
                   <td>{index + 1}</td>
@@ -74,7 +83,11 @@ const Article = () => {
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td className="flex justify-center items-center">
                     <Link
+
+                      href={`/dashboard/edit/${article._id}`}
+
                       href={`/dashboard/articleEdit/${article._id}`}
+
                       className="btn btn-sm btn-primary mr-2"
                       onClick={() => handleEdit(article.texteditor)}
                     >

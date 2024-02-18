@@ -79,28 +79,27 @@ const page = () => {
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="min-h-[70vh]">
                     {allUsersData?.map((user) => (
-                      <tr key={user.id}>
+                      <tr key={user._id}>
                         <td>
                           <div className="flex items-center gap-3">
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
-                                <img src={user.photoURL} alt="bookmark" />
+                                <img src={user.photoURL} alt="user" />
+                                
                               </div>
                             </div>
                             <div>
                               <p>{user.name}</p>
+                              
                             </div>
                           </div>
                         </td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
                         <td> {user.membership}</td>
-                        {/* <td></td>
-                                        <td>
-                                       
-                                        </td> */}
+                        
                         <td className="flex justify-center items-center">
                           <button className="btn btn-sm btn-primary mr-2">
                             <UserUpdate id={user._id} setUpdate={setUpdate} />

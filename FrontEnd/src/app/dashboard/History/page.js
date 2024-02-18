@@ -25,6 +25,7 @@ const HistoryPage = () => {
     const fetchHistory = async () => {
       try {
         const historyResponse = await axiosPublic.get("/history");
+        
         const historyCount = historyResponse.data.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -34,6 +35,7 @@ const HistoryPage = () => {
         const userHistory = historyResponse.data.filter(
           (history) => history.user === user.email
           );
+          console.log(userHistory)
           const historyData = userHistory.slice(startIndex, endIndex);
         setHistoryData(historyData);
         setLoading(false);
@@ -45,9 +47,9 @@ const HistoryPage = () => {
 
     fetchHistory();
 
-    // Cleanup function
+    
     return () => {
-      // Any cleanup code if needed
+      
     };
   }, [axiosPublic, user]);
 
@@ -91,7 +93,7 @@ const HistoryPage = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="min-h-[70vh]">
                 {historyData?.reverse().map((history) => (
                   <tr key={history.id}>
                     <td>
