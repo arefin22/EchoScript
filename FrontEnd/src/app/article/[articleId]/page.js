@@ -144,22 +144,21 @@ const SingleArticle = ({ params }) => {
 
  
   <div>
-    <div className=" flex items-center pl-2 mb-6">
+   <div className=" flex items-center pl-2 mb-6">
               <div className="rounded-full overflow-hidden border-2 border-white mr-2">
                 <Image
-                  src={authorImage}
+                  src={audience.filter((user)=> user.email===data?.texteditor?.authorEmail).map((author)=>author.photoURL) }
                   alt="Author"
                   width={60}
                   height={60}
-          d:
-          d        objectFit="cover"
+                  objectFit="cover"
                 />
               </div>
 
               <div className="flex flex-col">
                 <div className="flex gap-2">
                   <h2 className="text-[16px] font-bold ">
-                    {data?.texteditor?.authorEmail}
+                    {audience.filter((user)=>user.email===data?.texteditor?.authorEmail).map((author)=>author.name)    }
                   </h2>
                   <button className="text-gray-500 font-semibold text-[16px] ">
                   Follow
@@ -173,7 +172,8 @@ const SingleArticle = ({ params }) => {
 
               
             </div>
-            </div>
+           
+    </div>
 </div>
             
             <div className="flex justify-between border-t border-gray-300 pt-2">
