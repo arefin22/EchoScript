@@ -25,6 +25,7 @@ const HistoryPage = () => {
     const fetchHistory = async () => {
       try {
         const historyResponse = await axiosPublic.get("/history");
+        console.log("historydata:", historyResponse.data)
         const historyCount = historyResponse.data.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -34,6 +35,7 @@ const HistoryPage = () => {
         const userHistory = historyResponse.data.filter(
           (history) => history.user === user.email
           );
+          console.log(userHistory)
           const historyData = userHistory.slice(startIndex, endIndex);
         setHistoryData(historyData);
         setLoading(false);

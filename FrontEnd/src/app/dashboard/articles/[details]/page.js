@@ -1,10 +1,12 @@
 "use client";
+import { useAuth } from "@/context/authContext";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import { useEffect, useState } from "react";
 
 
 const page = ({ params }) => {
   const [articles, setArticles] = useState();
+  const {user} = useAuth();
 
   const id = params.details;
   console.log(id);
@@ -12,8 +14,13 @@ const page = ({ params }) => {
     const fetchArticleDetails = async () => {
       try {
         const response = await axiosSecure.get(`/textArticle/${id}`);
-        console.log(response.data);
+       const articleData =response.data
         setArticles(response.data);
+        const historyData={user:user.email,article:articleData}
+        if (user) {
+          axiosSecure.post("/history", historyData);
+         console.log("Article data saved to history API");
+       }
       } catch (error) {
         console.error("Error fetching article details:", error);
       }
