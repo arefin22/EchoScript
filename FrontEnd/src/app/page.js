@@ -1,3 +1,4 @@
+"use client"
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";

@@ -24,7 +24,7 @@ import {
   TwitterIcon,
 } from "react-share";
 
-const SingleArticle = ({ params }) => {
+const SingleArticle =  ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
@@ -33,10 +33,17 @@ const SingleArticle = ({ params }) => {
   const { user } = useAuth();
   const maxLength = 100;
   const id = params.articleId;
+  
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
+      const articleData=res.data
+      const historyData={user:user.email,article:articleData}
       setData(res.data);
+      if (user) {
+         axiosSecure.post("/history",historyData);
+        console.log("Article data saved to history API");
+      }
     });
   }, [forceUpdate]);
 
