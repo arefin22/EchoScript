@@ -32,6 +32,7 @@ const SingleArticle = ({ params }) => {
   const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
   const { user } = useAuth();
   const maxLength = 100;
+  const [audience, setAudience] = useState([]);
   const id = params.articleId;
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
@@ -39,7 +40,15 @@ const SingleArticle = ({ params }) => {
       setData(res.data);
     });
   }, [forceUpdate]);
+  useEffect(() => {
+    axiosSecure.get("/user").then((res) => {
 
+   console.log(res.data);
+   
+      setAudience(res.data);
+    });
+  }, [axiosSecure]);
+  console.log(audience)
   console.log(data);
 
   const handleInputChange = (e) => {
@@ -132,7 +141,8 @@ const SingleArticle = ({ params }) => {
                 {data?.texteditor?.articleTitle}
               </div>
               <div className=" mt-10 mb-5">
-  {/* <div> </div> */}
+
+ 
   <div>
     <div className=" flex items-center pl-2 mb-6">
               <div className="rounded-full overflow-hidden border-2 border-white mr-2">
@@ -141,7 +151,8 @@ const SingleArticle = ({ params }) => {
                   alt="Author"
                   width={60}
                   height={60}
-                  objectFit="cover"
+          d:
+          d        objectFit="cover"
                 />
               </div>
 
@@ -161,7 +172,8 @@ const SingleArticle = ({ params }) => {
               </div>
 
               
-            </div></div>
+            </div>
+            </div>
 </div>
             
             <div className="flex justify-between border-t border-gray-300 pt-2">
