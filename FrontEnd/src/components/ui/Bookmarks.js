@@ -1,5 +1,4 @@
 
-"use client"
 import { axiosSecure } from '@/utils/useAxiosSecure';
 import toast from 'react-hot-toast';
 

@@ -14,6 +14,7 @@ import makeAnimated from "react-select/animated";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Editor = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -211,7 +212,7 @@ const Editor = () => {
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
-  }, []);
+  }, [initEditor]);
 
   // initEditor();
 
@@ -421,7 +422,14 @@ const Editor = () => {
                 className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 onChange={handleThumbnailChange}
               />
-              {thumbnailUrl && <img src={thumbnailUrl} alt="Thumbnail" />}
+              {thumbnailUrl && (
+                <Image
+                  src={thumbnailUrl}
+                  alt="Thumbnail"
+                  width={200}
+                  height={200}
+                />
+              )}
             </div>
             <div>
               <Select

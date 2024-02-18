@@ -7,10 +7,12 @@ import Title from "@/components/shared/ReusableComponents/Title";
 import { useAuth } from "@/context/authContext";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+
 
 const bookmarks = () => {
-  const { user } = useAuth();
+  const { user } = useAuth("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
@@ -52,7 +54,7 @@ const bookmarks = () => {
     return () => {
       // Any cleanup code if needed
     };
-  }, [axiosPublic, user]);
+  }, [axiosPublic, user, currentPage]);
 
   if (loading) {
     return (
@@ -75,7 +77,7 @@ const bookmarks = () => {
       <div className="flex flex-col  w-full">
         <div className="grid h-20 card min-h-[580px] bg-base-300 rounded-box ">
           <div className="w-2/3 h-24 mx-auto">
-            <h1>{user.displayName}'s bookmarked articles:</h1>
+            <h1>{user.displayName}&apos;s bookmarked articles:</h1>
             {bookmarkedData?.length === 0 && (
               <div>No bookmarked articles found.</div>
             )}

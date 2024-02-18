@@ -33,7 +33,7 @@ const FeatureCard = () => {
           <div>
             <Image
               className="w-36  mx-auto"
-              src={item.icon}
+              src={item?.icon}
               width={200}
               height={200}
               alt="feature icon"
