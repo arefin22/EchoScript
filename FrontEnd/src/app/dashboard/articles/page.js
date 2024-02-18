@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import { useAuth } from "@/context/authContext";
@@ -38,13 +38,20 @@ const Article = () => {
     };
 
     fetchArticles();
+
+
+  }, []);
+  // console.log(articles);
+
+  }, [update]); 
+
   }, [update, currentPage]); 
+
 
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
   };
 
-  
   return (
     <PrivateRoute>
       <div className="ml-10 ">
@@ -74,7 +81,11 @@ const Article = () => {
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td className="flex justify-center items-center">
                     <Link
+
+                      href={`/dashboard/edit/${article._id}`}
+
                       href={`/dashboard/articleEdit/${article._id}`}
+
                       className="btn btn-sm btn-primary mr-2"
                       onClick={() => handleEdit(article.texteditor)}
                     >
