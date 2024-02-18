@@ -32,6 +32,8 @@ const Article = () => {
       const articleData = response.data.slice(startIndex, endIndex);
       setTotalPages(totalPagesCount);
       setArticles(articleData);
+      
+     
       } catch (error) {
         console.error("Error fetching articles:", error);
       }

@@ -31,10 +31,7 @@ const Article = ({
 }) => {
 
 
-    // const formatDateAgo = (date) => {
-    //   const dd = new Date(date);
-    //   return formatDistanceToNow(dd);
-    // };
+    
 
   return (
     <div className="w-3/4 mx-auto">

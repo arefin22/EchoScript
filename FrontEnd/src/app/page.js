@@ -1,3 +1,4 @@
+"use client"
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
@@ -8,6 +9,7 @@ import Navbar from "@/components/shared/Navbar";
 import Title from "@/components/shared/ReusableComponents/Title";
 import cardData from "@/utils/cardData";
 import Link from "next/link";
+
 
 
 const page = () => {
