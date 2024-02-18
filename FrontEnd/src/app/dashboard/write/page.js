@@ -1,11 +1,9 @@
-"use client"
-import TextEditor from '@/components/TextEditor/TextEditor';
-import React from 'react';
+import NewWrite from "@/components/newWrite/NewWrite";
 
 const page = () => {
     return (
         <div>
-            <TextEditor/>
+        <NewWrite/>
         </div>
     );
 };
