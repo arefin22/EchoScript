@@ -7,7 +7,7 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
-import "./TextEditor.css";
+// import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -15,7 +15,7 @@ import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
-const TextEditor = () => {
+const Editor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const ejInstance = useRef();
   const [isDraftExist, setIsDraftExist] = useState(false);
@@ -232,7 +232,7 @@ const TextEditor = () => {
 
   // Main title section
   const handleMainTextInputChange = (e) => {
-    const newMainTitle = e.target.value.trim();
+    const newMainTitle = e.target.value;
     setMainTitle(newMainTitle);
 
     if (newMainTitle.length === 0) {
@@ -516,4 +516,4 @@ const TextEditor = () => {
   );
 };
 
-export default TextEditor;
+export default Editor;

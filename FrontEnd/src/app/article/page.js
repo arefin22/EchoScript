@@ -79,9 +79,9 @@ const ArticlePage = () => {
     },
   ];
 
-  const handleCategory = (e) => {
-    console.log(e);
-  };
+  // const handleCategory = (e) => {
+  //   console.log(e);
+  // };
 
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
@@ -96,17 +96,21 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
 
+   console.log(res.data);
       setData(res.data);
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
 
+   console.log(res.data);
    
       setAudience(res.data);
     });
   }, [axiosSecure]);
 
+console.log(audience)
+console.log(data)
 
   return (
     <div>
@@ -142,39 +146,38 @@ const ArticlePage = () => {
         >
           <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
         </button>
-       
       </div>
       <div className="py-10">
-      {data?.map((item) => (
-        <div>
-          <Article
-                 data={item}
-            commentCount={item.comments.length}
-            key={item._id}
-            authorName={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.name)     }
-            category={item.texteditor.category}
-            title={item.texteditor?.articleTitle}
-            // postedDate={item.postedDate}
-            
-            view={item.likes.length}
-            likeCount={item.likes.length}
-            
-            // article={item.article}
-            image={item.texteditor?.thumbnail}
-            // authorImage={item.authorImage}
-            // category={item.category}
-            // title={item.title}
-            // postedDate={item.postedDate}
-            // view={item.view}
-            // article={item.article}
-            // image={item.image}
-            authorImage={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.photoURL) }
-            date={item.date}
-            articleId={item._id}
-            
-          />
-          
-         
+        {data?.map((item, idx) => (
+          <div key={idx}>
+            <Article
+              data={item}
+              commentCount={item.comments.length}
+              key={item._id}
+              authorName={audience
+                .filter((user) => user.email === item.texteditor.authorEmail)
+                .map((author) => author.name)}
+              category={item.texteditor.category}
+              title={item.texteditor?.articleTitle}
+              // postedDate={item.postedDate}
+
+              view={item.likes.length}
+              likeCount={item.likes.length}
+              // article={item.article}
+              image={item?.texteditor?.thumbnail}
+              // authorImage={item.authorImage}
+              // category={item.category}
+              // title={item.title}
+              // postedDate={item.postedDate}
+              // view={item.view}
+              // article={item.article}
+              // image={item.image}
+              authorImage={audience
+                .filter((user) => user?.email === item?.texteditor?.authorEmail)
+                .map((author) => author?.photoURL)}
+              date={item.date}
+              articleId={item._id}
+            />
           </div>
         ))}
       </div>

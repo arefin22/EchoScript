@@ -126,7 +126,7 @@ const AboutPage = () => {
                       className="mx-auto w-28 h-28 hover:scale-105 transition-all duration-200"
                       width={200}
                       height={200}
-                      src={item.img}
+                      src={item?.img}
                       alt=""
                     />
                     <h2 className="text-green text-2xl">{item.title}</h2>

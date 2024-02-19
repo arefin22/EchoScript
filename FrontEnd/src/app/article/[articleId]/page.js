@@ -24,7 +24,7 @@ import {
   TwitterIcon,
 } from "react-share";
 
-const SingleArticle =  ({ params }) => {
+const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [text, setText] = useState("");
@@ -33,19 +33,19 @@ const SingleArticle =  ({ params }) => {
   const { user } = useAuth();
   const maxLength = 100;
   const id = params.articleId;
-  
+
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
-      const articleData=res.data
-      const historyData={user:user.email,article:articleData}
+      const articleData = res.data;
+      const historyData = { user: user.email, article: articleData };
       setData(res.data);
       if (user) {
-         axiosSecure.post("/history",historyData);
+        axiosSecure.post("/history", historyData);
         console.log("Article data saved to history API");
       }
     });
-  }, [forceUpdate]);
+  }, [forceUpdate, axiosSecure, id, user]);
 
   console.log(data);
 
@@ -98,11 +98,13 @@ const SingleArticle =  ({ params }) => {
       image: user?.photoURL || "",
       likeCount: 1,
     };
-    axiosSecure.put(`/textArticle/${comment._id}`, likeOfComment).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        setForceUpdate(Date.now());
-      }
-    });
+    axiosSecure
+      .put(`/textArticle/${comment._id}`, likeOfComment)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setForceUpdate(Date.now());
+        }
+      });
   };
 
   const handleShare = () => {
@@ -117,11 +119,13 @@ const SingleArticle =  ({ params }) => {
       name: user?.displayName,
       like: 1,
     };
-    axiosSecure.put(`/textArticle/${item?._id}/like`, likeDetails).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        setForceUpdate(Date.now());
-      }
-    });
+    axiosSecure
+      .put(`/textArticle/${item?._id}/like`, likeDetails)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          setForceUpdate(Date.now());
+        }
+      });
   };
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
@@ -132,45 +136,43 @@ const SingleArticle =  ({ params }) => {
       <div>
         {data && (
           <div className="w-[800px] mx-auto  ">
-              <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
-                {data?.texteditor?.category}
-              </div>
-              <div className=" text-black text-[40px] mt-7 font-bold ">
-                {data?.texteditor?.articleTitle}
-              </div>
-              <div className=" mt-10 mb-5">
-  {/* <div> </div> */}
-  <div>
-    <div className=" flex items-center pl-2 mb-6">
-              <div className="rounded-full overflow-hidden border-2 border-white mr-2">
-                <Image
-                  src={authorImage}
-                  alt="Author"
-                  width={60}
-                  height={60}
-                  objectFit="cover"
-                />
-              </div>
+            <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
+              {data?.texteditor?.category}
+            </div>
+            <div className=" text-black text-[40px] mt-7 font-bold ">
+              {data?.texteditor?.articleTitle}
+            </div>
+            <div className=" mt-10 mb-5">
+              {/* <div> </div> */}
+              <div>
+                <div className=" flex items-center pl-2 mb-6">
+                  <div className="rounded-full overflow-hidden border-2 border-white mr-2">
+                    <Image
+                      src={authorImage}
+                      alt="Author"
+                      width={60}
+                      height={60}
+                      objectFit="cover"
+                    />
+                  </div>
 
-              <div className="flex flex-col">
-                <div className="flex gap-2">
-                  <h2 className="text-[16px] font-bold ">
-                    {data?.texteditor?.authorEmail}
-                  </h2>
-                  <button className="text-gray-500 font-semibold text-[16px] ">
-                  Follow
-                </button>
-                  
+                  <div className="flex flex-col">
+                    <div className="flex gap-2">
+                      <h2 className="text-[16px] font-bold ">
+                        {data?.texteditor?.authorEmail}
+                      </h2>
+                      <button className="text-gray-500 font-semibold text-[16px] ">
+                        Follow
+                      </button>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">22-oct-24</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                <p className="text-sm text-gray-500">22-oct-24</p>
               </div>
-              </div>
+            </div>
 
-              
-            </div></div>
-</div>
-            
             <div className="flex justify-between border-t border-gray-300 pt-2">
               <div className="flex mb-4">
                 <div className="mr-12 flex items-center gap-2">
@@ -194,10 +196,7 @@ const SingleArticle =  ({ params }) => {
                     <label htmlFor="my-drawer" className="">
                       <div className="">
                         <span className="flex items-center justify-center gap-1">
-                          <FaComment 
-                          size={24}
-                          color='gray'
-                          />
+                          <FaComment size={24} color="gray" />
                         </span>
                       </div>
                     </label>
@@ -263,7 +262,7 @@ const SingleArticle =  ({ params }) => {
                                   height={50}
                                   className="w-12 h-12 object-cover rounded-full"
                                   alt="img"
-                                  src={comment.image}
+                                  src={comment?.image}
                                 />
                                 <div>
                                   <p className="font-semibold">
@@ -300,16 +299,18 @@ const SingleArticle =  ({ params }) => {
                 <TextToSpeech
                   title={data?.texteditor?.articleTitle}
                   desc={data?.texteditor?.editorContent?.blocks.map((block) => {
-                    {block.type === "paragraph" && <p>{block.data.text}</p>}
+                    {
+                      block.type === "paragraph" && <p>{block.data.text}</p>;
+                    }
                   })}
                 />
               </div>
               <div>
                 <div className="flex gap-1">
-                  <FaBookmark  color='gray' size={24} />
+                  <FaBookmark color="gray" size={24} />
                   <button onClick={handleShare}>
-                    <FaShareAlt  color='gray' size={24} />
-                  </button> 
+                    <FaShareAlt color="gray" size={24} />
+                  </button>
                   {isShareDropdownOpen && (
                     <div className="absolute right-0 mt-6 p-2 rounded shadow-md bg-white w-52 h-28">
                       <p className="text-2xl font font-semibold text-center">
@@ -317,7 +318,7 @@ const SingleArticle =  ({ params }) => {
                       </p>
                       <div className="flex justify-center gap-2 items-center">
                         <FacebookShareButton url={shareUrl}>
-                          <FacebookIcon size={40}  round={true} />
+                          <FacebookIcon size={40} round={true} />
                         </FacebookShareButton>
                         <WhatsappShareButton url={shareUrl}>
                           <WhatsappIcon size={40} round={true} />
@@ -328,82 +329,72 @@ const SingleArticle =  ({ params }) => {
                       </div>
                     </div>
                   )}
-                  <FaEllipsisH  color='gray' size={24} />
+                  <FaEllipsisH color="gray" size={24} />
                 </div>
               </div>
             </div>
             <div className="mb-12  border-t border-gray-300">
-             <div className="mt-5 mx-auto">
-             {data?.texteditor?.editorContent?.blocks.map((block, idx) => (
-                <div key={idx} className="block">
-                <div className="text-[16px]">
-                {block.type === "paragraph" && <p>{block.data.text}</p>}
-                </div>
-                  <div className="text-xl mt-3">
-                  {block.type === "header" ? (
-        <>
-          {block.data.level === 1 && <h1>{block.data.text}</h1>}
-          {block.data.level === 2 && <h2>{block.data.text}</h2>}
-          {block.data.level === 3 && <h3>{block.data.text}</h3>}
-          {block.data.level === 4 && <h4>{block.data.text}</h4>}
-          {block.data.level === 5 && <h5>{block.data.text}</h5>}
-          {block.data.level === 6 && <h6>{block.data.text}</h6>}
-        </>
-      ) : null}
+              <div className="mt-5 mx-auto">
+                {data?.texteditor?.editorContent?.blocks.map((block, idx) => (
+                  <div key={idx} className="block">
+                    <div className="text-[16px]">
+                      {block.type === "paragraph" && <p>{block.data.text}</p>}
+                    </div>
+                    <div className="text-xl mt-3">
+                      {block.type === "header" ? (
+                        <>
+                          {block.data.level === 1 && <h1>{block.data.text}</h1>}
+                          {block.data.level === 2 && <h2>{block.data.text}</h2>}
+                          {block.data.level === 3 && <h3>{block.data.text}</h3>}
+                          {block.data.level === 4 && <h4>{block.data.text}</h4>}
+                          {block.data.level === 5 && <h5>{block.data.text}</h5>}
+                          {block.data.level === 6 && <h6>{block.data.text}</h6>}
+                        </>
+                      ) : null}
+                    </div>
+
+                    {block.type === "quote" && (
+                      <blockquote>
+                        {block.data.text}
+                        <cite>{block.data.caption}</cite>
+                      </blockquote>
+                    )}
+                    {block.type === "list" && (
+                      <ul>
+                        {block.data.items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                    <div className="flex justify-center items-center mt-5 mb-4">
+                      {block.type === "image" && (
+                        <Image
+                          src={block?.data?.file?.url}
+                          alt={block.data.caption}
+                          className="image"
+                          width={200}
+                          height={200}
+                        />
+                      )}
+                    </div>
                   </div>
-                  
-                  {block.type === "quote" && (
-                    <blockquote>
-                      {block.data.text}
-                      <cite>{block.data.caption}</cite>
-                    </blockquote>
-                  )}
-                  {block.type === "list" && (
-                    <ul>
-                      {block.data.items.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
-                  <div className='flex justify-center items-center mt-5 mb-4'>
-                  {block.type === "image" && (
-                    <img
-                      src={block.data.file.url}
-                      alt={block.data.caption}
-                      className="image"
-                    />
-                  )}
-                  </div>
-                </div>
-              ))}
-             </div>
+                ))}
+              </div>
             </div>
 
-            {/* article image */}
-            {/* <div className="mb-12">
-          <img
-            src={articleImage}
-            alt="Article Image"
-            style={{
-              width: "100%",
-              height: "450px",
-              objectFit: "cover",
-            }}
-          />
-        </div> */}
-            {/* <div className="mb-4">
-          <p>{contentSecondHalf}</p>
-        </div> */}
-       
-        <div className="flex gap-2">
-          {data?.texteditor?.tags?.map((tag)=><div className="border rounded-full mt-4
-         bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center  ">
-         {tag}
-         </div>)}
-        </div>
-     
+
+            <div className="flex gap-2">
+              {data?.texteditor?.tags?.map((tag, idx) => (
+                <div
+                  key={idx}
+                  className="border rounded-full mt-4
+         bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center  "
+                >
+                  {tag}
+                </div>
+              ))}
+            </div>
           </div>
-          
         )}
       </div>
       <Footer />
