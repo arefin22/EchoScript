@@ -42,12 +42,11 @@ const Article = () => {
     fetchArticles();
 
 
-  }, []);
   // console.log(articles);
 
   }, [update]); 
 
-  }, [update, currentPage]); 
+  // }, [update, currentPage]); 
 
 
   const handleEdit = (article) => {
@@ -86,7 +85,7 @@ const Article = () => {
 
                       href={`/dashboard/edit/${article._id}`}
 
-                      href={`/dashboard/articleEdit/${article._id}`}
+                      // href={`/dashboard/articleEdit/${article._id}`}
 
                       className="btn btn-sm btn-primary mr-2"
                       onClick={() => handleEdit(article.texteditor)}
