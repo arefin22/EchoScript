@@ -7,7 +7,6 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
-// import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
