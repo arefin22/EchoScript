@@ -166,7 +166,7 @@ const ArticleEdit = ({ params }) => {
     });
   };
 
-  console.log(ejInstance);
+  console.log(params.edit);
   const saveDraft = async () => {
     try {
       if (ejInstance.current) {
@@ -217,7 +217,7 @@ const ArticleEdit = ({ params }) => {
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
-  }, [initEditor]);
+  }, []);
 
   // initEditor();
 
@@ -346,7 +346,7 @@ const ArticleEdit = ({ params }) => {
     const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
     const storedCategoryEdit = JSON.parse(localStorage.getItem("categoryEdit"));
     const storedTagsEdit = JSON.parse(localStorage.getItem("tagsEdit"));
-    const storedEditorDraft = localStorage.getItem("editorDraft");
+    const storedEditorDraft = localStorage.getItem("editArticle");
 
     // Check if all required data is present
     return (
@@ -366,7 +366,7 @@ const ArticleEdit = ({ params }) => {
       setIsLoading(true);
 
       // Get editor content from local storage
-      const editorContent = JSON.parse(localStorage.getItem("editorDraft"));
+      const editorContent = JSON.parse(localStorage.getItem("editArticle"));
 
       const articleInfo = {
         articleTitle: mainTitleEdit,
@@ -378,9 +378,12 @@ const ArticleEdit = ({ params }) => {
 
       const texteditor = { editorContent, ...articleInfo };
       // Send data to the server
-      const response = await axiosPublic.post("/textArticle", {
-        texteditor,
-      });
+      const response = await axiosPublic.put(
+        `/textArticle/update/${params.edit}`,
+        {
+          texteditor,
+        }
+      );
 
       // Handle response
       if (response.status === 200) {
@@ -393,7 +396,7 @@ const ArticleEdit = ({ params }) => {
         });
         Router.replace("/dashboard/articles");
         // Remove draft content from localStorage
-        localStorage.removeItem("editorDraft");
+        localStorage.removeItem("editArticle");
         localStorage.removeItem("thumbnailUrlEdit");
         localStorage.removeItem("categoryEdit");
         localStorage.removeItem("mainTitleEdit");
