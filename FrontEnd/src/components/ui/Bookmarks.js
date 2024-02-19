@@ -15,9 +15,6 @@ const Bookmarks = async ({user,data}) => {
           "/bookmark",
           booked
         );
-
-          console.log(responseData)
-
         toast.success("Thi item is Bookmarked successfully")
         return responseData;
       } catch (error) {
