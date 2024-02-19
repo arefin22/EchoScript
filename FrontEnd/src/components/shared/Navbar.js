@@ -47,13 +47,8 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-<<<<<<< HEAD
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
-=======
-    axiosSecure.get("/article").then((res) => {
-      setData(res?.data);
->>>>>>> d71542425206b36013fc324dfc1affac29df3225
     });
   }, [axiosSecure]);
 

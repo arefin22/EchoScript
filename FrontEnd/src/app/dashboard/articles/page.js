@@ -81,7 +81,7 @@ const Article = () => {
                   <td>{article?.texteditor?.tags.join(", ")}</td>
                   <td className="flex justify-center items-center">
                     <Link
-                      // href={`/dashboard/articleEdit/${article._id}`}
+                      href={`/dashboard/articleEdit/${article._id}`}
                       className="btn btn-sm btn-primary mr-2"
                       onClick={() => handleEdit(article.texteditor)}
                     >
