@@ -403,3 +403,7 @@ const SingleArticle = ({ params }) => {
 };
 
 export default SingleArticle;
+
+
+// cv te educational background add kora
+// je je technology pari , seigulai add kora

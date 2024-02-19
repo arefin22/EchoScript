@@ -95,20 +95,22 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-      // console.log(res.data);
+
+   console.log(res.data);
       setData(res.data);
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
-      // console.log(res.data);
 
+   console.log(res.data);
+   
       setAudience(res.data);
     });
   }, [axiosSecure]);
 
-  // console.log(audience);
-  // console.log(data);
+console.log(audience)
+console.log(data)
 
   return (
     <div>

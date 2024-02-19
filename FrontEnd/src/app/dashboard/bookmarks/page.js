@@ -26,7 +26,10 @@ const bookmarks = () => {
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
-        const articlesResponse = await axiosPublic.get("/bookmark");
+        const articlesResponse = await axiosPublic.get(
+          `/bookmarkByEmail?email=${user?.email}`
+        );
+        console.log(articlesResponse);
         const articleCount = articlesResponse.data.length;
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -38,8 +41,8 @@ const bookmarks = () => {
           (article) => article.user === user.email
         );
         const articlesData = userArticles.slice(startIndex, endIndex);
-
         setBookmarkedData(articlesData);
+        console.log(bookmarkedData)
 
         setLoading(false);
       } catch (error) {
