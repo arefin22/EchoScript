@@ -2,13 +2,13 @@
 import { useAuth } from "@/context/authContext";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
 
-
 const page = ({ params }) => {
   const [articles, setArticles] = useState(null);
-  const {user} = useAuth("");
+  const { user } = useAuth("");
 
   const id = params.details;
   console.log(id);
@@ -16,13 +16,13 @@ const page = ({ params }) => {
     const fetchArticleDetails = async () => {
       try {
         const response = await axiosSecure.get(`/textArticle/${id}`);
-       const articleData =response.data
+        const articleData = response.data;
         setArticles(response.data);
-        const historyData={user:user.email,article:articleData}
+        const historyData = { user: user.email, article: articleData };
         if (user) {
           axiosSecure.post("/history", historyData);
-         console.log("Article data saved to history API");
-       }
+          console.log("Article data saved to history API");
+        }
       } catch (error) {
         console.error("Error fetching article details:", error);
       }
@@ -33,8 +33,41 @@ const page = ({ params }) => {
     }
   }, [id, user]);
 
- 
+ const renderBlockContent = (block) => {
+   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+
+   // Render each segment
+   const renderedSegments = segments.map((segment, index) => {
+     // Check if the segment is an anchor tag
+     if (segment.startsWith("<a")) {
+       // Parse the HTML to create a DOM element
+       const parser = new DOMParser();
+       const doc = parser.parseFromString(segment, "text/html");
+       const link = doc.querySelector("a");
+
+       // Return the anchor tag with proper attributes
+       return (
+         <a
+           key={index}
+           href={link.getAttribute("href")}
+           target="_blank"
+           style={{ textDecoration: "underline" }}
+         >
+           {link.textContent}
+         </a>
+       );
+     } else {
+       // Replace &nbsp; with an empty string and return the segment
+       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+     }
+   });
+
+   return renderedSegments;
+  };
   
+  const handleEdit = (article) => {
+    localStorage.setItem("editArticle", JSON.stringify(article));
+  };
 
   return (
     <div>
@@ -67,9 +100,7 @@ const page = ({ params }) => {
               {articles.texteditor.editorContent.blocks.map((block, index) => (
                 <div key={index} className="block">
                   {block.type === "paragraph" && (
-                    <p className="text-xl mb-5">
-                      {block.data.text?.replace(/&nbsp;/g, " ")}
-                    </p>
+                    <p className="text-xl mb-5">{renderBlockContent(block)}</p>
                   )}
                   {block.type === "header" && (
                     <h2 className="mb-5 font-bold">
@@ -83,8 +114,8 @@ const page = ({ params }) => {
                   )}
                   {block.type === "quote" && (
                     <blockquote className="mb-5">
-                      {block.data.text?.replace(/&nbsp;/g, " ")}
-                      <cite>{block.data.caption?.replace(/&nbsp;/g, " ")}</cite>
+                      {block.data.text}
+                      <span>{block.data.caption}</span>
                     </blockquote>
                   )}
                   {block.type === "list" && block.data.style === "ordered" && (
@@ -107,16 +138,32 @@ const page = ({ params }) => {
                     )}
 
                   {block.type === "image" && (
-                    <Image
-                      src={block?.data?.file?.url}
-                      alt={block.data.caption}
-                      className="image mx-auto text-center mb-5"
-                      width={600}
-                      height={600}
-                    />
+                    <div className="mb-5">
+                      <Image
+                        src={block?.data?.file?.url}
+                        alt={block.data.caption}
+                        className="image mx-auto text-center"
+                        width={600}
+                        height={600}
+                      />
+                      <p className="text-center mt-0">
+                        {block.data.caption?.replace(/&nbsp;/g, " ")}
+                      </p>
+                    </div>
                   )}
                 </div>
               ))}
+            </div>
+            <div className="w-full text-center">
+              <Link
+                href={`/dashboard/articleEdit/${id}`}
+                className="m-auto"
+                onClick={() => handleEdit(articles?.texteditor)}
+              >
+                <button className="btn btn-ghost mx-auto my-10 text-center font-bold">
+                  Edit Your Article
+                </button>
+              </Link>
             </div>
           </div>
         </div>
