@@ -7,14 +7,12 @@ import List from "@editorjs/list";
 import Quote from "@editorjs/quote";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
-// import "./TextEditor.css";
 import { axiosPublic } from "@/utils/useAxiosPublic";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const Editor = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -212,7 +210,7 @@ const Editor = () => {
       ejInstance?.current?.destroy();
       ejInstance.current = null;
     };
-  }, [initEditor]);
+  }, []);
 
   // initEditor();
 
@@ -233,7 +231,7 @@ const Editor = () => {
 
   // Main title section
   const handleMainTextInputChange = (e) => {
-    const newMainTitle = e.target.value.trim();
+    const newMainTitle = e.target.value;
     setMainTitle(newMainTitle);
 
     if (newMainTitle.length === 0) {
@@ -422,14 +420,7 @@ const Editor = () => {
                 className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 onChange={handleThumbnailChange}
               />
-              {thumbnailUrl && (
-                <Image
-                  src={thumbnailUrl}
-                  alt="Thumbnail"
-                  width={200}
-                  height={200}
-                />
-              )}
+              {thumbnailUrl && <img src={thumbnailUrl} alt="Thumbnail" />}
             </div>
             <div>
               <Select

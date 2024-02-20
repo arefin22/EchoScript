@@ -102,8 +102,9 @@ const ArticlePage = () => {
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
-      
 
+   console.log(res.data);
+   
       setAudience(res.data);
     });
   }, [axiosSecure]);

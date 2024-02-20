@@ -39,8 +39,8 @@ const SingleArticle = ({ params }) => {
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
-      setArticleData(res.data)
-      const historyData = { user: user.email,id: articleData._id };
+      const articleData = res.data;
+      const historyData = { user: user?.email, article: articleData };
       setData(res.data);
       if (user) {
         axiosSecure.post("/history", historyData);
@@ -300,11 +300,11 @@ const SingleArticle = ({ params }) => {
               <div>
                 <TextToSpeech
                   title={data?.texteditor?.articleTitle}
-                  desc={data?.texteditor?.editorContent?.blocks.map((block) => {
-                    {
-                      block.type === "paragraph" && <p>{block.data.text}</p>;
-                    }
-                  })}
+                  // desc={data?.texteditor?.editorContent?.blocks?.map((block) => {
+                  //   {
+                  //     block.type === "paragraph" && <p>{block.data.text}</p>;
+                  //   }
+                  // })}
                 />
               </div>
               <div>
@@ -405,3 +405,7 @@ const SingleArticle = ({ params }) => {
 };
 
 export default SingleArticle;
+
+
+// cv te educational background add kora
+// je je technology pari , seigulai add kora

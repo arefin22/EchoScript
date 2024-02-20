@@ -38,7 +38,14 @@ const Article = () => {
     };
 
     fetchArticles();
-  }, [authEmail, currentPage]);
+
+
+  // console.log(articles);
+
+  }, [update]); 
+
+  // }, [update, currentPage]); 
+
 
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));

@@ -2,7 +2,7 @@ import Editor from "../editor/Editor";
 
 const NewWrite = () => {
     return (
-      <div>
+      <div className="mb-10">
         <Editor/>
       </div>
     );
