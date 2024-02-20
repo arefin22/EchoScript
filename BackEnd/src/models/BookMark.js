@@ -1,15 +1,18 @@
 const { default: mongoose } = require("mongoose");
 
-const BookmarkSchema = new mongoose.Schema({
-  articleId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: [true, "articleId needed!!!"],
+const BookmarkSchema = new mongoose.Schema(
+  {
+    articleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, "articleId needed!!!"],
+    },
+    email: {
+      type: String,
+      required: [true, "email required!!!"],
+    },
   },
-  email: {
-    type: String,
-    required: [true, "email required!!!"],
-  },
-});
+  { timestamps: true }
+);
 
 const BookMark = mongoose.model("Bookmark", BookmarkSchema);
 

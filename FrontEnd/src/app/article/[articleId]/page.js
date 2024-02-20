@@ -38,7 +38,7 @@ const SingleArticle = ({ params }) => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
       const articleData = res.data;
-      const historyData = { user: user.email, article: articleData };
+      const historyData = { user: user?.email, article: articleData };
       setData(res.data);
       if (user) {
         axiosSecure.post("/history", historyData);
@@ -298,11 +298,11 @@ const SingleArticle = ({ params }) => {
               <div>
                 <TextToSpeech
                   title={data?.texteditor?.articleTitle}
-                  desc={data?.texteditor?.editorContent?.blocks.map((block) => {
-                    {
-                      block.type === "paragraph" && <p>{block.data.text}</p>;
-                    }
-                  })}
+                  // desc={data?.texteditor?.editorContent?.blocks?.map((block) => {
+                  //   {
+                  //     block.type === "paragraph" && <p>{block.data.text}</p>;
+                  //   }
+                  // })}
                 />
               </div>
               <div>

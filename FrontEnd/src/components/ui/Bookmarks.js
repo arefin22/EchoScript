@@ -16,8 +16,7 @@ const Bookmarks = async ({user,data}) => {
           booked
         );
 
-
-        const {data: responseData} = await axiosSecure.post('/bookmark', booked);
+          console.log(responseData)
 
         toast.success("Thi item is Bookmarked successfully")
         return responseData;
