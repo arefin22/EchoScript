@@ -30,29 +30,16 @@ const bookmarks = () => {
         const articlesResponse = await axiosPublic.get(
           `/bookmarkByEmail?email=${user?.email}`
         );
-<<<<<<< HEAD
-        
-        
-        const articleCount = articlesResponse?.data?.length;
-=======
         console.log(articlesResponse);
         const articleCount = articlesResponse.data.length;
->>>>>>> b17f6c4cade08805bb6c5b9a06e8555561fe0592
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         setTotalPages(totalPagesCount);
 
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, articleCount);
 
-<<<<<<< HEAD
         
         const articlesData = articlesResponse?.data?.slice(startIndex, endIndex);
-=======
-        const userArticles = articlesResponse.data.filter(
-          (article) => article.user === user.email
-        );
-        const articlesData = userArticles.slice(startIndex, endIndex);
->>>>>>> b17f6c4cade08805bb6c5b9a06e8555561fe0592
         setBookmarkedData(articlesData);
         console.log(bookmarkedData)
 
