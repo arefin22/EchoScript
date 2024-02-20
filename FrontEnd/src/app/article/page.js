@@ -9,6 +9,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -95,8 +96,7 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-
-   console.log(res.data);
+      
       setData(res.data);
     });
   }, [axiosSecure]);
@@ -109,12 +109,12 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
-console.log(audience)
-console.log(data)
+  
 
   return (
     <div>
-      <Navbar />
+    
+      <Navbar2/>
       <div className="text-center relative flex items-center pt-5">
         {/* <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
