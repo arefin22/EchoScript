@@ -411,7 +411,7 @@ const ArticleEdit = ({ params }) => {
   };
   return (
     <>
-      <div className="flex flex-col lg:flex-row lg:gap-10 w-full">
+      <div className="flex flex-col lg:flex-row lg:gap-10 w-full mb-40">
         <div id="editorjs" className="lg:w-2/3"></div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
