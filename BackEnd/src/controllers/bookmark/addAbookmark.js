@@ -27,8 +27,8 @@ const addAbookmark = async (req, res, next) => {
           email: email,
         });
 
-        return res.status(200).json({
-          success: true,
+         res.status(200).json({
+          success: false,
           message: "Bookmark removed",
         });
       } else {
