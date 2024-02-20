@@ -175,7 +175,8 @@ const SingleArticle = ({ params }) => {
            
     </div>
 </div>
-            
+
+{data?.texteditor?.editorContent?.blocks.map((block) =>
             <div className="flex justify-between border-t border-gray-300 pt-2">
               <div className="flex mb-4">
                 <div className="mr-12 flex items-center gap-2">
@@ -301,14 +302,19 @@ const SingleArticle = ({ params }) => {
                   </div>
                 </div>
               </div>
-              <div>
+              
+           
+                <div>
+                
                 <TextToSpeech
-                  title={data?.texteditor?.articleTitle}
-                  desc={data?.texteditor?.editorContent?.blocks.map((block) => {
-                    {block.type === "paragraph" && <p>{block.data.text}</p>}
-                  })}
-                />
-              </div>
+                title={data?.texteditor?.articleTitle}
+                desc={}
+              />
+           
+                 </div>
+                
+                
+             
               <div>
                 <div className="flex gap-1">
                   <FaBookmark  color='gray' size={24} />
@@ -337,6 +343,7 @@ const SingleArticle = ({ params }) => {
                 </div>
               </div>
             </div>
+            )}
             <div className="mb-12  border-t border-gray-300">
              <div className="mt-5 mx-auto">
              {data?.texteditor?.editorContent?.blocks.map((block, idx) => (
