@@ -33,46 +33,79 @@ const page = ({ params }) => {
     }
   }, [id, user]);
 
+ 
+  
+
   return (
     <div>
       {articles && (
         <div>
           <div className="max-w-3xl mx-auto">
-            <h1>{articles?.texteditor?.articleTitle}</h1>
-            {/* <Image
-              src={articles?.texteditor?.thumbnail}
-              alt="Thumbnail"
-              className="image mx-auto text-center"
-              width={600}
-              height={600}
-            /> */}
+            <h1>
+              {articles?.texteditor?.articleTitle?.replace(/&nbsp;/g, " ")}
+            </h1>
+            <div className="flex flex-row w-full items-center mb-10 mt-5">
+              <h6 className="w-1/2">
+                Category:{" "}
+                <span className="font-bold">
+                  {articles.texteditor?.category}
+                </span>
+              </h6>
+              <p className="w-1/2">
+                {articles.texteditor?.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-300 px-3 py-2 rounded-lg mr-2 font-bold"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </p>
+            </div>
+            <div className="divider"> </div>
             <div className="mt-10">
               {articles.texteditor.editorContent.blocks.map((block, index) => (
                 <div key={index} className="block">
                   {block.type === "paragraph" && (
-                    <p className="text-xl mb-5">{block.data.text}</p>
+                    <p className="text-xl mb-5">
+                      {block.data.text?.replace(/&nbsp;/g, " ")}
+                    </p>
                   )}
                   {block.type === "header" && (
-                    <h2 className="mb-5 font-bold">{block.data.text}</h2>
+                    <h2 className="mb-5 font-bold">
+                      {block.data.text?.replace(/&nbsp;/g, " ")}
+                    </h2>
                   )}
                   {block.type === "code" && (
                     <pre className="bg-gray-300 p-10 w-[90%] overflow-scroll mx-auto mb-5">
-                      {block.data.code}
+                      {block.data.code?.replace(/&nbsp;/g, " ")}
                     </pre>
                   )}
                   {block.type === "quote" && (
                     <blockquote className="mb-5">
-                      {block.data.text}
-                      <cite>{block.data.caption}</cite>
+                      {block.data.text?.replace(/&nbsp;/g, " ")}
+                      <cite>{block.data.caption?.replace(/&nbsp;/g, " ")}</cite>
                     </blockquote>
                   )}
-                  {block.type === "list" && (
-                    <ul className="mb-5">
+                  {block.type === "list" && block.data.style === "ordered" && (
+                    <ol className="mb-5">
                       {block.data.items.map((item, i) => (
-                        <li key={i}>{item}</li>
+                        <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
                       ))}
-                    </ul>
+                    </ol>
                   )}
+
+                  {block.type === "list" &&
+                    block.data.style === "unordered" && (
+                      <ul className="mb-5">
+                        {block.data.items.map((item, i) => (
+                          <li key={i}>
+                            <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
                   {block.type === "image" && (
                     <Image
                       src={block?.data?.file?.url}
@@ -84,22 +117,6 @@ const page = ({ params }) => {
                   )}
                 </div>
               ))}
-            </div>
-            <div>
-              <p className="font-bold">
-                Category: {articles.texteditor?.category}
-              </p>
-              <p className="mt-3">
-                Tags:{" "}
-                {articles.texteditor?.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-300 px-3 py-2 rounded-lg mr-2 font-bold"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </p>
             </div>
           </div>
         </div>

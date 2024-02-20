@@ -166,7 +166,6 @@ const ArticleEdit = ({ params }) => {
     });
   };
 
-  console.log(params.edit);
   const saveDraft = async () => {
     try {
       if (ejInstance.current) {
