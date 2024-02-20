@@ -7,13 +7,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const page = ({ params }) => {
-<<<<<<< HEAD
-  const [articles, setArticles] = useState([]);
-  const {user} = useAuth("");
-=======
   const [articles, setArticles] = useState(null);
   const { user } = useAuth("");
->>>>>>> b17f6c4cade08805bb6c5b9a06e8555561fe0592
 
   const id = params.details;
   console.log(id);

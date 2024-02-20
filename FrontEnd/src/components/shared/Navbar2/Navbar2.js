@@ -74,8 +74,9 @@ const Navbar2 = () => {
   ];
   
   return (
-    <div className="h-10  rounded-full  mx-auto bg-transparent z-50 sticky top-5">
-      <div className="flex h-8 justify-center items-center p-2 text-sm font-thin text-center">
+    <div className="h-20  rounded-full  mx-auto bg-transparent z-50 sticky top-5">
+      <div className="flex h-20 justify-center items-center p-2 text-sm font-thin text-center">
+       {/* left part */}
         <div className="w-1/5 h-8 flex items-center lg:justify-center gap-28 justify-between lg:w-auto">
           <div className="lg:hidden text-black flex items-start justify-start left-0">
             <details className="dropdown">
@@ -120,25 +121,25 @@ const Navbar2 = () => {
             </Link>
           </div>
         </div>
-
-        <div className="hidden  sm:hidden md:hidden  bg-black w-2/5 text-white rounded-full h-8 mx-auto p-1 lg:flex items-center justify-center">
-          <ul className=" flex justify-center items-start gap-2   px-1">
+           {/* center part */}
+        <div className="hidden text-lg font-medium  sm:hidden md:hidden  bg-black w-2/5 text-white rounded-full h-16 mx-auto p-5 lg:flex items-center justify-between">
+          <ul className=" flex justify-between items-start gap-2   px-1">
             {navItem.slice(0, 3).map((item, idx) => (
               <Link key={idx} href={item.pathName}>
-                <li className="mr-1 mt-2">{item.route}</li>
+                <li className="mr-1 mt-2 list-none">{item.route}</li>
               </Link>
             ))}
-            <li>
-              <details className="dropdown">
-                <summary className="m-1 btn btn-xs">
+            <li className="list-none">
+              <details className="dropdown dropdown-hover">
+                <summary className="m-1 btn bg-black btn-active btn-neutral ">
                   {user?.email ? (
                     <div className="flex gap-2">
-                      <div className="avatar online">
-                        <div className="w-6 rounded-full ring  ring-offset-base-100 ring-offset-2">
+                      <div className="avatar ">
+                        <div className="w-12 rounded-full ring  ring-offset-base-100 ring-offset-2">
                           <Image
                             src={user?.photoURL || person}
-                            width={6}
-                            height={6}
+                            width={12}
+                            height={12}
                             alt={"user"}
                           />
                         </div>
@@ -156,21 +157,21 @@ const Navbar2 = () => {
                 >
                   {navItem.map((item, idx) => (
                     <Link key={idx} href={item.pathName}>
-                      <li className="mr-5 py-2">{item.route}</li>
+                      <li className="mr-5 py-2 list-none">{item.route}</li>
                     </Link>
                   ))}
                   {user?.email ? (
-                    <li>
+                    <li className="list-none">
                       <button
                         onClick={logout}
-                        className="btn btn-error h-10 inline-block"
+                        className="btn btn-error h-10 inline-block text-center p-2"
                       >
                         LogOut
                       </button>
                     </li>
                   ) : (
                     <Link href={"/login"}>
-                      <li>log In</li>
+                      <li className="list-none">log In</li>
                     </Link>
                   )}
                 </ul>
@@ -178,23 +179,26 @@ const Navbar2 = () => {
             </li>
           </ul>
         </div>
+        {/* right part */}
         <div className={`${isHidden ? 'hidden' : ''}`}>
          {/* You can open the modal using document.getElementById('ID').showModal() method */}
-<button className="btn btn-xs" onClick={()=>document.getElementById('my_modal_3').showModal()}><FaSearch/></button>
+<button className="btn btn-lg bg-transparent h-10" onClick={()=>document.getElementById('my_modal_3').showModal()}><FaSearch/></button>
 <dialog id="my_modal_3" className="modal">
-  <div className="modal-box">
+  <div className="modal-box ">
     <form method="dialog">
       {/* if there is a button in form, it will close the modal */}
       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
-    <div className="relative w-full mx-auto flex gap-1 justify-center items-center">
-                   <input
+    <div className="relative bg-transparent w-full mx-auto flex gap-2 justify-center items-center">
+                <div className="w-3/4">
+                <input
              type="text"
              ref={nameInputRef}
              placeholder="Search"
            
-             className="input mx-auto input-bordered w-full mt-4 bg-black text-white md:w-5/6 "
+             className="input mx-auto input-bordered w-full mt-4   md:w-5/6 "
              />
+                </div>
              <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
              <VoiceButton
              inputRefs={inputRefs}
