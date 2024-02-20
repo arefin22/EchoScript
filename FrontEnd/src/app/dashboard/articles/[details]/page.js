@@ -109,7 +109,7 @@ const page = ({ params }) => {
                   )}
                   {block.type === "code" && (
                     <pre className="bg-gray-300 p-10 w-[90%] overflow-scroll mx-auto mb-5">
-                      {block.data.code?.replace(/&nbsp;/g, " ")}
+                      {block.data.code}
                     </pre>
                   )}
                   {block.type === "quote" && (
