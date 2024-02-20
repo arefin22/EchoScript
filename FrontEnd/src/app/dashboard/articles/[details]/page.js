@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 const page = ({ params }) => {
-  const [articles, setArticles] = useState(null);
+  const [articles, setArticles] = useState([]);
   const {user} = useAuth("");
 
   const id = params.details;

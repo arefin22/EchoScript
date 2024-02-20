@@ -14,6 +14,7 @@ const HistoryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
+  const [update, setUpdate] = useState(Date.now());
   const axiosPublic = useAxiosPublic();
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -120,6 +121,7 @@ const HistoryPage = () => {
                         className="btn btn-ghost btn-xs"
                         api={"/history"}
                         id={history.id}
+                        setUpdate={setUpdate}
                       />
                     </td>
                   </tr>

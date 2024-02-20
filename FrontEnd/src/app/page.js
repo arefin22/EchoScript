@@ -1,11 +1,12 @@
-"use client"
+
+
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
 import Payment from "@/components/Payment/Payment";
 import Recomendation from "@/components/Recomendation/page";
 import Footer from "@/components/shared/Footer";
-import Navbar from "@/components/shared/Navbar";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import Title from "@/components/shared/ReusableComponents/Title";
 import cardData from "@/utils/cardData";
 import Link from "next/link";
@@ -13,9 +14,10 @@ import Link from "next/link";
 
 
 const page = () => {
-  return (
-    <div>
-      <Navbar/>
+    return (
+        <div>
+             
+      <Navbar2/>
       <Banner/>
 
       <div className="container mx-auto my-24">
@@ -55,8 +57,8 @@ const page = () => {
       </div>
 
       <Footer/>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default page;

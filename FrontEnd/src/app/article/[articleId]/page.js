@@ -23,10 +23,12 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
+  const [articleData,setArticleData] = useState([]);
   const [text, setText] = useState("");
   const [forceUpdate, setForceUpdate] = useState(Date.now());
   const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
@@ -37,8 +39,8 @@ const SingleArticle = ({ params }) => {
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
-      const articleData = res.data;
-      const historyData = { user: user.email, article: articleData };
+      setArticleData(res.data)
+      const historyData = { user: user.email,id: articleData._id };
       setData(res.data);
       if (user) {
         axiosSecure.post("/history", historyData);
@@ -132,7 +134,7 @@ const SingleArticle = ({ params }) => {
 
   return (
     <div>
-      <Navbar />
+     <Navbar2/>
       <div>
         {data && (
           <div className="w-[800px] mx-auto  ">
