@@ -87,16 +87,18 @@ const Footer = () => {
       <footer className="footer p-10 text-white py-40">
         <nav className="space-y-3">
           <h3 className="">EchoScript</h3>
-          <p className="text-lg w-2/3">
-            An International Project by Team ByteBlazers.{" "}
-          </p>
-          <div className="flex gap-5 text-xl">
-            <FaGithub /> <FaGlobeAsia />
+          <div className="pl-3 space-y-3">
+            <p className="text-lg w-2/3">
+              An International Project by Team ByteBlazers.{" "}
+            </p>
+            <div className="flex gap-5 text-xl">
+              <FaGithub /> <FaGlobeAsia />
+            </div>
           </div>
         </nav>
         <nav className="space-y-3">
           <h3 className="">Links</h3>
-          <div className="pl-5 flex flex-col space-y-3">
+          <div className="pl-3 flex flex-col space-y-3">
             <a className="link link-hover">Home</a>
             <a className="link link-hover">Payment</a>
             <a className="link link-hover">Dashboard</a>
@@ -104,7 +106,7 @@ const Footer = () => {
         </nav>
         <nav className="space-y-3">
           <h3 className="">Additional Links</h3>
-          <div className="pl-5 flex flex-col space-y-3">
+          <div className="pl-3 flex flex-col space-y-3">
             <a className="link link-hover">Contact Us</a>
             <a className="link link-hover">About Us</a>
             <a className="link link-hover">Services</a>

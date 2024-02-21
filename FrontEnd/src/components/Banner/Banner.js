@@ -3,19 +3,24 @@
 const Banner = () => {
   return (
     <div
-      className="hero w-full"
+      className="hero w-full rounded-tl-[100px] rounded-tr-[100px]"
       style={{
-        backgroundImage: "url(https://i.ibb.co/wz43pyS/banner.png)",
+        backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
       }}
     >
       {/* <div className="hero-overlay bg-opacity-60"></div> */}
-      <div className="w-full p-8 md:p-28 lg:p-32 xl:p-48">
-        <div className="">
-          <h1 className="mb-5 text-4xl lg:text-6xl xl:text-8xl text-[#C8B7A5] font-bold">Let Your Story Shine</h1>
-          <p className="mb-5 text-lg lg:text-2xl text-[#C8B7A5] -mt-6">
-          The Cozy Corner for Sharing Life Tales!
+      <div className="w-full p-8 md:p-28 lg:p-32 xl:p-48 xl:pb-0 lg:mb-36">
+        <div className="mx-auto text-center">
+          <h1 className="mb-5 text-4xl lg:text-6xl xl:text-8xl text-white font-light w-1/3 mx-auto">
+            Let Story's Shine
+          </h1>
+          <p className="mb-5 text-lg lg:text-3xl text-white font-light">
+            The Cozy Corner for Sharing Life Tales!
           </p>
-          <button className="w-64 h-16 bg-[#C4B4A4] text-[#40220A] hover:bg-[#40220A] text-2xl hover:text-[#C4B4A4]  rounded-full mt-24 ">Explore Now</button>
+        </div>
+        <div className="text-white lg:pt-40 text-xl font-semibold">
+          <p>Loved Place - By Reader</p>
+          <p>Read Now</p>
         </div>
       </div>
     </div>
