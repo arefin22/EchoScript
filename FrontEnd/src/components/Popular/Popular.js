@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Popular = () => {
     return (
-      <div>
+      <div className="bg-white">
         <div className="sticky top-0">
           <Image
             src="https://i.ibb.co/1RSYcQy/library-isometric-horizontal-banner-vector.jpg"
@@ -29,7 +29,7 @@ const Popular = () => {
             className="rounded-tl-[100px] rounded-tr-[100px] sticky top-0"
           />
         </div>
-        <div className="sticky top-0">
+        <div className="sticky top-0 bg-white rounded-tl-[100px] rounded-tr-[100px]">
           <Image
             src="https://i.ibb.co/6wxTt4W/1-RNy-Xe0v36rg8-X4i-Cp-QYFag.webp"
             width={1680}
