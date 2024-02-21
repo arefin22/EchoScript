@@ -69,7 +69,7 @@ const Trending = () => {
 
       <div className="divider w-[90%] mx-auto"></div>
 
-      <div className="grid grid-cols-2 gap-10 px-20 py-20 mx-20">
+      <div className="grid grid-cols-2 gap-10 px-20 pb-40 pt-20 mx-20">
         <div className="w-1/2 flex flex-col-2 gap-5">
           <h2 className="text-gray-400">01</h2>
           <div className="space-y-3">
