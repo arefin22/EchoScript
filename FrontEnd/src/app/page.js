@@ -3,6 +3,7 @@
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
+import Contact from "@/components/Contact/Contact";
 import Payment from "@/components/Payment/Payment";
 import Popular from "@/components/Popular/Popular";
 import Recomendation from "@/components/Recomendation/page";
@@ -24,10 +25,11 @@ const page = () => {
             <Trending />
         </div>
         
-          <div className="bg-white">
+
             <Popular />
-        </div>
-        
+
+
+        <Contact />
 
         
         {/* <Recomendation/> */}
@@ -59,10 +61,10 @@ const page = () => {
           </div>
         </div> */}
 
-        <div className="my-24">
+        {/* <div className="my-24">
           <Title title="Packages"></Title>
           <Payment />
-        </div>
+        </div> */}
 
         <Footer />
       </div>
