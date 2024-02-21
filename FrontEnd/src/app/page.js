@@ -4,6 +4,7 @@ import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
 import Payment from "@/components/Payment/Payment";
+import Popular from "@/components/Popular/Popular";
 import Recomendation from "@/components/Recomendation/page";
 import Trending from "@/components/Trending/Trending";
 import Footer from "@/components/shared/Footer";
@@ -21,12 +22,17 @@ const page = () => {
           <Banner />
           <div className="mt-[-80px]">
             <Trending />
-          </div>
+        </div>
+        
+          <div className="bg-white">
+            <Popular />
+        </div>
+        
 
-          {/* <Recomendation/> */}
-
+        
+        {/* <Recomendation/> */}
         {/* popular cards */}
-        <div className="my-24">
+        {/* <div className="my-24">
           <Title title="Latest Article"></Title>
           <div className="my-32 grid grid-cols-1 md:grid-cols-3 gap-10">
             {cardData?.map((card, index) => (
@@ -51,7 +57,7 @@ const page = () => {
               <ButtonWithBgColor name={"Explore More"} />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="my-24">
           <Title title="Packages"></Title>
