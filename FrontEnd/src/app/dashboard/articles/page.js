@@ -1,17 +1,15 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import { useAuth } from "@/context/authContext";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
 import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
-import Pagination from "@/components/shared/Pagination/Pagination";
-
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
-  const [update,setUpdate]=useState(Date.now())
+  const [update, setUpdate] = useState(Date.now());
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
@@ -24,21 +22,30 @@ const Article = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axiosSecure.get(`/textArticleByEmail?email=${authEmail}`);
-      const articleCount = response.data.length;
-      const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = Math.min(startIndex + itemsPerPage, articleCount); // Fix typo here
-      const articleData = response.data.slice(startIndex, endIndex);
-      setTotalPages(totalPagesCount);
-      setArticles(articleData);
+        const response = await axiosSecure.get(
+          `/textArticleByEmail?email=${authEmail}`
+        );
+        const articleCount = response.data.length;
+        const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, articleCount); // Fix typo here
+        const articleData = response.data.slice(startIndex, endIndex);
+        setTotalPages(totalPagesCount);
+        setArticles(articleData);
       } catch (error) {
         console.error("Error fetching articles:", error);
       }
     };
 
     fetchArticles();
-  }, [update, currentPage]); 
+
+
+  // console.log(articles);
+
+  }, [update]); 
+
+  // }, [update, currentPage]); 
+
 
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
@@ -81,23 +88,19 @@ const Article = () => {
                       <FaEdit />
                     </Link>
                     <button className="btn btn-sm btn-error">
-                   <DeleteButton setUpdate={setUpdate} api={"textArticle"} id={article._id}/>
+                      <DeleteButton
+                        setUpdate={setUpdate}
+                        api={"textArticle"}
+                        id={article._id}
+                      />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-        <div className="mt-2 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-      </div>
         </div>
-            </div>
+      </div>
     </PrivateRoute>
   );
 };

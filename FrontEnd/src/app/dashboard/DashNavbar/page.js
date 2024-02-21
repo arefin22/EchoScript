@@ -21,46 +21,49 @@ const DashNavbar = () => {
     {
       path: "/dashboard",
       route: "Overview",
-      icon:GrOverview
+      icon: GrOverview,
     },
     {
       path: "/dashboard/articles",
       route: "Articles",
-      icon:GrArticle
-    },{
-      path:"/dashboard/users",
-      route:"Users",
-      icon:FaUsers
-    },{
-      path:"/dashboard/History",
-      route:"History",
-      icon:GrHistory 
-    },{
-      path:"/dashboard/bookmarks",
-      route:"Bookmarks",
-      icon:GrBookmark
+      icon: GrArticle,
     },
+    {
+      path: "/dashboard/users",
+      route: "Users",
+      icon: FaUsers,
+    },
+    {
+      path: "/dashboard/History",
+      route: "History",
+      icon: GrHistory,
+    },
+    {
+      path: "/dashboard/bookmarks",
+      route: "Bookmarks",
+      icon: GrBookmark,
+    },
+
     {
       path: "/dashboard/write",
       route: "Write",
-      icon:TfiWrite
+      icon: TfiWrite,
     },
     {
       path: "/",
       route: "Home",
-      icon:IoHomeOutline
+      icon: IoHomeOutline,
     },
     {
       path: "/dashboard/profile",
       route: "My Profile",
-      icon:CgProfile ,
-      spacing:true,
-      
+      icon: CgProfile,
+      spacing: true,
     },
     {
       path: "/setting",
       route: "Setting",
-      icon:IoSettingsOutline
+      icon: IoSettingsOutline,
     },
   ];
   const navItem = [

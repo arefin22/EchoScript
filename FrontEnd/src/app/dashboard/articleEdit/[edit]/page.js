@@ -13,15 +13,23 @@ import makeAnimated from "react-select/animated";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const ArticleEdit = ({ params }) => {
   const [isLoading, setIsLoading] = useState(false);
   const ejInstance = useRef();
   const [isDraftExist, setIsDraftExist] = useState(false);
-  const [mainTitle, setMainTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
+
+  // Preference part
+  const [categoryEdit, setCategoryEdit] = useState(null);
+  const [inputValueEdit, setInputValueEdit] = useState("");
+  const [tagsEdit, setTagsEdit] = useState([]);
+  const [mainTitleEdit, setMainTitleEdit] = useState("");
+  const [thumbnailEdit, setThumbnailEdit] = useState(null);
+  const [thumbnailUrlEdit, setThumbnailUrlEdit] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const user = useAuth();
+  const Router = useRouter();
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -178,22 +186,26 @@ const ArticleEdit = ({ params }) => {
     if (draftContent && ejInstance.current) {
       try {
         const parsedContent = JSON.parse(draftContent);
-        console.log(parsedContent);
-        setMainTitle(parsedContent.articleTitle);
-        setThumbnail(parsedContent.thumbnail);
+        setMainTitleEdit(parsedContent.articleTitle);
+        setThumbnailUrlEdit(parsedContent.thumbnail);
+        const formattedCategory = {
+          value: parsedContent.category,
+          label: parsedContent.category,
+        };
+        setCategoryEdit(formattedCategory);
+        setTagsEdit(parsedContent.tags);
         ejInstance.current.render({
           blocks: parsedContent.editorContent.blocks,
           time: parsedContent.editorContent.time,
           version: parsedContent.editorContent.version,
         });
-        setIsDraftExist(parsedContent.blocks.length > 0);
+        setIsDraftExist(parsedContent.editorContent.blocks.length > 0);
       } catch (error) {
         console.error("Error parsing draft content:", error);
       }
     }
   };
 
-  console.log(thumbnail);
   useEffect(() => {
     if (ejInstance.current === null) {
       initEditor();
@@ -209,16 +221,6 @@ const ArticleEdit = ({ params }) => {
   // initEditor();
 
   // Preference part
-  const [category, setCategory] = useState(null);
-  const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState([]);
-  // const [mainTitle, setMainTitle] = useState("");
-  // const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const Router = useRouter();
-
-  const user = useAuth();
   const options = [
     { value: "Tech", label: "Tech" },
     { value: "Business", label: "Business" },
@@ -233,48 +235,22 @@ const ArticleEdit = ({ params }) => {
     { value: "Vehicles", label: "Vehicles" },
   ];
 
-  const handleCategory = (selectedOption) => {
-    setCategory(selectedOption);
-    checkButtonState(selectedOption, tags);
-  };
-  const animatedComponents = makeAnimated();
+  // Main title section
+  const handleMainTextInputChange = (e) => {
+    const newMainTitleEdit = e.target.value;
+    setMainTitleEdit(newMainTitleEdit);
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      const tag = inputValue.trim();
-      if (tag) {
-        setTags([...tags, tag]);
-        setInputValue("");
-        checkButtonState(category, [...tags, tag]);
-      }
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-    checkButtonState(
-      category,
-      tags.filter((tag) => tag !== tagToRemove)
-    );
-  };
-
-  const checkButtonState = (category, tags) => {
-    if (mainTitle && thumbnail && category && tags.length > 0) {
-      setIsButtonDisabled(false);
+    if (newMainTitleEdit.length === 0) {
+      localStorage.removeItem("mainTitleEdit");
     } else {
-      setIsButtonDisabled(true);
+      localStorage.setItem("mainTitleEdit", newMainTitleEdit);
     }
   };
 
+  // Article thumbnail section
   const handleThumbnailChange = async (e) => {
     const selectedFile = e.target.files[0];
-    setThumbnail(selectedFile);
-
+    setThumbnailEdit(selectedFile);
     try {
       const formData = new FormData();
       formData.append("image", selectedFile);
@@ -284,36 +260,129 @@ const ArticleEdit = ({ params }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-
       console.log("Image uploaded successfully:", response.data);
-      // Set the uploaded image URL in state
-      setThumbnailUrl(response.data.data.display_url);
-      // Handle the response here
+      setThumbnailUrlEdit(response.data.data.display_url);
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Handle error
     }
   };
+
+  // Category select
+  const handleCategory = (selectedOption) => {
+    setCategoryEdit(selectedOption);
+    // checkButtonState(selectedOption, tags);
+  };
+  const animatedComponents = makeAnimated();
+
+  // Function to handle adding a tag
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      const tag = inputValueEdit.trim();
+      if (tag) {
+        const updatedTagsEdit = [...tagsEdit, tag];
+        setTagsEdit(updatedTagsEdit);
+        setInputValueEdit("");
+        setIsButtonDisabled(false);
+      }
+    }
+  };
+
+  // Function to handle removing a tag
+  const handleRemoveTag = (tagToRemove) => {
+    const updatedTagsEdit = tagsEdit.filter((tag) => tag !== tagToRemove);
+    setTagsEdit(updatedTagsEdit);
+
+    if (updatedTagsEdit.length === 0) {
+      localStorage.removeItem("tagsEdit");
+      setIsButtonDisabled(true);
+    } else {
+      localStorage.setItem("tagsEdit", JSON.stringify(updatedTagsEdit));
+    }
+  };
+
+  // Function to handle input change
+  const handleInputChange = (e) => {
+    setInputValueEdit(e.target.value);
+  };
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const storedMainTitleEdit = localStorage.getItem("mainTitleEdit");
+    const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
+    const storedCategoryEdit = JSON.parse(localStorage.getItem("categoryEdit"));
+    const storedTagsEdit = JSON.parse(localStorage.getItem("tagsEdit"));
+
+    if (storedMainTitleEdit) setMainTitleEdit(storedMainTitleEdit);
+    if (storedThumbnailUrlEdit) setThumbnailUrlEdit(storedThumbnailUrlEdit);
+    if (storedCategoryEdit) setCategoryEdit(storedCategoryEdit);
+    if (storedTagsEdit) setTagsEdit(storedTagsEdit);
+  }, []);
+
+  // Save data to localStorage whenever it changes
+  useEffect(() => {
+    if (mainTitleEdit) localStorage.setItem("mainTitleEdit", mainTitleEdit);
+    if (thumbnailUrlEdit)
+      localStorage.setItem("thumbnailUrlEdit", thumbnailUrlEdit);
+    if (categoryEdit)
+      localStorage.setItem("categoryEdit", JSON.stringify(categoryEdit));
+    if (tagsEdit?.length > 0)
+      localStorage.setItem("tagsEdit", JSON.stringify(tagsEdit));
+  }, [mainTitleEdit, thumbnailUrlEdit, categoryEdit, tagsEdit]);
+
+  // Save thumbnail data to localStorage whenever it changes
+  useEffect(() => {
+    if (thumbnailEdit) {
+      const thumbnailUrlEdit = URL.createObjectURL(thumbnailEdit);
+      localStorage.setItem("thumbnailUrlEdit", thumbnailUrlEdit);
+      setThumbnailUrlEdit(thumbnailUrlEdit);
+    }
+  }, [thumbnailEdit]);
+
+  // Function to check if all required data is present in local storage
+  const checkLocalStorageData = () => {
+    const storedMainTitleEdit = localStorage.getItem("mainTitleEdit");
+    const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
+    const storedCategoryEdit = JSON.parse(localStorage.getItem("categoryEdit"));
+    const storedTagsEdit = JSON.parse(localStorage.getItem("tagsEdit"));
+    const storedEditorDraft = localStorage.getItem("editArticle");
+
+    // Check if all required data is present
+    return (
+      storedMainTitleEdit &&
+      storedThumbnailUrlEdit &&
+      storedCategoryEdit &&
+      storedTagsEdit &&
+      storedEditorDraft
+    );
+  };
+
+  // Call the checkLocalStorageData function to determine button disabled state
+  const isButtonDisabledLocal = !checkLocalStorageData();
+
   const saveData = async () => {
     try {
       setIsLoading(true);
 
       // Get editor content from local storage
-      const editorContent = JSON.parse(localStorage.getItem("editorDraft"));
+      const editorContent = JSON.parse(localStorage.getItem("editArticle"));
 
       const articleInfo = {
-        articleTitle: mainTitle,
-        thumbnail: thumbnailUrl,
+        articleTitle: mainTitleEdit,
+        thumbnail: thumbnailUrlEdit,
         authorEmail: user.user?.email,
-        category: category.value,
-        tags: tags,
+        category: categoryEdit.value,
+        tags: tagsEdit,
       };
 
       const texteditor = { editorContent, ...articleInfo };
       // Send data to the server
-      const response = await axiosPublic.post("/textArticle", {
-        texteditor,
-      });
+      const response = await axiosPublic.put(
+        `/textArticle/update/${params.edit}`,
+        {
+          texteditor,
+        }
+      );
 
       // Handle response
       if (response.status === 200) {
@@ -324,10 +393,13 @@ const ArticleEdit = ({ params }) => {
           showConfirmButton: false,
           timer: 3000,
         });
-        localStorage.removeItem("editorDraft");
-        setCategory(null);
-        setTags([]);
         Router.replace("/dashboard/articles");
+        // Remove draft content from localStorage
+        localStorage.removeItem("editArticle");
+        localStorage.removeItem("thumbnailUrlEdit");
+        localStorage.removeItem("categoryEdit");
+        localStorage.removeItem("mainTitleEdit");
+        localStorage.removeItem("tagsEdit");
       } else {
         console.error("Failed to save data.");
       }
@@ -339,18 +411,19 @@ const ArticleEdit = ({ params }) => {
   };
   return (
     <>
-      <div className="flex flex-col lg:flex-row lg:gap-10 w-full">
+      <div className="flex flex-col lg:flex-row lg:gap-10 w-full mb-40">
         <div id="editorjs" className="lg:w-2/3"></div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
-            <h2>Select Title, Thumbnail, Category & Tags</h2>
+            <h2>Important Info</h2>
             <div>
               <input
                 type="text"
+                onChange={handleMainTextInputChange}
                 placeholder="Type you Main Title (required)"
                 className="w-full mt-5 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
-                value={mainTitle}
-                onChange={(e) => setMainTitle(e.target.value)}
+                value={mainTitleEdit}
+                // onChange={(e) => setMainTitle(e.target.value)}
               />
             </div>
             <br />
@@ -361,14 +434,16 @@ const ArticleEdit = ({ params }) => {
                 className="file-input file-input-ghost w-full border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 onChange={handleThumbnailChange}
               />
-              {/* <Image src={thumbnail} alt="" /> */}
+              {thumbnailUrlEdit && (
+                <img src={thumbnailUrlEdit} alt="Thumbnail" />
+              )}
             </div>
             <div>
               <Select
                 closeMenuOnSelect
                 components={animatedComponents}
                 options={options}
-                value={category}
+                value={categoryEdit}
                 onChange={handleCategory}
                 placeholder="Select your favorite category (required)"
                 className="w-full hover:border-[#4C2F17] text-black"
@@ -396,14 +471,15 @@ const ArticleEdit = ({ params }) => {
               <div>
                 <input
                   type="text"
-                  value={inputValue}
+                  value={inputValueEdit}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Type tags and press Enter or comma (required)"
+                  placeholder="Add tags and press Enter or comma (required)"
                   className="w-full mt-10 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 />
                 <div className="flex flex-row gap-5 p-5 w-full flex-wrap">
-                  {tags.map((tag, index) => (
+                  {/* Map over tags and display each tag */}
+                  {tagsEdit?.map((tag, index) => (
                     <div
                       key={index}
                       className="tag bg-gray-300 py-2 px-4 rounded-2xl"
@@ -420,25 +496,37 @@ const ArticleEdit = ({ params }) => {
                 </div>
               </div>
             </div>
+            <div className="w-full text-center">
+              <button
+                className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                    ? "disabled"
+                    : ""
+                }`}
+                disabled={
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                }
+                onClick={saveData}
+                style={
+                  !isDraftExist ||
+                  isButtonDisabledLocal ||
+                  isButtonDisabled ||
+                  isLoading
+                    ? { opacity: 0.5, cursor: "not-allowed" }
+                    : {}
+                }
+              >
+                {isLoading ? "Updating Article..." : "Update Article"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="w-full text-center">
-        <button
-          className={`bg-[#025] text-white px-12 py-3 rounded-3xl mt-3 ${
-            !isDraftExist || isButtonDisabled || isLoading ? "disabled" : ""
-          }`}
-          disabled={!isDraftExist || isButtonDisabled || isLoading}
-          onClick={saveData}
-          style={
-            !isDraftExist || isButtonDisabled || isLoading
-              ? { opacity: 0.5, cursor: "not-allowed" }
-              : {}
-          }
-        >
-          {isLoading ? "Updating Article..." : "Update Article"}
-        </button>
       </div>
     </>
   );

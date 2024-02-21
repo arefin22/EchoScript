@@ -8,6 +8,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
+import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -78,9 +79,9 @@ const ArticlePage = () => {
     },
   ];
 
-  const handleCategory = (e) => {
-    console.log(e);
-  };
+  // const handleCategory = (e) => {
+  //   console.log(e);
+  // };
 
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
@@ -147,30 +148,37 @@ console.log(data)
         </button>
       </div>
       <div className="py-10">
-      {data?.map((item) => (
-          <Article
-            commentCount={item.comments.length}
-            key={item._id}
-            authorName={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.name)     }
-            category={item.texteditor.category}
-            title={item.texteditor?.articleTitle}
-            // postedDate={item.postedDate}
-            view={item.likes.length}
-            likeCount={item.likes.length}
-            // article={item.article}
-            image={item.texteditor?.thumbnail}
-            // authorImage={item.authorImage}
-            // category={item.category}
-            // title={item.title}
-            // postedDate={item.postedDate}
-            // view={item.view}
-            // article={item.article}
-            // image={item.image}
-            authorImage={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.photoURL) }
-            date={item.date}
-            articleId={item._id}
-            
-          />
+        {data?.map((item, idx) => (
+          <div key={idx}>
+            <Article
+              data={item}
+              commentCount={item.comments.length}
+              key={item._id}
+              authorName={audience
+                .filter((user) => user.email === item.texteditor.authorEmail)
+                .map((author) => author.name)}
+              category={item.texteditor.category}
+              title={item.texteditor?.articleTitle}
+              // postedDate={item.postedDate}
+
+              view={item.likes.length}
+              likeCount={item.likes.length}
+              // article={item.article}
+              image={item?.texteditor?.thumbnail}
+              // authorImage={item.authorImage}
+              // category={item.category}
+              // title={item.title}
+              // postedDate={item.postedDate}
+              // view={item.view}
+              // article={item.article}
+              // image={item.image}
+              authorImage={audience
+                .filter((user) => user?.email === item?.texteditor?.authorEmail)
+                .map((author) => author?.photoURL)}
+              date={item.date}
+              articleId={item._id}
+            />
+          </div>
         ))}
       </div>
       <hr className="border-1 border-[#F2F2F2] my-3" />

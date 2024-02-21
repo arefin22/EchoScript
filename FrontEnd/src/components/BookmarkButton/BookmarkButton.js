@@ -1,8 +1,7 @@
 "use client"
 import { useAuth } from '@/context/authContext';
 import React, { useState } from 'react';
-import { FaBookBookmark } from 'react-icons/fa6';
-import { MdBookmarkAdded } from 'react-icons/md';
+import {  MdOutlineBookmarkAdd } from 'react-icons/md';
 import Bookmarks from '../ui/Bookmarks';
 import toast from 'react-hot-toast';
 
@@ -16,14 +15,14 @@ const BookmarkButton = ({data}) => {
           toast.success('This item is bookmarked successfully');
        
         } catch (error) {
-         
+         toast.error(`${error.message}`)
         } finally {
           setLoading(false);
         }
       };
       return (
         <button onClick={handleBookmark} disabled={loading}>
-          {loading ?  <MdBookmarkAdded/>:<FaBookBookmark/> }
+          {loading ?  <MdOutlineBookmarkAdd/>:<MdOutlineBookmarkAdd fontSize={"1.5rem"}/>  }
         </button>
       );
 };

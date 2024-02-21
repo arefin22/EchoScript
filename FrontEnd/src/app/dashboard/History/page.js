@@ -25,6 +25,7 @@ const HistoryPage = () => {
     const fetchHistory = async () => {
       try {
         const historyResponse = await axiosPublic.get("/history");
+        
         const historyCount = historyResponse.data.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -34,6 +35,7 @@ const HistoryPage = () => {
         const userHistory = historyResponse.data.filter(
           (history) => history.user === user.email
           );
+          console.log(userHistory)
           const historyData = userHistory.slice(startIndex, endIndex);
         setHistoryData(historyData);
         setLoading(false);
@@ -45,11 +47,11 @@ const HistoryPage = () => {
 
     fetchHistory();
 
-    // Cleanup function
+    
     return () => {
-      // Any cleanup code if needed
+      
     };
-  }, [axiosPublic, user]);
+  }, [axiosPublic, user, currentPage]);
 
   if (loading) {
     return <Loader />;
@@ -91,14 +93,19 @@ const HistoryPage = () => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="min-h-[70vh]">
                 {historyData?.reverse().map((history) => (
                   <tr key={history.id}>
                     <td>
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
-                            <img src={history.userAvatar} alt="History" />
+                            <Image
+                              src={history?.userAvatar}
+                              alt="History"
+                              width={200}
+                              height={200}
+                            />
                           </div>
                         </div>
                         <div>
@@ -122,12 +129,12 @@ const HistoryPage = () => {
           </div>
         )}
         <div className="mt-2 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );
