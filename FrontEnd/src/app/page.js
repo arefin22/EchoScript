@@ -26,6 +26,17 @@ const page = () => {
       once: false,
     });
   }, []);
+  // window.addEventListener("scroll", function () {
+  //   var topElement = document.querySelector(".top");
+
+  //   // Add or remove the 'visible' class based on the scroll position
+  //   if (window.scrollY > 0) {
+  //     topElement.classList.add("visible");
+  //   } else {
+  //     topElement.classList.remove("visible");
+  //   }
+  // });
+
 
     return (
       <div className="container mx-auto px-2">
@@ -82,9 +93,9 @@ const page = () => {
 
         <Footer />
 
-        <div className="top w-[120px] float-end">
-          <a href="#">Back to Top &#8593;</a>
-        </div>
+          {/* <a href="#" className="top w-[120px] float-end ">
+            Back to Top &#8593;
+          </a> */}
       </div>
     );
 };
