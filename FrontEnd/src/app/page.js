@@ -81,6 +81,10 @@ const page = () => {
         </div> */}
 
         <Footer />
+
+        <div className="top w-[120px] float-end">
+          <a href="#">Back to Top &#8593;</a>
+        </div>
       </div>
     );
 };

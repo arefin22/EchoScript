@@ -72,3 +72,29 @@ blockquote span{
   font-weight: bold;
   margin-top:1em;
 }
+
+.top {
+  --offset: 50px; 
+  
+  position: sticky;
+  bottom: 20px;
+  margin-right: auto;
+  place-self: end;
+  margin-top: calc(100vh + var(--offset));
+  
+  /* visual styling */
+  text-decoration: none;
+  padding: 10px;
+  font-family: sans-serif;
+  color: #fff;
+  background: #000;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+html,
+body {
+  scroll-behavior: smooth;
+}
+.parent-container {
+   /* Align children to the right */
+}
