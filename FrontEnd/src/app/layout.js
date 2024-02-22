@@ -5,6 +5,9 @@ import Navbar from '@/components/shared/Navbar';
 import { AuthProvider } from '@/context/authContext';
 import { Toaster } from 'react-hot-toast';
 
+import "aos/dist/aos.css";
+
+
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

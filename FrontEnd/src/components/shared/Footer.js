@@ -84,7 +84,7 @@ const Footer = () => {
     // </footer>
 
     <>
-      <footer className="footer p-10 text-white py-40">
+      <footer className="footer p-10 text-white py-40" data-aos="fade-up">
         <nav className="space-y-3">
           <h3 className="">EchoScript</h3>
           <div className="pl-3 space-y-3">

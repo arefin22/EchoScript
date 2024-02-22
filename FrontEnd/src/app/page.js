@@ -1,5 +1,5 @@
 
-
+"use client"
 import Banner from "@/components/Banner/Banner";
 import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
 import Card from "@/components/Card/Card";
@@ -13,25 +13,39 @@ import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import Title from "@/components/shared/ReusableComponents/Title";
 import cardData from "@/utils/cardData";
 import Link from "next/link";
-
+import Navbar from "@/components/shared/Navbar";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 
 const page = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+  }, []);
+
     return (
-      <div className="container mx-auto">
-        <Navbar2 />
-          <Banner />
-          <div className="mt-[-80px]">
-            <Trending />
+      <div className="container mx-auto px-2">
+        {/* <Navbar2 /> */}
+        <div className="sticky top-10 md:top-16 lg:top-[50px] z-50">
+          <Navbar />
         </div>
-        
+        <Banner />
+        <div className="mt-[-25px] lg:mt-[-80px]">
+          <Trending />
+        </div>
 
-            <Popular />
+        <div>
+          <Popular />
+        </div>
 
+        <div>
+          <Contact />
+        </div>
 
-        <Contact />
-
-        
         {/* <Recomendation/> */}
         {/* popular cards */}
         {/* <div className="my-24">
