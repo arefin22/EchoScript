@@ -7,10 +7,13 @@ import Title from "@/components/shared/ReusableComponents/Title";
 import { useAuth } from "@/context/authContext";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+
 
 const bookmarks = () => {
-  const { user } = useAuth();
+  const { user } = useAuth("");
+  const [update, setUpdate] = useState(Date.now());
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
@@ -24,7 +27,10 @@ const bookmarks = () => {
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
-        const articlesResponse = await axiosPublic.get("/bookmark");
+        const articlesResponse = await axiosPublic.get(
+          `/bookmarkByEmail?email=${user?.email}`
+        );
+        console.log(articlesResponse);
         const articleCount = articlesResponse.data.length;
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -32,12 +38,10 @@ const bookmarks = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, articleCount);
 
-        const userArticles = articlesResponse.data.filter(
-          (article) => article.user === user.email
-        );
-        const articlesData = userArticles.slice(startIndex, endIndex);
-
+        
+        const articlesData = articlesResponse?.data?.slice(startIndex, endIndex);
         setBookmarkedData(articlesData);
+        console.log(bookmarkedData)
 
         setLoading(false);
       } catch (error) {
@@ -48,11 +52,11 @@ const bookmarks = () => {
 
     fetchBookmarks();
 
-    // Cleanup function
+   
     return () => {
-      // Any cleanup code if needed
+      
     };
-  }, [axiosPublic, user]);
+  }, [axiosPublic, user, currentPage]);
 
   if (loading) {
     return (
@@ -75,7 +79,7 @@ const bookmarks = () => {
       <div className="flex flex-col  w-full">
         <div className="grid h-20 card min-h-[580px] bg-base-300 rounded-box ">
           <div className="w-2/3 h-24 mx-auto">
-            <h1>{user.displayName}'s bookmarked articles:</h1>
+            <h1>{user.displayName}&apos;s bookmarked articles:</h1>
             {bookmarkedData?.length === 0 && (
               <div>No bookmarked articles found.</div>
             )}
@@ -94,7 +98,7 @@ const bookmarks = () => {
                     </tr>
                   </thead>
                   <tbody className="min-h-[70vh]">
-                    {bookmarkedData?.reverse().map((bookmark, index) => (
+                    {bookmarkedData?.map((bookmark, index) => (
                       <tr key={bookmark._id} className="text-center">
                         <td>{index + 1}</td>
                         <td>

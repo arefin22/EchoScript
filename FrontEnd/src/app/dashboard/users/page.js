@@ -7,8 +7,10 @@ import UserUpdate from "@/components/shared/UserUpdate/UserUpdate";
 
 
 import useAxiosPublic from "@/utils/useAxiosPublic";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const page = () => {
   const [update, setUpdate] = useState(Date.now());
@@ -64,8 +66,8 @@ const page = () => {
       <div className="flex flex-col  w-full">
         <div className="grid  card   rounded-box ">
           <div className="mx-auto">
-          {allUsersData?.length === 0 && <div>No Users found.</div>}
-          {allUsersData?.length > 0 && (
+            {allUsersData?.length === 0 && <div>No Users found.</div>}
+            {allUsersData?.length > 0 && (
               <div className="overflow-x-auto">
                 <table className="table">
                   {/* head */}
@@ -86,20 +88,23 @@ const page = () => {
                           <div className="flex items-center gap-3">
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
-                                <img src={user.photoURL} alt="user" />
-                                
+                                <Image
+                                  src={user?.photoURL}
+                                  alt="user"
+                                  width={200}
+                                  height={200}
+                                />
                               </div>
                             </div>
                             <div>
                               <p>{user.name}</p>
-                              
                             </div>
                           </div>
                         </td>
                         <td>{user.email}</td>
                         <td>{user.role}</td>
                         <td> {user.membership}</td>
-                        
+
                         <td className="flex justify-center items-center">
                           <button className="btn btn-sm btn-primary mr-2">
                             <UserUpdate id={user._id} setUpdate={setUpdate} />
@@ -118,7 +123,7 @@ const page = () => {
                 </table>
               </div>
             )}
-             <div className="mt-2 flex justify-center">
+            <div className="mt-2 flex justify-center">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -127,7 +132,6 @@ const page = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

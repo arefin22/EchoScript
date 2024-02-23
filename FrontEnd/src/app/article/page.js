@@ -9,6 +9,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -79,9 +80,9 @@ const ArticlePage = () => {
     },
   ];
 
-  const handleCategory = (e) => {
-    console.log(e);
-  };
+  // const handleCategory = (e) => {
+  //   console.log(e);
+  // };
 
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
@@ -95,8 +96,7 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-
-   console.log(res.data);
+      
       setData(res.data);
     });
   }, [axiosSecure]);
@@ -109,12 +109,12 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
-console.log(audience)
-console.log(data)
+  
 
   return (
     <div>
-      <Navbar />
+    
+      <Navbar2/>
       <div className="text-center relative flex items-center pt-5">
         {/* <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
@@ -146,39 +146,38 @@ console.log(data)
         >
           <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
         </button>
-       
       </div>
       <div className="py-10">
-      {data?.map((item) => (
-        <div>
-          <Article
-                 data={item}
-            commentCount={item.comments.length}
-            key={item._id}
-            authorName={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.name)     }
-            category={item.texteditor.category}
-            title={item.texteditor?.articleTitle}
-            // postedDate={item.postedDate}
-            
-            view={item.likes.length}
-            likeCount={item.likes.length}
-            
-            // article={item.article}
-            image={item.texteditor?.thumbnail}
-            // authorImage={item.authorImage}
-            // category={item.category}
-            // title={item.title}
-            // postedDate={item.postedDate}
-            // view={item.view}
-            // article={item.article}
-            // image={item.image}
-            authorImage={audience.filter((user)=> user.email===item.texteditor.authorEmail).map((author)=>author.photoURL) }
-            date={item.date}
-            articleId={item._id}
-            
-          />
-          
-         
+        {data?.map((item, idx) => (
+          <div key={idx}>
+            <Article
+              data={item}
+              commentCount={item.comments.length}
+              key={item._id}
+              authorName={audience
+                .filter((user) => user.email === item.texteditor.authorEmail)
+                .map((author) => author.name)}
+              category={item.texteditor.category}
+              title={item.texteditor?.articleTitle}
+              // postedDate={item.postedDate}
+
+              view={item.likes.length}
+              likeCount={item.likes.length}
+              // article={item.article}
+              image={item?.texteditor?.thumbnail}
+              // authorImage={item.authorImage}
+              // category={item.category}
+              // title={item.title}
+              // postedDate={item.postedDate}
+              // view={item.view}
+              // article={item.article}
+              // image={item.image}
+              authorImage={audience
+                .filter((user) => user?.email === item?.texteditor?.authorEmail)
+                .map((author) => author?.photoURL)}
+              date={item.date}
+              articleId={item._id}
+            />
           </div>
         ))}
       </div>

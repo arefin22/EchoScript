@@ -14,6 +14,7 @@ const HistoryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
+  const [update, setUpdate] = useState(Date.now());
   const axiosPublic = useAxiosPublic();
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const HistoryPage = () => {
     const fetchHistory = async () => {
       try {
         const historyResponse = await axiosPublic.get("/history");
-        console.log("historydata:", historyResponse.data)
+        
         const historyCount = historyResponse.data.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
         setTotalPages(totalPagesCount);
@@ -47,11 +48,11 @@ const HistoryPage = () => {
 
     fetchHistory();
 
-    // Cleanup function
+    
     return () => {
-      // Any cleanup code if needed
+      
     };
-  }, [axiosPublic, user]);
+  }, [axiosPublic, user, currentPage]);
 
   if (loading) {
     return <Loader />;
@@ -100,7 +101,12 @@ const HistoryPage = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
-                            <img src={history.userAvatar} alt="History" />
+                            <Image
+                              src={history?.userAvatar}
+                              alt="History"
+                              width={200}
+                              height={200}
+                            />
                           </div>
                         </div>
                         <div>
@@ -115,6 +121,7 @@ const HistoryPage = () => {
                         className="btn btn-ghost btn-xs"
                         api={"/history"}
                         id={history.id}
+                        setUpdate={setUpdate}
                       />
                     </td>
                   </tr>
@@ -124,12 +131,12 @@ const HistoryPage = () => {
           </div>
         )}
         <div className="mt-2 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
     </div>
   );

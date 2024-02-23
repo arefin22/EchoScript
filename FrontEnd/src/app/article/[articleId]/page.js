@@ -23,30 +23,34 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 
-const SingleArticle =  ({ params }) => {
+const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
+  const [articleData,setArticleData] = useState([]);
   const [text, setText] = useState("");
   const [forceUpdate, setForceUpdate] = useState(Date.now());
   const [isShareDropdownOpen, setShareDropdownOpen] = useState(false);
   const { user } = useAuth();
   const maxLength = 100;
+  const [audience, setAudience] = useState([]);
   const id = params.articleId;
-  
   useEffect(() => {
     axiosSecure.get(`/textArticle/${id}`).then((res) => {
       console.log(res.data);
-      const articleData=res.data
-      const historyData={user:user.email,article:articleData}
       setData(res.data);
-      if (user) {
-         axiosSecure.post("/history",historyData);
-        console.log("Article data saved to history API");
-      }
     });
   }, [forceUpdate]);
+  useEffect(() => {
+    axiosSecure.get("/user").then((res) => {
 
+   console.log(res.data);
+   
+      setAudience(res.data);
+    });
+  }, [axiosSecure]);
+  console.log(audience)
   console.log(data);
 
   const handleInputChange = (e) => {
@@ -128,7 +132,7 @@ const SingleArticle =  ({ params }) => {
 
   return (
     <div>
-      <Navbar />
+     <Navbar2/>
       <div>
         {data && (
           <div className="w-[800px] mx-auto  ">
@@ -139,12 +143,13 @@ const SingleArticle =  ({ params }) => {
                 {data?.texteditor?.articleTitle}
               </div>
               <div className=" mt-10 mb-5">
-  {/* <div> </div> */}
+
+ 
   <div>
-    <div className=" flex items-center pl-2 mb-6">
+   <div className=" flex items-center pl-2 mb-6">
               <div className="rounded-full overflow-hidden border-2 border-white mr-2">
                 <Image
-                  src={authorImage}
+                  src={audience.filter((user)=> user.email===data?.texteditor?.authorEmail).map((author)=>author.photoURL) }
                   alt="Author"
                   width={60}
                   height={60}
@@ -155,7 +160,7 @@ const SingleArticle =  ({ params }) => {
               <div className="flex flex-col">
                 <div className="flex gap-2">
                   <h2 className="text-[16px] font-bold ">
-                    {data?.texteditor?.authorEmail}
+                    {audience.filter((user)=>user.email===data?.texteditor?.authorEmail).map((author)=>author.name)    }
                   </h2>
                   <button className="text-gray-500 font-semibold text-[16px] ">
                   Follow
@@ -168,9 +173,12 @@ const SingleArticle =  ({ params }) => {
               </div>
 
               
-            </div></div>
+            </div>
+           
+    </div>
 </div>
-            
+
+
             <div className="flex justify-between border-t border-gray-300 pt-2">
               <div className="flex mb-4">
                 <div className="mr-12 flex items-center gap-2">
@@ -296,14 +304,19 @@ const SingleArticle =  ({ params }) => {
                   </div>
                 </div>
               </div>
-              <div>
+              
+           
+                <div>
+                
                 <TextToSpeech
-                  title={data?.texteditor?.articleTitle}
-                  desc={data?.texteditor?.editorContent?.blocks.map((block) => {
-                    {block.type === "paragraph" && <p>{block.data.text}</p>}
-                  })}
-                />
-              </div>
+                title={data?.texteditor?.articleTitle}
+                desc={'data'}
+              />
+           
+                 </div>
+                
+                
+             
               <div>
                 <div className="flex gap-1">
                   <FaBookmark  color='gray' size={24} />
@@ -332,6 +345,7 @@ const SingleArticle =  ({ params }) => {
                 </div>
               </div>
             </div>
+          
             <div className="mb-12  border-t border-gray-300">
              <div className="mt-5 mx-auto">
              {data?.texteditor?.editorContent?.blocks.map((block, idx) => (

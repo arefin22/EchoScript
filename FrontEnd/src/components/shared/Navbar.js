@@ -9,6 +9,7 @@ import person from "@/assets/img/person-removebg-preview.png";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import VoiceButton from "./VoiceButton/VoiceButton";
+import { FaList } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, loader, logout } = useAuth();
@@ -22,11 +23,6 @@ const Navbar = () => {
   const inputRefs = [nameInputRef];
 
   const navItem = [
-    {
-      route: "Home",
-      pathName: "/",
-    },
-
     {
       route: "About Us",
       pathName: "/about",
@@ -47,7 +43,7 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    axiosSecure.get("/article").then((res) => {
+    axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
     });
   }, [axiosSecure]);
@@ -100,8 +96,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
+    <div className="">
+      {/* <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
         <Image
           src={logo}
           alt="Logo"
@@ -143,7 +139,7 @@ const Navbar = () => {
                 {item.photoURL ? (
                   <Image
                     className="rounded-full"
-                    src={item.photoURL}
+                    src={item?.photoURL}
                     width={50}
                     height={50}
                     alt="user image"
@@ -240,6 +236,17 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+      </div> */}
+
+      <div className="w-[30%] mx-auto hidden lg:block bg-black text-white rounded-full px-5 py-3 ">
+        <nav className="flex justify-around">
+          <li className="list-none">About</li>
+          <li className="list-none">Articles</li>
+          <li className="list-none">Dashboard</li>
+        </nav>
+      </div>
+      <div className="w-[25%] ml-[60%] lg:hidden block bg-black text-white rounded-full px-5 py-3">
+        <FaList/>
       </div>
     </div>
   );

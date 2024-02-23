@@ -5,6 +5,9 @@ import Navbar from '@/components/shared/Navbar';
 import { AuthProvider } from '@/context/authContext';
 import { Toaster } from 'react-hot-toast';
 
+import "aos/dist/aos.css";
+
+
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -20,10 +23,10 @@ export default function RootLayout({ children }) {
       <body>
       <AuthProvider>
       <div><Toaster/></div>
-        <div className="max-w-screen-full mx-auto">
+        <div className="max-w-screen-full mx-auto bg-black">
 
           {/* <Navbar /> */}
-          <div className=' mx-auto'>{children}</div>
+          <div className='mx-auto'>{children}</div>
           {/* <Footer /> */}
 
 

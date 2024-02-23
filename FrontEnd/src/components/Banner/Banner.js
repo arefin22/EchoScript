@@ -1,21 +1,42 @@
 "use client";
+import Image from "next/image";
+import { FaSearch } from "react-icons/fa";
+import logo from "./../../assets/img/logo.png";
 
 const Banner = () => {
   return (
-    <div
-      className="hero w-full"
-      style={{
-        backgroundImage: "url(https://i.ibb.co/wz43pyS/banner.png)",
-      }}
-    >
-      {/* <div className="hero-overlay bg-opacity-60"></div> */}
-      <div className="w-full p-8 md:p-28 lg:p-32 xl:p-48">
-        <div className="">
-          <h1 className="mb-5 text-4xl lg:text-6xl xl:text-8xl text-[#C8B7A5] font-bold">Let Your Story Shine</h1>
-          <p className="mb-5 text-lg lg:text-2xl text-[#C8B7A5] -mt-6">
-          The Cozy Corner for Sharing Life Tales!
-          </p>
-          <button className="w-64 h-16 bg-[#C4B4A4] text-[#40220A] hover:bg-[#40220A] text-2xl hover:text-[#C4B4A4]  rounded-full mt-24 ">Explore Now</button>
+    <div className="mt-[-20px] md:pt-5 lg:mt-[-50px]">
+      <div
+        className="w-full h-screen rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
+        style={{
+          backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
+        }}
+      >
+        <div className="w-full flex justify-between py-5 px-3 lg:px-20 lg:pt-10 items-center">
+          <div>
+            <Image src={logo} width={200} height={100} />
+          </div>
+          <div>
+            <FaSearch className="text-3xl" />
+          </div>
+        </div>
+
+        <div className="w-full mt-5 lg:pt-10" data-aos="fade-up">
+          <div className="mx-auto text-center">
+            <h1 className="mb-5 text-white font-light text-6xl xl:text-8xl w-[150px] lg:w-[200px] mx-auto text-center">
+              Let Story's Shine
+            </h1>
+            <p className="mb-5 text-3xl text-white font-light">
+              The Cozy Corner for Sharing Life Tales!
+            </p>
+          </div>
+        </div>
+        <div
+          className="text-white text-xl font-semibold mt-20 lg:mt-10 pl-10 lg:pb-40 lg:pl-24"
+          data-aos="fade-up"
+        >
+          <p>Loved Place - By Reader</p>
+          <p>Read Now</p>
         </div>
       </div>
     </div>
