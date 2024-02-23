@@ -145,15 +145,11 @@ const DashNavbar = () => {
     </div>
      <div className='hidden md:block fixed'>
 
-     <diV className={`bg-black h-screen p-5 pt-8 rounded-full w-24 duration-300 relative `}>
-            <FaArrowCircleLeft size={25}  className={`bg-white text-gray-600 rounded-full absolute -right-3 top-9
-            border border-gray-600 cursor-pointer
-            ${!open && 'rotate-180'}`} /> 
-            <div className='inline-flex ml-2 text-white'>
+     <diV className={`bg-black h-screen p-5 pt-8 rounded-full w-20 duration-300 relative `}>
+            
+            <div  data-tip="EchoScript" className='tooltip  tooltip-top inline-flex ml-2 text-white'>
              <MdArticle className=' text-4xl rounded cursor-pointer block float-left ' />
-             <h1 className={` origin-left text-2xl font-medium ${!open && 'scale-0'} duration-300`}>
-             EchoScript
-             </h1>
+            
             </div> 
             <ul className="ml-2 ">
             <>
@@ -162,15 +158,15 @@ const DashNavbar = () => {
                href={nav.path}
               
               >
-              <li onClick={()=> setOpen(!open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-slate-400 rounded-md ${nav.spacing?'mt-9':'mt-2'} ${
+              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-slate-400 rounded-md ${nav.spacing?'mt-9':'mt-2'} ${
                 pathname === `${nav.path}`
-                  ? `bg-black rounded-md ${open ? 'w-32': 'w-24 '}`
+                  ? `bg-black rounded-md ${open ? 'w-32': 'w-20 '}`
                   : ""
               }`  }>
-               <span className ="text-2xl block float-left ">
+               <span className ="text-xl block float-left ">
                 {React.createElement(nav.icon)}
                 </span>
-               <span className={`text-base font-medium flex-1 ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
+               <span className={`text-base ml-2 font-medium flex-1 ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
               </li>
               </Link>
             ))}
