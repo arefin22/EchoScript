@@ -40,8 +40,8 @@ const page = () => {
 
     return (
       <div className="container mx-auto px-2">
-        {/* <Navbar2 /> */}
         <div className="sticky top-10 md:top-16 lg:top-[50px] z-50">
+        {/* <Navbar2 /> */}
           <Navbar />
         </div>
         <Banner />
