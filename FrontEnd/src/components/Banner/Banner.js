@@ -1,9 +1,12 @@
 "use client";
 import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
+
 import logo from "./../../assets/img/logo.png";
+import Search from "../shared/Search/Search";
+
 
 const Banner = () => {
+  
   return (
     <div className="mt-[-20px] md:pt-5 lg:mt-[-50px]">
       <div
@@ -14,10 +17,12 @@ const Banner = () => {
       >
         <div className="w-full flex justify-between py-5 px-3 lg:px-20 lg:pt-10 items-center">
           <div>
+            {/* navbar left part */}
             <Image src={logo} width={200} height={100} />
           </div>
           <div>
-            <FaSearch className="text-3xl" />
+            {/* navbar right part */}
+           <Search/>
           </div>
         </div>
 
