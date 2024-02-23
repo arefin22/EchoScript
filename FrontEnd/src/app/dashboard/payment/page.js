@@ -16,17 +16,17 @@ const payment = () => {
 
   const axiosPublic = useAxiosPublic()
 
-  // useEffect(() => {
-  //   // Create PaymentIntent as soon as the page loads
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
 
-  //   axiosPublic
-  //     .post("/create-payment-intent", { amount: 20 })
-  //     .then((data) => console.log(data.clientSecret));
-  //   // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
-  //   //   method: "POST",
-  //   //   headers: { "Content-Type": "application/json" },
-  //   // })
-  // }, []);
+    axiosPublic
+      .post("/create-payment-intent", { amount: 20 })
+      .then((data) => console.log(data.clientSecret));
+    // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    // })
+  }, []);
 
   return (
     <div>

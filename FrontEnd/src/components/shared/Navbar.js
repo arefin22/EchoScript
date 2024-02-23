@@ -251,7 +251,7 @@ const Navbar = () => {
             ))}
              <li className="list-none">
               <details className="dropdown dropdown-hover">
-                <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
+                <summary className="btn p-0 bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
                   {user?.email ? (
                     <div className="flex gap-2">
                       <div className="avatar ">

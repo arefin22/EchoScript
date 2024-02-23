@@ -53,7 +53,7 @@ const Payment = () => {
   ];
 
   const handlePayment = (data) => {
-    console.log(parseFloat(data.price));
+    // console.log(parseFloat(data.price));
   };
 
   return (
