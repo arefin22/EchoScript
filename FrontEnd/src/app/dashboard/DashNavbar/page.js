@@ -145,26 +145,26 @@ const DashNavbar = () => {
     </div>
      <div className='hidden md:block fixed'>
 
-     <diV className={`bg-gray-600 h-screen p-5 pt-8  ${open ? 'w-60': 'w-20 '} duration-300 relative `}>
-            <FaArrowCircleLeft size={25} onClick={()=> setOpen(!open)} className={`bg-white text-gray-600 rounded-full absolute -right-3 top-9
+     <diV className={`bg-black h-screen p-5 pt-8 rounded-full ${open ? 'w-24': 'w-24 '} duration-300 relative `}>
+            <FaArrowCircleLeft size={25}  className={`bg-white text-gray-600 rounded-full absolute -right-3 top-9
             border border-gray-600 cursor-pointer
             ${!open && 'rotate-180'}`} /> 
-            <div className='inline-flex'>
-             <MdArticle className=' text-4xl rounded cursor-pointer block float-left mr-2' />
-             <h1 className={`text-white origin-left text-2xl font-medium ${!open && 'scale-0'} duration-300`}>
+            <div className='inline-flex ml-2 text-white'>
+             <MdArticle className=' text-4xl rounded cursor-pointer block float-left ' />
+             <h1 className={` origin-left text-2xl font-medium ${!open && 'scale-0'} duration-300`}>
              EchoScript
              </h1>
             </div> 
-            <ul className="pt-2">
+            <ul className="ml-2 ">
             <>
             {navs.map((nav, idx) => (
-              <Link key={idx}
+              <Link  key={idx}
                href={nav.path}
               
               >
-              <li  className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-slate-400 rounded-md ${nav.spacing?'mt-9':'mt-2'} ${
+              <li onClick={()=> setOpen(!open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-slate-400 rounded-md ${nav.spacing?'mt-9':'mt-2'} ${
                 pathname === `${nav.path}`
-                  ? "bg-slate-400 rounded-md"
+                  ? "bg-black rounded-md w-32"
                   : ""
               }`  }>
                <span className ="text-2xl block float-left ">
