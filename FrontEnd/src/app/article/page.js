@@ -10,6 +10,7 @@ import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
+import SubHeader from "@/components/SubHeader/SubHeader";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -112,9 +113,15 @@ const ArticlePage = () => {
   
 
   return (
-    <div>
-    
-      <Navbar2/>
+    <div className="bg-white">
+      {/* <Navbar2/> */}
+      <SubHeader />
+      
+      <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[30px] lg:mt-[-85px] z-50">
+        {/* <Navbar2 /> */}
+        <Navbar />
+      </div>
+
       <div className="text-center relative flex items-center pt-5">
         {/* <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
