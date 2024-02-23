@@ -145,7 +145,7 @@ const DashNavbar = () => {
     </div>
      <div className='hidden md:block fixed'>
 
-     <diV className={`bg-black h-screen p-5 pt-8 rounded-full ${open ? 'w-24': 'w-24 '} duration-300 relative `}>
+     <diV className={`bg-black h-screen p-5 pt-8 rounded-full w-24 duration-300 relative `}>
             <FaArrowCircleLeft size={25}  className={`bg-white text-gray-600 rounded-full absolute -right-3 top-9
             border border-gray-600 cursor-pointer
             ${!open && 'rotate-180'}`} /> 
@@ -164,7 +164,7 @@ const DashNavbar = () => {
               >
               <li onClick={()=> setOpen(!open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-slate-400 rounded-md ${nav.spacing?'mt-9':'mt-2'} ${
                 pathname === `${nav.path}`
-                  ? "bg-black rounded-md w-32"
+                  ? `bg-black rounded-md ${open ? 'w-32': 'w-24 '}`
                   : ""
               }`  }>
                <span className ="text-2xl block float-left ">
