@@ -52,7 +52,7 @@ const Navbar2 = () => {
   }, [voiceButtonActive]);
   const navItem = [
     {
-      route: "All Article",
+      route: "Articles",
       pathName: "/article",
     },
     {
@@ -122,16 +122,16 @@ const Navbar2 = () => {
           </div>
         </div>
            {/* center part */}
-        <div className="hidden text-lg font-medium  sm:hidden md:hidden  bg-black w-2/5 text-white rounded-full h-16 mx-auto p-5 lg:flex items-center justify-between">
-          <ul className=" flex justify-between items-start gap-2   px-1">
+        <div className="hidden text-lg font-medium  sm:hidden md:hidden  bg-black w-2/5 text-white rounded-full h-16 mx-auto p-5 lg:flex items-center justify-around">
+          <ul className=" flex  justify-around items-start gap-2   px-1">
             {navItem.slice(0, 3).map((item, idx) => (
               <Link key={idx} href={item.pathName}>
-                <li className="mr-1 mt-2 list-none">{item.route}</li>
+                <li className="mr-1 mt-4 list-none">{item.route}</li>
               </Link>
             ))}
             <li className="list-none">
               <details className="dropdown dropdown-hover">
-                <summary className="m-1 btn bg-black btn-active btn-neutral ">
+                <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
                   {user?.email ? (
                     <div className="flex gap-2">
                       <div className="avatar ">
@@ -182,7 +182,7 @@ const Navbar2 = () => {
         {/* right part */}
         <div className={`${isHidden ? 'hidden' : ''}`}>
          {/* You can open the modal using document.getElementById('ID').showModal() method */}
-<button className="btn btn-lg bg-transparent h-10" onClick={()=>document.getElementById('my_modal_3').showModal()}><FaSearch/></button>
+<button className="btn border-hidden hover:border-hidden hover:bg-transparent bg-transparent h-10" onClick={()=>document.getElementById('my_modal_3').showModal()}><FaSearch className="w-12 h-12"/></button>
 <dialog id="my_modal_3" className="modal">
   <div className="modal-box ">
     <form method="dialog">
