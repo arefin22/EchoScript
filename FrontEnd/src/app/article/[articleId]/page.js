@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import TextToSpeech from "./../../../components/TextToSpeech/page";
+import TextToSpeech from "../../../components/TextToSpeech/texttospeech";
 import { AiFillLike } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
@@ -129,7 +129,10 @@ const SingleArticle = ({ params }) => {
   };
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
-
+  const blocks = data?.texteditor?.editorContent?.blocks;
+  const onlyText = blocks?.map((block) =>
+    block.data.text?.replace(/&nbsp;/g, " ")
+  );
   return (
     <div>
      <Navbar2/>
@@ -310,7 +313,7 @@ const SingleArticle = ({ params }) => {
                 
                 <TextToSpeech
                 title={data?.texteditor?.articleTitle}
-                desc={'data'}
+                desc={onlyText}
               />
            
                  </div>
