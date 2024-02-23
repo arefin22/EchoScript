@@ -40,8 +40,8 @@ const page = () => {
 
     return (
       <div className="container mx-auto px-2">
-        <div className="sticky top-[50px] md:top-[60px] z-50">
-        {/* <Navbar2 /> */}
+        <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] z-50">
+          {/* <Navbar2 /> */}
           <Navbar />
         </div>
         <Banner />
@@ -93,7 +93,7 @@ const page = () => {
 
         <Footer />
 
-          {/* <a href="#" className="top w-[120px] float-end ">
+        {/* <a href="#" className="top w-[120px] float-end ">
             Back to Top &#8593;
           </a> */}
       </div>
