@@ -4,7 +4,7 @@ import Speech from "react-text-to-speech";
 import { MdRecordVoiceOver } from "react-icons/md";
 import { MdVoiceOverOff } from "react-icons/md";
 import { RiVoiceprintFill } from "react-icons/ri";
-const page = ({title, desc}) => {
+const texttospeech = ({title, desc}) => {
     const startBtn = <button ><MdRecordVoiceOver size={26} /></button>;
     const pauseBtn = <button><RiVoiceprintFill size={26}/></button>;
     const stopBtn = <button ><MdVoiceOverOff size={26} /></button>;
@@ -46,4 +46,4 @@ const page = ({title, desc}) => {
     );
 };
 
-export default page;
+export default texttospeech;
