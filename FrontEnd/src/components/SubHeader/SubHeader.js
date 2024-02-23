@@ -15,7 +15,7 @@ const SubHeader = () => {
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
-            src={"https://i.ibb.co/Qk6B1cy/echo-black.png"}
+            src={"https://i.ibb.co/yfjY1j4/echo-white.png"}
             width={250}
             height={100}
           />
