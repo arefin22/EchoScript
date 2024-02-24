@@ -34,25 +34,23 @@ const page = () => {
     return (
       <div className="container mx-auto px-2">
         <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] z-50">
-          {/* <Navbar2 /> */}
           <Navbar />
         </div>
-        <Banner />
-        <div className="mt-[-25px] lg:mt-[-80px]">
-          <Trending />
-        </div>
+        <div className="mainContainer">
+          <Banner />
 
-        <div>
+          <div className="mt-[-25px] lg:mt-[-80px] z-50">
+            <Trending />
+          </div>
+
           <Popular />
-        </div>
 
-        <div>
           <Contact />
         </div>
 
-      
+        <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
-
+        </div>
 
         {/* <a href="#" className="top w-[120px] float-end ">
             Back to Top &#8593;
