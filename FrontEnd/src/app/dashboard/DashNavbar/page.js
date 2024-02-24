@@ -58,7 +58,7 @@ const DashNavbar = () => {
       path: "/dashboard/profile",
       route: "My Profile",
       icon: CgProfile,
-      spacing: true,
+      
     },
     {
       path: "/setting",
@@ -145,10 +145,12 @@ const DashNavbar = () => {
     </div>
      <div className='hidden md:block fixed'>
 
-     <diV className={`bg-black h-[80vh] mt-16 ml-10 p-5 pt-8 rounded-full w-[72px] duration-300 relative `}>
+     <diV className={`bg-black h-[80vh] mt-16 ml-10 p-5  rounded-full w-[72px] duration-300 relative `}>
             
-            <div  data-tip="EchoScript" className='tooltip  tooltip-top  ml-1 text-white'>
-             <MdArticle className=' text-2xl rounded cursor-pointer block float-left ' />
+            <div   className=' ml-1 text-white'>
+            <Link href="/">
+            <MdArticle className=' text-3xl rounded cursor-pointer block float-left mb-2' />
+            </Link>
             
             </div> 
             <ul className="ml-1 ">
@@ -158,12 +160,12 @@ const DashNavbar = () => {
                href={nav.path}
               
               >
-              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-slate-400 rounded-md ${nav.spacing?'mt-3':'mt-1'} ${
+              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-black hover:${open && 'w-36'} transition hover:translate-x-10 duration-300 ease-in-out rounded-md mt-2 ${
                 pathname === `${nav.path}`
-                  ? `bg-black rounded-md ${open ? 'w-28': 'w-[72px] '}`
+                  ? `bg-black rounded-md ${open ? 'w-36': 'w-[72px] '}`
                   : ""
               }`  }>
-               <span className ="text-[16px] block float-left ">
+               <span className ="text-[20px] block float-left ">
                 {React.createElement(nav.icon)}
                 </span>
                <span className={`text-base ml-2 font-medium flex-1 ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
@@ -176,55 +178,6 @@ const DashNavbar = () => {
 
       </diV>
 
-
-
-
-
-
-
-      
-     {/* <div className=" w-64 border-r-2 border-black min-h-screen  flex md:flex-col    ">
-        <div>
-          <Link href={"/"}>
-            <Image src={logo} alt="Logo" className="w-48 mx-auto mt-2" />
-            <p className=" text-black text-center text-[10px]">
-              Empowering Voices, Enriching Minds.
-            </p>
-          </Link>
-        </div>
-        <div className="flex flex-col gap-6 mt-5  mx-12 text-black text-[16px] ">
-          {navs.map((nav, idx) => (
-            <Link
-              key={idx}
-              className={ `${
-                pathname === `${nav.path}`
-                  ? "border border-black w-40 rounded-xl px-1 py-1"
-                  : ""
-              }`}
-              href={nav.path}
-            >
-              <h1 className='flex items-center text-base gap-2'>   {React.createElement(nav.icon)}
-              {nav.route}</h1>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-60 border-y-[1px] border-black w-40 mx-auto"></div>
-        <div className="flex flex-col gap-6 mt-5  mx-12 text-black text-[16px] text-center">
-          {navItem.map((nav, idx) => (
-            <Link
-              className={` ${
-                pathname === `${nav.path}`
-                  ? "border border-black w-40 rounded-xl px-1 py-1"
-                  : ""
-              }`}
-              key={idx}
-              href={nav.path}
-            >    <h1 className='flex items-center  text-base gap-2'>   {React.createElement(nav.icon)}
-            {nav.route}</h1>
-            </Link>
-          ))}
-        </div>
-      </div> */}
      </div>
     </div>
     </PrivateRoute>
