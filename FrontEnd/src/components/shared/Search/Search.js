@@ -25,7 +25,7 @@ const Search = () => {
           className="btn border-hidden hover:border-hidden hover:bg-transparent bg-transparent h-10"
           onClick={() => document.getElementById("my_modal_3").showModal()}
         >
-          <FaSearch className="text-xl lg:text-3xl text-white" />
+          <FaSearch className="text-3xl text-white" />
         </button>
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box ">

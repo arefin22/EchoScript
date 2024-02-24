@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Popular = () => {
     return (
-      <div className="bg-white">
+      <div className="bg-white z-1">
         <div className="sticky top-0 lg:mt-[-100px]">
           <div
             className="w-full h-screen rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
