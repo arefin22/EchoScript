@@ -2,7 +2,7 @@
 
 import CheckoutForm from "@/components/Payment/CheckoutForm";
 import useAxiosPublic from "@/utils/useAxiosPublic";
-import { Elements } from "@stripe/react-stripe-js";
+import { useElements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ const payment = () => {
   const [paymentAmount, setPaymentAmount] = useState("");
 
   const axiosPublic = useAxiosPublic()
+  const Elements = useElements()
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
