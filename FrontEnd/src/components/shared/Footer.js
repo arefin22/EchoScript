@@ -4,8 +4,8 @@ const Footer = () => {
  
   
   return (
-    <>
-      <footer className="footerFirst flex flex-col md:flex-row space-y-5 md:space-y-0 w-full mx-auto justify-around p-10 text-white  py-40">
+    <div className="bg-black text-white ">
+      <footer className="footerFirst flex flex-col md:flex-row space-y-5 md:space-y-0 w-full mx-auto justify-around p-10 py-40">
         <div className="space-y-3 md:w-[40%]">
           <h3 className="">EchoScript</h3>
           <div className="pl-3 space-y-3">
@@ -38,7 +38,7 @@ const Footer = () => {
       <div className="border-t text-white py-10">
         <p className="text-center">@Right to - ByteBlazers Team | 2024</p>
       </div>
-    </>
+    </div>
   );
 };
 

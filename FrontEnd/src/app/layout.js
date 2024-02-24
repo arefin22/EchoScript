@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
       <body>
       <AuthProvider>
       <div><Toaster/></div>
-        <div className="max-w-screen-full mx-auto bg-black">
+        <div className="max-w-screen-full mx-auto bg-black px-6 pt-5">
 
           {/* <Navbar /> */}
           <div className='mx-auto'>{children}</div>
