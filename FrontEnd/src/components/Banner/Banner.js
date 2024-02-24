@@ -6,14 +6,14 @@ import SubHeader from "../SubHeader/SubHeader";
 const Banner = () => {
   
   return (
-    <div className="mt-[-20px] lg:mt-[-50px]">
+    <div className="mt-[-20px] lg:mt-[-50px] z-1">
       <div
-        className="w-full rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
+        className="w-full pb-96 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
         style={{
           // backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
           background:
-            "linear-gradient(90deg, rgba(150,150,150,1) 0%, rgba(87,87,87,1) 0%, rgba(0,0,0,0.4654236694677871) 0%), url(https://i.ibb.co/rsGgD7b/banner.jpg)",
-          height: "200vh"
+            "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/wQ4LPrQ/shunya-koide-1em-Wndl-DHs0-unsplash.jpg)",
+              backgroundSize: "cover"
         }}
       >
         <SubHeader />
@@ -28,10 +28,7 @@ const Banner = () => {
             </p>
           </div>
         </div>
-        <div
-          className="text-white text-xl font-semibold mt-20 lg:mt-10 pl-10 lg:pb-40 lg:pl-24"
-          data-aos="fade-up"
-        >
+        <div className="text-white text-xl font-semibold mt-68 lg:mt-[200px] pl-10 lg:pb-0 lg:pl-24">
           <p>Loved Place - By Reader</p>
           <p>Read Now</p>
         </div>

@@ -246,7 +246,7 @@ const Navbar = () => {
         <nav className="flex gap-2 items-center justify-around">
           {navItem.slice(0, 3).map((item, idx) => (
             <Link key={idx} href={item.pathName}>
-              <li className=" list-none">{item.route}</li>
+              <li className="list-none text-xl font-semibold">{item.route}</li>
             </Link>
           ))}
           <li className="list-none">

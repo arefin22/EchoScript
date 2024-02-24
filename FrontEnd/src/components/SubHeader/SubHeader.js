@@ -15,13 +15,13 @@ const SubHeader = () => {
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
-            src={"https://i.ibb.co/yfjY1j4/echo-white.png"}
+            src={"https://i.ibb.co/Qk6B1cy/echo-black.png"}
             width={250}
             height={100}
           />
         </Link>
       </div>
-      <div className="bg-black rounded-full md:p-2">
+      <div className="bg-black rounded-full py-[11px] px-[5px]">
         {/* navbar right part */}
         <Search />
       </div>
