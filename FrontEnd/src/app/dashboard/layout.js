@@ -6,7 +6,7 @@ const dashbordlayout = ({ children }) => {
   
   return (
     <PrivateRoute>
-      <div className="flex flex-col md:flex-row ml-2  rounded-full ">
+      <div className="flex flex-col md:flex-row  ">
         <DashNavbar />
         <div className="flex-1 bg-white">
          <div className="ml-[200px] ">
