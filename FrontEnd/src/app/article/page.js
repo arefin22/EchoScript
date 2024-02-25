@@ -10,12 +10,18 @@ import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
+import SubHeader from "@/components/SubHeader/SubHeader";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [audience, setAudience] = useState([]);
+  const [searchString, setSearchString] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All"); // Add this line
+
+
+  
 
   const category = [
     {
@@ -96,25 +102,50 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-      
       setData(res.data);
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
+      console.log(res.data);
 
-   console.log(res.data);
-   
       setAudience(res.data);
     });
   }, [axiosSecure]);
+  const handleSearch = (query) => {
+    setSearchString(query);
+  };
 
+  const handleCategoryFilter = (category) => {
+    setCategoryFilter(category);
+  };
+
+  const handleCloseSearchModal = () => {
+    setSearchString("");
+    setCategoryFilter("All");
+  };
+
+  const filteredArticles = data.filter((article) => {
+    const isInCategory = categoryFilter === "All" || article.texteditor.category === categoryFilter;
+    const matchesSearch =
+      article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
+      article.texteditor.category.toLowerCase().includes(searchString.toLowerCase());
+    return isInCategory && matchesSearch;
+  });
   
 
   return (
     <div>
-    
-      <Navbar2/>
+    <div className="bg-white">
+      {/* <Navbar2/> */}
+      <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
+      
+      
+      <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[30px] lg:mt-[-85px] z-50">
+        {/* <Navbar2 /> */}
+        <Navbar />
+      </div>
+
       <div className="text-center relative flex items-center pt-5">
         {/* <input
           className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
@@ -148,7 +179,7 @@ const ArticlePage = () => {
         </button>
       </div>
       <div className="py-10">
-        {data?.map((item, idx) => (
+      {filteredArticles.slice(startIdx * 5, startIdx * 5 + 5).map((item, idx) => (
           <div key={idx}>
             <Article
               data={item}
@@ -159,19 +190,9 @@ const ArticlePage = () => {
                 .map((author) => author.name)}
               category={item.texteditor.category}
               title={item.texteditor?.articleTitle}
-              // postedDate={item.postedDate}
-
               view={item.likes.length}
               likeCount={item.likes.length}
-              // article={item.article}
               image={item?.texteditor?.thumbnail}
-              // authorImage={item.authorImage}
-              // category={item.category}
-              // title={item.title}
-              // postedDate={item.postedDate}
-              // view={item.view}
-              // article={item.article}
-              // image={item.image}
               authorImage={audience
                 .filter((user) => user?.email === item?.texteditor?.authorEmail)
                 .map((author) => author?.photoURL)}
@@ -181,10 +202,13 @@ const ArticlePage = () => {
           </div>
         ))}
       </div>
-      <hr className="border-1 border-[#F2F2F2] my-3" />
 
-      <Footer></Footer>
+      <div className="lg:sticky lg:bottom-0 lg:z-0">
+        <Footer />
+      </div>
+    </div>
     </div>
   );
+
 };
 export default ArticlePage;
