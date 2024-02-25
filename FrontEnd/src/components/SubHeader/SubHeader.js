@@ -8,7 +8,7 @@ import Link from "next/link";
 // https://i.ibb.co/yfjY1j4/echo-white.png
 // https://i.ibb.co/Qk6B1cy/echo-black.png
 
-const SubHeader = () => {
+const SubHeader = ({ onSearch, onClose }) => {
   return (
     <div className="w-full flex justify-between py-5 px-3 lg:px-20 lg:pt-10 items-center">
       <div>
@@ -23,7 +23,7 @@ const SubHeader = () => {
       </div>
       <div className="bg-black rounded-full py-[11px] px-[5px]">
         {/* navbar right part */}
-        <Search />
+        <Search onSearch={onSearch} onClose={onClose} />
       </div>
     </div>
   );
