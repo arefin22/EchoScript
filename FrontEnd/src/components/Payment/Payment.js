@@ -1,8 +1,16 @@
 "use client";
-import Link from "next/link";
-import React from "react";
+
+import { usePayment } from "@/context/paymentContext";
+import { useRouter } from "next/navigation";
+
+import React, { useState } from "react";
+
+
 
 const Payment = () => {
+  // const [paymentAmount, setPaymentAmount] = useState("");
+  const {setPayment} = usePayment()
+  const router = useRouter()
   const data = [
     {
       id: 1,
@@ -52,8 +60,10 @@ const Payment = () => {
     },
   ];
 
-  const handlePayment = (data) => {
+  const handlePayment = (item) => {
     // console.log(parseFloat(data.price));
+    setPayment(item?.price);
+    router.push("/dashboard/payment");
   };
 
   return (
@@ -73,7 +83,7 @@ const Payment = () => {
                 <span className="text-xs">/{item.duration} month</span>
               </p>
               <hr />
-              <Link href="/dashboard/payment">
+              {/* <Link href="/dashboard/payment"> */}
                 <button
                   className="p-5 mt-10 rounded-xl drop-shadow-lg hover:drop-shadow-2xl text-white px-16"
                   style={{ backgroundColor: `${item.color}` }}
@@ -81,7 +91,7 @@ const Payment = () => {
                 >
                   {item.button}
                 </button>
-              </Link>
+              {/* </Link> */}
             </div>
             <div className="flex flex-col gap-4">
               {item.features.map((feature, idx) => (

@@ -25,6 +25,7 @@ const CheckoutForm = () => {
       "payment_intent_client_secret"
     );
 
+  
     if (!clientSecret) {
       return;
     }
@@ -81,7 +82,7 @@ const CheckoutForm = () => {
   };
 
   const paymentElementOptions = {
-    layout: "tabs",
+    layout: "accordion",
   };
 
 
