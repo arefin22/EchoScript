@@ -1,10 +1,15 @@
 "use client";
 
-import SubHeader from "../SubHeader/SubHeader";
-
+import SubHeader from "@/components/SubHeader/SubHeader";
 
 const Banner = () => {
-  
+    const handleSearch = (query) => {
+      setSearchString(query);
+    };
+    const handleCloseSearchModal = () => {
+      setSearchString("");
+      setCategoryFilter("All");
+    };
   return (
     <div className="mt-[-20px] lg:mt-[-50px] z-1">
       <div
@@ -13,10 +18,10 @@ const Banner = () => {
           // backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
           background:
             "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/wQ4LPrQ/shunya-koide-1em-Wndl-DHs0-unsplash.jpg)",
-              backgroundSize: "cover"
+          backgroundSize: "cover",
         }}
       >
-        <SubHeader />
+        <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
 
         <div className="w-full mt-5 lg:pt-10" data-aos="fade-up">
           <div className="mx-auto text-center">
