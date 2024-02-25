@@ -49,16 +49,16 @@ const DashNavbar = () => {
       route: "Write",
       icon: TfiWrite,
     },
-    {
-      path: "/",
-      route: "Home",
-      icon: IoHomeOutline,
-    },
+    // {
+    //   path: "/",
+    //   route: "Home",
+    //   icon: IoHomeOutline,
+    // },
     {
       path: "/dashboard/profile",
       route: "My Profile",
       icon: CgProfile,
-      spacing: true,
+      
     },
     {
       path: "/setting",
@@ -139,103 +139,45 @@ const DashNavbar = () => {
             </div>
           </div>
         </div>
-        <div className="hidden md:block fixed">
-          <div
-            className={`bg-gray-600 h-screen p-5 pt-8  ${
-              open ? "w-60" : "w-20 "
-            } duration-300 relative `}
-          >
-            <FaArrowCircleLeft
-              size={25}
-              onClick={() => setOpen(!open)}
-              className={`bg-white text-gray-600 rounded-full absolute -right-3 top-9
-            border border-gray-600 cursor-pointer
-            ${!open && "rotate-180"}`}
-            />
-            <div className="inline-flex">
-              <MdArticle className=" text-4xl rounded cursor-pointer block float-left mr-2" />
-              <h1
-                className={`text-white origin-left text-2xl font-medium ${
-                  !open && "scale-0"
-                } duration-300`}
-              >
-                EchoScript
-              </h1>
-            </div>
-            <ul className="pt-2">
-              <>
-                {navs?.map((nav, idx) => (
-                  <Link key={idx} href={nav.path}>
-                    <li
-                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-slate-400 rounded-md ${
-                        nav.spacing ? "mt-9" : "mt-2"
-                      } ${
-                        pathname === `${nav.path}`
-                          ? "bg-slate-400 rounded-md"
-                          : ""
-                      }`}
-                    >
-                      <span className="text-2xl block float-left ">
-                        {React.createElement(nav.icon)}
-                      </span>
-                      <span
-                        className={`text-base font-medium flex-1 ${
-                          !open && "scale-0"
-                        } duration-300`}
-                      >
-                        {nav.route}{" "}
-                      </span>
-                    </li>
-                  </Link>
-                ))}
-              </>
-            </ul>
-          </div>
+ 
+    </div>
+     <div className='hidden md:block fixed'>
 
-          {/* <div className=" w-64 border-r-2 border-black min-h-screen  flex md:flex-col    ">
-        <div>
-          <Link href={"/"}>
-            <Image src={logo} alt="Logo" className="w-48 mx-auto mt-2" />
-            <p className=" text-black text-center text-[10px]">
-              Empowering Voices, Enriching Minds.
-            </p>
-          </Link>
-        </div>
-        <div className="flex flex-col gap-6 mt-5  mx-12 text-black text-[16px] ">
-          {navs.map((nav, idx) => (
-            <Link
-              key={idx}
-              className={ `${
-                pathname === `${nav.path}`
-                  ? "border border-black w-40 rounded-xl px-1 py-1"
-                  : ""
-              }`}
-              href={nav.path}
-            >
-              <h1 className='flex items-center text-base gap-2'>   {React.createElement(nav.icon)}
-              {nav.route}</h1>
+     <diV className={`bg-black h-[80vh] mt-16 ml-10 p-5  rounded-full w-[72px] duration-300 relative `}>
+            
+            <div   className=' ml-1 text-white'>
+            <Link href="/">
+            <MdArticle className=' text-3xl rounded cursor-pointer block float-left mb-2' />
             </Link>
-          ))}
-        </div>
-        <div className="mt-60 border-y-[1px] border-black w-40 mx-auto"></div>
-        <div className="flex flex-col gap-6 mt-5  mx-12 text-black text-[16px] text-center">
-          {navItem.map((nav, idx) => (
-            <Link
-              className={` ${
+            
+            </div> 
+            <ul className="ml-1 ">
+            <>
+            {navs.map((nav, idx) => (
+              <Link  key={idx}
+               href={nav.path}
+              
+              >
+              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2   rounded-md mt-2 ${
                 pathname === `${nav.path}`
-                  ? "border border-black w-40 rounded-xl px-1 py-1"
+                  ? `bg-black rounded-md ${open ? 'w-36': 'w-[72px] '}`
                   : ""
-              }`}
-              key={idx}
-              href={nav.path}
-            >    <h1 className='flex items-center  text-base gap-2'>   {React.createElement(nav.icon)}
-            {nav.route}</h1>
-            </Link>
-          ))}
-        </div>
-      </div> */}
-        </div>
-      </div>
+              }`  }>
+               <span className ="text-[20px] block float-left ">
+                {React.createElement(nav.icon)}
+                </span>
+               <span className={`text-base ml-2 font-medium flex-1  ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
+              </li>
+              </Link>
+            ))}
+            </>
+            
+            </ul>  
+
+      </diV>
+
+     </div>
+ 
     </PrivateRoute>
   );
 };
