@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaGithub, FaGlobe, FaGlobeAfrica, FaGlobeAsia } from "react-icons/fa";
 
 const Footer = () => {
@@ -99,18 +100,18 @@ const Footer = () => {
         <nav className="space-y-3">
           <h3 className="">Links</h3>
           <div className="pl-3 flex flex-col space-y-3">
-            <a className="link link-hover">Home</a>
-            <a className="link link-hover">Payment</a>
-            <a className="link link-hover">Dashboard</a>
+            <Link href={'/'} className="link link-hover">Home</Link>
+            <Link href={''} className="link link-hover">Payment</Link>
+            <Link href={'/dashboard'} className="link link-hover">Dashboard</Link>
           </div>
         </nav>
         <nav className="space-y-3">
           <h3 className="">Additional Links</h3>
           <div className="pl-3 flex flex-col space-y-3">
-            <a className="link link-hover">Contact Us</a>
-            <a className="link link-hover">About Us</a>
-            <a className="link link-hover">Services</a>
-            <a className="link link-hover">Privacy Policy</a>
+            <Link href={'/contact'} className="link link-hover">Contact Us</Link>
+            <Link href={'/about'} className="link link-hover">About Us</Link>
+            <Link href={'/articles'} className="link link-hover">Services</Link>
+            <Link href={'/'} className="link link-hover">Privacy Policy</Link>
           </div>
         </nav>
       </footer>

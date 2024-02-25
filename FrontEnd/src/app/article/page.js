@@ -17,6 +17,11 @@ const ArticlePage = () => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
   const [audience, setAudience] = useState([]);
+  const [searchString, setSearchString] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("All"); // Add this line
+
+
+  
 
   const category = [
     {
@@ -109,13 +114,33 @@ const ArticlePage = () => {
       setAudience(res.data);
     });
   }, [axiosSecure]);
+  const handleSearch = (query) => {
+    setSearchString(query);
+  };
 
+  const handleCategoryFilter = (category) => {
+    setCategoryFilter(category);
+  };
+
+  const handleCloseSearchModal = () => {
+    setSearchString("");
+    setCategoryFilter("All");
+  };
+
+  const filteredArticles = data.filter((article) => {
+    const isInCategory = categoryFilter === "All" || article.texteditor.category === categoryFilter;
+    const matchesSearch =
+      article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
+      article.texteditor.category.toLowerCase().includes(searchString.toLowerCase());
+    return isInCategory && matchesSearch;
+  });
   
 
   return (
     <div className="bg-white">
       {/* <Navbar2/> */}
-      <SubHeader />
+      <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
+      
       
       <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[30px] lg:mt-[-85px] z-50">
         {/* <Navbar2 /> */}
@@ -155,7 +180,7 @@ const ArticlePage = () => {
         </button>
       </div>
       <div className="py-10">
-        {data?.map((item, idx) => (
+      {filteredArticles.slice(startIdx * 5, startIdx * 5 + 5).map((item, idx) => (
           <div key={idx}>
             <Article
               data={item}
@@ -166,19 +191,9 @@ const ArticlePage = () => {
                 .map((author) => author.name)}
               category={item.texteditor.category}
               title={item.texteditor?.articleTitle}
-              // postedDate={item.postedDate}
-
               view={item.likes.length}
               likeCount={item.likes.length}
-              // article={item.article}
               image={item?.texteditor?.thumbnail}
-              // authorImage={item.authorImage}
-              // category={item.category}
-              // title={item.title}
-              // postedDate={item.postedDate}
-              // view={item.view}
-              // article={item.article}
-              // image={item.image}
               authorImage={audience
                 .filter((user) => user?.email === item?.texteditor?.authorEmail)
                 .map((author) => author?.photoURL)}
