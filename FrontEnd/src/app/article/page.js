@@ -139,7 +139,7 @@ const ArticlePage = () => {
   });
 
   return (
-    <div className="">
+    <div className="px-6 pt-5">
       <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[50px] lg:mt-[-75px] z-50">
         <Navbar />
       </div>

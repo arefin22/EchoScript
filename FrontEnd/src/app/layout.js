@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             <div>
               <Toaster />
             </div>
-            <div className="max-w-screen-full mx-auto bg-black px-6 pt-5">
+            <div className="max-w-screen-full mx-auto bg-black ">
               {/* <Navbar /> */}
               <div className="mx-auto">{children}</div>
               {/* <Footer /> */}
