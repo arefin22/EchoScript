@@ -58,7 +58,6 @@ const DashNavbar = () => {
       path: "/dashboard/profile",
       route: "My Profile",
       icon: CgProfile,
-      
     },
     {
       path: "/setting",
@@ -88,6 +87,7 @@ const DashNavbar = () => {
               className="input input-bordered w-full mt-4 bg-white md:w-auto"
             />
           </div>
+
           <div className="navbar text-white bg-[#282C32]">
             <div className="container mx-auto">
               <div className="navbar-start items-center">
@@ -139,45 +139,45 @@ const DashNavbar = () => {
             </div>
           </div>
         </div>
- 
-    </div>
-     <div className='hidden md:block fixed'>
-
-     <diV className={`bg-black h-[80vh] mt-16 ml-10 p-5  rounded-full w-[72px] duration-300 relative `}>
-            
-            <div   className=' ml-1 text-white'>
+      </div>
+      <div className="hidden md:block fixed">
+        <div
+          className={`bg-black h-[80vh] mt-16 ml-10 p-5  rounded-full w-[72px] duration-300 relative `}
+        >
+          <div className=" ml-1 text-white">
             <Link href="/">
-            <MdArticle className=' text-3xl rounded cursor-pointer block float-left mb-2' />
+              <MdArticle className=" text-3xl rounded cursor-pointer block float-left mb-2" />
             </Link>
-            
-            </div> 
-            <ul className="ml-1 ">
+          </div>
+          <ul className="ml-1 ">
             <>
-            {navs.map((nav, idx) => (
-              <Link  key={idx}
-               href={nav.path}
-              
-              >
-              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2   rounded-md mt-2 ${
-                pathname === `${nav.path}`
-                  ? `bg-black rounded-md ${open ? 'w-36': 'w-[72px] '}`
-                  : ""
-              }`  }>
-               <span className ="text-[20px] block float-left ">
-                {React.createElement(nav.icon)}
-                </span>
-               <span className={`text-base ml-2 font-medium flex-1  ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
-              </li>
-              </Link>
-            ))}
+              {navs.map((nav, idx) => (
+                <Link key={idx} href={nav.path}>
+                  <li
+                    onClick={() => setOpen(open)}
+                    className={`text-white text-sm flex justify-between items-center gap-x-4 cursor-pointer p-2   rounded-md mt-2 ${
+                      pathname === `${nav.path}`
+                        ? `bg-black rounded-md ${open ? "w-36" : "w-[72px] "}`
+                        : ""
+                    }`}
+                  >
+                    <span className="text-[20px] block float-left ">
+                      {React.createElement(nav.icon)}
+                    </span>
+                    <span
+                      className={`text-base ml-2 font-medium flex-1  ${
+                        !open && "scale-0"
+                      } duration-300`}
+                    >
+                      {nav.route}{" "}
+                    </span>
+                  </li>
+                </Link>
+              ))}
             </>
-            
-            </ul>  
-
-      </diV>
-
-     </div>
- 
+          </ul>
+        </div>
+      </div>
     </PrivateRoute>
   );
 };
