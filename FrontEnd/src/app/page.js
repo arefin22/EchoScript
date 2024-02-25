@@ -32,7 +32,7 @@ const page = () => {
 
 
     return (
-      <div className="container">
+      <div className="mx-auto">
         <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[70px] lg:-mt-6 z-50">
           <Navbar />
         </div>

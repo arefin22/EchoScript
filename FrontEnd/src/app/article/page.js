@@ -20,9 +20,6 @@ const ArticlePage = () => {
   const [searchString, setSearchString] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All"); // Add this line
 
-
-  
-
   const category = [
     {
       id: 1,
@@ -112,103 +109,80 @@ const ArticlePage = () => {
       setAudience(res.data);
     });
   }, [axiosSecure]);
+
   const handleSearch = (query) => {
     setSearchString(query);
   };
+   const handleCloseSearchModal = () => {
+     setSearchString("");
+     setCategoryFilter("All");
+   };
 
   const handleCategoryFilter = (category) => {
     setCategoryFilter(category);
   };
 
-  const handleCloseSearchModal = () => {
-    setSearchString("");
-    setCategoryFilter("All");
-  };
+ 
 
   const filteredArticles = data.filter((article) => {
-    const isInCategory = categoryFilter === "All" || article.texteditor.category === categoryFilter;
+    const isInCategory =
+      categoryFilter === "All" ||
+      article.texteditor.category === categoryFilter;
     const matchesSearch =
-      article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
-      article.texteditor.category.toLowerCase().includes(searchString.toLowerCase());
+      article.texteditor.articleTitle
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.category
+        .toLowerCase()
+        .includes(searchString.toLowerCase());
     return isInCategory && matchesSearch;
   });
-  
 
   return (
-    <div>
-    <div className="bg-white">
-      {/* <Navbar2/> */}
-      <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
-      
-      
-      <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[30px] lg:mt-[-85px] z-50">
-        {/* <Navbar2 /> */}
+    <div className="">
+      <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[50px] lg:mt-[-75px] z-50">
         <Navbar />
       </div>
 
-      <div className="text-center relative flex items-center pt-5">
-        {/* <input
-          className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search your article here" */}
-        {/* /> */}
-      </div>
-      <div className="flex gap-5 justify-center pt-3 items-center">
-        <button
-          className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
-          onClick={handlePrev}
-        >
-          <MdOutlineKeyboardArrowLeft fontSize={"1.5rem"} />
-        </button>
-        {category?.slice(startIdx, startIdx + 5).map((item) => (
-          <button
-            onClick={() => handleCategory(`${item?.category}`)}
-            className="bg-[#D9D9D9] px-5 py-2 rounded-2xl text-sm hover:bg-[#bdb8b8]"
-            key={item.id}
-          >
-            {item.category}
-          </button>
-        ))}
-        <button
-          className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
-          onClick={handleNext}
-        >
-          <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
-        </button>
-      </div>
-      <div className="py-10">
-      {filteredArticles.slice(startIdx * 5, startIdx * 5 + 5).map((item, idx) => (
-          <div key={idx}>
-            <Article
-              data={item}
-              commentCount={item.comments.length}
-              key={item._id}
-              authorName={audience
-                .filter((user) => user.email === item.texteditor.authorEmail)
-                .map((author) => author.name)}
-              category={item.texteditor.category}
-              title={item.texteditor?.articleTitle}
-              view={item.likes.length}
-              likeCount={item.likes.length}
-              image={item?.texteditor?.thumbnail}
-              authorImage={audience
-                .filter((user) => user?.email === item?.texteditor?.authorEmail)
-                .map((author) => author?.photoURL)}
-              date={item.date}
-              articleId={item._id}
-            />
-          </div>
-        ))}
+      <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
+        <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
+
+        <div className="py-10">
+          {filteredArticles
+            .slice(startIdx * 5, startIdx * 5 + 5)
+            .map((item, idx) => (
+              <div key={idx}>
+                <Article
+                  data={item}
+                  commentCount={item.comments.length}
+                  key={item._id}
+                  authorName={audience
+                    .filter(
+                      (user) => user.email === item.texteditor.authorEmail
+                    )
+                    .map((author) => author.name)}
+                  category={item.texteditor.category}
+                  title={item.texteditor?.articleTitle}
+                  view={item.likes.length}
+                  likeCount={item.likes.length}
+                  image={item?.texteditor?.thumbnail}
+                  authorImage={audience
+                    .filter(
+                      (user) => user?.email === item?.texteditor?.authorEmail
+                    )
+                    .map((author) => author?.photoURL)}
+                  date={item.date}
+                  articleId={item._id}
+                />
+              </div>
+            ))}
+        </div>
       </div>
 
       <div className="lg:sticky lg:bottom-0 lg:z-0">
         <Footer />
       </div>
     </div>
-    </div>
   );
-
 };
 export default ArticlePage;
