@@ -80,8 +80,13 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
 
+  const paymentElementOptions = {
+    layout: "tabs",
+  };
+
+
   return (
-    <div>
+    <div className="bg-white">
       Checkout Form
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />

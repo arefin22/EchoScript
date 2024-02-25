@@ -2,7 +2,7 @@ import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import DashNavbar from "./DashNavbar/page";
 
 
-const dashbordlayout = ({ children }) => {
+const dashboardLayout = ({ children }) => {
   
   return (
     <PrivateRoute>
@@ -19,4 +19,4 @@ const dashbordlayout = ({ children }) => {
   );
 };
 
-export default dashbordlayout;
+export default dashboardLayout;

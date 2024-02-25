@@ -2,7 +2,7 @@
 
 import CheckoutForm from "@/components/Payment/CheckoutForm";
 import useAxiosPublic from "@/utils/useAxiosPublic";
-import { useElements } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
 
@@ -15,20 +15,25 @@ const payment = () => {
   const [paymentAmount, setPaymentAmount] = useState("");
 
   const axiosPublic = useAxiosPublic()
-  const Elements = useElements()
+
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
 
     axiosPublic
       .post("/create-payment-intent", { amount: 20 })
-      .then((data) => console.log(data.clientSecret));
+      .then((data) => setClientSecret(data?.data?.clientSecret));
     // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // })
   }, []);
 
+  const options = {
+    clientSecret,
+  };
+
+  // console.log(clientSecret)
   return (
     <div>
       <h3>Payment</h3>
