@@ -75,7 +75,7 @@ const CheckoutForm = () => {
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      setMessage("An unexpected error occurred.", error);
     }
 
     setIsLoading(false);
@@ -87,11 +87,11 @@ const CheckoutForm = () => {
 
 
   return (
-    <div className="bg-white">
-      Checkout Form
-      <form id="payment-form" onSubmit={handleSubmit}>
+    <div className="container lg:w-2/5 p-10 mx-auto">
+      <h2>Payment of {}</h2>
+      <form className="w-full" id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
+        <button className="btn mt-5 btn-accent text-center items-center" disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
             {isLoading ? (
               <div className="spinner" id="spinner"></div>

@@ -39,8 +39,8 @@ const payment = ({ price }) => {
 
   // console.log(clientSecret)
   return (
-    <div>
-      <h3>Payment</h3>
+    <div className="bg-white w-full min-h-screen">
+      {/* <h3>Payment</h3> */}
       {/* <CheckoutForm /> */}
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
