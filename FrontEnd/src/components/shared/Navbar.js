@@ -100,118 +100,21 @@ const Navbar = () => {
 
   return (
     <div className="">
-      {/* <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
-        <Image
-          src={logo}
-          alt="Logo"
-          width={100}
-          height={100}
-          className="w-96"
-        />
-        <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
-          Empowering Voices, Enriching Minds.
-        </h2>
-       <div className="flex justify-center items-center gap-5">
-       <input
-          type="text"
-          ref={nameInputRef}
-          placeholder="Search"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="input input-bordered w-full mt-4 bg-white md:w-auto"
-        />
-        <VoiceButton className="btn ml-5" inputRefs={inputRefs}/>
-       </div>
-      </div>
-      <div className="flex justify-center w-3/4 " ref={dropdownRef}>
-        {suggestions?.length > 0 && searchQuery?.length > 0 && (
-          <div
-            key={Math.random()}
-            className="absolute mt-2 p-2 bg-white shadow rounded-lg border z-50 border-gray-300 w-96 cursor-pointer"
-          >
-            {suggestions?.map((item) => (
-              // <Link href={`/article/${item._id}`}>
-              <p
-                onClick={() => {
-                  setSearchQuery(item.title || item.name);
-                  setSuggestions([]);
-                }}
-                className="flex justify-center items-center"
-                key={item._id}
-              >
-                {item.photoURL ? (
-                  <Image
-                    className="rounded-full"
-                    src={item?.photoURL}
-                    width={50}
-                    height={50}
-                    alt="user image"
-                  />
-                ) : (
-                  ""
-                )}
-                {item.title || item.name}
-              </p>
-              // </Link>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="navbar text-white bg-[#282C32]">
-        <div className="container mx-auto">
-          <div className="navbar-start items-center">
-            <div className="dropdown">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost lg:hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />
-                </svg>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
-              >
-                {navItem.map((item, idx) => (
-                  <Link key={idx} href={item.pathName}>
-                    <li className="mr-5 py-2">{item.route}</li>
-                  </Link>
-                ))}
-              </ul>
-            </div>
-            <div className="flex-shrink-0 hidden -mt-6 items-center justify-start lg:flex">
-              <ul className="menu menu-horizontal px-1">
-                {navItem.map((item, idx) => (
-                  <Link key={idx} href={item.pathName}>
-                    <li className="mr-5">{item.route}</li>
-                  </Link>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="navbar-end">
-            <div className="flex flex-row items-center justify-end gap-2">
-              <div>
-                <Theme />
-              </div>
-              <div>
+      <div className="w-[40%] mx-auto hidden lg:block bg-black text-white rounded-full px-5 py-2">
+        {/* middle part */}
+        <nav className="flex gap-2 items-center justify-around">
+          {navItem.slice(0, 3).map((item, idx) => (
+            <Link key={idx} href={item.pathName}>
+              <li className="list-none text-xl font-semibold">{item.route}</li>
+            </Link>
+          ))}
+          <li className="list-none">
+            <details className="dropdown dropdown-hover">
+              <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
                 {user?.email ? (
                   <div className="flex gap-2">
-                    <div className="avatar online">
-                      <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div className="avatar ">
+                      <div className="w-12 rounded-full ring  ring-offset-base-100 ring-offset-2">
                         <Image
                           src={user?.photoURL || person}
                           width={12}
@@ -220,139 +123,92 @@ const Navbar = () => {
                         />
                       </div>
                     </div>
-                    <button
-                      onClick={logout}
-                      className="btn btn-error inline-block"
-                    >
-                      LogOut
-                    </button>
                   </div>
                 ) : (
                   <div>
-                    <Link href={"/login"} className="btn">
-                      <Image src={person} width={20} height={20} alt="demo" />
-                      Log In
-                    </Link>
+                    <Image src={person} width={12} height={12} alt="demo" />
                   </div>
                 )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      <div className="w-[40%]  mx-auto hidden lg:block bg-black text-white rounded-full px-5 py-3 ">
-       {/* middle part */}
-        <nav className="flex gap-2 items-center justify-around">
-        {navItem.slice(0, 3).map((item, idx) => (
-              <Link key={idx} href={item.pathName}>
-                <li className=" list-none">{item.route}</li>
-              </Link>
-            ))}
-             <li className="list-none">
-              <details className="dropdown dropdown-hover">
-                <summary className="btn p-0 bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
-                  {user?.email ? (
-                    <div className="flex gap-2">
-                      <div className="avatar ">
-                        <div className="w-12 rounded-full ring  ring-offset-base-100 ring-offset-2">
-                          <Image
-                            src={user?.photoURL || person}
-                            width={12}
-                            height={12}
-                            alt={"user"}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <Image src={person} width={12} height={12} alt="demo" />
-                    </div>
-                  )}
-                </summary>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
-                >
-                  {navItem.map((item, idx) => (
-                    <Link key={idx} href={item.pathName}>
-                      <li className="mr-5 py-2 text-center list-none">{item.route}</li>
-                    </Link>
-                  ))}
-                  {user?.email ? (
-                    <li className="list-none">
-                      <button
-                        onClick={logout}
-                        className="btn btn-error h-10 inline-block text-center p-2"
-                      >
-                        LogOut
-                      </button>
-                    </li>
-                  ) : (
-                    <Link href={"/login"}>
-                      <li className="list-none text-center">log In</li>
-                    </Link>
-                  )}
-                </ul>
-              </details>
-            </li>
+              </summary>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
+              >
+                {user?.email ? (
+                  <li className="list-none">
+                    <button
+                      onClick={logout}
+                      className="btn btn-error inline-block text-center text-2xl hover:text-white"
+                    >
+                      LogOut
+                    </button>
+                  </li>
+                ) : (
+                  <Link href={"/login"}>
+                    <li className="list-none text-center">log In</li>
+                  </Link>
+                )}
+              </ul>
+            </details>
+          </li>
         </nav>
       </div>
-      <div className="w-[25%] ml-[60%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3 py-2">
-       {/* mobile nav option */}
-       <div>
-       <details className="dropdown dropdown-hover">
-                <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
-                <FaList/>
-                </summary>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
-                >
-                  {navItem.map((item, idx) => (
-                    <Link key={idx} href={item.pathName}>
-                      <li className="mr-5 py-2 text-center list-none">{item.route}</li>
-                    </Link>
-                  ))}
-                  {user?.email ? (
-                    <li className="list-none">
-                      <button
-                        onClick={logout}
-                        className="btn btn-error h-10 inline-block text-center p-2"
-                      >
-                        LogOut
-                      </button>
-                    </li>
-                  ) : (
-                    <Link href={"/login"}>
-                      <li className="list-none">log In</li>
-                    </Link>
-                  )}
-                </ul>
-              </details>
-       </div>
-       
-      <div>
-      {user?.email ? (
-                    <div className="flex gap-2">
-                      <div className="avatar ">
-                        <div className="w-8 rounded-full ring  ring-offset-base-100 ring-offset-2">
-                          <Image
-                            src={user?.photoURL || person}
-                            width={8}
-                            height={8}
-                            alt={"user"}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <Image src={person} width={8} height={8} alt="demo" />
-                    </div>
-                  )}
-      </div>
+      <div className="w-[30%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
+        {/* mobile nav option */}
+        <div>
+          <details className="dropdown dropdown-hover">
+            <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
+              <FaList className="text-white"/>
+            </summary>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 ml-[-50px] z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
+            >
+              {navItem.map((item, idx) => (
+                <Link key={idx} href={item.pathName}>
+                  <li className="py-2 text-center list-none">
+                    {item.route}
+                  </li>
+                </Link>
+              ))}
+              {user?.email ? (
+                <li className="list-none">
+                  <button
+                    onClick={logout}
+                    className="btn btn-error h-10 inline-block text-center p-2"
+                  >
+                    LogOut
+                  </button>
+                </li>
+              ) : (
+                <Link href={"/login"}>
+                  <li className="list-none">log In</li>
+                </Link>
+              )}
+            </ul>
+          </details>
+        </div>
+
+        <div>
+          {user?.email ? (
+            <div className="flex gap-2">
+              <div className="avatar ">
+                <div className="w-8 rounded-full ring  ring-offset-base-100 ring-offset-2">
+                  <Image
+                    src={user?.photoURL || person}
+                    width={8}
+                    height={8}
+                    alt={"user"}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Image src={person} width={8} height={8} alt="demo" />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

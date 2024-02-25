@@ -1,6 +1,6 @@
 import Article from "../Article/Article";
 import Card from "../Card/Card";
-import TextToSpeech from "../TextToSpeech/page"
+import TextToSpeech from "../TextToSpeech/texttospeech"
 import Title from "../shared/ReusableComponents/Title";
 const Recomendation = async () => {
   const userFav = ["Books", "Weather", "Technology", "Coding"];

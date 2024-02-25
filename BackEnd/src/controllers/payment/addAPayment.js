@@ -1,16 +1,16 @@
 const stripe = require("stripe")(process.env.STRIPE_TOKEN);
 
-const calculateOrderAmount = (items) => {
-  const amount = items * 100;
-  return amount;
-};
+// const calculateOrderAmount = (items) => {
+ 
+//   return amount;
+// };
 
 const addAPayment = async (req, res) => {
-  const { items } = req.body;
-
+  const { amount } = req.body;
+  const price = amount * 100;
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: "eur",
+    amount: price,
+    currency: "usd",
     payment_method_types: ["card"],
   });
 
