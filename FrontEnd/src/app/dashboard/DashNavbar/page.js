@@ -160,7 +160,7 @@ const DashNavbar = () => {
                href={nav.path}
               
               >
-              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2  hover:bg-black hover:${open && 'w-36'} transition hover:translate-x-10 duration-300 ease-in-out rounded-md mt-2 ${
+              <li onClick={()=> setOpen(open)} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2   rounded-md mt-2 ${
                 pathname === `${nav.path}`
                   ? `bg-black rounded-md ${open ? 'w-36': 'w-[72px] '}`
                   : ""
@@ -168,7 +168,7 @@ const DashNavbar = () => {
                <span className ="text-[20px] block float-left ">
                 {React.createElement(nav.icon)}
                 </span>
-               <span className={`text-base ml-2 font-medium flex-1 ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
+               <span className={`text-base ml-2 font-medium flex-1  ${!open && 'scale-0'} duration-300`}>{nav.route} </span>
               </li>
               </Link>
             ))}
