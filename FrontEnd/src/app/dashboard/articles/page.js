@@ -1,65 +1,108 @@
+"use client";
+import { useEffect, useState } from "react";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import Image from "next/image";
+import { useAuth } from "@/context/authContext";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { axiosSecure } from "@/utils/useAxiosSecure";
+import Link from "next/link";
+import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 
-const article = () => {
+const Article = () => {
+  const [articles, setArticles] = useState([]);
+  const [update, setUpdate] = useState(Date.now());
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
+  const user = useAuth();
+  const authEmail = user.user.email;
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await axiosSecure.get(
+          `/textArticleByEmail?email=${authEmail}`
+        );
+        const articleCount = response.data.length;
+        const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, articleCount); // Fix typo here
+        const articleData = response.data.slice(startIndex, endIndex);
+        setTotalPages(totalPagesCount);
+        setArticles(articleData);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+
+    fetchArticles();
+
+
+  // console.log(articles);
+
+  }, [update]); 
+
+  // }, [update, currentPage]); 
+
+
+  const handleEdit = (article) => {
+    localStorage.setItem("editArticle", JSON.stringify(article));
+  };
+
+  // console.log(articles);
   return (
     <PrivateRoute>
-    <div className="ml-10">
-     
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr className="text-center">
-              <th>#</th>
-              <th>images</th>
-              <th>Author Name</th>
-              <th>Title</th>
-              <th>Like</th>
-              <th>Comment</th>
-              <th>share</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <td>1</td>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <Image
-                        src="https://i.ibb.co/1dWtPt3/download.jpg"
-                        alt="Avatar Tailwind CSS Component"
-                        width="500"
-                        height="500"
-                      ></Image>
-                      {/* <img
-                        src="https://i.ibb.co/1dWtPt3/download.jpg"
-                        alt="Avatar Tailwind CSS Component"
-                      /> */}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <p className="font-bold">Shawal</p>
-              </td>
-              <td>Zemlak, Daniel and Leannon</td>
-              <td>20k</td>
-              <td>1000</td>
-              <td>10</td>
-              <th>
-                <button className="btn ">Details</button>
-              </th>
-            </tr>
-          </tbody>
-        </table>
+      <div className="ml-10">
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr className="text-center">
+                <th>#</th>
+                <th>Title</th>
+                <th>Like</th>
+                <th>Comment</th>
+                <th>Tags</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {articles.map((article, index) => (
+                <tr key={article._id} className="text-center">
+                  <td>{index + 1}</td>
+                  <td>
+                    <Link href={`/dashboard/articles/${article._id}`}>
+                      {article?.texteditor?.articleTitle}
+                    </Link>
+                  </td>
+                  <td>{article?.likes.length}</td>
+                  <td>{article?.comments.length}</td>
+                  <td>{article?.texteditor?.tags.join(", ")}</td>
+                  <td className="flex justify-center items-center">
+                    <Link
+                      href={`/dashboard/articleEdit/${article._id}`}
+                      className="btn btn-sm btn-primary mr-2"
+                      onClick={() => handleEdit(article.texteditor)}
+                    >
+                      <FaEdit />
+                    </Link>
+                    <button className="btn btn-sm btn-error">
+                      <DeleteButton
+                        setUpdate={setUpdate}
+                        api={"textArticle"}
+                        id={article._id}
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
     </PrivateRoute>
   );
 };
 
-export default article;
+export default Article;

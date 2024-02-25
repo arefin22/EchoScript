@@ -10,21 +10,110 @@ h5,
 h6 {
   font-weight: bold;
 }
-h1{
-    font-size: 34px;
+h1 {
+  font-size: 34px;
 }
-h2{
-    font-size: 30px;
+h2 {
+  font-size: 30px;
 }
-h3{
-    font-size: 24px;
+h3 {
+  font-size: 24px;
 }
-h4{
-    font-size: 20px;
+h4 {
+  font-size: 20px;
 }
-h5{
-    font-size: 18px;
+h5 {
+  font-size: 18px;
 }
-h6{
-    font-size: 16px;
+h6 {
+  font-size: 16px;
+}
+
+ol {
+  list-style-type: disc;
+  margin-left: 50px;
+}
+ul {
+  list-style-type: circle;
+  margin-left: 50px;
+}
+blockquote {
+  font-size: 1.4em;
+  width: 80%;
+  margin: 50px auto;
+  font-family: Open Sans;
+  font-style: italic;
+  color: #555555;
+  padding: 1.2em 30px 1.2em 75px;
+  border-left: 8px solid #78c0a8;
+  line-height: 1.6;
+  position: relative;
+  background: #ededed;
+}
+
+blockquote::before {
+  font-family: Arial;
+  content: "\201C";
+  color: #78c0a8;
+  font-size: 4em;
+  position: absolute;
+  left: 10px;
+  top: -10px;
+}
+
+blockquote::after {
+  content: "";
+}
+
+blockquote span {
+  display: block;
+  color: #333333;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+.top {
+  --offset: 50px;
+  position: sticky;
+  bottom: 20px;
+  margin-right: 10px;
+  place-self: end;
+  margin-top: -50px; /* Initially hide the element above the viewport */
+  opacity: 0; /* Initially set opacity to 0 */
+  transition: opacity 0.3s ease; /* Smooth transition effect */
+
+  /* visual styling */
+  text-decoration: none;
+  padding: 10px;
+  font-family: sans-serif;
+  color: #fff;
+  background: #000;
+  border-radius: 100px;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.top.visible {
+  opacity: 1; /* Set opacity to 1 when the element is visible */
+}
+.top:hover {
+  background: gray;
+}
+html,
+body {
+  scroll-behavior: smooth;
+}
+.mainContainer {
+  z-index: 1;
+  position: relative;
+}
+
+.footerFirst a{
+  transition: 0.3s;
+  width: max-content;
+}
+.footerFirst a:hover{
+  margin-left: 10px;
+  
 }

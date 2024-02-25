@@ -4,20 +4,23 @@ const applyMiddleware = require("./middlewares/applyMiddleware");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
-const getAllArticle = require("./routes/article/index")
 const addAUser = require("./routes/user/index")
 const textArticle = require("./routes/textArticle/index")
 const search = require("./routes/search/index")
+const history = require("./routes/history/index")
+const bookmark = require("./routes/bookmark/index")
+const payment = require("./routes/payment/index")
 
 // middlewares
 applyMiddleware(app)
 
 // routes
-app.use(getAllArticle);
 app.use(addAUser);
 app.use(textArticle);
 app.use(search)
-
+app.use(history)
+app.use(bookmark)
+app.use(payment)
 
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");

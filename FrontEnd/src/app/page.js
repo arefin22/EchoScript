@@ -1,60 +1,62 @@
+
+"use client"
 import Banner from "@/components/Banner/Banner";
-import ButtonWithBgColor from "@/components/Button/ButtonWithBgColor";
-import Card from "@/components/Card/Card";
-import Payment from "@/components/Payment/Payment";
-import Recomendation from "@/components/Recomendation/page";
+import Contact from "@/components/Contact/Contact";
+import Popular from "@/components/Popular/Popular";
+import Trending from "@/components/Trending/Trending";
 import Footer from "@/components/shared/Footer";
+
 import Navbar from "@/components/shared/Navbar";
-import Title from "@/components/shared/ReusableComponents/Title";
-import cardData from "@/utils/cardData";
-import Link from "next/link";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 
 const page = () => {
-  return (
-    <div>
-      <Navbar/>
-      <Banner/>
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+  }, []);
+  // window.addEventListener("scroll", function () {
+  //   var topElement = document.querySelector(".top");
 
-      <div className="container mx-auto my-24">
-        <Recomendation/>
-      </div>
-      {/* popular cards */}
-      <div className="container mx-auto my-24">
-        <Title title="Latest Article"></Title>
-        <div className="my-32 grid grid-cols-1 md:grid-cols-3 gap-10">
-          {cardData?.map((card, index) => (
-            <Link key={index} href="/singlearticle">
-              <Card
-                key={index}
-                tags={card.tags}
-                title={card.title}
-                date={card.date}
-                likes={card.likes}
-                comments={card.comments}
-                article={card.article}
-                image={card.image}
-                authorName={card.authorName}
-                view={card.view}
-              />
-            </Link>
-          ))}
+  //   // Add or remove the 'visible' class based on the scroll position
+  //   if (window.scrollY > 0) {
+  //     topElement.classList.add("visible");
+  //   } else {
+  //     topElement.classList.remove("visible");
+  //   }
+  // });
+
+
+    return (
+      <div className="container">
+        <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[70px] lg:-mt-6 z-50">
+          <Navbar />
         </div>
-        <div className="my-24">
-          <div className=" text-center mx-auto">
-            <ButtonWithBgColor name={"Explore More"} />
+        <div className="mainContainer">
+          <Banner />
+
+          <div className="mt-[-25px] lg:mt-[-80px] z-50">
+            <Trending />
           </div>
+
+          <Popular />
+
+          <Contact />
         </div>
-      </div>
 
-      <div className="container mx-auto my-24">
-        <Title title="Packages"></Title>
-        <Payment />
-      </div>
+        <div className="lg:sticky lg:bottom-0 lg:z-0">
+          <Footer />
+        </div>
 
-      <Footer/>
-    </div>
-  );
+        {/* <a href="#" className="top w-[120px] float-end ">
+            Back to Top &#8593;
+          </a> */}
+      </div>
+    );
 };
 
 export default page;

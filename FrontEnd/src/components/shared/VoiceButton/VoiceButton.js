@@ -1,10 +1,10 @@
 "use client"
+// VoiceButton.js
 import React, { useEffect, useState } from 'react';
 import { FaMicrophoneAlt } from 'react-icons/fa';
 
-
-const VoiceButton = ({ inputRefs }) => {
-    const [recognition, setRecognition] = useState(null);
+const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) => {
+  const [recognition, setRecognition] = useState(null);
   const [listening, setListening] = useState(false);
 
   useEffect(() => {
@@ -24,6 +24,7 @@ const VoiceButton = ({ inputRefs }) => {
     if (recognition) {
       recognition.start();
       setListening(true);
+      toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
 
@@ -31,6 +32,7 @@ const VoiceButton = ({ inputRefs }) => {
     if (recognition) {
       recognition.stop();
       setListening(false);
+      toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
 
@@ -49,11 +51,13 @@ const VoiceButton = ({ inputRefs }) => {
     }
   };
 
-    return (
-        <div className='mx-auto w-10 h-10 mt-2'>
-        <button className='btn btn-circle btn-outline' onClick={toggleListening}>{listening ? (<span className="loading loading-bars loading-lg"></span>) : <FaMicrophoneAlt/>}</button>
-      </div>
-    );
+  return (
+    <div className='mx-auto w-10 h-10 mt-2'>
+      <button className={`btn btn-circle btn-outline ${voiceButtonActive ? 'active' : ''}`} onClick={toggleListening}>
+        {listening ? <span className="loading loading-bars loading-lg"></span> : <FaMicrophoneAlt />}
+      </button>
+    </div>
+  );
 };
 
 export default VoiceButton;

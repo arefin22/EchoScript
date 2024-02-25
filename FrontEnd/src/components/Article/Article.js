@@ -11,8 +11,11 @@ import { useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Link from "next/link";
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import BookmarkButton from "../BookmarkButton/BookmarkButton";
+import person from "@/assets/img/person-removebg-preview.png";
 
 const Article = ({
+  data,
   authorName,
   category,
   title,
@@ -24,15 +27,9 @@ const Article = ({
   authorImage,
   handleCollectComment,
   articleId,
-  commentCount
+  commentCount,
+  likeCount,
 }) => {
-
-
-    // const formatDateAgo = (date) => {
-    //   const dd = new Date(date);
-    //   return formatDistanceToNow(dd);
-    // };
-
   return (
     <div className="w-3/4 mx-auto">
       <div className="flex items-center justify-between text-[#025]">
@@ -40,14 +37,14 @@ const Article = ({
           <div className="flex w-[80%] justify-between items-center">
             <Link href={`/writer`}>
               <div className="flex gap-2 pb-4 items-center">
-              
                 <Image
-                  src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
+                  src={authorImage || person}
                   height={40}
                   width={40}
                   className="rounded-[50%] h-12 w-12 object-cover"
                   alt="author image"
                 />
+                
                 <p>
                   {authorName} .
                   <span className="text-[#06F] ml-4 hover:underline cursor-pointer">
@@ -57,7 +54,7 @@ const Article = ({
               </div>
             </Link>
             <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
-              <MdOutlineBookmarkAdd fontSize={"1.5rem"} />
+              <BookmarkButton data={data} />
             </button>
           </div>
           <Link href={`/article/${articleId}`}>
@@ -78,7 +75,12 @@ const Article = ({
             </div>
             <div className="flex gap-3">
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FaRegHeart fontSize={"1.5rem"} />
+                <div className="indicator">
+                  <FaRegHeart fontSize={"1.5rem"} />
+                  <span className="badge badge-sm indicator-item">
+                    {likeCount}
+                  </span>
+                </div>
               </button>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
@@ -97,7 +99,7 @@ const Article = ({
         <div>
           <Link href={`/article/${articleId}`}>
             <Image
-              src={"https://i.ibb.co/vcS8X7k/download-3.jpg"}
+              src={image || person}
               height={200}
               width={200}
               alt="article image"

@@ -1,12 +1,12 @@
 const { default: mongoose } = require("mongoose");
-const Article = require("../../models/Article");
+const TextEditor = require("../../models/TextArticle");
 
 const putLikes = async (req, res) => {
   const { id } = req.params;
   const { email, name } = req.body;
 
-  const existingArticle = await Article.findById(id);
-
+  const existingArticle = await TextEditor.findById(id);
+  console.log(existingArticle)
   if (!existingArticle) {
     return res.status(404).json({ error: "Article not found" });
   }
@@ -27,7 +27,7 @@ const putLikes = async (req, res) => {
       },
     };
 
-    const result = await Article.updateOne(
+    const result = await TextEditor.updateOne(
       { _id: existingArticle._id },
       updateDoc
     );
@@ -44,7 +44,7 @@ const putLikes = async (req, res) => {
       },
     };
 
-    const result = await Article.updateOne(
+    const result = await TextEditor.updateOne(
       { _id: existingArticle._id },
       updateDoc
     );
