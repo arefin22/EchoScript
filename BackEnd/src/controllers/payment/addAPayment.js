@@ -1,18 +1,22 @@
 const stripe = require("stripe")(process.env.STRIPE_TOKEN);
+const Payment = require("../../models/Payment");
+// const calculateOrderAmount = (items) => {
 
-const calculateOrderAmount = (items) => {
-  const amount = items * 100;
-  return amount;
-};
+//   return amount;
+// };
 
 const addAPayment = async (req, res) => {
-  const { items } = req.body;
-
+  const { amount } = req.body;
+  const price = amount * 100;
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: "eur",
+    amount: price,
+    currency: "usd",
     payment_method_types: ["card"],
   });
+  console.log(paymentIntent);
+  console.log(amount);
+
+  console.log(Payment)
 
   res.send({
     clientSecret: paymentIntent.client_secret,

@@ -21,7 +21,7 @@ const SubHeader = ({ onSearch, onClose }) => {
           />
         </Link>
       </div>
-      <div className="bg-black rounded-full md:p-2">
+      <div className="bg-black rounded-full py-[11px] px-[5px]">
         {/* navbar right part */}
         <Search onSearch={onSearch} onClose={onClose} />
       </div>

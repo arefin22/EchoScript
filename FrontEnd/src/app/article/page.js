@@ -102,15 +102,13 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-      
       setData(res.data);
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
+      console.log(res.data);
 
-   console.log(res.data);
-   
       setAudience(res.data);
     });
   }, [axiosSecure]);
@@ -137,6 +135,7 @@ const ArticlePage = () => {
   
 
   return (
+    <div>
     <div className="bg-white">
       {/* <Navbar2/> */}
       <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
@@ -203,10 +202,13 @@ const ArticlePage = () => {
           </div>
         ))}
       </div>
-      <hr className="border-1 border-[#F2F2F2] my-3" />
 
-      <Footer></Footer>
+      <div className="lg:sticky lg:bottom-0 lg:z-0">
+        <Footer />
+      </div>
+    </div>
     </div>
   );
+
 };
 export default ArticlePage;
