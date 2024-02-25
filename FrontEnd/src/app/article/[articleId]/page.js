@@ -56,14 +56,6 @@ const SingleArticle = ({ params }) => {
   const formatDateAgo = (date) => {
     return formatDistanceToNow(new Date(date));
   };
-
-    const handleSearch = (query) => {
-      setSearchString(query);
-    };
-    const handleCloseSearchModal = () => {
-      setSearchString("");
-      setCategoryFilter("All");
-  };
   
   const handleSubmitComment = (data) => {
     const d = new Date();
@@ -161,10 +153,20 @@ const SingleArticle = ({ params }) => {
 
     return renderedSegments;
   };
+
+  // search function
+   const handleSearch = (query) => {
+     setSearchString(query);
+   };
+   const handleCloseSearchModal = () => {
+     setSearchString("");
+     setCategoryFilter("All");
+  };
+  
   return (
     <>
-      <div className="px-6 pt-5">
-        <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[50px] lg:mt-[-75px] z-50">
+      <div className="px-6 pt-5 mt-[-20px] lg:mt-[-50px] z-1">
+        <div className="w-[80%] mx-auto sticky top-[40px] -mt-8 md:-mt-8 lg:top-[70px] lg:-mt-6 z-50">
           <Navbar />
         </div>
 

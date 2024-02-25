@@ -153,7 +153,7 @@ const Navbar = () => {
           </li>
         </nav>
       </div>
-      <div className="w-[30%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
+      <div className="w-[40%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
         {/* mobile nav option */}
         <div>
           <details className="dropdown dropdown-hover">

@@ -11,7 +11,7 @@ import Link from "next/link";
 const SubHeader = ({ onSearch, onClose }) => {
   return (
     <div className="w-full flex justify-between py-5 px-3 lg:px-20 lg:pt-10 items-center">
-      <div>
+      <div className="w-40 lg:w-full">
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
@@ -21,7 +21,7 @@ const SubHeader = ({ onSearch, onClose }) => {
           />
         </Link>
       </div>
-      <div className="bg-black rounded-full py-[11px] px-[5px]">
+      <div className="bg-black rounded-full lg:py-[11px] lg:px-[5px]">
         {/* navbar right part */}
         <Search onSearch={onSearch} onClose={onClose} />
       </div>
