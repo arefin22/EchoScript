@@ -10,6 +10,9 @@ const Popular = () => {
             className="w-full h-screen rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
             style={{
               backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             }}
           ></div>
         </div>
@@ -20,6 +23,9 @@ const Popular = () => {
             style={{
               backgroundImage:
                 "url(https://i.ibb.co/Vwcwgwn/1-z-5sz44-FOBGUwh-Qqpl-Fotw.webp)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             }}
           ></div>
         </div>
@@ -29,6 +35,9 @@ const Popular = () => {
             style={{
               backgroundImage:
                 "url(https://i.ibb.co/n3b56qG/0-dxp-NPWAOOa-F-Lcx-B.webp)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             }}
           ></div>
         </div>
@@ -38,6 +47,9 @@ const Popular = () => {
             style={{
               backgroundImage:
                 "url(https://i.ibb.co/6wxTt4W/1-RNy-Xe0v36rg8-X4i-Cp-QYFag.webp)",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             }}
           ></div>
         </div>
