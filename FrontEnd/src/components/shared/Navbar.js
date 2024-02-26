@@ -51,40 +51,6 @@ const Navbar = () => {
     });
   }, [axiosSecure]);
 
-  const handleSearchChange = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    try {
-      if (query.trim() === "") {
-        setSuggestions([]);
-        return;
-      } else if (query.trim().length < searchQuery.trim().length) {
-        return;
-      } else {
-        const response = await axiosPublic.get(`/search?query=${query}`);
-        const { articles, user } = response.data;
-        const combinedSuggestions = [
-          ...(articles
-            ? articles?.map((article) => ({
-                title: article.title,
-                _id: article._id,
-              }))
-            : []),
-          ...(user
-            ? user?.map((Suser) => ({
-                name: Suser?.name,
-                photoURL: Suser?.photoURL,
-              }))
-            : []),
-        ];
-        setSuggestions(combinedSuggestions);
-      }
-    } catch (error) {
-      console.error("Error searching items:", error);
-    }
-  };
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -100,12 +66,12 @@ const Navbar = () => {
 
   return (
     <div className="">
-      <div className="w-[40%] mx-auto hidden lg:block bg-black text-white rounded-full px-5 py-2">
+      <div className="hidden lg:block bg-black text-white rounded-full px-5 py-2">
         {/* middle part */}
-        <nav className="flex gap-2 items-center justify-around">
+        <nav className="flex xl:gap-2 items-center justify-around">
           {navItem.slice(0, 3).map((item, idx) => (
             <Link key={idx} href={item.pathName}>
-              <li className="list-none text-xl font-semibold">{item.route}</li>
+              <li className="list-none text-lg lg:mr-5 xl:text-xl font-semibold">{item.route}</li>
             </Link>
           ))}
           <li className="list-none">
@@ -153,7 +119,7 @@ const Navbar = () => {
           </li>
         </nav>
       </div>
-      <div className="w-[30%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
+      <div className="w-[30%] md:w-[20%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
         {/* mobile nav option */}
         <div>
           <details className="dropdown dropdown-hover">

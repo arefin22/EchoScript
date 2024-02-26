@@ -54,52 +54,50 @@ const Article = () => {
   // console.log(articles);
   return (
     <PrivateRoute>
-      <div className="ml-10">
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr className="text-center">
-                <th>#</th>
-                <th>Title</th>
-                <th>Like</th>
-                <th>Comment</th>
-                <th>Tags</th>
-                <th>Details</th>
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr className="text-center">
+              <th>#</th>
+              <th>Title</th>
+              <th>Like</th>
+              <th>Comment</th>
+              <th>Tags</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {articles.map((article, index) => (
+              <tr key={article._id} className="text-center">
+                <td>{index + 1}</td>
+                <td>
+                  <Link href={`/dashboard/articles/${article._id}`}>
+                    {article?.texteditor?.articleTitle}
+                  </Link>
+                </td>
+                <td>{article?.likes.length}</td>
+                <td>{article?.comments.length}</td>
+                <td>{article?.texteditor?.tags.join(", ")}</td>
+                <td className="flex justify-center items-center">
+                  <Link
+                    href={`/dashboard/articleEdit/${article._id}`}
+                    className="btn btn-sm btn-primary mr-2"
+                    onClick={() => handleEdit(article.texteditor)}
+                  >
+                    <FaEdit />
+                  </Link>
+                  <button className="btn btn-sm btn-error">
+                    <DeleteButton
+                      setUpdate={setUpdate}
+                      api={"textArticle"}
+                      id={article._id}
+                    />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {articles.map((article, index) => (
-                <tr key={article._id} className="text-center">
-                  <td>{index + 1}</td>
-                  <td>
-                    <Link href={`/dashboard/articles/${article._id}`}>
-                      {article?.texteditor?.articleTitle}
-                    </Link>
-                  </td>
-                  <td>{article?.likes.length}</td>
-                  <td>{article?.comments.length}</td>
-                  <td>{article?.texteditor?.tags.join(", ")}</td>
-                  <td className="flex justify-center items-center">
-                    <Link
-                      href={`/dashboard/articleEdit/${article._id}`}
-                      className="btn btn-sm btn-primary mr-2"
-                      onClick={() => handleEdit(article.texteditor)}
-                    >
-                      <FaEdit />
-                    </Link>
-                    <button className="btn btn-sm btn-error">
-                      <DeleteButton
-                        setUpdate={setUpdate}
-                        api={"textArticle"}
-                        id={article._id}
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </PrivateRoute>
   );
