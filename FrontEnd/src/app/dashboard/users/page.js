@@ -89,7 +89,7 @@ const page = () => {
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
                                 <Image
-                                  src={user?.photoURL}
+                                  src={user?.photoURL || ''}
                                   alt="user"
                                   width={200}
                                   height={200}
