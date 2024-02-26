@@ -24,6 +24,7 @@ import {
   TwitterIcon,
 } from "react-share";
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
+import Recomendation from "@/components/Recomendation/page";
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
