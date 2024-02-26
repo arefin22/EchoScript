@@ -6,7 +6,7 @@ import Popular from "@/components/Popular/Popular";
 import Recomendation from "@/components/Recomendation/page";
 import Trending from "@/components/Trending/Trending";
 import Footer from "@/components/shared/Footer";
-
+import { useAuth } from "@/context/authContext";
 import Navbar from "@/components/shared/Navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -14,6 +14,9 @@ import { useEffect } from "react";
 
 
 const page = () => {
+  const user=useAuth()
+  const userEmail= user.email
+  // console.log(userEmail)
   useEffect(() => {
     AOS.init({
       duration: 800,
