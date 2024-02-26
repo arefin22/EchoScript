@@ -50,10 +50,9 @@ const Recomendation=() => {
       </h2>
       
     
-       
-      { ranDom.slice(1, 4).map((art,idx) => (
-       <div key={idx} className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-40">
-       <div
+      <div  className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-40"> 
+      { ranDom.slice(1, 6).map((art,idx) => (
+       <div key={idx}
          className="w-full flex flex-col-2 gap-5 border-b-2 py-20"
          data-aos="fade-up"
        >
@@ -71,14 +70,12 @@ const Recomendation=() => {
               {art.texteditor?.articleTitle}
             </h5>
               </Link>
-           
-           
            <small>{art.texteditor?.category}</small>
          </div>
        </div>       
-     </div>
-      ))}
      
+      ))}
+     </div>
       </div>
     
     </div>
