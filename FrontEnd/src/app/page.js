@@ -10,10 +10,10 @@ import Navbar from "@/components/shared/Navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-
+import { useAuth } from "@/context/authContext";
 
 const page = () => {
- 
+ const {user} = useAuth()
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -41,11 +41,15 @@ const page = () => {
           <Banner />
 
           <div className="mt-[-25px] lg:mt-[-80px] z-50">
-            <Trending />
+           {
+            user?  <Recomendation /> :  <Trending />
+           }
+           
+           
           </div>
-          <div className="mt-[-25px] lg:mt-[-80px] z-50">
-          <Recomendation />
-          </div>
+          {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
+        
+          </div> */}
           
           <Popular />
 

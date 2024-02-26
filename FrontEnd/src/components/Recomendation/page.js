@@ -26,7 +26,7 @@ const Recomendation=() => {
   console.log(audience)
   console.log(user)
   console.log(user?.email);
-  const users = audience.filter((userss)=>userss.email==='shawal@gmail.com');
+  const users = audience.filter((userss)=>userss.email===user?.email);
   console.log(users)
   const userFav =users.map((fav)=>fav.favourite.map((favo)=>favo.value))
   console.log(userFav[0]);
