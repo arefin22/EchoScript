@@ -2,7 +2,7 @@ import { FaCircle } from "react-icons/fa";
 
 const Trending = () => {
   return (
-    <div className="bg-white p-5 lg:pt-20 lg:pb-40 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] ">
+    <div className="bg-white text-black p-5 lg:pt-20 lg:pb-40 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] z-1">
       <h2 className="lg:px-20 lg:py-5" data-aos="fade-up">
         Trending On <span className="underline">EchoScript</span>
       </h2>

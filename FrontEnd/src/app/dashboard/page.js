@@ -3,6 +3,7 @@ import { MdOutlineArticle } from "react-icons/md";
 import { FaPenFancy } from "react-icons/fa";
 
 const page = () => {
+
   return (
     <div className="">
       <h1 className="mx-auto text-2xl font-bold">This is overview</h1>
@@ -39,6 +40,7 @@ const page = () => {
             </div>
             <span className="text-4xl mt-5 font-semibold">294k</span>
           </div>
+
         </div>
       </div>
     </div>
