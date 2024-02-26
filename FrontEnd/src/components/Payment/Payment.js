@@ -15,7 +15,7 @@ const Payment = () => {
     {
       id: 1,
       packageName: "Monthly",
-      price: "4.89",
+      price: "5.89",
       duration: 1,
       features: [
         "Read subscribers-only contents",
