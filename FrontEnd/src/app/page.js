@@ -47,9 +47,7 @@ const page = () => {
            
            
           </div>
-          {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
-        
-          </div> */}
+          
           
           <Popular />
 
