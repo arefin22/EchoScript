@@ -33,8 +33,8 @@ const page = () => {
 
 
     return (
-      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-        <div className="mx-auto sticky z-50 -mt-5 top-[30px] md:-mt-4 md:top-[40px] lg:w-[50%] lg:top-[55px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
+      <div className="container">
+        <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[70px] lg:-mt-6 z-50">
           <Navbar />
         </div>
         <div className="mainContainer">
@@ -47,7 +47,9 @@ const page = () => {
            
            
           </div>
-          
+          {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
+        
+          </div> */}
           
           <Popular />
 

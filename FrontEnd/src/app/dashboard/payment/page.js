@@ -25,7 +25,10 @@ const payment = ({ price }) => {
 
     axiosPublic
       .post("/create-payment-intent", { amount: parseFloat(payment) })
-      .then((data) => setClientSecret(data?.data?.clientSecret));
+      .then((data) => {
+        console.log("pay success")
+        setClientSecret(data?.data?.clientSecret);
+      });
       // .then((data) => console.log(data, paymentAmount));
     // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
     //   method: "POST",

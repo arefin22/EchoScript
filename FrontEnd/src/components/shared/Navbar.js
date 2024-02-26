@@ -66,25 +66,25 @@ const Navbar = () => {
 
   return (
     <div className="">
-      <div className="hidden lg:block bg-black text-white rounded-full px-5 py-2">
+      <div className="hidden lg:block bg-black text-white rounded-full px-2 py-3">
         {/* middle part */}
         <nav className="flex xl:gap-2 items-center justify-around">
           {navItem.slice(0, 3).map((item, idx) => (
             <Link key={idx} href={item.pathName}>
-              <li className="list-none text-lg lg:mr-5 xl:text-xl font-semibold">{item.route}</li>
+              <li className="list-none text-lg xl:text-xl font-semibold">{item.route}</li>
             </Link>
           ))}
           <li className="list-none">
             <details className="dropdown dropdown-hover">
-              <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
+              <summary className="btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
                 {user?.email ? (
-                  <div className="flex gap-2">
-                    <div className="avatar ">
-                      <div className="w-12 rounded-full ring  ring-offset-base-100 ring-offset-2">
+                  <div className="flex">
+                    <div className="avatar">
+                      <div className="w-10 rounded-full ring ring-offset-base-100 ring-offset-2">
                         <Image
                           src={user?.photoURL || person}
-                          width={12}
-                          height={12}
+                          width={8}
+                          height={8}
                           alt={"user"}
                         />
                       </div>
@@ -92,7 +92,7 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div>
-                    <Image src={person} width={12} height={12} alt="demo" />
+                    <Image src={person} width={8} height={8} alt="demo" />
                   </div>
                 )}
               </summary>

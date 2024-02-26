@@ -27,16 +27,25 @@ const Banner = () => {
         <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
         {/* data-aos="fade-up" */}
         <div className="w-full mt-5 lg:pt-10">
-          <div className="mx-auto text-center">
-            <h1 className="mb-5 text-white mx-auto text-center font-[600px] w-[200px] text-[50px] md:w-[300px] md:text-[100px] lg:text-[120px] lg:w-[500px] xl:text-[150px] xl:w-[500px]">
+          <div className="mx-auto text-center" data-aos="fade-up">
+            <h1
+              className="mb-5 text-white mx-auto text-center font-[600px] w-[200px] text-[50px] md:w-[300px] md:text-[100px] lg:text-[120px] lg:w-[500px] xl:text-[150px] xl:w-[500px]"
+              data-aos="fade-up"
+            >
               Let Story's Shine
             </h1>
-            <p className="mb-5 text-xl md:text-3xl lg:text-5xl lg:pt-5 text-white font-bold">
+            <p
+              className="mb-5 text-xl md:text-3xl lg:text-5xl lg:pt-5 text-white font-bold"
+              data-aos="fade-up"
+            >
               The Cozy Corner for Sharing Life Tales!
             </p>
           </div>
         </div>
-        <div className="text-white text-xl font-semibold text-center py-[70px] md:py-[120px] lg:pt-[200px] lg:text-left lg:pl-24">
+        <div
+          className="text-white text-xl font-semibold text-center py-[70px] md:py-[120px] lg:pt-[200px] lg:text-left lg:pl-24"
+          data-aos="fade-up"
+        >
           <p>Loved Place - By Reader</p>
           <p>Read Now</p>
         </div>

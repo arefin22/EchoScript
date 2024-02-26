@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
 import Article from "../Article/Article";
 import Card from "../Card/Card";
@@ -80,6 +80,8 @@ const Recomendation=() => {
     
     </div>
 
+       
+     
   );
 };
 

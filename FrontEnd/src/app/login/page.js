@@ -69,9 +69,9 @@ const LogIn = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-white text-black gap-20 mx-5 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] lg:rounded-bl-[100px] lg:rounded-br-[100px] rounded-bl-[30px] rounded-br-[30px]">
       <div>
-        <div className="flex justify-end">
+        <div className="flex justify-end mr-16">
           <div style={cencleStyle} className="hover:bg-gray-200">
             <Link href={"/"}>
               <MdOutlineCancel size={30} className="text-black" />
@@ -97,7 +97,7 @@ const LogIn = () => {
                   name="email"
                   required
                   placeholder="Email"
-                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-white hover:border-black"
                 />
               </div>
               <div className="md:w-2/5 mx-auto relative ">
@@ -105,7 +105,7 @@ const LogIn = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
-                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
+                  className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-white hover:border-black"
                   placeholder="Password"
                 />
                 <button
@@ -124,7 +124,7 @@ const LogIn = () => {
                 <button
                   disabled={loader}
                   type="submit"
-                  className="w-full rounded-3xl py-3 border-2 border-[#4C2F17] text-[#4C2F17] md:text-lg transition-all duration-300 hover:bg-[#4C2F17] hover:text-white"
+                  className="w-full rounded-3xl py-3 border-2 border-black text-black md:text-lg transition-all duration-300 hover:bg-black hover:text-white"
                 >
                   {loader ? (
                     <span className="loading loading-bars loading-lg"></span>

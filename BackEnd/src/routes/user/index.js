@@ -9,7 +9,7 @@ const router = require("express").Router();
 router.post("/user", addAUser)
 router.get("/user", getAllUser)
 router.delete("/user/:id", deleteAUser)
-router.put("/user/:id", updateAUser);
+router.put("/userEdit/:id", updateAUser);
 router.get("/user/:email", getSingleUser)
 
 module.exports = router
