@@ -165,8 +165,8 @@ const SingleArticle = ({ params }) => {
   
   return (
     <>
-      <div className="px-6 pt-5 mt-[-20px] lg:mt-[-50px] z-1">
-        <div className="w-[80%] mx-auto sticky top-[40px] -mt-8 md:-mt-8 lg:top-[70px] lg:-mt-6 z-50">
+      <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
+        <div className=" mx-auto sticky top-[40px] z-50 -mt-8 md:-mt-8 lg:w-[50%] lg:top-[50px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
           <Navbar />
         </div>
 

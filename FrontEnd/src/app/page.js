@@ -32,8 +32,8 @@ const page = () => {
 
 
     return (
-      <div className="mx-auto px-6 pt-5">
-        <div className="w-[80%] mx-auto sticky top-[40px] -mt-8 md:-mt-8 lg:top-[70px] lg:-mt-6 z-50">
+      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+        <div className="mx-auto sticky z-50 -mt-5 top-[30px] md:-mt-4 md:top-[40px] lg:w-[50%] lg:top-[55px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
           <Navbar />
         </div>
         <div className="mainContainer">
