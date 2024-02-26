@@ -151,11 +151,7 @@ const DashNavbar = () => {
         </div>
         <div className="hidden md:block fixed">
           <div className={`bg-black p-5 rounded-full w-[72px] duration-300 `}>
-            <div className=" text-white">
-              {/* <Link href="/">
-                <MdArticle className="text-3xl rounded cursor-pointer block float-left mb-2" />
-              </Link> */}
-            </div>
+            <div className=" text-white"></div>
             {/* <ul className="ml-1 ">
               <>
                 {navs.map((nav, idx) => (
@@ -208,6 +204,11 @@ const DashNavbar = () => {
             </ul> */}
 
             <ul className="ml-1">
+              <li>
+                <Link href="/">
+                  <MdArticle className="text-white text-2xl items-center cursor-pointer my-2" />
+                </Link>
+              </li>
               {navs.map((nav, idx) => (
                 <Link key={idx} href={nav.path}>
                   <li
