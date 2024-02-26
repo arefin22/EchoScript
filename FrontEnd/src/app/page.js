@@ -3,7 +3,6 @@
 import Banner from "@/components/Banner/Banner";
 import Contact from "@/components/Contact/Contact";
 import Popular from "@/components/Popular/Popular";
-import Recomendation from "@/components/Recomendation/page";
 import Trending from "@/components/Trending/Trending";
 import Footer from "@/components/shared/Footer";
 
@@ -43,10 +42,7 @@ const page = () => {
           <div className="mt-[-25px] lg:mt-[-80px] z-50">
             <Trending />
           </div>
-          <div className="mt-[-25px] lg:mt-[-80px] z-50">
-          <Recomendation />
-          </div>
-          
+
           <Popular />
 
           <Contact />
