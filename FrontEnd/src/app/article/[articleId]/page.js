@@ -425,7 +425,11 @@ const SingleArticle = ({ params }) => {
         )}
       </div>
       <div className="mt-[-25px] lg:mt-[-80px] z-50">
-          <Recomendation />
+           {
+            user?  <Recomendation /> :  <Trending />
+           }
+           
+           
           </div>
       <Footer />
     </div>
