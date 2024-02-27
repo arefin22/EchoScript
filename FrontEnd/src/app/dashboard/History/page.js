@@ -6,7 +6,6 @@ import Pagination from "@/components/shared/Pagination/Pagination";
 import Title from "@/components/shared/ReusableComponents/Title";
 import { useAuth } from "@/context/authContext";
 import useAxiosPublic from "@/utils/useAxiosPublic";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const HistoryPage = () => {
@@ -23,37 +22,78 @@ const HistoryPage = () => {
     setCurrentPage(page);
   };
   useEffect(() => {
+    // const fetchHistory = async () => {
+    //   try {
+    //     const historyResponse = await axiosPublic.get("/textArticle");
+
+    //     const loggedInUserEmail = user.email; 
+
+    //     const likedPosts = historyResponse.data.filter((history) =>
+    //       history.likes.some((like) => like.email === loggedInUserEmail)
+    //     );
+    //     const commentedPosts = historyResponse.data.filter((history) =>
+    //       history.comments.some(
+    //         (comment) => comment.email === loggedInUserEmail
+    //       )
+    //     );
+
+    //     const userPosts = [...likedPosts, ...commentedPosts];
+
+    //     console.log(userPosts);
+
+    //     const historyCount = historyResponse.data.length;
+    //     const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
+    //     setTotalPages(totalPagesCount);
+
+    //     const startIndex = (currentPage - 1) * itemsPerPage;
+    //     const endIndex = Math.min(startIndex + itemsPerPage, historyCount);
+
+    //     const historyData = userHistory.slice(startIndex, endIndex);
+    //     setHistoryData(historyData);
+    //     setLoading(false);
+    //   } catch (error) {
+    //     setError(error);
+    //     setLoading(false);
+    //   }
+    // };
+
     const fetchHistory = async () => {
       try {
-        const historyResponse = await axiosPublic.get("/history");
-        
-        const historyCount = historyResponse.data.length;
+        const historyResponse = await axiosPublic.get("/textArticle");
+        const loggedInUserEmail = user.email;
+
+        const likedPosts = historyResponse.data.filter((history) =>
+          history.likes.some((like) => like.email === loggedInUserEmail)
+        );
+        const commentedPosts = historyResponse.data.filter((history) =>
+          history.comments.some(
+            (comment) => comment.email === loggedInUserEmail
+          )
+        );
+
+        const userPosts = [...likedPosts, ...commentedPosts];
+        const historyCount = userPosts.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
         setTotalPages(totalPagesCount);
 
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, historyCount);
-        const userHistory = historyResponse.data.filter(
-          (history) => history.user === user.email
-          );
-          console.log(userHistory)
-          const historyData = userHistory.slice(startIndex, endIndex);
+
+        const historyData = userPosts.slice(startIndex, endIndex);
         setHistoryData(historyData);
         setLoading(false);
+        console.log(historyData);
       } catch (error) {
         setError(error);
         setLoading(false);
       }
     };
-
     fetchHistory();
 
-    
-    return () => {
-      
-    };
-  }, [axiosPublic, user, currentPage]);
+    return () => {};
+  }, [axiosPublic, user, currentPage, update]);
 
+ 
   if (loading) {
     return <Loader />;
   }
@@ -84,45 +124,45 @@ const HistoryPage = () => {
         )}
         {historyData.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="table">
+            <table className="table text-center">
               {/* head */}
               <thead>
                 <tr>
-                  <th>History</th>
                   <th>Title</th>
-                  <th>Date</th>
+                  <th>Like</th>
+                  <th>Comment</th>
+                  <th>History Date</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody className="min-h-[70vh]">
                 {historyData?.reverse().map((history) => (
-                  <tr key={history.id}>
+                  <tr key={history._id}>
+                    <td>{history.texteditor.articleTitle}</td>
                     <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <Image
-                              src={history?.userAvatar}
-                              alt="History"
-                              width={200}
-                              height={200}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">{history.userName}</div>
-                        </div>
-                      </div>
+                      {history.likes.some(
+                        (like) => like.email === user.email
+                      ) && <span> You liked this</span>}
                     </td>
-                    <td>{history.title}</td>
-                    <td>{history.date}</td>
                     <td>
-                      <DeleteButton
-                        className="btn btn-ghost btn-xs"
-                        api={"/history"}
-                        id={history.id}
-                        setUpdate={setUpdate}
-                      />
+                      {/* Check if the logged-in user has a comment */}
+                      {history.comments.some(
+                        (comment) => comment.email === user.email
+                      ) &&
+                        // If the user has a comment, display it
+                        history.comments.find(
+                          (comment) => comment.email === user.email
+                        ).commentText}
+                    </td>
+                    <td>{new Date(history.createdAt).toLocaleString()}</td>
+                    <td>
+                      <button className="btn btn-sm btn-error">
+                        <DeleteButton
+                          api={"history"}
+                          id={history._id}
+                          setUpdate={setUpdate}
+                        />
+                      </button>
                     </td>
                   </tr>
                 ))}
