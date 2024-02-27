@@ -5,6 +5,7 @@ import { useAuth } from "@/context/authContext";
 import Title from "../shared/ReusableComponents/Title";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { FaCircle } from "react-icons/fa";
+
 import Link from "next/link";
 const Recomendation=() => {
   const axiosSecure = useAxiosSecure();
@@ -34,7 +35,7 @@ const Recomendation=() => {
   console.log(id);
   const datas = data.map((dataa)=>dataa)
   console.log(datas)
-  const fav = datas.filter((art) => userFav[0].includes(art.texteditor.category) || favCat.includes(art.texteditor.category))
+  const fav = datas.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
   console.log(fav);
   const ran = fav.map((f)=>f.texteditor)
   console.log(ran);
@@ -75,11 +76,7 @@ const Recomendation=() => {
       ))}
      </div>
       </div>
-    
     </div>
-
-       
-     
   );
 };
 
