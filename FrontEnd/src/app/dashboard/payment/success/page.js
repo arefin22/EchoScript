@@ -1,13 +1,18 @@
+"use client"
+import { usePayment } from "@/context/paymentContext";
 import Link from "next/link";
 import React from "react";
 
-const SuccessPage = () => {
+const successPage = () => {
+  const { payment } = usePayment();
+
+  console.log(payment);
   return (
     <div>
-      <h2>Success</h2>
-      <Link href={"/"}>Go back to homepage</Link>
+      <h2>Payment Successful</h2>
+      <Link href={"/dashboard/profile"} className="btn btn-success text-white">Go back to Profile</Link>
     </div>
   );
 };
 
-export default SuccessPage;
+export default successPage;
