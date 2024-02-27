@@ -15,13 +15,13 @@ const Card = ({
   comments,
 }) => {
   return (
-    <div className="card w-full h-[400px] shadow-2xl">
-      <figure className="p-4">
+    <div className="card w-[350px] mb-5 h-[350px] shadow-2xl">
+      <figure className="py-4">
         <div className="rounded-2xl">
           <Image
             src={image}
-            height={500}
-            width={500}
+            height={350}
+            width={350}
             className="rounded-xl"
             alt="article image"
           />
@@ -29,24 +29,13 @@ const Card = ({
       </figure>
 
       <div className="text-start px-6 py-1">
-        <div className="flex space-x-2">
-          {tags.length > 0 &&
-            tags.map((tag, index) => (
-              <p
-                key={index}
-                className="text-xs bg-[#C4B4A4] text-white px-3 py-2 rounded-lg"
-              >
-                {tag}
-              </p>
-            ))}
-        </div>
-        <h2 className="card-title text-[20px] py-2 mb-4 font-medium">
+       
+        <h2 className="card-title text-[20px] py-1 mb-2 font-medium">
           {title}
         </h2>
-        <p className="text-[12px]">{article}</p>
         <div className="flex justify-between py-4 text-[12px]">
-          <div className="flex items-center gap-1">
-            {/* <FaUser /> */}
+          <div className="flex font-bold items-center gap-1">
+            <FaUser />
             {authorName}
           </div>
           <div className="flex gap-2">
@@ -55,12 +44,12 @@ const Card = ({
               {likes}
             </div>
             <div className="flex items-center gap-1">
-              <MdComment />
+              {/* <MdComment /> */}
               {comments}
             </div>
           </div>
-          <div className="flex items-center gap-1">
-            {/* <FaEye /> {date} */}
+          <div className="flex font-bold items-center gap-1">
+             {date}
           </div>
         </div>
       </div>
