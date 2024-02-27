@@ -5,7 +5,6 @@ import Pagination from "@/components/shared/Pagination/Pagination";
 import Title from "@/components/shared/ReusableComponents/Title";
 import UserUpdate from "@/components/shared/UserUpdate/UserUpdate";
 
-
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,7 +44,7 @@ const page = () => {
     };
 
     fetchUsers();
-  }, [axiosPublic, currentPage]);
+  }, [update]);
   if (loading) {
     return (
       <div>
@@ -89,7 +88,7 @@ const page = () => {
                             <div className="avatar">
                               <div className="mask mask-squircle w-12 h-12">
                                 <Image
-                                  src={user?.photoURL || ''}
+                                  src={user?.photoURL || ""}
                                   alt="user"
                                   width={200}
                                   height={200}
@@ -124,11 +123,13 @@ const page = () => {
               </div>
             )}
             <div className="mt-2 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
+              {allUsersData?.length > 9 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              )}
             </div>
           </div>
         </div>

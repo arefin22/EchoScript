@@ -10,7 +10,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
 
-
 const bookmarks = () => {
   const { user } = useAuth("");
   const [update, setUpdate] = useState(Date.now());
@@ -38,10 +37,12 @@ const bookmarks = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = Math.min(startIndex + itemsPerPage, articleCount);
 
-        
-        const articlesData = articlesResponse?.data?.slice(startIndex, endIndex);
+        const articlesData = articlesResponse?.data?.slice(
+          startIndex,
+          endIndex
+        );
         setBookmarkedData(articlesData);
-        console.log(bookmarkedData)
+        console.log(bookmarkedData);
 
         setLoading(false);
       } catch (error) {
@@ -52,11 +53,8 @@ const bookmarks = () => {
 
     fetchBookmarks();
 
-   
-    return () => {
-      
-    };
-  }, [axiosPublic, user, currentPage]);
+    return () => {};
+  }, [update]);
 
   if (loading) {
     return (
@@ -110,11 +108,6 @@ const bookmarks = () => {
                         <td>{bookmark?.comments.length}</td>
                         <td>{bookmark?.texteditor?.tags.join(", ")}</td>
                         <td className="flex justify-center items-center">
-                          <Link
-                            href={`/dashboard/articleEdit/${bookmark._id}`}
-                            className="btn btn-sm btn-primary mr-2"
-                            onClick={() => handleEdit(bookmark.texteditor)}
-                          ></Link>
                           <button className="btn btn-sm btn-error">
                             <DeleteButton
                               setUpdate={setUpdate}
@@ -128,11 +121,13 @@ const bookmarks = () => {
                   </tbody>
                 </table>
                 <div className="mt-2 flex justify-center">
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                  />
+                  {bookmarkedData?.length > 9 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  )}
                 </div>
               </div>
             )}
