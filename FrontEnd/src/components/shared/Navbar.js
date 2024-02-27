@@ -66,12 +66,14 @@ const Navbar = () => {
 
   return (
     <div className="">
-      <div className="hidden lg:block bg-black text-white rounded-full px-2 py-3">
+      <div className="hidden lg:block bg-black text-white rounded-full px-2 py-1">
         {/* middle part */}
         <nav className="flex xl:gap-2 items-center justify-around">
           {navItem.slice(0, 3).map((item, idx) => (
             <Link key={idx} href={item.pathName}>
-              <li className="list-none text-lg xl:text-xl font-semibold">{item.route}</li>
+              <li className="list-none text-lg xl:text-xl font-semibold">
+                {item.route}
+              </li>
             </Link>
           ))}
           <li className="list-none">
@@ -80,11 +82,11 @@ const Navbar = () => {
                 {user?.email ? (
                   <div className="flex">
                     <div className="avatar">
-                      <div className="w-10 rounded-full ring ring-offset-base-100 ring-offset-2">
+                      <div className="rounded-full ring ring-offset-base-100 ring-offset-2">
                         <Image
                           src={user?.photoURL || person}
-                          width={8}
-                          height={8}
+                          width={24}
+                          height={24}
                           alt={"user"}
                         />
                       </div>
@@ -92,7 +94,7 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <div>
-                    <Image src={person} width={8} height={8} alt="demo" />
+                    <Image src={person} width={24} height={24} alt="demo" />
                   </div>
                 )}
               </summary>
@@ -119,12 +121,12 @@ const Navbar = () => {
           </li>
         </nav>
       </div>
-      <div className="w-[30%] md:w-[20%] ml-[50%] lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
+      <div className="w-[35%] md:w-[20%] mx-auto lg:hidden flex items-center justify-around bg-black text-white rounded-full px-3">
         {/* mobile nav option */}
         <div>
           <details className="dropdown dropdown-hover">
-            <summary className="m-1 btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
-              <FaList className="text-white"/>
+            <summary className="btn bg-transparent border-hidden hover:border-hidden hover:bg-transparent ">
+              <FaList className="text-white" />
             </summary>
             <ul
               tabIndex={0}
@@ -132,9 +134,7 @@ const Navbar = () => {
             >
               {navItem.map((item, idx) => (
                 <Link key={idx} href={item.pathName}>
-                  <li className="py-2 text-center list-none">
-                    {item.route}
-                  </li>
+                  <li className="py-2 text-center list-none">{item.route}</li>
                 </Link>
               ))}
               {user?.email ? (
@@ -159,11 +159,11 @@ const Navbar = () => {
           {user?.email ? (
             <div className="flex gap-2">
               <div className="avatar ">
-                <div className="w-8 rounded-full ring  ring-offset-base-100 ring-offset-2">
+                <div className="rounded-full ring  ring-offset-base-100 ring-offset-2">
                   <Image
                     src={user?.photoURL || person}
-                    width={8}
-                    height={8}
+                    width={24}
+                    height={24}
                     alt={"user"}
                   />
                 </div>
@@ -171,7 +171,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div>
-              <Image src={person} width={8} height={8} alt="demo" />
+              <Image src={person} width={24} height={24} alt="demo" />
             </div>
           )}
         </div>
