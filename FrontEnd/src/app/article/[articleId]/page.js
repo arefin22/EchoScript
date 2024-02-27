@@ -26,6 +26,7 @@ import {
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import Recomendation from "@/components/Recomendation/page";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Trending from "@/components/Trending/Trending";
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
