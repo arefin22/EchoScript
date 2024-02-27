@@ -79,7 +79,7 @@ const SignUp = () => {
           name: name,
           photoURL: photoURL,
           role: "reader",
-          favourite: favourite,
+          preference: favourite,
         };
         console.log(userInfo)
         await axiosPublic.post('/user',userInfo)
