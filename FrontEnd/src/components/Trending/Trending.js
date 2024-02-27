@@ -5,16 +5,18 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 const Trending = () => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
+  const [audience, setAudience] = useState([]);
+  useEffect(() => {
+    axiosSecure.get("/user").then((res) => {
+      setAudience(res.data);
+    });
+  }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
     });
   }, [axiosSecure]);
-  console.log(data)
-  // const datas = data.map((dataa)=>dataa)
-  // console.log(datas)
   const lastTofirst = data.slice().reverse();
-  console.log(lastTofirst);
   return (
     <div className="bg-white text-black p-5 lg:pt-20 lg:pb-40 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] z-1">
       <h2 className="lg:px-20 lg:py-5" data-aos="fade-up">
