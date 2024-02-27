@@ -74,26 +74,19 @@ const page = ({ params }) => {
       {articles && (
         <div>
           <div className="max-w-3xl mx-auto">
+            <div className="w-full">
+              <Image
+                src={articles.texteditor?.thumbnail}
+                width={1280}
+                height={600}
+                className="w-full"
+              />
+            </div>
             <h1>
               {articles?.texteditor?.articleTitle?.replace(/&nbsp;/g, " ")}
             </h1>
-            <div className="flex flex-row w-full items-center mb-10 mt-5">
-              <h6 className="w-1/2">
-                Category:{" "}
-                <span className="font-bold">
-                  {articles.texteditor?.category}
-                </span>
-              </h6>
-              <p className="w-1/2">
-                {articles.texteditor?.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-300 px-3 py-2 rounded-lg mr-2 font-bold"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </p>
+            <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
+              {articles.texteditor?.category}
             </div>
             <div className="divider"> </div>
             <div className="mt-10">
@@ -151,6 +144,17 @@ const page = ({ params }) => {
                       </p>
                     </div>
                   )}
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              {articles.texteditor?.tags.map((tag, idx) => (
+                <div
+                  className="border rounded-full mt-4
+             bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center"
+                  key={idx}
+                >
+                  {tag}
                 </div>
               ))}
             </div>
