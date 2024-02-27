@@ -1,3 +1,4 @@
+'use client'
 import { FaCircle } from "react-icons/fa";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 const Trending = () => {
