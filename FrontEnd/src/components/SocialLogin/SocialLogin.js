@@ -24,7 +24,7 @@ const SocialLogin = () => {
         email: res.user?.email,
         name: res.user?.displayName,
         image: res.user?.photoURL || '',
-        role: "guest",
+        role: "reader",
       };
       axiosPublic.post('/user',userInfo)
       .then(res=>{console.log(res.data)});
@@ -43,7 +43,7 @@ const SocialLogin = () => {
         email: res.user?.email,
         name: res.user?.displayName,
         image: res.user?.photoURL || '',
-        role: "guest",
+        role: "reader",
       };
       axiosPublic.post('/user',userInfo)
       .then(res=>{console.log(res.data)});
@@ -62,7 +62,7 @@ const SocialLogin = () => {
         email: res.user?.email,
         name: res.user?.displayName,
         image: res.user?.photoURL || '',
-        role: "guest",
+        role: "reader",
       };
       axiosPublic.post('/user',userInfo)
                 .then(res=>{console.log(res.data)});
@@ -81,7 +81,7 @@ const SocialLogin = () => {
         email: res.user?.email,
         name: res.user?.displayName,
         image: res.user?.photoURL || '',
-        role: "guest",
+        role: "reader",
       };
       axiosPublic.post('/user',userInfo)
                 .then(res=>{console.log(res.data)});
@@ -95,8 +95,8 @@ const SocialLogin = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-center items-center space-x-12 m-4 p-3 border-gray-300 rounded">
+    <div className="w-full mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center items-center space-x-12 m-4 p-3 border-gray-300 rounded">
         <div style={iconStyle} className="hover:bg-gray-200">
           <button onClick={handleGoogle}>
           <FcGoogle size={24} className="text-black text-center" />
