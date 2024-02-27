@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { FaCircle } from "react-icons/fa";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import Link from "next/link";
 const Trending = () => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
@@ -32,11 +33,15 @@ const Trending = () => {
         <div className="space-y-3">
           <div className="flex items-center gap-3 mt-[-30px]">
             <FaCircle />
-            <p>Author</p>
+            <p>{audience
+                .filter((user) => user?.email === trend.texteditor?.authorEmail)
+                .map((author) => author.name)}</p>
           </div>
-          <h5 className="font-bold">
+          <Link  href={`/article/${trend._id}`}>
+            <h5 className="font-bold">
             {trend?.texteditor?.articleTitle}
-          </h5>
+            </h5>
+              </Link>
           <small> {trend?.texteditor?.category}</small>
         </div>
       </div>)
