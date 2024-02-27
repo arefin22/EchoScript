@@ -148,7 +148,7 @@ const Navbar = () => {
                 </li>
               ) : (
                 <Link href={"/login"}>
-                  <li className="list-none">log In</li>
+                  <li className="list-none text-center">log In</li>
                 </Link>
               )}
             </ul>

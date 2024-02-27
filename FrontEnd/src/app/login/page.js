@@ -49,7 +49,7 @@ const LogIn = () => {
           email: res.user?.email,
           name: res.user?.displayName,
           image: res.user?.photoURL || '',
-          role: "guest",
+          role: "reader",
         };
         axiosPublic.post("/user", userInfo).then((res) => {
           console.log(res.data);

@@ -106,7 +106,7 @@ const page = () => {
 
                         <td className="flex justify-center items-center">
                           <button className="btn btn-sm btn-primary mr-2">
-                            <UserUpdate id={user._id} setUpdate={setUpdate} />
+                            <UserUpdate data={user} id={user._id} setUpdate={setUpdate} />
                           </button>
                           <button className="btn btn-sm btn-error">
                             <DeleteButton
