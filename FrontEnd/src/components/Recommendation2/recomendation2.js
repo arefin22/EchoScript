@@ -6,7 +6,7 @@ import Title from "../shared/ReusableComponents/Title";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { FaCircle } from "react-icons/fa";
 import Link from "next/link";
-const Recomendation=() => {
+const Recomendation2=() => {
   const axiosSecure = useAxiosSecure();
   const [audience, setAudience] = useState([]);
   const [data, setData] = useState([]);
@@ -32,9 +32,7 @@ const Recomendation=() => {
   console.log(data)
   const datas = data.map((dataa)=>dataa)
   console.log(datas)
-  const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
-  console.log(other);
-  const fav = other.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
+  const fav = datas.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
   console.log(fav);
   const ran = fav.map((f)=>f.texteditor)
   console.log(ran);
@@ -83,4 +81,4 @@ const Recomendation=() => {
   );
 };
 
-export default Recomendation;
+export default Recomendation2;
