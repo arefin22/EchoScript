@@ -12,15 +12,24 @@ const UserSchema = new Schema(
     },
     photoURL: {
       type: String,
+      required: true,
     },
     role: {
       type: String,
-      default: "user",
+      default: "guest",
+      required: true,
+      enum: ["admin", "user", "writer", "guest"],
     },
     favourite: {
       type: [Object],
       default: [],
       required: true,
+    },
+    membership: {
+      type: String,
+      enum: ["active", "suspended"],
+      required: true,
+      default: "active"
     },
   },
   { timestamps: true }

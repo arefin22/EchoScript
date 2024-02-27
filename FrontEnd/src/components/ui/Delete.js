@@ -7,10 +7,9 @@ const Delete =  ({api,id,setUpdate}) => {
   try {
      axiosSecure.delete(`/${api}/${id}`).then(res=>{
      
-    console.log(res.data)
-    if(res.data.deletedCount>0){
-      toast.success('Article deleted successfully');
-      setUpdate(Date.now())
+    if (res.data === "deleted successfully") {
+      toast.success("Article deleted successfully");
+      setUpdate(Date.now());
     }
      })
     

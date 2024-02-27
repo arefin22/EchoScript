@@ -15,9 +15,9 @@ const SubHeader = ({ onSearch, onClose }) => {
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
-            src={"https://i.ibb.co/Qk6B1cy/echo-black.png"}
-            width={250}
-            height={100}
+            src={"https://i.ibb.co/KWhP3g2/echo-icon.png"}
+            width={50}
+            height={50}
           />
         </Link>
       </div>
