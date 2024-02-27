@@ -63,7 +63,8 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        // return_url: "https://echoscript-front.vercel.app/dashboard/payment/success",
+        return_url: "http://localhost:3000/dashboard/payment/success",
       },
     });
 
