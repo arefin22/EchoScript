@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import logo from "./../../../assets/img/logo.png";
 import Image from "next/image";
@@ -13,10 +13,25 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { MdArticle } from "react-icons/md";
 import { useAuth } from "@/context/authContext";
 import { FaUsers } from "react-icons/fa6";
+import { axiosPublic } from "@/utils/useAxiosPublic";
 const DashNavbar = () => {
   const pathname = usePathname();
   const { user } = useAuth();
   const [open, setOpen] = useState(true);
+  const [loggedInUser, setLoggedInUser] = useState([]);
+
+  console.log(user?.email);
+
+  let userEmail = user?.email;
+
+  useEffect(() => {
+    axiosPublic.get(`/user/${userEmail}`).then((res) => {
+      setLoggedInUser(res.data);
+    });
+  }, [userEmail]);
+
+  console.log(loggedInUser);
+  // All Data
   const navs = [
     {
       path: "/dashboard",
@@ -65,38 +80,93 @@ const DashNavbar = () => {
       icon: IoSettingsOutline,
     },
   ];
-  const navItem = [];
-    const [activeIndex, setActiveIndex] = useState(null);
-    const [hoveredIndex, setHoveredIndex] = useState(null);
 
-   const handleHover = (idx) => {
-     if (activeIndex !== idx) {
-       setHoveredIndex(idx);
-     }
-   };
+  // Admin Panel
+  const admin = [
+    {
+      path: "/dashboard",
+      route: "Overview",
+      icon: GrOverview,
+    },
+    {
+      path: "/dashboard/articles",
+      route: "Articles",
+      icon: GrArticle,
+    },
+    {
+      path: "/dashboard/users",
+      route: "Users",
+      icon: FaUsers,
+    },
+  ];
+
+  // Writer Panel
+  const writer = [
+    {
+      path: "/dashboard",
+      route: "Overview",
+      icon: GrOverview,
+    },
+    {
+      path: "/dashboard/History",
+      route: "History",
+      icon: GrHistory,
+    },
+    {
+      path: "/dashboard/bookmarks",
+      route: "Bookmarks",
+      icon: GrBookmark,
+    },
+    {
+      path: "/dashboard/articles",
+      route: "Articles",
+      icon: GrArticle,
+    },
+    {
+      path: "/dashboard/write",
+      route: "Write",
+      icon: TfiWrite,
+    },
+    {
+      path: "/dashboard/profile",
+      route: "My Profile",
+      icon: CgProfile,
+    },
+  ];
+
+  // Reader Panel
+  const reader = [
+    {
+      path: "/dashboard/History",
+      route: "History",
+      icon: GrHistory,
+    },
+    {
+      path: "/dashboard/bookmarks",
+      route: "Bookmarks",
+      icon: GrBookmark,
+    },
+    {
+      path: "/dashboard/profile",
+      route: "My Profile",
+      icon: CgProfile,
+    },
+  ];
+
+  const navItem = [];
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const handleHover = (idx) => {
+    if (activeIndex !== idx) {
+      setHoveredIndex(idx);
+    }
+  };
   return (
     <PrivateRoute>
       <div className="min-h-[100vh]  flex justify-center items-center">
         <div>
           <div className="block md:hidden">
-            <div className="flex flex-col gap-3 items-center justify-center p-16 bg-white w-full">
-              <Image
-                src={logo}
-                alt="Logo"
-                width={100}
-                height={100}
-                className="w-96"
-              />
-              <h2 className="lg:text-2xl md:text-xl text-base text-center font-thin">
-                Empowering Voices, Enriching Minds.
-              </h2>
-              <input
-                type="text"
-                placeholder="Search"
-                className="input input-bordered w-full mt-4 bg-white md:w-auto"
-              />
-            </div>
-
             <div className="navbar text-white bg-[#282C32]">
               <div className="container mx-auto">
                 <div className="navbar-start items-center">
@@ -209,7 +279,10 @@ const DashNavbar = () => {
                   <MdArticle className="text-white text-2xl items-center cursor-pointer my-2" />
                 </Link>
               </li>
-              {navs.map((nav, idx) => (
+
+              {/* {navs.map((nav, idx) => (
+
+
                 <Link key={idx} href={nav.path}>
                   <li
                     onClick={() => {
@@ -232,7 +305,114 @@ const DashNavbar = () => {
                     )}
                   </li>
                 </Link>
-              ))}
+              ))} */}
+
+              {/* {loggedInUser?.role === "admin" &&
+                admin.map((nav, idx) => (
+                  <Link key={idx} href={nav.path}>
+                    <li
+                      onClick={() => {
+                        setOpen(open);
+                        setActiveIndex(idx);
+                      }}
+                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md ${
+                        activeIndex === idx ? "bg-black" : ""
+                      }`}
+                      onMouseEnter={() => handleHover(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                      <span className="text-xl block float-left">
+                        {React.createElement(nav.icon)}
+                      </span>
+                      {(hoveredIndex === idx || activeIndex === idx) && (
+                        <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
+                          {nav.route}
+                        </span>
+                      )}
+                    </li>
+                  </Link>
+                ))}
+              {loggedInUser?.role === "writer" &&
+                writer.map((nav, idx) => (
+                  <Link key={idx} href={nav.path}>
+                    <li
+                      onClick={() => {
+                        setOpen(open);
+                        setActiveIndex(idx);
+                      }}
+                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md ${
+                        activeIndex === idx ? "bg-black" : ""
+                      }`}
+                      onMouseEnter={() => handleHover(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                      <span className="text-xl block float-left">
+                        {React.createElement(nav.icon)}
+                      </span>
+                      {(hoveredIndex === idx || activeIndex === idx) && (
+                        <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
+                          {nav.route}
+                        </span>
+                      )}
+                    </li>
+                  </Link>
+                ))}
+              {loggedInUser?.role === "reader" &&
+                reader.map((nav, idx) => (
+                  <Link key={idx} href={nav.path}>
+                    <li
+                      onClick={() => {
+                        setOpen(open);
+                        setActiveIndex(idx);
+                      }}
+                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md ${
+                        activeIndex === idx ? "bg-black" : ""
+                      }`}
+                      onMouseEnter={() => handleHover(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                      <span className="text-xl block float-left">
+                        {React.createElement(nav.icon)}
+                      </span>
+                      {(hoveredIndex === idx || activeIndex === idx) && (
+                        <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
+                          {nav.route}
+                        </span>
+                      )}
+                    </li>
+                  </Link>
+                ))} */}
+
+              {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
+                (loggedInUser?.role === "admin"
+                  ? admin
+                  : loggedInUser?.role === "writer"
+                  ? writer
+                  : loggedInUser?.role === "reader" && reader
+                ).map((nav, idx) => (
+                  <Link key={idx} href={nav.path}>
+                    <li
+                      onClick={() => {
+                        setOpen(open);
+                        setActiveIndex(idx);
+                      }}
+                      className={`text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md ${
+                        activeIndex === idx ? "bg-black" : ""
+                      }`}
+                      onMouseEnter={() => handleHover(idx)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                      <span className="text-xl block float-left">
+                        {React.createElement(nav.icon)}
+                      </span>
+                      {(hoveredIndex === idx || activeIndex === idx) && (
+                        <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
+                          {nav.route}
+                        </span>
+                      )}
+                    </li>
+                  </Link>
+                ))}
             </ul>
           </div>
         </div>
