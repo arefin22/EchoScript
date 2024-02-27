@@ -5,6 +5,7 @@ import { useAuth } from "@/context/authContext";
 import Title from "../shared/ReusableComponents/Title";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { FaCircle } from "react-icons/fa";
+
 import Link from "next/link";
 const Recomendation=() => {
   const axiosSecure = useAxiosSecure();
@@ -75,11 +76,7 @@ const Recomendation=() => {
       ))}
      </div>
       </div>
-    
     </div>
-
-       
-     
   );
 };
 
