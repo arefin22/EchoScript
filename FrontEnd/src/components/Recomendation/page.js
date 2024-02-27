@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Article from "../Article/Article";
 import Card from "../Card/Card";
 import { useAuth } from "@/context/authContext";
 import Title from "../shared/ReusableComponents/Title";
@@ -36,7 +35,6 @@ const Recomendation=() => {
   const datas = data.map((dataa)=>dataa)
   console.log(datas)
   const fav = datas.filter((art) => userFav[0].includes(art.texteditor.category) || favCat.includes(art.texteditor.category))
-  // const fV= fav.map((f)=>f.texteditor)
   console.log(fav);
   const ran = fav.map((f)=>f.texteditor)
   console.log(ran);
