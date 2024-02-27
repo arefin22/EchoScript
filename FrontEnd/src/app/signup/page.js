@@ -78,7 +78,7 @@ const SignUp = () => {
           email: email,
           name: name,
           photoURL: photoURL,
-          role: "guest",
+          role: "reader",
           favourite: favourite,
         };
         console.log(userInfo)
