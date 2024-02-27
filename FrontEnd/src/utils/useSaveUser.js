@@ -1,12 +1,12 @@
 import { axiosSecure } from "./useAxiosSecure";
 
 export const saveUser = async (user) => {
-    console.log(user)
+    
     const currentUser = {
         email: user.email,
         name:user.displayName,
-        role:'user',
-        satus:'verified',
+        role:'reader',
+        membership:'active',
         image:user.photoURL || ''
 
     }
