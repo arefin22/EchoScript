@@ -70,7 +70,6 @@ const HistoryPage = () => {
             (comment) => comment.email === loggedInUserEmail
           )
         );
-
         const userPosts = [...likedPosts, ...commentedPosts];
         const historyCount = userPosts.length;
         const totalPagesCount = Math.ceil(historyCount / itemsPerPage);
@@ -142,14 +141,13 @@ const HistoryPage = () => {
                     <td>
                       {history.likes.some(
                         (like) => like.email === user.email
-                      ) && <span> You liked this</span>}
+                      ) && <span>You liked this</span>}
                     </td>
                     <td>
-                      {/* Check if the logged-in user has a comment */}
+                      
                       {history.comments.some(
                         (comment) => comment.email === user.email
                       ) &&
-                        // If the user has a comment, display it
                         history.comments.find(
                           (comment) => comment.email === user.email
                         ).commentText}
