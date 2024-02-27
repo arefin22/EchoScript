@@ -23,6 +23,8 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
+import Recomendation from "@/components/Recomendation/page";
 import SubHeader from "@/components/SubHeader/SubHeader";
 
 const SingleArticle = ({ params }) => {
@@ -469,12 +471,18 @@ const SingleArticle = ({ params }) => {
             </div>
           </div>
         </div>
-
+        <div className="mt-[-25px] lg:mt-[-80px] z-50">
+           {
+            user?  <Recomendation /> :  <Trending />
+           }
+          </div>
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
         </div>
       </div>
-    </>
+      
+      
+     </>
   );
 };
 
