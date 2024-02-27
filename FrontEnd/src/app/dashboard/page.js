@@ -7,7 +7,7 @@ const page = () => {
   return (
     <div className="">
       <h1 className="mx-auto text-2xl font-bold">This is overview</h1>
-      <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1">
+      <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-5">
         <div className="w-72 h-32 bg-gray-200 rounded-xl pl-3">
           <div>
             <h1>Total Users</h1>

@@ -5,15 +5,12 @@ import toast from 'react-hot-toast';
 
 const EditData =  ({id,data,setUpdate}) => {
     try {
-       axiosSecure.put(`/user/${id}`,data)
-      .then(res=>{
-     
-        console.log(res.data)
-        if(res.data.modifiedCount>0){
-          toast.success('user info Updated successfully');
-          setUpdate(Date.now())
-        }
-         })
+       axiosSecure.put(`/userEdit/${id}`, data).then((res) => {
+         if (res.data.modifiedCount > 0) {
+           toast.success("user info Updated successfully");
+           setUpdate(Date.now());
+         }
+       });
         
      
     } catch (error) {

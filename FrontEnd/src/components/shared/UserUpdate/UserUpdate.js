@@ -17,9 +17,9 @@ const UserUpdate = ({ id, setUpdate }) => {
       const membership = form.membership.value;
       const name = form.name.value;
       const userData = { email, name, membership, role };
-      EditData({ id: id, setUpdate: setUpdate, data: userData });
-      toast("user updated ");
-      document.getElementById("my_modal_1").close();
+      EditData({ id: id, setUpdate: setUpdate, data: userData })
+        toast("user updated");
+      document.getElementById(`my_modal_${id}`).close();
       router.replace("/dashboard");
     } catch (err) {
       console.log(err);
@@ -30,12 +30,11 @@ const UserUpdate = ({ id, setUpdate }) => {
     <div>
       <button
         className="text-white "
-        onClick={() => document.getElementById("my_modal_1").showModal()}
+        onClick={() => document.getElementById(`my_modal_${id}`).showModal()}
       >
-        {" "}
         <FaUserEdit />
       </button>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id={`my_modal_${id}`} className="modal">
         <div className="modal-box">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6 my-6">
