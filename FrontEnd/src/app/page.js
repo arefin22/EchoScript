@@ -43,12 +43,7 @@ const page = () => {
           <div className="mt-[-25px] lg:mt-[-80px] z-50">
             {user ? <Recomendation /> : <Trending />}
           </div>
-          {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
-        
-          </div> */}
-
           <Popular />
-
           <Contact />
         </div>
 

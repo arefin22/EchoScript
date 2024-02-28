@@ -24,7 +24,7 @@ const Trending2 = () => {
       <h2 className="lg:px-60 text-[20px] lg:py-5" data-aos="fade-up">
         Trending On EchoScript
       </h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-60">
+      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 py-10 lg:px-60">
        {
         lastTofirst.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
         

@@ -40,7 +40,7 @@ const page=({authorEmail,Id}) => {
       .filter((user) => user?.email ===authoremail)
       .map((author) => author.name)}
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-60">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 py-10 lg:px-60">
          {
           ranDom.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
           

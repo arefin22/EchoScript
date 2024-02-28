@@ -15,7 +15,7 @@ const Card = ({
   comments,
 }) => {
   return (
-    <div className="card w-[350px] mb-5 h-[350px] shadow-2xl">
+    <div className="card xl:w-[350px] mb-5 xl:h-[350px] shadow-2xl">
       <figure className="py-4">
         <div className="rounded-2xl">
           <Image
