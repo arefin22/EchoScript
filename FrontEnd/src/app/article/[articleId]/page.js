@@ -23,6 +23,8 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
+import Navbar2 from "@/components/shared/Navbar2/Navbar2";
+import Recomendation from "@/components/Recomendation/page";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Link from "next/link";
 
@@ -57,28 +59,78 @@ const SingleArticle = ({ params }) => {
     return formatDistanceToNow(new Date(date));
   };
 
-  const handleSubmitComment = (data) => {
-    const d = new Date();
-    const comment = {
-      email: user?.email,
-      name: user?.displayName,
-      image: user?.photoURL || "",
-      id: data?._id,
-      commentText: text,
-      date: d,
-    };
-    axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        setForceUpdate(Date.now());
-        Swal.fire({
-          title: "Good job!",
-          text: "successfylly added a comment!",
-          icon: "success",
+  // previous comment function
+  
+  // const handleSubmitComment = (data) => {
+  //   const d = new Date();
+  //   const comment = {
+  //     email: user?.email,
+  //     name: user?.displayName,
+  //     image: user?.photoURL || "",
+  //     id: data?._id,
+  //     commentText: text,
+  //     date: d,
+  //   };
+  //   axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
+  //     if (res.data.modifiedCount > 0) {
+  //       setForceUpdate(Date.now());
+  //       Swal.fire({
+  //         title: "Good job!",
+  //         text: "successfylly added a comment!",
+  //         icon: "success",
+  //       });
+  //       setText("");
+  //     }
+  //   });
+  // };
+
+  
+  const handleSubmitComment = async (data) => {
+    try {
+      // article comment
+      const d = new Date();
+      const comment = {
+        email: user?.email,
+        name: user?.displayName,
+        image: user?.photoURL || "",
+        id: data?._id,
+        commentText: text,
+        date: d,
+      };
+      axiosSecure
+        .put(`/textArticle/${data._id}/comment`, comment)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            setForceUpdate(Date.now());
+            Swal.fire({
+              title: "Good job!",
+              text: "successfylly added a comment!",
+              icon: "success",
+            });
+            setText("");
+          }
         });
-        setText("");
+      
+      
+      // add history comment
+      const commentHistory = {
+        email: user?.email,
+        articleId: data._id,
+        articleTitle: data.texteditor.articleTitle,
+        comment: text,
+      };
+      console.log(commentHistory);
+      await axiosSecure.post("/history", commentHistory);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // console.log("History already exists for this article");
+      } else {
+        console.error("An error occurred:", error);
       }
-    });
+    }
   };
+
+
 
   const handleShare = () => {
     setShareDropdownOpen(!isShareDropdownOpen);
@@ -86,19 +138,50 @@ const SingleArticle = ({ params }) => {
 
   const shareUrl = `https://echoscript-front.vercel.app`;
 
-  const handleLike = (item) => {
-    const likeDetails = {
-      email: user?.email,
-      name: user?.displayName,
-      like: 1,
-    };
-    axiosSecure
-      .put(`/textArticle/${item?._id}/like`, likeDetails)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          setForceUpdate(Date.now());
-        }
-      });
+  // // make like in main article
+  // const handleLike = (item) => {
+  //   const likeDetails = {
+  //     email: user?.email,
+  //     name: user?.displayName,
+  //     like: 1,
+  //   };
+  //   axiosSecure
+  //     .put(`/textArticle/${item?._id}/like`, likeDetails)
+  //     .then((res) => {
+  //       if (res.data.modifiedCount > 0) {
+  //         setForceUpdate(Date.now());
+  //       }
+  //     });
+  // };
+
+  // marge both function
+ 
+  const handleLike = async (item) => {
+    try {
+      const likeDetails = {
+        email: user?.email,
+        like: 1,
+        articleId: item._id,
+        articleTitle: item.texteditor.articleTitle,
+      };
+
+      axiosSecure
+        .put(`/textArticle/${item?._id}/like`, likeDetails)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            setForceUpdate(Date.now());
+          }
+        });
+
+      // add like to the history
+      await axiosSecure.post("/history", likeDetails);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // console.log("History already exists for this article");
+      } else {
+        console.error("An error occurred:", error);
+      }
+    }
   };
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
@@ -145,7 +228,7 @@ const SingleArticle = ({ params }) => {
   return (
     <>
       <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-        <div className=" mx-auto sticky top-[40px] z-50 -mt-8 md:-mt-8 lg:w-[50%] lg:top-[50px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
+        <div className="mx-auto sticky z-50 -mt-5 top-[30px] md:-mt-4 md:top-[40px] lg:w-[45%] lg:top-[55px] xl:w-[35%] xl:top-[60px] xl:-mt-6">
           <Navbar />
         </div>
 
@@ -409,7 +492,9 @@ const SingleArticle = ({ params }) => {
             </div>
           </div>
         </div>
-
+        {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
+          {user ? <Recomendation /> : <Trending />}
+        </div> */}
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
         </div>
