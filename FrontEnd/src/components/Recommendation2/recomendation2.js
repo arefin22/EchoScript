@@ -6,11 +6,14 @@ import Title from "../shared/ReusableComponents/Title";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { FaCircle } from "react-icons/fa";
 import Link from "next/link";
-const Recomendation2=() => {
+const Recomendation2=({authorCategory}) => {
   const axiosSecure = useAxiosSecure();
   const [audience, setAudience] = useState([]);
   const [data, setData] = useState([]);
   const {user} = useAuth()
+  const authorcat={authorCategory}
+const category =authorcat.authorCategory
+const recommend= [`${category}`]
   const favCat=['Tech', 'Sports']
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
@@ -32,7 +35,9 @@ const Recomendation2=() => {
   console.log(data)
   const datas = data.map((dataa)=>dataa)
   console.log(datas)
-  const fav = datas.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
+  const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
+  console.log(other);
+  const fav = other.filter((art) => recommend.includes(art.texteditor.category))
   console.log(fav);
   const ran = fav.map((f)=>f.texteditor)
   console.log(ran);

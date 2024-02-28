@@ -24,7 +24,7 @@ import {
   TwitterIcon,
 } from "react-share";
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
-import Recomendation from "@/components/Recomendation/page";
+import Recommendation2 from "@/components/Recommendation2/recomendation2";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Trending from "@/components/Trending/Trending";
 import Trending2 from "@/components/Trending2/Trending2";
@@ -473,7 +473,7 @@ const SingleArticle = ({ params }) => {
               )}
                <div className=" mt-[-25px] lg:mt-[-80px] z-50">
            {
-            user?  <Recomendation /> :  <Trending2 />
+            user?  <Recommendation2 authorCategory={data?.texteditor?.category} /> :  <Trending2 />
            }
           </div>
             </div>
