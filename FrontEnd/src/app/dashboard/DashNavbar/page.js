@@ -20,7 +20,7 @@ const DashNavbar = () => {
   const [open, setOpen] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState([]);
 
-  console.log(user?.email);
+  // console.log(user?.email);
 
   let userEmail = user?.email;
 
@@ -30,7 +30,7 @@ const DashNavbar = () => {
     });
   }, [userEmail]);
 
-  console.log(loggedInUser);
+  // console.log(loggedInUser);
   // All Data
   const navs = [
     {
@@ -222,56 +222,6 @@ const DashNavbar = () => {
         <div className="hidden md:block fixed">
           <div className={`bg-black p-5 rounded-full w-[72px] duration-300 `}>
             <div className=" text-white"></div>
-            {/* <ul className="ml-1 ">
-              <>
-                {navs.map((nav, idx) => (
-                  <Link key={idx} href={nav.path}>
-                    <li
-                      onClick={() => setOpen(open)}
-                      className={`text-white text-sm flex justify-between items-center gap-x-4 cursor-pointer py-2 rounded-md mt-2 ${
-                        pathname === `${nav.path}`
-                          ? `bg-black rounded-md ${open ? "w-36" : "w-[72px] "}`
-                          : ""
-                      }`}
-                    >
-                      <span className="text-[20px] block float-left ">
-                        {React.createElement(nav.icon)}
-                      </span>
-                      <span
-                        className={`text-base ml-2 font-medium flex-1  ${
-                          !open && "scale-0"
-                        } duration-300`}
-                      >
-                        {nav.route}{" "}
-                      </span>
-                    </li>
-                  </Link>
-                ))}
-              </>
-            </ul> */}
-
-            {/* perfect design */}
-            {/* <ul className="ml-1">
-              {navs.map((nav, idx) => (
-                <Link key={idx} href={nav.path}>
-                  <li
-                    onClick={() => setOpen(open)}
-                    className="text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md "
-                    onMouseEnter={() => setHoveredIndex(idx)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                  >
-                    <span className="text-xl block float-left">
-                      {React.createElement(nav.icon)}
-                    </span>
-                    {hoveredIndex === idx && (
-                      <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
-                        {nav.route}
-                      </span>
-                    )}
-                  </li>
-                </Link>
-              ))}
-            </ul> */}
 
             <ul className="ml-1">
               <li>
@@ -280,9 +230,7 @@ const DashNavbar = () => {
                 </Link>
               </li>
 
-              {/* {navs.map((nav, idx) => (
-
-
+              {navs.map((nav, idx) => (
                 <Link key={idx} href={nav.path}>
                   <li
                     onClick={() => {
@@ -305,7 +253,7 @@ const DashNavbar = () => {
                     )}
                   </li>
                 </Link>
-              ))} */}
+              ))}
 
               {/* {loggedInUser?.role === "admin" &&
                 admin.map((nav, idx) => (
@@ -383,7 +331,9 @@ const DashNavbar = () => {
                   </Link>
                 ))} */}
 
-              {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
+              {/* Role base nav */}
+
+              {/* {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
                 (loggedInUser?.role === "admin"
                   ? admin
                   : loggedInUser?.role === "writer"
@@ -412,7 +362,7 @@ const DashNavbar = () => {
                       )}
                     </li>
                   </Link>
-                ))}
+                ))} */}
             </ul>
           </div>
         </div>
