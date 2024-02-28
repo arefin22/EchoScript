@@ -6,15 +6,16 @@ import Title from "../shared/ReusableComponents/Title";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { FaCircle } from "react-icons/fa";
 import Link from "next/link";
-const Recomendation2=({authorCategory}) => {
+const Recomendation2=({authorCategory,Id}) => {
   const axiosSecure = useAxiosSecure();
   const [audience, setAudience] = useState([]);
   const [data, setData] = useState([]);
   const {user} = useAuth()
   const authorcat={authorCategory}
+  const postId =Id
+  console.log(postId);
 const category =authorcat.authorCategory
 const recommend= [`${category}`]
-  const favCat=['Tech', 'Sports']
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
       setAudience(res.data);
@@ -25,58 +26,33 @@ const recommend= [`${category}`]
       setData(res.data);
     });
   }, [axiosSecure]);
-  console.log(audience)
-  console.log(user)
-  console.log(user?.email);
-  const users = audience.filter((userss)=>userss.email===user?.email);
-  console.log(users)
-  const userFav =users.map((fav)=>fav.favourite.map((favo)=>favo.value))
-  console.log(userFav[0]);
-  console.log(data)
   const datas = data.map((dataa)=>dataa)
-  console.log(datas)
   const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
-  console.log(other);
-  const fav = other.filter((art) => recommend.includes(art.texteditor.category))
-  console.log(fav);
-  const ran = fav.map((f)=>f.texteditor)
-  console.log(ran);
+  const  filterId= other.filter((fil)=> fil._id !==postId)
+  const fav = filterId.filter((art) => recommend.includes(art.texteditor.category))
   const ranDom = fav.sort(() => Math.random() - 0.5);
-  console.log(ranDom)
   return (
     <div>
-       <div className="bg-white p-5 lg:pt-20 lg:pb-40 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] z-1">
-      <h2 className="lg:px-20 lg:py-5" data-aos="fade-up">
-        Recommendation <span className="underline">For you</span>
+       <div className=" p-5 lg:pt-20 lg:pb-40 rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] z-1">
+      <h2 className="lg:px-60 text-[20px] lg:py-5" data-aos="fade-up">
+        Recommendation Form EchoScript
       </h2>
-      
-    
-      <div  className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-40"> 
-      { ranDom.slice(1, 6).map((art,idx) => (
-       <div key={idx}
-         className="w-full flex flex-col-2 gap-5 border-b-2 py-20"
-         data-aos="fade-up"
-       >
-         <h2 className="text-gray-400">{idx+1}</h2>
-         <div className="space-y-3">
-           <div className="flex items-center gap-3 mt-[-30px]">
-             <FaCircle />
-             <p>{audience
-                .filter((user) => user?.email === art.texteditor?.authorEmail)
-                .map((author) => author.name)}</p>
-           </div>
-           
-            <Link key={idx} href={`/article/${art._id}`}>
-            <h5 className="font-bold">
-              {art.texteditor?.articleTitle}
-            </h5>
-              </Link>
-           <small>{art.texteditor?.category}</small>
-         </div>
-       </div>       
-     
-      ))}
-     </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 py-10 lg:px-60">
+       {
+        ranDom.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
+        
+        <Card
+        title= {trend?.texteditor?.articleTitle}
+  image= {trend?.texteditor?.thumbnail}
+  authorName={audience
+    .filter((user) => user?.email === trend.texteditor?.authorEmail)
+    .map((author) => author.name)}
+  date={trend?.texteditor?.category}
+        />
+        </Link>
+      )
+       }
+      </div>
       </div>
     
     </div>

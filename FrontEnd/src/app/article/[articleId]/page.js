@@ -473,7 +473,7 @@ const SingleArticle = ({ params }) => {
               )}
                <div className=" mt-[-25px] lg:mt-[-80px] z-50">
            {
-            user?  <Recommendation2 authorCategory={data?.texteditor?.category} /> :  <Trending2 />
+            user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
            }
           </div>
             </div>
