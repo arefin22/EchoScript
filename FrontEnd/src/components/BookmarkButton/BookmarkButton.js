@@ -25,7 +25,7 @@ const BookmarkButton = ({data}) => {
       fetchBookmarks();
     }, [user?.email]);
   
-    const isBookmarked = bookMarked.some((bookmark) => bookmark._id === data?._id);
+    const setIsBookmarked = bookMarked.some((bookmark) => bookmark._id === data?._id);
   
     const handleBookmark = async () => {
       try {
@@ -42,7 +42,7 @@ const BookmarkButton = ({data}) => {
     };
      
       return (
-        <button onClick={handleBookmark}  disabled={loading}>
+        <button onClick={handleBookmark}  disabled={loading }>
           {isBookmarked ? (
         <MdBookmarkAdded fontSize="1.5rem" />
       ) : (

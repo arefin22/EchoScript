@@ -8,13 +8,14 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
-import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
-import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Loader from "@/components/shared/Loader/Loader";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState([]);
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
@@ -100,6 +101,7 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -107,6 +109,7 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
 
@@ -117,6 +120,9 @@ const ArticlePage = () => {
    setSearchString("");
    setCategoryFilter("All");
  };
+ if(loading){
+  return <Loader/>;
+ }
  
 
   const filteredArticles = data.filter((article) => {
