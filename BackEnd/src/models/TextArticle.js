@@ -4,7 +4,6 @@ const CommentSchema = new Schema(
   {
     id: {
       type: Types.ObjectId,
-      required: true,
     },
     commentText: {
       type: String,
@@ -20,7 +19,6 @@ const CommentSchema = new Schema(
     },
     image: {
       type: String,
-      required: true,
     },
     date: {
       type: String,
@@ -34,6 +32,11 @@ const LikesSchema = new Schema({
   email: { type: String, required: true },
   name: { type: String, required: true },
   likesCount: { type: Number, required: true },
+  date: {
+    type: String,
+    required: true,
+    default: new Date(),
+  },
 });
 
 const TextEditorSchema = new Schema(
