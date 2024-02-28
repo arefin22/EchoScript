@@ -28,6 +28,7 @@ import Recommendation2 from "@/components/Recommendation2/recomendation2";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Trending from "@/components/Trending/Trending";
 import Trending2 from "@/components/Trending2/Trending2";
+import Writerized from "@/components/Writerized/writerized";
 import Link from "next/link";
 
 const SingleArticle = ({ params }) => {
@@ -493,15 +494,15 @@ const SingleArticle = ({ params }) => {
                 </div>
               )}
                <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+              <Writerized authorEmail={data?.texteditor?.authorEmail} Id={data?._id}/>
+          </div>
+               <div className=" mt-[-25px] lg:mt-[-80px] z-50">
            {
             user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
            }
           </div>
             </div>
-          </div>
-          
-          
-                
+          </div>     
         </div>
         
         <div className="lg:sticky lg:bottom-0 lg:z-0">
