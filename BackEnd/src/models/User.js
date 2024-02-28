@@ -12,28 +12,37 @@ const UserSchema = new Schema(
     },
     photoURL: {
       type: String,
-      required: true,
     },
     role: {
       type: String,
-      default: "guest",
+      default: "reader",
       required: true,
-      enum: ["admin", "user", "writer", "guest"],
+      enum: ["admin", "reader", "writer"],
     },
-    favourite: {
+    preference: {
       type: [Object],
       default: [],
       required: true,
     },
     membership: {
+      type: Date,
+      default: Date.now,
+    },
+    status: {
       type: String,
       enum: ["active", "suspended"],
       required: true,
-      default: "active"
+      default: "active",
+    },
+    about: {
+      type: String,
+      maxlength: 250,
     },
   },
   { timestamps: true }
 );
+
+UserSchema.index({ membership: 1 }, { expireAfterSeconds: 10 });
 
 const User = model("user", UserSchema);
 

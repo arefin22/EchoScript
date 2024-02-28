@@ -61,8 +61,8 @@ const Payment = () => {
   ];
 
   const handlePayment = (item) => {
-    // console.log(parseFloat(data.price));
-    setPayment(item?.price);
+    console.log(item)
+    setPayment(item);
     router.push("/dashboard/payment");
   };
 

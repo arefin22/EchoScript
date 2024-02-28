@@ -8,7 +8,7 @@ const Delete =  ({api,id,setUpdate}) => {
      axiosSecure.delete(`/${api}/${id}`).then(res=>{
      
     if (res.data === "deleted successfully") {
-      toast.success("Article deleted successfully");
+      toast.success("this item is deleted successfully");
       setUpdate(Date.now());
     }
      })

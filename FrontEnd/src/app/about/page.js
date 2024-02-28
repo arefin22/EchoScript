@@ -40,7 +40,7 @@ const AboutPage = () => {
   };
   return (
     <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-      <div className=" mx-auto sticky top-[40px] z-50 -mt-8 md:-mt-8 lg:w-[50%] lg:top-[50px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
+      <div className="mx-auto sticky z-50 -mt-3 top-[40px] md:-mt-4 md:top-[40px] lg:-mt-2 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-2">
         <Navbar />
       </div>
 

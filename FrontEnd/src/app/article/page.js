@@ -8,13 +8,14 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
-import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
-import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Loader from "@/components/shared/Loader/Loader";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState([]);
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
@@ -100,6 +101,7 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -107,6 +109,7 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
 
@@ -117,6 +120,9 @@ const ArticlePage = () => {
    setSearchString("");
    setCategoryFilter("All");
  };
+ if(loading){
+  return <Loader/>;
+ }
  
 
   const filteredArticles = data.filter((article) => {
@@ -134,12 +140,12 @@ const ArticlePage = () => {
   });
 
   return (
-    <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-      <div className=" mx-auto sticky top-[40px] z-50 -mt-8 md:-mt-8 lg:w-[50%] lg:top-[50px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
+    <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
         <Navbar />
       </div>
 
-      <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
+      <div className="mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
         <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
 
         <div className="py-10">

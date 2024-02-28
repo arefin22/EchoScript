@@ -29,7 +29,7 @@ const bookmarks = () => {
         const articlesResponse = await axiosPublic.get(
           `/bookmarkByEmail?email=${user?.email}`
         );
-        console.log(articlesResponse);
+        // console.log(articlesResponse);
         const articleCount = articlesResponse.data.length;
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         setTotalPages(totalPagesCount);
