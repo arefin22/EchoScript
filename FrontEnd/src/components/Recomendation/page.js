@@ -31,11 +31,11 @@ const Recomendation=() => {
   const userFav =users.map((fav)=>fav.favourite.map((favo)=>favo.value))
   console.log(userFav[0]);
   console.log(data)
-  const id = data.map((id)=>id._id)
-  console.log(id);
   const datas = data.map((dataa)=>dataa)
   console.log(datas)
-  const fav = datas.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
+  const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
+  console.log(other);
+  const fav = other.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
   console.log(fav);
   const ran = fav.map((f)=>f.texteditor)
   console.log(ran);
