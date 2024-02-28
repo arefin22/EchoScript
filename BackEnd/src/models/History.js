@@ -1,13 +1,34 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema, Types } = require("mongoose");
 
 const HistorySchema = new Schema(
+  // {
+  //   history: {
+  //     type: [Object],
+  //   },
+  //   timestamp: {
+  //     type: Date,
+  //     default: Date.now(),
+  //   },
+  // },
+  // { timestamps: true }
   {
-    history: {
-      type: [Object],
+    articleId: {
+      type: String,
+      required: true,
     },
-    timestamp: {
-      type: Date,
-      default: Date.now(),
+    articleTitle: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    like: {
+      type: Number,
+    },
+    comment: {
+      type: String,
     },
   },
   { timestamps: true }

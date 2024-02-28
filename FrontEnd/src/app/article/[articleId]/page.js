@@ -28,6 +28,8 @@ import Recommendation2 from "@/components/Recommendation2/recomendation2";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Trending from "@/components/Trending/Trending";
 import Trending2 from "@/components/Trending2/Trending2";
+import Link from "next/link";
+
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
@@ -60,28 +62,78 @@ const SingleArticle = ({ params }) => {
     return formatDistanceToNow(new Date(date));
   };
 
-  const handleSubmitComment = (data) => {
-    const d = new Date();
-    const comment = {
-      email: user?.email,
-      name: user?.displayName,
-      image: user?.photoURL || "",
-      id: data?._id,
-      commentText: text,
-      date: d,
-    };
-    axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
-      if (res.data.modifiedCount > 0) {
-        setForceUpdate(Date.now());
-        Swal.fire({
-          title: "Good job!",
-          text: "successfylly added a comment!",
-          icon: "success",
+  // previous comment function
+  
+  // const handleSubmitComment = (data) => {
+  //   const d = new Date();
+  //   const comment = {
+  //     email: user?.email,
+  //     name: user?.displayName,
+  //     image: user?.photoURL || "",
+  //     id: data?._id,
+  //     commentText: text,
+  //     date: d,
+  //   };
+  //   axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
+  //     if (res.data.modifiedCount > 0) {
+  //       setForceUpdate(Date.now());
+  //       Swal.fire({
+  //         title: "Good job!",
+  //         text: "successfylly added a comment!",
+  //         icon: "success",
+  //       });
+  //       setText("");
+  //     }
+  //   });
+  // };
+
+  
+  const handleSubmitComment = async (data) => {
+    try {
+      // article comment
+      const d = new Date();
+      const comment = {
+        email: user?.email,
+        name: user?.displayName,
+        image: user?.photoURL || "",
+        id: data?._id,
+        commentText: text,
+        date: d,
+      };
+      axiosSecure
+        .put(`/textArticle/${data._id}/comment`, comment)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            setForceUpdate(Date.now());
+            Swal.fire({
+              title: "Good job!",
+              text: "successfylly added a comment!",
+              icon: "success",
+            });
+            setText("");
+          }
         });
-        setText("");
+      
+      
+      // add history comment
+      const commentHistory = {
+        email: user?.email,
+        articleId: data._id,
+        articleTitle: data.texteditor.articleTitle,
+        comment: text,
+      };
+      console.log(commentHistory);
+      await axiosSecure.post("/history", commentHistory);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // console.log("History already exists for this article");
+      } else {
+        console.error("An error occurred:", error);
       }
-    });
+    }
   };
+
+
 
   const handleShare = () => {
     setShareDropdownOpen(!isShareDropdownOpen);
@@ -89,19 +141,50 @@ const SingleArticle = ({ params }) => {
 
   const shareUrl = `https://echoscript-front.vercel.app`;
 
-  const handleLike = (item) => {
-    const likeDetails = {
-      email: user?.email,
-      name: user?.displayName,
-      like: 1,
-    };
-    axiosSecure
-      .put(`/textArticle/${item?._id}/like`, likeDetails)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          setForceUpdate(Date.now());
-        }
-      });
+  // // make like in main article
+  // const handleLike = (item) => {
+  //   const likeDetails = {
+  //     email: user?.email,
+  //     name: user?.displayName,
+  //     like: 1,
+  //   };
+  //   axiosSecure
+  //     .put(`/textArticle/${item?._id}/like`, likeDetails)
+  //     .then((res) => {
+  //       if (res.data.modifiedCount > 0) {
+  //         setForceUpdate(Date.now());
+  //       }
+  //     });
+  // };
+
+  // marge both function
+ 
+  const handleLike = async (item) => {
+    try {
+      const likeDetails = {
+        email: user?.email,
+        like: 1,
+        articleId: item._id,
+        articleTitle: item.texteditor.articleTitle,
+      };
+
+      axiosSecure
+        .put(`/textArticle/${item?._id}/like`, likeDetails)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            setForceUpdate(Date.now());
+          }
+        });
+
+      // add like to the history
+      await axiosSecure.post("/history", likeDetails);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // console.log("History already exists for this article");
+      } else {
+        console.error("An error occurred:", error);
+      }
+    }
   };
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
@@ -147,8 +230,8 @@ const SingleArticle = ({ params }) => {
 
   return (
     <>
-      <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-        <div className=" mx-auto sticky top-[40px] z-50 -mt-8 md:-mt-8 lg:w-[50%] lg:top-[50px] xl:w-[50%] xl:top-[60px] xl:-mt-6">
+      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+        <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
           <Navbar />
         </div>
 
@@ -228,111 +311,50 @@ const SingleArticle = ({ params }) => {
                               <FaComment size={24} color="gray" />
                             </span>
                           </div>
-                          <div className="overflow-y-scroll">
+                          <div
+                            className={`fixed inset-0 bg-gray-900 bg-opacity-50 transition-transform ease-in-out duration-300 ${
+                              isDrawerOpen
+                                ? "translate-x-0"
+                                : "-translate-x-full"
+                            } z-50`}
+                            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                            style={{ right: 0 }}
+                          >
                             <div
-                              className={`absolute inset-0 z-50 transition-transform duration-300  ${
+                              className={` h-full bg-[#1F2544] w-64 p-4 transform transition-transform ease-in-out duration-300 ${
                                 isDrawerOpen
                                   ? "translate-x-0"
-                                  : "translate-x-full"
+                                  : "-translate-x-full"
                               }`}
+                              onClick={(e) => e.stopPropagation()}
                             >
-                              <div className="absolute inset-y-0  right-0 w-[320px]">
-                                <div className="h-full bg-base-200  text-base-content">
-                                  <ul className="p-4 mx-auto min-h-full bg-base-200 text-base-content">
-                                    <div className="flex items-center justify-between">
-                                      <h4 className="pb-5">
-                                        Responses ({data?.comments?.length})
-                                      </h4>
-                                      <div></div>
-                                    </div>
-                                    <div className="w-full max-w-2xl mx-auto">
-                                      <div className="bg-white border rounded-lg p-6 shadow-md">
-                                        <div className="flex items-center">
-                                          <Image
-                                            className="rounded-full w-12 h-12 object-cover"
-                                            width={50}
-                                            height={50}
-                                            src={user?.photoURL || ""}
-                                            alt="comment img"
-                                          />
-                                          <p className="ml-3">
-                                            {user?.displayName}
-                                          </p>
-                                        </div>
-                                        <textarea
-                                          placeholder="What are your thoughts?"
-                                          minLength={0}
-                                          maxLength={maxLength}
-                                          value={text}
-                                          onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                              e.preventDefault();
-                                            }
-                                          }}
-                                          onChange={handleInputChange}
-                                          className="flex-1 h-14 p-2 border-none rounded-md focus:outline-none focus:border-blue-500  resize-none w-full mt-2 align-top"
-                                        />
-                                        <div className="flex justify-between items-center mt-3">
-                                          <span>
-                                            {text.length}/{maxLength}
-                                          </span>
-                                          <button
-                                            disabled={text.trim() === ""}
-                                            onClick={() =>
-                                              handleSubmitComment(data)
-                                            }
-                                            className={` rounded-xl btn-sm ${
-                                              text.trim() === ""
-                                                ? "bg-gray-400 cursor-not-allowed"
-                                                : "bg-[#1A8917]"
-                                            }  text-white px-4  rounded-full`}
-                                          >
-                                            Respond
-                                          </button>
-                                        </div>
-                                      </div>
-                                      <div className="mt-10">
-                                        {data?.comments?.map((comment) => (
-                                          <div key={comment._id} className="">
-                                            <div className="flex justify-start items-center gap-3">
-                                              <Image
-                                                width={50}
-                                                height={50}
-                                                className="w-12 h-12 object-cover rounded-full"
-                                                alt="img"
-                                                src={comment.image}
-                                              />
-                                              <div>
-                                                <p className="font-semibold">
-                                                  {comment.name}
-                                                </p>
-                                                <span>
-                                                  {formatDateAgo(comment.date)}
-                                                </span>
-                                              </div>
-                                            </div>
-                                            <p className="my-3">
-                                              {comment.commentText}
-                                            </p>
-                                            <div className="flex justify-between items-center">
-                                              <button className="p-2 hover:bg-gray-300 rounded-full">
-                                                <AiFillLike
-                                                  className=" m-1 cursor-pointer"
-                                                  fontSize={"1rem"}
-                                                />
-                                              </button>
-                                              <p className="underline cursor-pointer">
-                                                Reply
-                                              </p>
-                                            </div>
-                                            <hr className="my-2" />
-                                          </div>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  </ul>
-                                </div>
+                              <div className="pb-3 flex justify-between items-center">
+                                <Link href="/">
+                                  <h2 className="text-4xl font-semibold text-white">
+                                    Shop{" "}
+                                    <span className="text-orange-600">Ito</span>
+                                  </h2>
+                                </Link>
+                                <button
+                                  // onClick={hideMenu}
+                                  className="p-2 rounded-full hover:bg-gray-600"
+                                >
+                                  {/* <FaTimes /> */}
+                                </button>
                               </div>
+                              <ul className="flex flex-col w-[100%]">
+                                {/* {routes.map((item) => (
+                                  <div key={item.id}>
+                                    <Link
+                                      to={item.route}
+                                      className="text-white pl-3 w-full cursor-pointer py-2 hover:text-orange-600 "
+                                    >
+                                      {item.name}
+                                    </Link>
+                                    <hr className="my-2" />
+                                  </div>
+                                ))} */}
+                              </ul>
                             </div>
                           </div>
                         </div>
@@ -471,25 +493,19 @@ const SingleArticle = ({ params }) => {
                   
                 </div>
               )}
-               <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
            {
             user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
            }
           </div>
             </div>
-          </div>
-          
-          
-                
+          </div>     
         </div>
-        
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
         </div>
       </div>
-      
-      
-     </>
+    </>
   );
 };
 
