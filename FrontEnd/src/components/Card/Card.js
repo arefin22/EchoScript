@@ -15,20 +15,20 @@ const Card = ({
   comments,
 }) => {
   return (
-    <div className="card w-[350px] mb-5 h-[350px] shadow-2xl">
+    <div className="card  xl:w-[350px] mb-5 xl:h-[350px] ">
       <figure className="py-4">
-        <div className="rounded-2xl">
+        <div className="">
           <Image
             src={image}
             height={350}
             width={350}
-            className="rounded-xl"
+            className=""
             alt="article image"
           />
         </div>
       </figure>
 
-      <div className="text-start px-6 py-1">
+      <div className="text-start px-6 py-1 ">
        
         <h2 className="card-title text-[20px] py-1 mb-2 font-medium">
           {title}
