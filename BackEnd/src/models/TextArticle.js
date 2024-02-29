@@ -15,7 +15,6 @@ const CommentSchema = new Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
@@ -30,11 +29,10 @@ const CommentSchema = new Schema(
 
 const LikesSchema = new Schema({
   email: { type: String, required: true },
-  name: { type: String, required: true },
+  name: { type: String },
   likesCount: { type: Number, required: true },
   date: {
     type: String,
-    required: true,
     default: new Date(),
   },
 });
