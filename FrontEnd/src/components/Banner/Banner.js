@@ -11,9 +11,9 @@ const Banner = () => {
       setCategoryFilter("All");
     };
   return (
-    <div className="mt-[-20px] lg:mt-[-50px] z-1">
+    <div className="z-1">
       <div
-        className="xl:h-[200vh] rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
+        className="rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
         style={{
           // backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
           background:
@@ -43,7 +43,7 @@ const Banner = () => {
           </div>
         </div>
         <div
-          className="text-white text-xl font-semibold text-center py-[70px] md:py-[120px] lg:pt-[200px] lg:text-left lg:pl-24"
+          className="text-white text-xl font-semibold text-center py-[70px] md:py-[120px] lg:pt-[200px] lg:text-left lg:pl-24 xl:pt-[300px] xl:pb-[200px]"
           data-aos="fade-up"
         >
           <p>Loved Place - By Reader</p>

@@ -11,14 +11,14 @@ import Link from "next/link";
 const SubHeader = ({ onSearch, onClose, onRecommendationClick }) => {
   return (
     <div className="w-full flex justify-between py-5 px-5 lg:px-10 xl:px-20 lg:pt-10 items-center">
-      <div className="w-[50px] md:w-[200px] lg:w-[300px] xl:w-full">
+      <div className="w-[50px] lg:w-[300px] xl:w-full">
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
             src={"https://i.ibb.co/KWhP3g2/echo-icon.png"}
-            width={35}
-            height={35}
-            className="w-[35px] md:w-[50px]"
+            width={20}
+            height={20}
+            className="w-[35px] lg:w-[50px]"
           />
         </Link>
       </div>
