@@ -34,27 +34,16 @@ const page = () => {
 
     return (
       <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-        <div className="mx-auto sticky z-50 -mt-5 top-[30px] md:-mt-4 md:top-[40px] lg:w-[45%] lg:top-[55px] xl:w-[35%] xl:top-[60px] xl:-mt-6">
+        <div className="mx-auto sticky z-50 -mt-3 top-[40px] md:-mt-4 md:top-[40px] lg:-mt-2 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-2 2xl:w-[35%]">
           <Navbar />
         </div>
         <div className="mainContainer">
           <Banner />
 
           <div className="mt-[-25px] lg:mt-[-80px] z-50">
-
-           {
-            user?  <Recomendation /> :  <Trending />
-           }
-           
-           
+            {user ? <Recomendation /> : <Trending />}
           </div>
-          {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
-        
-          </div> */}
-          
-
           <Popular />
-
           <Contact />
         </div>
 

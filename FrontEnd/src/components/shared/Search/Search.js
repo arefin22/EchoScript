@@ -122,7 +122,7 @@ const Search = ({ onSearch, onClose, onRecommendationClick }) => {
         className="btn border-hidden hover:border-hidden hover:bg-transparent bg-transparent h-10"
         onClick={() => document.getElementById("my_modal_3").showModal()}
       >
-        <FaSearch className="text-xl xl:text-3xl text-white" />
+        <FaSearch className="text-xl xl:text-2xl text-white" />
       </button>
       <dialog id="my_modal_3" className="modal absolute top-5" style={{ width: "83.333%" }}>
         <div className="modal-box absolute top-5 left-10   mx-auto w-full" style={{ maxWidth: "calc(100% - 2rem)" }}>

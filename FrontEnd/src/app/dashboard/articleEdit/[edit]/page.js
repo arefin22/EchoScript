@@ -218,7 +218,7 @@ const ArticleEdit = ({ params }) => {
     };
   }, []);
 
-  // initEditor();
+  initEditor();
 
   // Preference part
   const options = [

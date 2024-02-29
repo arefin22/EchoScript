@@ -12,9 +12,8 @@ const SocialLogin = () => {
   const {googleLogIn,facebookLogIn,githubLogIn,twitterLogIn} = useAuth();
   const router=useRouter()
   const iconStyle = {
-    borderRadius: "50%",
     border: "2px solid black",
-    padding: "20px",
+    // padding: "20px",
     cursor: "pointer",
   };
   const handleTwitterLogin = async () => {
@@ -95,29 +94,28 @@ const SocialLogin = () => {
   };
 
   return (
-    <div className="w-full mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center items-center space-x-12 m-4 p-3 border-gray-300 rounded">
-        <div style={iconStyle} className="hover:bg-gray-200">
+    <div className="w-full mx-auto flex items-center justify-center py-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 border-gray-300 gap-5 text-center">
+        <div style={iconStyle} className="hover:bg-gray-200 w-full mr-10 mt-5 rounded-full py-4">
           <button onClick={handleGoogle}>
-          <FcGoogle size={24} className="text-black text-center" />
+            <FcGoogle size={24} className="text-black text-center" />
           </button>
         </div>
-        <div style={iconStyle} className="hover:bg-gray-200">
-         
+        <div style={iconStyle} className="hover:bg-gray-200 w-full mr-10 mt-5 rounded-full py-4">
           <button onClick={handleFacebook}>
-          <FaFacebookF size={24} className="text-black text-center" />
+            <FaFacebookF size={24} className="text-black text-center" />
           </button>
         </div>
-        <div style={iconStyle} className="hover:bg-gray-200">
+        <div style={iconStyle} className="hover:bg-gray-200 w-full mr-10 mt-5 rounded-full py-4">
           {/* <FaXTwitter size={24} className="text-black" /> */}
           <button onClick={handleTwitterLogin}>
-          <FaTwitter size={24} className="text-black text-center" />
+            <FaTwitter size={24} className="text-black text-center" />
           </button>
         </div>
-        <div style={iconStyle} className="hover:bg-gray-200">
+        <div style={iconStyle} className="hover:bg-gray-200 w-full mt-5 rounded-full py-4">
           {/* <FaXTwitter size={24} className="text-black" /> */}
           <button onClick={handleGitHub}>
-          <FaGithub size={24} className="text-black text-center" />
+            <FaGithub size={24} className="text-black text-center" />
           </button>
         </div>
       </div>
