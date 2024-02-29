@@ -208,7 +208,7 @@ const ArticleEdit = ({ params }) => {
 
   useEffect(() => {
     if (ejInstance.current === null) {
-      initEditor();
+      // initEditor();
     }
 
     return () => {

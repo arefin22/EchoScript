@@ -187,6 +187,7 @@ const SingleArticle = ({ params }) => {
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
   const blocks = data?.texteditor?.editorContent?.blocks;
+  console.log(blocks)
   const onlyText = blocks?.map((block) =>
     block.data.text?.replace(/&nbsp;/g, " ")
   );
@@ -374,6 +375,7 @@ const SingleArticle = ({ params }) => {
                                         Respond
                                       </button>
                                     </div>
+
                                   </div>
                                   <div className="mt-10">
                                     {data?.comments?.map((comment) => (
@@ -399,9 +401,7 @@ const SingleArticle = ({ params }) => {
                                           {comment.commentText}
                                         </p>
                                         <div className="flex justify-between items-center">
-                                          <button
-                                            className="p-2 hover:bg-gray-300 rounded-full"
-                                          >
+                                          <button className="p-2 hover:bg-gray-300 rounded-full">
                                             <AiFillLike
                                               className=" m-1 cursor-pointer"
                                               fontSize={"1rem"}
@@ -415,6 +415,7 @@ const SingleArticle = ({ params }) => {
                                       </div>
                                     ))}
                                   </div>
+
                                 </div>
                               </ul>
                             </div>
@@ -552,22 +553,28 @@ const SingleArticle = ({ params }) => {
                       </div>
                     ))}
                   </div>
-                  
                 </div>
               )}
 
-               <div className=" mt-[-25px] lg:mt-[-80px] z-5">
-              <Writerized authorEmail={data?.texteditor?.authorEmail} Id={data?._id}/>
-          </div>
-                  
-              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
-           {
-            user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
-           }
+              <div className=" mt-[-25px] lg:mt-[-80px] z-5">
+                <Writerized
+                  authorEmail={data?.texteditor?.authorEmail}
+                  Id={data?._id}
+                />
+              </div>
 
-          </div>
+              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+                {user ? (
+                  <Recommendation2
+                    Id={data?._id}
+                    authorCategory={data?.texteditor?.category}
+                  />
+                ) : (
+                  <Trending2 />
+                )}
+              </div>
             </div>
-          </div>     
+          </div>
         </div>
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />

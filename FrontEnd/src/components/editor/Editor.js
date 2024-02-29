@@ -199,7 +199,7 @@ const Editor = () => {
 
   useEffect(() => {
     if (ejInstance.current === null) {
-      initEditor();
+      // initEditor();
     }
 
     return () => {

@@ -21,7 +21,7 @@ const DashNavbar = () => {
 
   useEffect(() => {
     axiosPublic.get(`/user/${userEmail}`).then((res) => {
-      setLoggedInUser(res.data);
+      setLoggedInUser(res?.data);
     });
   }, [userEmail]);
 
@@ -113,7 +113,7 @@ const DashNavbar = () => {
     },
     {
       path: "/dashboard/History",
-      route: "History",
+      route: "Activity",
       icon: GrHistory,
     },
     {
@@ -172,7 +172,7 @@ const DashNavbar = () => {
   };
   return (
     <PrivateRoute>
-      <div className="min-h-[100vh]  flex justify-center items-center overflow-x-hidden">
+      <div className="md:min-h-[100vh] flex justify-center items-center overflow-x-hidden">
         <nav className="fixed z-50 bottom-0 left-0 right-5 backdrop-blur-md backdrop-filter bg-zinc-50 bg-opacity-60 bg-transparent py-2  ml-5 lg:hidden md:hidden block h-14">
           <div className="items-center gap-10 tracking-wider flex justify-around text center relative">
             {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
@@ -185,12 +185,12 @@ const DashNavbar = () => {
                 <div key={idx}>
                   <Link
                     className={`${
-                      pathname === nav.path ? "text-black" : "text-gray-600"
+                      pathname === nav?.path ? "text-black" : "text-gray-600"
                     }`}
                     href={nav.path}
                   >
                     <nav.icon className="mx-auto" fontSize={"1.5rem"} />
-                    {pathname === nav.path ? (
+                    {pathname === nav?.path ? (
                       <p className="text-center uppercase text-black">
                         {nav.route}
                       </p>
@@ -214,7 +214,7 @@ const DashNavbar = () => {
                   ? writer
                   : loggedInUser?.role === "reader" && reader
                 ).map((nav, idx) => (
-                  <Link key={idx} href={nav.path}>
+                  <Link key={idx} href={nav?.path}>
                     <li
                       onClick={() => {
                         setOpen(open);
@@ -227,11 +227,11 @@ const DashNavbar = () => {
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <span className="text-xl block float-left">
-                        {React.createElement(nav.icon)}
+                        {React.createElement(nav?.icon)}
                       </span>
                       {(hoveredIndex === idx || activeIndex === idx) && (
                         <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
-                          {nav.route}
+                          {nav?.route}
                         </span>
                       )}
                     </li>

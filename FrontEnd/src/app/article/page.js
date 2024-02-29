@@ -152,10 +152,11 @@ const ArticlePage = () => {
       </div>
 
       <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
-      <SubHeader  onSearch={handleSearch}
+        <SubHeader
+          onSearch={handleSearch}
           onClose={handleCloseSearchModal}
-          onRecommendationClick={handleRecommendationClick} />
-
+          onRecommendationClick={handleRecommendationClick}
+        />
 
         <div className="py-10">
           {filteredArticles
