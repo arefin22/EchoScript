@@ -31,6 +31,7 @@ import Trending2 from "@/components/Trending2/Trending2";
 
 import Writerized from "@/components/Writerized/writerized";
 import Link from "next/link";
+import { date } from "zod";
 
 
 const SingleArticle = ({ params }) => {
@@ -87,9 +88,9 @@ const SingleArticle = ({ params }) => {
   //       setText("");
   //     }
   //   });
-  // };
+  // };s
 
-  
+   const Postdate =data?.createdAt?.split("T")[0]
   const handleSubmitComment = async (data) => {
     try {
       // article comment
@@ -283,7 +284,7 @@ const SingleArticle = ({ params }) => {
                             </button>
                           </div>
                           <div>
-                            <p className="text-sm text-gray-500">22-oct-24</p>
+                            <p className="text-sm text-gray-500">{Postdate}</p>
                           </div>
                         </div>
                       </div>

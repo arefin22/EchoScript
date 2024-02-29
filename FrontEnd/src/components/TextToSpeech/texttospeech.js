@@ -26,7 +26,7 @@ const texttospeech = ({title, desc,id}) => {
               onError={() => console.error("Browser not supported!")}
               
               />
-              <HighlightedText id={id}></HighlightedText>
+              {/* <HighlightedText id={id}></HighlightedText> */}
         {/* {news.map(({ id, title, desc }) => (
             <div key={id}>
               <h4>{title}</h4>
