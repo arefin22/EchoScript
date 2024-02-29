@@ -187,6 +187,7 @@ const SingleArticle = ({ params }) => {
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
   const blocks = data?.texteditor?.editorContent?.blocks;
+  console.log(blocks)
   const onlyText = blocks?.map((block) =>
     block.data.text?.replace(/&nbsp;/g, " ")
   );

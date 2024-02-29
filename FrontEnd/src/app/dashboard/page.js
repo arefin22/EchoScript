@@ -15,12 +15,13 @@ import {
 } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { axiosSecure } from "@/utils/useAxiosSecure";
 
 const page = () => {
   const [stats, setStats] = useState({});
 
   useEffect(() => {
-    axios.get("http://localhost:5000/stats").then((data) => {
+    axiosSecure.get("/stats").then((data) => {
       setStats(data?.data);
     });
   }, []);

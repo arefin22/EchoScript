@@ -212,7 +212,7 @@ const Editor = () => {
     };
   }, []);
 
-  initEditor();
+  // initEditor();
 
   // Preference part
   const options = [
