@@ -229,8 +229,8 @@ const SingleArticle = ({ params }) => {
 
   return (
     <>
-      <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-        <div className="mx-auto sticky z-50 -mt-3 top-[40px] md:-mt-4 md:top-[40px] lg:-mt-2 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-2">
+      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+        <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
           <Navbar />
         </div>
 
@@ -400,9 +400,7 @@ const SingleArticle = ({ params }) => {
                                           {comment.commentText}
                                         </p>
                                         <div className="flex justify-between items-center">
-                                          <button
-                                            className="p-2 hover:bg-gray-300 rounded-full"
-                                          >
+                                          <button className="p-2 hover:bg-gray-300 rounded-full">
                                             <AiFillLike
                                               className=" m-1 cursor-pointer"
                                               fontSize={"1rem"}
@@ -553,22 +551,28 @@ const SingleArticle = ({ params }) => {
                       </div>
                     ))}
                   </div>
-                  
                 </div>
               )}
 
-               <div className=" mt-[-25px] lg:mt-[-80px] z-5">
-              <Writerized authorEmail={data?.texteditor?.authorEmail} Id={data?._id}/>
-          </div>
-                  
-              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
-           {
-            user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
-           }
+              <div className=" mt-[-25px] lg:mt-[-80px] z-5">
+                <Writerized
+                  authorEmail={data?.texteditor?.authorEmail}
+                  Id={data?._id}
+                />
+              </div>
 
-          </div>
+              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+                {user ? (
+                  <Recommendation2
+                    Id={data?._id}
+                    authorCategory={data?.texteditor?.category}
+                  />
+                ) : (
+                  <Trending2 />
+                )}
+              </div>
             </div>
-          </div>     
+          </div>
         </div>
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
