@@ -248,10 +248,10 @@ const SingleArticle = ({ params }) => {
                   <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
                     {data?.texteditor?.category}
                   </div>
-                  <div className=" text-black text-[20px] lg:text-[40px] mt-7 font-bold p-2 lg:p-0">
+                  <div className=" text-black text-[20px] lg:text-[40px] mt-7 font-bold p-5 lg:p-0">
                     {data?.texteditor?.articleTitle}
                   </div>
-                  <div className=" mt-10 mb-5">
+                  <div className=" mt-10 mb-5 px-5">
                     <div>
                       <div className=" flex items-center pl-2 mb-6">
                         <div className="rounded-full border-2 border-white mr-2">
@@ -401,7 +401,7 @@ const SingleArticle = ({ params }) => {
                     </div>
                   </div>
 
-                  <div className="mb-12  border-t border-gray-300">
+                  <div className="mb-12  border-t border-gray-300 px-5">
                     <div>
                       {data && (
                         <div>
