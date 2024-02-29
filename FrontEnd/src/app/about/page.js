@@ -3,6 +3,7 @@ import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import Image from "next/image";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
 const AboutPage = () => {
   const serviceLists = [
     {
@@ -40,9 +41,7 @@ const AboutPage = () => {
   };
   return (
     <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
-        <Navbar />
-      </div>
+      <StickyNavbar />
 
       <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
         <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />

@@ -10,6 +10,7 @@ import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Loader from "@/components/shared/Loader/Loader";
+import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -20,11 +21,7 @@ const ArticlePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All"); 
-  
-  
-  
-  
+  const [categoryFilter, setCategoryFilter] = useState("All");
 
   const category = [
     {
@@ -89,7 +86,6 @@ const ArticlePage = () => {
     },
   ];
 
-  
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
       Math.min(prevStartIdx + 1, category.length - 5)
@@ -103,7 +99,7 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
-      setLoading(false)
+      setLoading(false);
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -111,10 +107,9 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
-      setLoading(false)
+      setLoading(false);
     });
   }, [axiosSecure]);
-
 
   const handleSearch = (query) => {
     setSearchString(query);
@@ -128,28 +123,30 @@ const ArticlePage = () => {
     setCategoryFilter(category);
   };
 
-
-
-
- 
-
   const filteredArticles = data.filter((article) => {
-    const isInCategory = categoryFilter ==="All" || article.texteditor.category === categoryFilter;
+    const isInCategory =
+      categoryFilter === "All" ||
+      article.texteditor.category === categoryFilter;
     const matchesSearch =
-    
-    article.texteditor.category.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.thumbnail.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.authorEmail.toLowerCase().includes(searchString.toLowerCase()) 
-    
+      article.texteditor.category
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.articleTitle
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.thumbnail
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.authorEmail
+        .toLowerCase()
+        .includes(searchString.toLowerCase());
+
     return isInCategory && matchesSearch;
   });
 
   return (
-    <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
-        <Navbar />
-      </div>
+     <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+       <StickyNavbar/>
 
       <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
         <SubHeader

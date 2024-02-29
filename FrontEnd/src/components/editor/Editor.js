@@ -199,7 +199,7 @@ const Editor = () => {
 
   useEffect(() => {
     if (ejInstance.current === null) {
-      // initEditor();
+      initEditor();
     }
 
     return () => {
@@ -212,7 +212,7 @@ const Editor = () => {
     };
   }, []);
 
-  initEditor();
+  // initEditor();
 
   // Preference part
   const options = [
