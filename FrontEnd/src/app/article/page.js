@@ -8,17 +8,23 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
-import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
-import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Loader from "@/components/shared/Loader/Loader";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All"); // Add this line
+  const [categoryFilter, setCategoryFilter] = useState("All"); 
+  
+  
+  
+  
 
   const category = [
     {
@@ -83,10 +89,7 @@ const ArticlePage = () => {
     },
   ];
 
-  // const handleCategory = (e) => {
-  //   console.log(e);
-  // };
-
+  
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
       Math.min(prevStartIdx + 1, category.length - 5)
@@ -100,6 +103,7 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -107,29 +111,37 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
+      setLoading(false)
     });
   }, [axiosSecure]);
 
- const handleSearch = (query) => {
-   setSearchString(query);
- };
- const handleCloseSearchModal = () => {
-   setSearchString("");
-   setCategoryFilter("All");
- };
+
+  const handleSearch = (query) => {
+    setSearchString(query);
+    setCategoryFilter("All");
+  };
+  const handleCloseSearchModal = () => {
+    setSearchString("");
+  };
+
+  const handleRecommendationClick = (category) => {
+    setCategoryFilter(category);
+  };
+
+
+
+
  
 
   const filteredArticles = data.filter((article) => {
-    const isInCategory =
-      categoryFilter === "All" ||
-      article.texteditor.category === categoryFilter;
+    const isInCategory = categoryFilter ==="All" || article.texteditor.category === categoryFilter;
     const matchesSearch =
-      article.texteditor.articleTitle
-        .toLowerCase()
-        .includes(searchString.toLowerCase()) ||
-      article.texteditor.category
-        .toLowerCase()
-        .includes(searchString.toLowerCase());
+    
+    article.texteditor.category.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.thumbnail.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.authorEmail.toLowerCase().includes(searchString.toLowerCase()) 
+    
     return isInCategory && matchesSearch;
   });
 
@@ -139,8 +151,11 @@ const ArticlePage = () => {
         <Navbar />
       </div>
 
-      <div className="mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
-        <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
+      <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
+      <SubHeader  onSearch={handleSearch}
+          onClose={handleCloseSearchModal}
+          onRecommendationClick={handleRecommendationClick} />
+
 
         <div className="py-10">
           {filteredArticles

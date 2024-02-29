@@ -6,23 +6,35 @@ import VoiceButton from "../VoiceButton/VoiceButton";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-const Search = ({ onSearch ,onClose }) => {
+const Search = ({ onSearch, onClose, onRecommendationClick }) => {
   const nameInputRef = useRef(null);
   const [startIdx, setStartIdx] = useState(0);
   const inputRefs = [nameInputRef];
+  const [searchString, setSearchString] = useState("");
   const [voiceButtonActive, setVoiceButtonActive] = useState(false);
+// this is for voice command
   const toggleVoiceButtonActive = () => {
     setVoiceButtonActive((prevState) => !prevState);
     
   };
-  const [searchString, setSearchString] = useState("");
+ 
+
+ 
 
   const handleInputChange = (e) => {
     setSearchString(e.target.value);
   };
-
-  const handleCategoryClick = (category) => {
-    onSearch(category);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onClose();
+    onSearch(searchString);
+    document.getElementById("my_modal_3").close()
+    setSearchString("");
+    
+    
+  };
+  const handleRecommendationClick = (category) => {
+    onRecommendationClick(category);
     onClose();
   };
 
@@ -114,7 +126,8 @@ const Search = ({ onSearch ,onClose }) => {
       </button>
       <dialog id="my_modal_3" className="modal absolute top-5" style={{ width: "83.333%" }}>
         <div className="modal-box absolute top-5 left-10   mx-auto w-full" style={{ maxWidth: "calc(100% - 2rem)" }}>
-          <form method="dialog" className="relative">
+          <form 
+          method="dialog" className="relative">
             <div className="flex justify-between items-center">
               <h1 className="font-medium text-left">Articles</h1>
               <button
@@ -127,22 +140,39 @@ const Search = ({ onSearch ,onClose }) => {
           </form>
           <div className="relative bg-transparent w-full mx-auto flex justify-between items-center">
             <div className="flex items-center w-5/6">
-              <input 
-                value={searchString}
-                onChange={handleInputChange}
-                type="text"
-                ref={nameInputRef}
-                placeholder="Search here..."
-                className="input border-none w-full"
-              />
+           
+            <form className="flex items-center justify-between w-full gap-5" 
+            onSubmit={handleSubmit }>
+    <div className="relative flex items-center w-5/6">
+      <input 
+       value={searchString}
+       onChange={handleInputChange}
+        type="text"
+        ref={nameInputRef}
+        placeholder="Search here..."
+        className="input border-none w-full"
+      />
+    </div>
+    <div className="flex justify-between gap-5 items-center"> {/* Adjust the position of search icon and voice button */}
+      <button type="submit" className="btn mt-5 btn-sm btn-circle btn-ghost">
+        <FaSearch className="text-xl xl:text-3xl" />
+      </button>
+      <VoiceButton
+        inputRefs={inputRefs}
+        toggleVoiceButtonActive={toggleVoiceButtonActive}
+        voiceButtonActive={voiceButtonActive}
+      />
+    </div>
+  </form>
+             
             </div>
-            <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
+            {/* <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
               <VoiceButton
                 inputRefs={inputRefs}
                 toggleVoiceButtonActive={toggleVoiceButtonActive}
                 voiceButtonActive={voiceButtonActive}
               />
-            </div>
+            </div> */}
           </div>
           <div className="divider"></div>
           <div className="w-full" >
@@ -158,7 +188,7 @@ const Search = ({ onSearch ,onClose }) => {
               </button>
               {category?.slice(startIdx, startIdx + 5).map((item) => (
                 <button
-                onClick={() => handleCategoryClick(item?.category)}
+                onClick={() => onRecommendationClick(item.category) && document.getElementById("my_modal_3").close()}
                   className="bg-[#D9D9D9] px-4 py-3 rounded-xl text-sm hover:bg-[#bdb8b8]"
                   key={item.id}
                 >
