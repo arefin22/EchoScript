@@ -103,7 +103,7 @@ const page = () => {
             <Tooltip />
             <Legend />
             <Bar dataKey="users" fill="#8884d8">
-              <LabelList dataKey="users" position="center" stroke="white" />
+              <LabelList dataKey="users"  position="center" stroke="white" />
             </Bar>
             <Bar dataKey="articles" fill="#82ca9d">
               <LabelList dataKey="articles" position="center" stroke="white" />
