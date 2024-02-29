@@ -26,7 +26,7 @@ const page = () => {
           try {
             const usersResponse = await axiosPublic.get("/user");
       
-            const userData = usersResponse.data.find(userData => userData.email === user.email && userData.name === user.displayName);
+            const userData = usersResponse.data.find(userData => userData.email === user.email);
             setMyself(userData);
             setId(userData?._id);
           
