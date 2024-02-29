@@ -8,7 +8,7 @@ import Link from "next/link";
 // https://i.ibb.co/yfjY1j4/echo-white.png
 // https://i.ibb.co/Qk6B1cy/echo-black.png
 
-const SubHeader = ({ onSearch, onClose }) => {
+const SubHeader = ({ onSearch, onClose, onRecommendationClick }) => {
   return (
     <div className="w-full flex justify-between py-5 px-5 lg:px-10 xl:px-20 lg:pt-10 items-center">
       <div className="w-[50px] md:w-[200px] lg:w-[300px] xl:w-full">
@@ -24,7 +24,7 @@ const SubHeader = ({ onSearch, onClose }) => {
       </div>
       <div className="bg-black rounded-full lg:py-[8px] lg:px-[6px]">
         {/* navbar right part */}
-        <Search onSearch={onSearch} onClose={onClose} />
+        <Search onSearch={onSearch} onClose={onClose} onRecommendationClick={onRecommendationClick} />
       </div>
     </div>
   );
