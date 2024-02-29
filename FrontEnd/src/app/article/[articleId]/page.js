@@ -65,7 +65,7 @@ const SingleArticle = ({ params }) => {
   };
 
   // previous comment function
-  
+
   // const handleSubmitComment = (data) => {
   //   const d = new Date();
   //   const comment = {
@@ -89,7 +89,6 @@ const SingleArticle = ({ params }) => {
   //   });
   // };
 
-  
   const handleSubmitComment = async (data) => {
     try {
       // article comment
@@ -115,8 +114,7 @@ const SingleArticle = ({ params }) => {
             setText("");
           }
         });
-      
-      
+
       // add history comment
       const commentHistory = {
         email: user?.email,
@@ -134,8 +132,6 @@ const SingleArticle = ({ params }) => {
       }
     }
   };
-
-
 
   const handleShare = () => {
     setShareDropdownOpen(!isShareDropdownOpen);
@@ -160,7 +156,7 @@ const SingleArticle = ({ params }) => {
   // };
 
   // marge both function
- 
+
   const handleLike = async (item) => {
     try {
       const likeDetails = {
@@ -314,48 +310,112 @@ const SingleArticle = ({ params }) => {
                             </span>
                           </div>
                           <div
-                            className={`fixed inset-0 bg-gray-900 bg-opacity-50 transition-transform ease-in-out duration-300 ${
+                            className={`fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity ${
+                              isDrawerOpen
+                                ? "opacity-100"
+                                : "opacity-0 pointer-events-none"
+                            } z-40`}
+                            onClick={() => setIsDrawerOpen(false)}
+                          ></div>
+                          <div
+                            className={`fixed overflow-y-scroll overflow-x-hidden top-0 right-0 h-full bg-gray-200 w-80 transform transition-transform ease-in-out duration-300 ${
                               isDrawerOpen
                                 ? "translate-x-0"
-                                : "-translate-x-full"
+                                : "translate-x-full"
                             } z-50`}
-                            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-                            style={{ right: 0 }}
                           >
-                            <div
-                              className={` h-full bg-[#1F2544] w-64 p-4 transform transition-transform ease-in-out duration-300 ${
-                                isDrawerOpen
-                                  ? "translate-x-0"
-                                  : "-translate-x-full"
-                              }`}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className="pb-3 flex justify-between items-center">
-                                <Link href="/">
-                                  <h2 className="text-4xl font-semibold text-white">
-                                    Shop{" "}
-                                    <span className="text-orange-600">Ito</span>
-                                  </h2>
-                                </Link>
-                                <button
-                                  // onClick={hideMenu}
-                                  className="p-2 rounded-full hover:bg-gray-600"
-                                >
-                                  {/* <FaTimes /> */}
-                                </button>
-                              </div>
-                              <ul className="flex flex-col w-[100%]">
-                                {/* {routes.map((item) => (
-                                  <div key={item.id}>
-                                    <Link
-                                      to={item.route}
-                                      className="text-white pl-3 w-full cursor-pointer py-2 hover:text-orange-600 "
-                                    >
-                                      {item.name}
-                                    </Link>
-                                    <hr className="my-2" />
+                            <div className="text-white">
+                              <ul className="menu mx-auto p-4 w-80 min-h-full bg-base-200 text-base-content px-5">
+                                <h4 className="pb-5">
+                                  Responses ({data?.comments?.length})
+                                </h4>
+                                <div className="w-full max-w-2xl mx-auto">
+                                  <div className="bg-white border rounded-lg p-6 shadow-md">
+                                    <div className="flex items-center">
+                                      <Image
+                                        className="rounded-full w-12 h-12 object-cover"
+                                        width={50}
+                                        height={50}
+                                        src={user?.photoURL || ""}
+                                        alt="comment img"
+                                      />
+                                      <p className="ml-3">
+                                        {user?.displayName}
+                                      </p>
+                                    </div>
+                                    <textarea
+                                      placeholder="What are your thoughts?"
+                                      minLength={0}
+                                      maxLength={maxLength}
+                                      value={text}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          e.preventDefault();
+                                        }
+                                      }}
+                                      onChange={handleInputChange}
+                                      className="flex-1 h-14 p-2 border-none rounded-md focus:outline-none focus:border-blue-500  resize-none w-full mt-2 align-top"
+                                    />
+                                    <div className="flex justify-between items-center mt-3">
+                                      <span>
+                                        {text.length}/{maxLength}
+                                      </span>
+                                      <button
+                                        disabled={text.trim() === ""}
+                                        onClick={() =>
+                                          handleSubmitComment(data)
+                                        }
+                                        className={` rounded-xl btn-sm ${
+                                          text.trim() === ""
+                                            ? "bg-gray-400 cursor-not-allowed"
+                                            : "bg-[#1A8917]"
+                                        }  text-white px-4  rounded-full`}
+                                      >
+                                        Respond
+                                      </button>
+                                    </div>
                                   </div>
-                                ))} */}
+                                  <div className="mt-10">
+                                    {data?.comments?.map((comment) => (
+                                      <div key={comment._id}>
+                                        <div className="flex justify-start items-center gap-3">
+                                          <Image
+                                            width={50}
+                                            height={50}
+                                            className="w-12 h-12 object-cover rounded-full"
+                                            alt="img"
+                                            src={comment.image}
+                                          />
+                                          <div>
+                                            <p className="font-semibold">
+                                              {comment.name}
+                                            </p>
+                                            <span>
+                                              {formatDateAgo(comment.date)}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <p className="my-3">
+                                          {comment.commentText}
+                                        </p>
+                                        <div className="flex justify-between items-center">
+                                          <button
+                                            className="p-2 hover:bg-gray-300 rounded-full"
+                                          >
+                                            <AiFillLike
+                                              className=" m-1 cursor-pointer"
+                                              fontSize={"1rem"}
+                                            />
+                                          </button>
+                                          <p className="underline cursor-pointer">
+                                            Reply
+                                          </p>
+                                        </div>
+                                        <hr className="my-2" />
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
                               </ul>
                             </div>
                           </div>

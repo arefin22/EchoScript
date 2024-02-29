@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@canvasjs/charts": "^3.7.41",
+    "@canvasjs/react-charts": "^1.0.1",
     "@editorjs/code": "^2.9.0",
     "@editorjs/editorjs": "^2.29.0",
     "@editorjs/header": "^2.8.1",
@@ -44,6 +46,7 @@
     "react-share": "^5.0.3",
     "react-slick": "^0.29.0",
     "react-text-to-speech": "^0.8.2",
+    "recharts": "^2.12.1",
     "sass": "^1.70.0",
     "sharp": "^0.33.2",
     "stripe": "^14.18.0",

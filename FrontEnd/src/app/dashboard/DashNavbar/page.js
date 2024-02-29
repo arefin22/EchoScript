@@ -162,7 +162,6 @@ const DashNavbar = () => {
     },
   ];
 
-  const navItem = [];
   const [activeIndex, setActiveIndex] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -208,12 +207,6 @@ const DashNavbar = () => {
             <div className=" text-white"></div>
 
             <ul className="ml-1">
-              <li>
-                <Link href="/">
-                  <MdArticle className="text-white text-2xl items-center cursor-pointer my-2" />
-                </Link>
-              </li>
-
               {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
                 (loggedInUser?.role === "admin"
                   ? admin
