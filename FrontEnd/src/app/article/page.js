@@ -147,7 +147,7 @@ const ArticlePage = () => {
 
   return (
     <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[40%] xl:top-[60px] xl:-mt-18 2xl:w-[35%]">
+      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
         <Navbar />
       </div>
 
