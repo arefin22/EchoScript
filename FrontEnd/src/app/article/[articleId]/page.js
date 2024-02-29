@@ -375,6 +375,7 @@ const SingleArticle = ({ params }) => {
                                         Respond
                                       </button>
                                     </div>
+
                                   </div>
                                   <div className="mt-10">
                                     {data?.comments?.map((comment) => (
@@ -414,6 +415,7 @@ const SingleArticle = ({ params }) => {
                                       </div>
                                     ))}
                                   </div>
+
                                 </div>
                               </ul>
                             </div>
