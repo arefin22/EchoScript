@@ -270,12 +270,23 @@ const HistoryPage = () => {
                         {history.likes.some(
                           (like) => like.email === user.email
                         ) && (
-                          <button
-                            className="btn btn-sm btn-error"
-                            onClick={() => handleLike(history)}
-                          >
-                            Unlike Article
-                          </button>
+                          // <div>
+                          //   <button
+                          //     className="btn btn-sm btn-error"
+                          //     onClick={() => handleLike(history)}
+                          //   >
+                          //     Unlike Article
+                          //   </button>
+                          // </div>
+                          <div className="flex flex-row justify-between">
+                            
+                            <button
+                              className="btn btn-sm btn-error"
+                              onClick={() => handleLike(history)}
+                            >
+                              Unlike Post
+                            </button>
+                          </div>
                         )}
                       </div>
                     </div>
