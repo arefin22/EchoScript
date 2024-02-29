@@ -84,7 +84,7 @@ const HistoryPage = () => {
         const historyData = userPosts.slice(startIndex, endIndex);
         setHistoryData(historyData);
         setLoading(false);
-        console.log(historyData);
+        // console.log(historyData);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -153,7 +153,7 @@ const HistoryPage = () => {
       setLoading(true);
       Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: "If you delete this the main comment will be automatically removed",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -168,7 +168,7 @@ const HistoryPage = () => {
               },
             })
             .then((res) => {
-              console.log(res);
+              // console.log(res);
               // If deletion is successful, update the historyData state
               setHistoryData((prevHistoryData) => {
                 // Filter out the deleted comment from historyData
