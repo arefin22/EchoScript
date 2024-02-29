@@ -89,10 +89,7 @@ const ArticlePage = () => {
     },
   ];
 
-  // const handleCategory = (e) => {
-  //   console.log(e);
-  // };
-
+  
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
       Math.min(prevStartIdx + 1, category.length - 5)
@@ -118,6 +115,7 @@ const ArticlePage = () => {
     });
   }, [axiosSecure]);
 
+
   const handleSearch = (query) => {
     setSearchString(query);
     setCategoryFilter("All");
@@ -129,6 +127,9 @@ const ArticlePage = () => {
   const handleRecommendationClick = (category) => {
     setCategoryFilter(category);
   };
+
+
+
 
  
 
