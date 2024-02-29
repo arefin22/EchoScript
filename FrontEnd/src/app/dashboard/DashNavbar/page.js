@@ -113,7 +113,7 @@ const DashNavbar = () => {
     },
     {
       path: "/dashboard/History",
-      route: "History",
+      route: "Activity",
       icon: GrHistory,
     },
     {

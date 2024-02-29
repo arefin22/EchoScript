@@ -13,7 +13,7 @@ const Recomendation=() => {
   const [audience, setAudience] = useState([]);
   const [data, setData] = useState([]);
   const {user} = useAuth()
-  const favCat=['Tech', 'Sports']
+  // const favCat=['Tech', 'Sports']
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
       setAudience(res.data);
@@ -24,24 +24,15 @@ const Recomendation=() => {
       setData(res.data);
     });
   }, [axiosSecure]);
-  console.log(audience)
-  console.log(user)
-  console.log(user?.email);
-  const users = audience.filter((userss)=>userss.email===user?.email);
-  console.log(users)
-  const userFav =users.map((fav)=>fav.favourite.map((favo)=>favo.value))
-  console.log(userFav[0]);
-  console.log(data)
-  const datas = data.map((dataa)=>dataa)
-  console.log(datas)
-  const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
-  console.log(other);
-  const fav = other.filter((art) => userFav[0]?.includes(art.texteditor.category) || favCat?.includes(art.texteditor.category))
-  console.log(fav);
-  const ran = fav.map((f)=>f.texteditor)
-  console.log(ran);
-  const ranDom = fav.sort(() => Math.random() - 0.5);
-  console.log(ranDom)
+  
+  const users = audience?.filter((userss)=>userss.email===user?.email);
+  const userFav =users?.map((fav)=>fav.favourite.map((favo)=>favo.value))
+  const datas = data?.map((dataa)=>dataa)
+  const other = datas?.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
+  const fav = other?.filter((art) => userFav[0]?.includes(art.texteditor.category))
+  const ran = fav?.map((f)=>f.texteditor)
+  const ranDom = fav?.sort(() => Math.random() - 0.5);
+
   return (
     <div>
        {
