@@ -49,7 +49,7 @@ const handleToggle = () => {
       const userData = {id,  name, membership, role };
       console.log(userData)
       console.log(myself)
-    //   EditData({ id: id, setUpdate: setUpdate, data: userData }) 
+     EditData({ id: id, setUpdate: setUpdate, data: userData }) 
     
   };
 
