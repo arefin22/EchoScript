@@ -16,7 +16,7 @@ const HistoryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
-  const [update, setUpdate] = useState(Date.now());
+  const [forceUpdate, setForceUpdate] = useState(Date.now());
   const axiosPublic = useAxiosPublic();
   const [historyData, setHistoryData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const HistoryPage = () => {
     //   try {
     //     const historyResponse = await axiosPublic.get("/textArticle");
 
-    //     const loggedInUserEmail = user.email; 
+    //     const loggedInUserEmail = user.email;
 
     //     const likedPosts = historyResponse.data.filter((history) =>
     //       history.likes.some((like) => like.email === loggedInUserEmail)
@@ -93,7 +93,7 @@ const HistoryPage = () => {
     fetchHistory();
 
     return () => {};
-  }, [axiosPublic, user, currentPage, update]);
+  }, [axiosPublic, user, currentPage, forceUpdate]);
 
  
   if (loading) {
@@ -202,6 +202,34 @@ const HistoryPage = () => {
     }
   };
 
+  // like part
+  const handleLike = async (item) => {
+    try {
+      const likeDetails = {
+        email: user?.email,
+        like: 1,
+        articleId: item._id,
+        articleTitle: item.texteditor.articleTitle,
+      };
+
+      axiosSecure
+        .put(`/textArticle/${item?._id}/like`, likeDetails)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            setForceUpdate(Date.now());
+          }
+        });
+
+      // add like to the history
+      await axiosSecure.post("/history", likeDetails);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // console.log("History already exists for this article");
+      } else {
+        console.error("An error occurred:", error);
+      }
+    }
+  };
 
 
   return (
@@ -242,7 +270,10 @@ const HistoryPage = () => {
                         {history.likes.some(
                           (like) => like.email === user.email
                         ) && (
-                          <button className="btn btn-sm btn-error">
+                          <button
+                            className="btn btn-sm btn-error"
+                            onClick={() => handleLike(history)}
+                          >
                             Unlike Article
                           </button>
                         )}
