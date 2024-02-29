@@ -24,9 +24,14 @@ import {
   TwitterIcon,
 } from "react-share";
 import Navbar2 from "@/components/shared/Navbar2/Navbar2";
-import Recomendation from "@/components/Recomendation/page";
+import Recommendation2 from "@/components/Recommendation2/recomendation2";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Trending from "@/components/Trending/Trending";
+import Trending2 from "@/components/Trending2/Trending2";
+
+import Writerized from "@/components/Writerized/writerized";
 import Link from "next/link";
+
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
@@ -223,8 +228,8 @@ const SingleArticle = ({ params }) => {
 
   return (
     <>
-      <div className="z-1 px-6 pt-5 mt-[-20px] lg:mt-[-40px]">
-        <div className="mx-auto sticky z-50 -mt-5 top-[30px] md:-mt-4 md:top-[40px] lg:w-[45%] lg:top-[55px] xl:w-[35%] xl:top-[60px] xl:-mt-6">
+      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+        <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
           <Navbar />
         </div>
 
@@ -234,11 +239,11 @@ const SingleArticle = ({ params }) => {
           <div className="py-10">
             <div>
               {data && (
-                <div className="w-[800px] mx-auto">
+                <div className="w-auto lg:w-[800px] mx-auto">
                   <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
                     {data?.texteditor?.category}
                   </div>
-                  <div className=" text-black text-[40px] mt-7 font-bold ">
+                  <div className=" text-black text-[20px] lg:text-[40px] mt-7 font-bold p-2 lg:p-0">
                     {data?.texteditor?.articleTitle}
                   </div>
                   <div className=" mt-10 mb-5">
@@ -281,9 +286,9 @@ const SingleArticle = ({ params }) => {
                     </div>
                   </div>
 
-                  <div className="flex justify-between border-t border-gray-300 pt-2">
+                  <div className="flex justify-around lg:justify-between border-t border-gray-300 pt-2">
                     <div className="flex mb-4">
-                      <div className="mr-12 flex items-center gap-2">
+                      <div className="mr-10 lg:mr-12 flex items-center gap-2">
                         <p className="flex items-center gap-1">
                           <AiFillLike
                             className="cursor-pointer"
@@ -426,14 +431,14 @@ const SingleArticle = ({ params }) => {
                     </div>
 
                     <div>
-                      <div className="flex gap-1">
+                      <div className="flex gap-2">
                         <FaBookmark color="gray" size={24} />
                         <button onClick={handleShare}>
                           <FaShareAlt color="gray" size={24} />
                         </button>
                         {isShareDropdownOpen && (
                           <div className="absolute right-0 mt-6 p-2 rounded shadow-md bg-white w-52 h-28">
-                            <p className="text-2xl font font-semibold text-center">
+                            <p className="text-[16px] lg:text-2xl font font-semibold text-center mb-1">
                               Share via
                             </p>
                             <div className="flex justify-center gap-2 items-center">
@@ -459,17 +464,17 @@ const SingleArticle = ({ params }) => {
                       {data && (
                         <div>
                           <div className="max-w-3xl mx-auto">
-                            <div className="mt-10">
+                            <div className="mt-4 lg:mt-10 p-2 lg:p-0">
                               {data?.texteditor?.editorContent?.blocks.map(
                                 (block, index) => (
                                   <div key={index} className="block">
                                     {block.type === "paragraph" && (
-                                      <p className="text-xl mb-5">
+                                      <p className="text-[16px] lg:text-xl  mb-2 lg:mb-5">
                                         {renderBlockContent(block)}
                                       </p>
                                     )}
                                     {block.type === "header" && (
-                                      <h2 className="mb-5 font-bold">
+                                      <h2 className="mb-2 lg:mb-5 text-[20px] font-bold">
                                         {block.data.text?.replace(
                                           /&nbsp;/g,
                                           " "
@@ -537,24 +542,33 @@ const SingleArticle = ({ params }) => {
                       )}
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap mt-4 gap-2 mb-4">
                     {data?.texteditor?.tags?.map((tag) => (
                       <div
-                        className="border rounded-full mt-4
-             bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center  "
+                        className="border rounded-lg lg:rounded-full 
+             bg-gray-200 mx-auto w-40 text-[12px] lg:text-[16px] font-semibold p-[5px] text-center  "
                       >
                         {tag}
                       </div>
                     ))}
                   </div>
+                  
                 </div>
               )}
-            </div>
+
+               <div className=" mt-[-25px] lg:mt-[-80px] z-5">
+              <Writerized authorEmail={data?.texteditor?.authorEmail} Id={data?._id}/>
           </div>
+                  
+              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+           {
+            user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
+           }
+
+          </div>
+            </div>
+          </div>     
         </div>
-        {/* <div className="mt-[-25px] lg:mt-[-80px] z-50">
-          {user ? <Recomendation /> : <Trending />}
-        </div> */}
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
         </div>
