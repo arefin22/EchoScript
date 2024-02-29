@@ -172,7 +172,7 @@ const DashNavbar = () => {
   };
   return (
     <PrivateRoute>
-      <div className="min-h-[100vh]  flex justify-center items-center overflow-x-hidden">
+      <div className="md:min-h-[100vh] flex justify-center items-center overflow-x-hidden">
         <nav className="fixed z-50 bottom-0 left-0 right-5 backdrop-blur-md backdrop-filter bg-zinc-50 bg-opacity-60 bg-transparent py-2  ml-5 lg:hidden md:hidden block h-14">
           <div className="items-center gap-10 tracking-wider flex justify-around text center relative">
             {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
