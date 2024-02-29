@@ -21,7 +21,7 @@ const DashNavbar = () => {
 
   useEffect(() => {
     axiosPublic.get(`/user/${userEmail}`).then((res) => {
-      setLoggedInUser(res.data);
+      setLoggedInUser(res?.data);
     });
   }, [userEmail]);
 
@@ -185,12 +185,12 @@ const DashNavbar = () => {
                 <div key={idx}>
                   <Link
                     className={`${
-                      pathname === nav.path ? "text-black" : "text-gray-600"
+                      pathname === nav?.path ? "text-black" : "text-gray-600"
                     }`}
                     href={nav.path}
                   >
                     <nav.icon className="mx-auto" fontSize={"1.5rem"} />
-                    {pathname === nav.path ? (
+                    {pathname === nav?.path ? (
                       <p className="text-center uppercase text-black">
                         {nav.route}
                       </p>
@@ -214,7 +214,7 @@ const DashNavbar = () => {
                   ? writer
                   : loggedInUser?.role === "reader" && reader
                 ).map((nav, idx) => (
-                  <Link key={idx} href={nav.path}>
+                  <Link key={idx} href={nav?.path}>
                     <li
                       onClick={() => {
                         setOpen(open);
@@ -227,11 +227,11 @@ const DashNavbar = () => {
                       onMouseLeave={() => setHoveredIndex(null)}
                     >
                       <span className="text-xl block float-left">
-                        {React.createElement(nav.icon)}
+                        {React.createElement(nav?.icon)}
                       </span>
                       {(hoveredIndex === idx || activeIndex === idx) && (
                         <span className="text-base font-medium w-auto px-3 py-2 inline-block ml-10 absolute bg-black rounded-tr-[20px] rounded-br-[20px]">
-                          {nav.route}
+                          {nav?.route}
                         </span>
                       )}
                     </li>
