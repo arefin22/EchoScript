@@ -34,49 +34,49 @@ const Article = ({
     <div className="w-3/4 mx-auto">
       <div className="flex items-center justify-between text-[#025]">
         <div className="w-[70%]">
-          <div className="flex w-[80%] justify-between items-center">
+          <div className="flex w-[100%] justify-between items-center">
             <Link href={`/writer`}>
               <div className="flex gap-2 pb-4 items-center">
                 <Image
                   src={authorImage || person}
-                  height={40}
-                  width={40}
-                  className="rounded-[50%] h-12 w-12 object-cover"
+                  height={20}
+                  width={20}
+                  className="rounded-full  object-cover"
                   alt="author image"
                 />
                 
-                <p>
-                  {authorName} .
-                  <span className="text-[#06F] ml-4 hover:underline cursor-pointer">
+                <p className="text-[12px] lg:text-[16px]">
+                  {authorName} 
+                  {/* <span className="text-[#06F] ml-4 hover:underline cursor-pointer">
                     Follow +
-                  </span>
+                  </span> */}
                 </p>
               </div>
             </Link>
-            <button className="hover:bg-[#ddd4d4] p-3 rounded-full">
+            <button className="hover:bg-[#ddd4d4] lg:p-3 rounded-full">
               <BookmarkButton data={data} />
             </button>
           </div>
           <Link href={`/article/${articleId}`}>
-            <h1 className="text-2xl font-semibold pb-2">{title}</h1>
+            <h1 className="text-[12px] md:text-[16px] lg:text-xl font-semibold pb-2">{title}</h1>
             <p>{article}</p>
           </Link>
-          <div className="flex justify-between w-[80%] pt-4 items-center">
+          <div className="flex justify-between w-[100%] pt-4 px-1 md:px-0 gap-4">
             <div className="flex items-center gap-5">
-              <span className="flex items-center gap-1">
+              {/* <span className="flex items-center gap-1">
                 <MdAccessTime /> {date}
               </span>
               <span className="flex items-center gap-1">
                 <FaEye /> {view}
-              </span>
-              <span className="bg-[#D9D9D9] px-4 py-2 text-sm rounded-2xl ml-2">
+              </span> */}
+              <span className="bg-[#D9D9D9] px-2 lg:px-4 lg:py-2 text-sm rounded-xl ">
                 {category}
               </span>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-1">
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
-                  <FaRegHeart fontSize={"1.5rem"} />
+                  <FaRegHeart size={16} />
                   <span className="badge badge-sm indicator-item">
                     {likeCount}
                   </span>
@@ -84,15 +84,15 @@ const Article = ({
               </button>
               <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <div className="indicator">
-                  <FaRegCommentDots fontSize={"1.5rem"} />
+                  <FaRegCommentDots size={16} />
                   <span className="badge badge-sm indicator-item">
                     {commentCount}
                   </span>
                 </div>
               </button>
-              <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
+              {/* <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
                 <FiShare2 fontSize={"1.5rem"} />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
