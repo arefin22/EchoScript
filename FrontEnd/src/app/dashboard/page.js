@@ -14,11 +14,12 @@ import {
   Tooltip,
 } from "recharts";
 
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "@/hooks/useAxiosSecure";  
-  const page = () => {
-    const [stats, setStats] = useState({});
-    const axiosSecure = useAxiosSecure();
+
+const page = () => {
+  const [stats, setStats] = useState({});
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     axiosSecure.get("/stats").then((data) => {

@@ -157,7 +157,6 @@ const ArticlePage = () => {
 
         <div className="py-10">
           {filteredArticles
-            .slice(startIdx * 5, startIdx * 5 + 5)
             .map((item, idx) => (
               <div key={idx}>
                 <Article

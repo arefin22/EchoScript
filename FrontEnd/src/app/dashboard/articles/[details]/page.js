@@ -11,7 +11,6 @@ const page = ({ params }) => {
   const { user } = useAuth("");
 
   const id = params.details;
-  console.log(id);
   useEffect(() => {
     const fetchArticleDetails = async () => {
       try {
@@ -34,36 +33,48 @@ const page = ({ params }) => {
   }, [id, user]);
 
  const renderBlockContent = (block) => {
-   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+   const segments = block.data.text.split(
+     /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
+   );
 
-   // Render each segment
    const renderedSegments = segments.map((segment, index) => {
-     // Check if the segment is an anchor tag
-     if (segment.startsWith("<a")) {
-       // Parse the HTML to create a DOM element
-       const parser = new DOMParser();
-       const doc = parser.parseFromString(segment, "text/html");
-       const link = doc.querySelector("a");
+     const parser = new DOMParser();
+     const doc = parser.parseFromString(segment, "text/html");
+     const link =
+       doc.querySelector("a") ||
+       doc.querySelector("b") ||
+       doc.querySelector("i");
 
-       // Return the anchor tag with proper attributes
-       return (
-         <a
-           key={index}
-           href={link.getAttribute("href")}
-           target="_blank"
-           style={{ textDecoration: "underline" }}
-         >
-           {link.textContent}
-         </a>
-       );
+     if (link) {
+       const Tag = link.tagName.toLowerCase();
+       const content = link.textContent;
+
+       // Check if it's a valid opening tag
+       if (segment.startsWith("<")) {
+         return (
+           <Tag
+             key={index}
+             href={Tag === "a" ? link.getAttribute("href") : undefined}
+             target={Tag === "a" ? "_blank" : undefined}
+             style={{
+               textDecoration: Tag === "a" ? "underline" : "none",
+               fontWeight: Tag === "b" ? "bold" : "normal",
+               fontStyle: Tag === "i" ? "italic" : "normal",
+             }}
+           >
+             {content}
+           </Tag>
+         );
+       } else {
+         return `</${Tag}>`; // Return the closing tag
+       }
      } else {
-       // Replace &nbsp; with an empty string and return the segment
-       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+       return <span key={index}>{segment?.replace(/&nbsp;/g, " ")}</span>;
      }
    });
 
    return renderedSegments;
-  };
+ };
   
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
