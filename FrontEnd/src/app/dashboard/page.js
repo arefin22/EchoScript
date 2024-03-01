@@ -27,7 +27,6 @@ const page = () => {
     });
   }, []);
 
-
   const data = [
     {
       name: "Users",
@@ -42,7 +41,6 @@ const page = () => {
       writer: parseInt(stats?.writerLength),
     },
   ];
-
 
   return (
     <div className="">
@@ -89,7 +87,7 @@ const page = () => {
         </div>
       </div>
       <div className="w-[100%] mx-auto text-center" style={{ height: "300px" }}>
-        <ResponsiveContainer width="100%" height="100%">
+        {/* <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
             margin={{
@@ -100,12 +98,12 @@ const page = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis />
             <YAxis />
             <Tooltip />
             <Legend />
             <Bar dataKey="users" fill="#8884d8">
-              <LabelList dataKey="users"  position="center" stroke="white" />
+              <LabelList dataKey="users" position="center" stroke="white" />
             </Bar>
             <Bar dataKey="articles" fill="#82ca9d">
               <LabelList dataKey="articles" position="center" stroke="white" />
@@ -114,7 +112,7 @@ const page = () => {
               <LabelList dataKey="writer" position="center" stroke="white" />
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
         <div></div>
       </div>
     </div>

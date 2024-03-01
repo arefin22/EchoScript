@@ -83,7 +83,7 @@ const Preference = () => {
         const texteditor = { editorContent, ...articleInfo };
       // Send data to the server
       const response = await axiosPublic.post("/textArticle", { texteditor });
-      console.log(response);
+      // console.log(response);
       // Handle response
         if (response.status === 200) {
           Swal.fire({

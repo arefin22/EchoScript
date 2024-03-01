@@ -254,7 +254,7 @@ const Editor = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Image uploaded successfully:", response.data);
+      // console.log("Image uploaded successfully:", response.data);
       setThumbnailUrl(response.data.data.display_url);
     } catch (error) {
       console.error("Error uploading image:", error);

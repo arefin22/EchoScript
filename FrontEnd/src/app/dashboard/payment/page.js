@@ -20,8 +20,8 @@ const payment = ({ price }) => {
   const { payment } = usePayment();
   const {user} = useAuth()
 
-  console.log(user?.email)
-  console.log(payment?.price)
+  // console.log(user?.email)
+  // console.log(payment?.price)
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -29,7 +29,7 @@ const payment = ({ price }) => {
     axiosPublic
       .post("/create-payment-intent", { amount: parseFloat(payment?.price) , customer: user?.email })
       .then((data) => {
-        console.log("pay success")
+        // console.log("pay success")
         setClientSecret(data?.data?.clientSecret);
       });
       // .then((data) => console.log(data, paymentAmount));

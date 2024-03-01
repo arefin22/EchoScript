@@ -7,14 +7,11 @@ import { FaBookmark } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa";
 import { FaEllipsisH } from "react-icons/fa";
 import Footer from "@/components/shared/Footer";
-import Navbar from "@/components/shared/Navbar";
-import articleData from "@/utils/articleData";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
 import { formatDistanceToNow } from "date-fns";
-import { FaFacebookF, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -23,17 +20,11 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
-import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import Recommendation2 from "@/components/Recommendation2/recomendation2";
 import SubHeader from "@/components/SubHeader/SubHeader";
-import Trending from "@/components/Trending/Trending";
 import Trending2 from "@/components/Trending2/Trending2";
-
 import Writerized from "@/components/Writerized/writerized";
-import Link from "next/link";
-import { date } from "zod";
 import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
-
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
@@ -66,33 +57,7 @@ const SingleArticle = ({ params }) => {
     return formatDistanceToNow(new Date(date));
   };
 
-  // previous comment function
-
-  // const handleSubmitComment = (data) => {
-  //   const d = new Date();
-  //   const comment = {
-  //     email: user?.email,
-  //     name: user?.displayName,
-  //     image: user?.photoURL || "",
-  //     id: data?._id,
-  //     commentText: text,
-  //     date: d,
-  //   };
-  //   axiosSecure.put(`/textArticle/${data._id}/comment`, comment).then((res) => {
-  //     if (res.data.modifiedCount > 0) {
-  //       setForceUpdate(Date.now());
-  //       Swal.fire({
-  //         title: "Good job!",
-  //         text: "successfylly added a comment!",
-  //         icon: "success",
-  //       });
-  //       setText("");
-  //     }
-  //   });
-  // };s
-
-
-   const Postdate =data?.createdAt?.split("T")[0]
+  const Postdate = data?.createdAt?.split("T")[0];
   const handleSubmitComment = async (data) => {
     try {
       // article comment
@@ -126,7 +91,7 @@ const SingleArticle = ({ params }) => {
         articleTitle: data.texteditor.articleTitle,
         comment: text,
       };
-      console.log(commentHistory);
+      // console.log(commentHistory);
       await axiosSecure.post("/history", commentHistory);
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -142,24 +107,6 @@ const SingleArticle = ({ params }) => {
   };
 
   const shareUrl = `https://echoscript-front.vercel.app`;
-
-  // // make like in main article
-  // const handleLike = (item) => {
-  //   const likeDetails = {
-  //     email: user?.email,
-  //     name: user?.displayName,
-  //     like: 1,
-  //   };
-  //   axiosSecure
-  //     .put(`/textArticle/${item?._id}/like`, likeDetails)
-  //     .then((res) => {
-  //       if (res.data.modifiedCount > 0) {
-  //         setForceUpdate(Date.now());
-  //       }
-  //     });
-  // };
-
-  // marge both function
 
   const handleLike = async (item) => {
     try {
@@ -194,77 +141,6 @@ const SingleArticle = ({ params }) => {
   const onlyText = blocks?.map((block) =>
     block.data.text?.replace(/&nbsp;/g, " ")
   );
-
-  // const renderBlockContent = (block) => {
-  //   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
-
-  //   const renderedSegments = segments.map((segment, index) => {
-  //     if (segment.startsWith("<a")) {
-  //       const parser = new DOMParser();
-  //       const doc = parser.parseFromString(segment, "text/html");
-  //       const link = doc.querySelector("a");
-
-  //       return (
-  //         <a
-  //           key={index}
-  //           href={link.getAttribute("href")}
-  //           target="_blank"
-  //           style={{ textDecoration: "underline" }}
-  //         >
-  //           {link.textContent}
-  //         </a>
-  //       );
-  //     } else {
-  //       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
-  //     }
-  //   });
-
-  //   return renderedSegments;
-  // };
-
-  
-  // const renderBlockContent = (block) => {
-  //   const segments = block.data.text.split(/(<(a|b|i)[^>]*>.*?<\/\2>)/g);
-
-  //   const renderedSegments = segments
-  //     .map((segment, index) => {
-  //       const parser = new DOMParser();
-  //       const doc = parser.parseFromString(segment, "text/html");
-  //       const link =
-  //         doc.querySelector("a") ||
-  //         doc.querySelector("b") ||
-  //         doc.querySelector("i");
-
-  //       if (link) {
-  //         const Tag = link.tagName.toLowerCase();
-  //         const content = link.textContent;
-
-  //         return (
-  //           <Tag
-  //             key={index}
-  //             href={Tag === "a" ? link.getAttribute("href") : undefined}
-  //             target={Tag === "a" ? "_blank" : undefined}
-  //             style={{
-  //               textDecoration: Tag === "a" ? "underline" : "none",
-  //               fontWeight: Tag === "b" ? "bold" : "normal",
-  //               fontStyle: Tag === "i" ? "italic" : "normal",
-  //             }}
-  //           >
-  //             {content}
-  //           </Tag>
-  //         );
-  //       } else if (segment.startsWith("</")) {
-  //         // Exclude the closing tag from the content
-  //         return null;
-  //       } else {
-  //         return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
-  //       }
-  //     })
-  //     .filter((segment) => segment !== null); // Remove null elements from the array
-
-  //   return renderedSegments;
-  // };
-
 
   const renderBlockContent = (block) => {
     const segments = block.data.text.split(
@@ -310,8 +186,6 @@ const SingleArticle = ({ params }) => {
     return renderedSegments;
   };
 
-
-
   const handleSearch = (query) => {
     setSearchString(query);
   };
@@ -319,6 +193,14 @@ const SingleArticle = ({ params }) => {
     setSearchString("");
     setCategoryFilter("All");
   };
+
+  // console.log(
+  //   audience.filter(
+  //     (audience) => audience.email === data?.texteditor?.authorEmail
+  //   )
+  // );
+
+  console.log(data?.texteditor?.authorEmail)
 
   return (
     <>
@@ -344,11 +226,11 @@ const SingleArticle = ({ params }) => {
                         <div className="rounded-full border-2 border-white mr-2">
                           <Image
                             src={audience
-                              .filter(
+                              ?.filter(
                                 (user) =>
-                                  user.email === data?.texteditor?.authorEmail
+                                  user?.email === data?.texteditor?.authorEmail
                               )
-                              .map((author) => author?.photoURL || "")}
+                              ?.map((author) => author?.photoURL || "")}
                             alt="Author"
                             width={60}
                             height={60}
@@ -466,7 +348,6 @@ const SingleArticle = ({ params }) => {
                                         Respond
                                       </button>
                                     </div>
-
                                   </div>
                                   <div className="mt-10">
                                     {data?.comments?.map((comment) => (
@@ -506,7 +387,6 @@ const SingleArticle = ({ params }) => {
                                       </div>
                                     ))}
                                   </div>
-
                                 </div>
                               </ul>
                             </div>
@@ -588,24 +468,31 @@ const SingleArticle = ({ params }) => {
                                     {block.type === "list" &&
                                       block.data.style === "ordered" && (
                                         <ol className="mb-5">
-                                          {block?.data?.items?.map((item, i) => (
-                                            <li key={i}>
-                                              {item?.replace(/&nbsp;/g, " ")}
-                                            </li>
-                                          ))}
+                                          {block?.data?.items?.map(
+                                            (item, i) => (
+                                              <li key={i}>
+                                                {item?.replace(/&nbsp;/g, " ")}
+                                              </li>
+                                            )
+                                          )}
                                         </ol>
                                       )}
 
                                     {block.type === "list" &&
                                       block.data.style === "unordered" && (
                                         <ul className="mb-5">
-                                          {block?.data?.items?.map((item, i) => (
-                                            <li key={i}>
+                                          {block?.data?.items?.map(
+                                            (item, i) => (
                                               <li key={i}>
-                                                {item?.replace(/&nbsp;/g, " ")}
+                                                <li key={i}>
+                                                  {item?.replace(
+                                                    /&nbsp;/g,
+                                                    " "
+                                                  )}
+                                                </li>
                                               </li>
-                                            </li>
-                                          ))}
+                                            )
+                                          )}
                                         </ul>
                                       )}
 
@@ -613,7 +500,7 @@ const SingleArticle = ({ params }) => {
                                       <div className="mb-5">
                                         <Image
                                           src={block?.data?.file?.url}
-                                          alt={block.data.caption}
+                                          alt={block?.data?.caption}
                                           className="image mx-auto text-center"
                                           width={600}
                                           height={600}

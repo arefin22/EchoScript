@@ -6,7 +6,7 @@ import React from "react";
 const successPage = () => {
   const { payment } = usePayment();
 
-  console.log(payment);
+  // console.log(payment);
   return (
     <div>
       <h2>Payment Successful</h2>

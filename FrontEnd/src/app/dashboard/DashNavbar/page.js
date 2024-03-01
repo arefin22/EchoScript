@@ -27,62 +27,57 @@ const DashNavbar = () => {
   }, [userEmail]);
 
   // All Data
-  const navs = [
-    {
-      path: "/dashboard",
-      route: "Overview",
-      icon: GrOverview,
-    },
-    {
-      path: "/dashboard/articles",
-      route: "Articles",
-      icon: GrArticle,
-    },
-    {
-      path: "/dashboard/users",
-      route: "Users",
-      icon: FaUsers,
-    },
-    {
-      path: "/dashboard/History",
-      route: "History",
-      icon: GrHistory,
-    },
-    {
-      path: "/dashboard/bookmarks",
-      route: "Bookmarks",
-      icon: GrBookmark,
-    },
+  // const navs = [
+  //   {
+  //     path: "/dashboard",
+  //     route: "Overview",
+  //     icon: GrOverview,
+  //   },
+  //   {
+  //     path: "/dashboard/articles",
+  //     route: "Articles",
+  //     icon: GrArticle,
+  //   },
+  //   {
+  //     path: "/dashboard/users",
+  //     route: "Users",
+  //     icon: FaUsers,
+  //   },
+  //   {
+  //     path: "/dashboard/History",
+  //     route: "History",
+  //     icon: GrHistory,
+  //   },
+  //   {
+  //     path: "/dashboard/bookmarks",
+  //     route: "Bookmarks",
+  //     icon: GrBookmark,
+  //   },
 
-    {
-      path: "/dashboard/write",
-      route: "Write",
-      icon: TfiWrite,
-    },
-    // {
-    //   path: "/",
-    //   route: "Home",
-    //   icon: IoHomeOutline,
-    // },
-    {
-      path: "/dashboard/profile",
-      route: "My Profile",
-      icon: CgProfile,
-    },
-    {
-      path: "/setting",
-      route: "Setting",
-      icon: IoSettingsOutline,
-    },
-  ];
+  //   {
+  //     path: "/dashboard/write",
+  //     route: "Write",
+  //     icon: TfiWrite,
+  //   },
+  //   // {
+  //   //   path: "/",
+  //   //   route: "Home",
+  //   //   icon: IoHomeOutline,
+  //   // },
+  //   {
+  //     path: "/dashboard/profile",
+  //     route: "My Profile",
+  //     icon: CgProfile,
+  //   },
+  //   {
+  //     path: "/setting",
+  //     route: "Setting",
+  //     icon: IoSettingsOutline,
+  //   },
+  // ];
 
   // Admin Panel
   const admin = [
-    {
-      path: "/",
-      route: "Home",
-      icon: MdArticle,
-    },
     {
       path: "/dashboard",
       route: "Overview",
@@ -102,11 +97,6 @@ const DashNavbar = () => {
 
   // Writer Panel
   const writer = [
-    {
-      path: "/",
-      route: "Home",
-      icon: MdArticle,
-    },
     {
       path: "/dashboard",
       route: "Overview",
@@ -142,11 +132,6 @@ const DashNavbar = () => {
   // Reader Panel
   const reader = [
     {
-      path: "/",
-      route: "Home",
-      icon: MdArticle,
-    },
-    {
       path: "/dashboard/History",
       route: "History",
       icon: GrHistory,
@@ -176,6 +161,12 @@ const DashNavbar = () => {
       <div className="md:min-h-[100vh] flex justify-center items-center overflow-x-hidden">
         <nav className="fixed z-50 bottom-0 left-0 right-5 backdrop-blur-md backdrop-filter bg-zinc-50 bg-opacity-60 bg-transparent py-2  ml-5 lg:hidden md:hidden block h-14">
           <div className="items-center gap-10 tracking-wider flex justify-around text center relative">
+            <div>
+              <Link href={"/"}>
+                <MdArticle className="mx-auto" fontSize={"1.5rem"} />
+                <p className="text-center uppercase text-black">Home</p>
+              </Link>
+            </div>
             {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
               (loggedInUser?.role === "admin"
                 ? admin
@@ -206,8 +197,21 @@ const DashNavbar = () => {
         <div className="hidden md:block fixed">
           <div className={`bg-black p-5 rounded-full w-[72px] duration-300 `}>
             <div className=" text-white"></div>
-
             <ul className="ml-1">
+              <div>
+                <Link href={"/"}>
+                  <li
+                    onClick={() => {
+                      setOpen(open);
+                    }}
+                    className={`text-white text-sm flex items-center gap-x-4 cursor-pointer py-4 rounded-md`}
+                  >
+                    <span className="text-xl block float-left">
+                      <MdArticle />
+                    </span>
+                  </li>
+                </Link>
+              </div>
               {["admin", "writer", "reader"].includes(loggedInUser?.role) &&
                 (loggedInUser?.role === "admin"
                   ? admin

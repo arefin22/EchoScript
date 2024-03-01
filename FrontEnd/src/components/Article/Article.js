@@ -1,16 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { FaEye } from "react-icons/fa";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { MdAccessTime } from "react-icons/md";
-import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { FaRegCommentDots, FaRegHeart } from "react-icons/fa";
-import { FiShare2 } from "react-icons/fi";
-import { useState } from "react";
-import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Link from "next/link";
-import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 import BookmarkButton from "../BookmarkButton/BookmarkButton";
 import person from "@/assets/img/person-removebg-preview.png";
 
@@ -37,28 +29,30 @@ const Article = ({
           <div className="flex w-[100%] justify-between items-center">
             <Link href={`/writer`}>
               <div className="flex gap-2 pb-4 items-center">
-                <Image
+                {/* <Image
                   src={authorImage || person}
                   height={20}
                   width={20}
                   className="rounded-full  object-cover"
                   alt="author image"
-                />
-                
+                /> */}
+
                 <p className="text-[12px] lg:text-[16px]">
-                  {authorName} 
+                  {authorName}
                   {/* <span className="text-[#06F] ml-4 hover:underline cursor-pointer">
                     Follow +
                   </span> */}
                 </p>
               </div>
             </Link>
-            <button className="hover:bg-[#ddd4d4] lg:p-3 rounded-full">
+            <div className="hover:bg-[#ddd4d4] lg:p-3 rounded-full">
               <BookmarkButton data={data} />
-            </button>
+            </div>
           </div>
           <Link href={`/article/${articleId}`}>
-            <h1 className="text-[12px] md:text-[16px] lg:text-xl font-semibold pb-2">{title}</h1>
+            <h1 className="text-[12px] md:text-[16px] lg:text-xl font-semibold pb-2">
+              {title}
+            </h1>
             <p>{article}</p>
           </Link>
           <div className="flex justify-between w-[100%] pt-4 px-1 md:px-0 gap-4">

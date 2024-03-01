@@ -13,7 +13,7 @@ const Recomendation2=({authorCategory,Id}) => {
   const {user} = useAuth()
   const authorcat={authorCategory}
   const postId =Id
-  console.log(postId);
+  // console.log(postId);
 const category =authorcat.authorCategory
 const recommend= [`${category}`]
   useEffect(() => {

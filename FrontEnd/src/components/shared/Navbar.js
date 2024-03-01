@@ -35,14 +35,6 @@ const Navbar = () => {
       route: "Dashboard",
       pathName: "/dashboard",
     },
-    {
-      route: "Home",
-      pathName: "/",
-    },
-    {
-      route: "About Us",
-      pathName: "/about",
-    },
   ];
 
   useEffect(() => {
@@ -87,7 +79,7 @@ const Navbar = () => {
                           src={user?.photoURL || person}
                           width={24}
                           height={24}
-                          alt={"user"}
+                          alt={user?.name || "Profile Photo"}
                         />
                       </div>
                     </div>
@@ -164,7 +156,7 @@ const Navbar = () => {
                     src={user?.photoURL || person}
                     width={24}
                     height={24}
-                    alt={"user"}
+                    alt={user?.name || 'profile photo'}
                   />
                 </div>
               </div>

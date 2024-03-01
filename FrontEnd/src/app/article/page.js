@@ -12,12 +12,11 @@ import SubHeader from "@/components/SubHeader/SubHeader";
 import Loader from "@/components/shared/Loader/Loader";
 
 const ArticlePage = () => {
-  const [startIdx, setStartIdx] = useState(0);
+  // const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(true);
-
   const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -85,15 +84,15 @@ const ArticlePage = () => {
     },
   ];
 
-  const handleNext = () => {
-    setStartIdx((prevStartIdx) =>
-      Math.min(prevStartIdx + 1, category.length - 5)
-    );
-  };
+  // const handleNext = () => {
+  //   setStartIdx((prevStartIdx) =>
+  //     Math.min(prevStartIdx + 1, category.length - 5)
+  //   );
+  // };
 
-  const handlePrev = () => {
-    setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
-  };
+  // const handlePrev = () => {
+  //   setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
+  // };
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
@@ -103,8 +102,6 @@ const ArticlePage = () => {
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
-      console.log(res.data);
-
       setAudience(res.data);
       setLoading(false);
     });
@@ -166,7 +163,7 @@ const ArticlePage = () => {
                 commentCount={item.comments.length}
                 key={item._id}
                 authorName={audience
-                  .filter((user) => user.email === item.texteditor.authorEmail)
+                  ?.filter((user) => user.email === item.texteditor.authorEmail)
                   .map((author) => author.name)}
                 category={item.texteditor.category}
                 title={item.texteditor?.articleTitle}
@@ -174,7 +171,7 @@ const ArticlePage = () => {
                 likeCount={item.likes.length}
                 image={item?.texteditor?.thumbnail}
                 authorImage={audience
-                  .filter(
+                  ?.filter(
                     (user) => user?.email === item?.texteditor?.authorEmail
                   )
                   .map((author) => author?.photoURL)}

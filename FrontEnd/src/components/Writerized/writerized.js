@@ -13,7 +13,7 @@ const page=({authorEmail,Id}) => {
   const {user} = useAuth()
   const authoremail=authorEmail
   const postId =Id
-  console.log(postId);
+  // console.log(postId);
 // const category =authorcat.authorCategory
 // const recommend= [`${category}`]
   useEffect(() => {

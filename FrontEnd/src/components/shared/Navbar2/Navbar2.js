@@ -140,7 +140,7 @@ const Navbar2 = () => {
                             src={user?.photoURL || person}
                             width={12}
                             height={12}
-                            alt={"user"}
+                            alt={user?.name}
                           />
                         </div>
                       </div>

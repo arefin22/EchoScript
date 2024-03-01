@@ -20,7 +20,7 @@ const page = ({ params }) => {
         const historyData = { user: user.email, article: articleData };
         if (user) {
           axiosSecure.post("/history", historyData);
-          console.log("Article data saved to history API");
+          // console.log("Article data saved to history API");
         }
       } catch (error) {
         console.error("Error fetching article details:", error);
@@ -90,6 +90,7 @@ const page = ({ params }) => {
                 src={articles.texteditor?.thumbnail}
                 width={1280}
                 height={600}
+                alt="Thumbnail for article"
                 className="w-full"
               />
             </div>
@@ -145,7 +146,7 @@ const page = ({ params }) => {
                     <div className="mb-5">
                       <Image
                         src={block?.data?.file?.url}
-                        alt={block.data.caption}
+                        alt={block?.data?.caption}
                         className="image mx-auto text-center"
                         width={600}
                         height={600}

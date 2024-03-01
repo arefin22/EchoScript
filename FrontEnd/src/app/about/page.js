@@ -142,7 +142,7 @@ const AboutPage = () => {
                           width={200}
                           height={200}
                           src={item?.img}
-                          alt=""
+                          alt="image"
                         />
                         <h2 className="text-green text-2xl">{item.title}</h2>
                         <p className="text-[#90BD95] text-lg">{item.des}</p>

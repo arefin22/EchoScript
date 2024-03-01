@@ -61,7 +61,7 @@ const Payment = () => {
   ];
 
   const handlePayment = (item) => {
-    console.log(item)
+    // console.log(item)
     setPayment(item);
     router.push("/dashboard/payment");
   };

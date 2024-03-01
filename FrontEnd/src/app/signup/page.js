@@ -15,7 +15,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { saveUser } from "@/utils/useSaveUser";
 
 const SignUp = () => {
-  const { createUser, handleUpdateProfile, user, loader } = useAuth();
+  const { createUser, handleUpdateProfile, user, loader, setLoader } =
+    useAuth();
   const [favourite, useFavourite] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,25 +55,22 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     try {
       e.preventDefault();
-
       const form = e.target;
       const email = form.email.value;
       const password = form.password.value;
       const image = form.image.files[0];
-
       const name = form.name.value;
+
       if (password.length < 6) {
         toast.error("password must be at least 6 characters");
         return;
       }
       try {
         const photoURL = await imageUpload(image);
-        console.log(email, password, name, photoURL);
-        console.log(createUser);
         createUser(email, password).then((res) => {
           handleUpdateProfile(name, photoURL);
           router.push("/");
-          console.log(res.user);
+          // console.log(res.user);
         });
         const userInfo = {
           email: email,
@@ -81,22 +79,17 @@ const SignUp = () => {
           role: "reader",
           preference: favourite,
         };
-        console.log(userInfo)
-        await axiosPublic.post('/user',userInfo)
-        toast.success('user login successfully')
-        .then(res=>{console.log(res.data)});
-       
-        toast.success('user created successfully')
-          
-             console.log(result)
-        const DBresponse = await saveUser(result?.user)
-        console.log(DBresponse)
+        // console.log(userInfo)
+        await axiosPublic.post("/user", userInfo).then((res) => {
+          toast.success("user Createddddddddddddddddd successfully");
+        });
       } catch (err) {
-        console.log(err);
+        toast.success(err.message, "Errorrrr");
         form.reset();
+        setLoader(false);
       }
     } catch (err) {
-      console.log(err);
+      toast.error(err.message, "Just a joke");
     }
   };
   return (

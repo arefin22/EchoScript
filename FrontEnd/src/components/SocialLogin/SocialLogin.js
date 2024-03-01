@@ -86,7 +86,7 @@ const SocialLogin = () => {
                 .then(res=>{console.log(res.data)});
                 toast.success('user login successfully')
       router.push("/dashboard");
-      console.log(userInfo);
+      // console.log(userInfo);
       toast.success("User login successfully");
     } catch (error) {
       toast.error(error.message);

@@ -18,7 +18,7 @@ const ContactForm = () => {
           setMessage(result);
           toast("✔️ Thanks, We will contact you soon");
           form.current.reset();
-          console.log(form.current)
+          // console.log(form.current)
         },
         (error) => {
           toast("❌ something wrong, lets try again later");

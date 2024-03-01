@@ -18,6 +18,7 @@ const SubHeader = ({ onSearch, onClose, onRecommendationClick }) => {
             src={"https://i.ibb.co/KWhP3g2/echo-icon.png"}
             width={20}
             height={20}
+            alt="Echo Logo"
             className="w-[35px] lg:w-[50px]"
           />
         </Link>

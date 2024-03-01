@@ -52,7 +52,7 @@ const LogIn = () => {
           role: "reader",
         };
         axiosPublic.post("/user", userInfo).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         });
         toast.success("User login successfully");
         router.push("/dashboard");
