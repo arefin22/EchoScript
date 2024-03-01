@@ -11,6 +11,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
+import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
 
 const page = () => {
  const {user} = useAuth()
@@ -34,9 +35,8 @@ const page = () => {
 
     return (
       <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-        <div className="mx-auto sticky z-50 -mt-3 top-[40px] md:-mt-4 md:top-[40px] lg:-mt-2 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-2 2xl:w-[35%]">
-          <Navbar />
-        </div>
+        <StickyNavbar />
+
         <div className="mainContainer">
           <Banner />
 

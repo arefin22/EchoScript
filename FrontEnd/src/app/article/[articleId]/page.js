@@ -32,6 +32,7 @@ import Trending2 from "@/components/Trending2/Trending2";
 import Writerized from "@/components/Writerized/writerized";
 import Link from "next/link";
 import { date } from "zod";
+import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
 
 
 const SingleArticle = ({ params }) => {
@@ -66,7 +67,7 @@ const SingleArticle = ({ params }) => {
   };
 
   // previous comment function
-  
+
   // const handleSubmitComment = (data) => {
   //   const d = new Date();
   //   const comment = {
@@ -89,6 +90,7 @@ const SingleArticle = ({ params }) => {
   //     }
   //   });
   // };s
+
 
    const Postdate =data?.createdAt?.split("T")[0]
   const handleSubmitComment = async (data) => {
@@ -116,8 +118,7 @@ const SingleArticle = ({ params }) => {
             setText("");
           }
         });
-      
-      
+
       // add history comment
       const commentHistory = {
         email: user?.email,
@@ -135,8 +136,6 @@ const SingleArticle = ({ params }) => {
       }
     }
   };
-
-
 
   const handleShare = () => {
     setShareDropdownOpen(!isShareDropdownOpen);
@@ -161,7 +160,7 @@ const SingleArticle = ({ params }) => {
   // };
 
   // marge both function
- 
+
   const handleLike = async (item) => {
     try {
       const likeDetails = {
@@ -196,32 +195,122 @@ const SingleArticle = ({ params }) => {
     block.data.text?.replace(/&nbsp;/g, " ")
   );
 
+  // const renderBlockContent = (block) => {
+  //   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+
+  //   const renderedSegments = segments.map((segment, index) => {
+  //     if (segment.startsWith("<a")) {
+  //       const parser = new DOMParser();
+  //       const doc = parser.parseFromString(segment, "text/html");
+  //       const link = doc.querySelector("a");
+
+  //       return (
+  //         <a
+  //           key={index}
+  //           href={link.getAttribute("href")}
+  //           target="_blank"
+  //           style={{ textDecoration: "underline" }}
+  //         >
+  //           {link.textContent}
+  //         </a>
+  //       );
+  //     } else {
+  //       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+  //     }
+  //   });
+
+  //   return renderedSegments;
+  // };
+
+  
+  // const renderBlockContent = (block) => {
+  //   const segments = block.data.text.split(/(<(a|b|i)[^>]*>.*?<\/\2>)/g);
+
+  //   const renderedSegments = segments
+  //     .map((segment, index) => {
+  //       const parser = new DOMParser();
+  //       const doc = parser.parseFromString(segment, "text/html");
+  //       const link =
+  //         doc.querySelector("a") ||
+  //         doc.querySelector("b") ||
+  //         doc.querySelector("i");
+
+  //       if (link) {
+  //         const Tag = link.tagName.toLowerCase();
+  //         const content = link.textContent;
+
+  //         return (
+  //           <Tag
+  //             key={index}
+  //             href={Tag === "a" ? link.getAttribute("href") : undefined}
+  //             target={Tag === "a" ? "_blank" : undefined}
+  //             style={{
+  //               textDecoration: Tag === "a" ? "underline" : "none",
+  //               fontWeight: Tag === "b" ? "bold" : "normal",
+  //               fontStyle: Tag === "i" ? "italic" : "normal",
+  //             }}
+  //           >
+  //             {content}
+  //           </Tag>
+  //         );
+  //       } else if (segment.startsWith("</")) {
+  //         // Exclude the closing tag from the content
+  //         return null;
+  //       } else {
+  //         return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+  //       }
+  //     })
+  //     .filter((segment) => segment !== null); // Remove null elements from the array
+
+  //   return renderedSegments;
+  // };
+
+
   const renderBlockContent = (block) => {
-    const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+    const segments = block.data.text.split(
+      /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
+    );
 
     const renderedSegments = segments.map((segment, index) => {
-      if (segment.startsWith("<a")) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(segment, "text/html");
-        const link = doc.querySelector("a");
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(segment, "text/html");
+      const link =
+        doc.querySelector("a") ||
+        doc.querySelector("b") ||
+        doc.querySelector("i");
 
-        return (
-          <a
-            key={index}
-            href={link.getAttribute("href")}
-            target="_blank"
-            style={{ textDecoration: "underline" }}
-          >
-            {link.textContent}
-          </a>
-        );
+      if (link) {
+        const Tag = link.tagName.toLowerCase();
+        const content = link.textContent;
+
+        // Check if it's a valid opening tag
+        if (segment.startsWith("<")) {
+          return (
+            <Tag
+              key={index}
+              href={Tag === "a" ? link.getAttribute("href") : undefined}
+              target={Tag === "a" ? "_blank" : undefined}
+              style={{
+                textDecoration: Tag === "a" ? "underline" : "none",
+                fontWeight: Tag === "b" ? "bold" : "normal",
+                fontStyle: Tag === "i" ? "italic" : "normal",
+              }}
+            >
+              {content}
+            </Tag>
+          );
+        } else {
+          return `</${Tag}>`; // Return the closing tag
+        }
       } else {
-        return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+        return <span key={index}>{segment?.replace(/&nbsp;/g, " ")}</span>;
       }
     });
 
     return renderedSegments;
   };
+
+
 
   const handleSearch = (query) => {
     setSearchString(query);
@@ -234,9 +323,7 @@ const SingleArticle = ({ params }) => {
   return (
     <>
       <div className="mx-auto px-4 lg:px-6 lg:pt-5">
-        <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
-          <Navbar />
-        </div>
+        <StickyNavbar />
 
         <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
           <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
@@ -315,48 +402,112 @@ const SingleArticle = ({ params }) => {
                             </span>
                           </div>
                           <div
-                            className={`fixed inset-0 bg-gray-900 bg-opacity-50 transition-transform ease-in-out duration-300 ${
+                            className={`fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity ${
+                              isDrawerOpen
+                                ? "opacity-100"
+                                : "opacity-0 pointer-events-none"
+                            } z-40`}
+                            onClick={() => setIsDrawerOpen(false)}
+                          ></div>
+                          <div
+                            className={`fixed overflow-y-scroll overflow-x-hidden top-0 right-0 h-full bg-gray-200 w-80 transform transition-transform ease-in-out duration-300 ${
                               isDrawerOpen
                                 ? "translate-x-0"
-                                : "-translate-x-full"
+                                : "translate-x-full"
                             } z-50`}
-                            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-                            style={{ right: 0 }}
                           >
-                            <div
-                              className={` h-full bg-[#1F2544] w-64 p-4 transform transition-transform ease-in-out duration-300 ${
-                                isDrawerOpen
-                                  ? "translate-x-0"
-                                  : "-translate-x-full"
-                              }`}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className="pb-3 flex justify-between items-center">
-                                <Link href="/">
-                                  <h2 className="text-4xl font-semibold text-white">
-                                    Shop{" "}
-                                    <span className="text-orange-600">Ito</span>
-                                  </h2>
-                                </Link>
-                                <button
-                                  // onClick={hideMenu}
-                                  className="p-2 rounded-full hover:bg-gray-600"
-                                >
-                                  {/* <FaTimes /> */}
-                                </button>
-                              </div>
-                              <ul className="flex flex-col w-[100%]">
-                                {/* {routes.map((item) => (
-                                  <div key={item.id}>
-                                    <Link
-                                      to={item.route}
-                                      className="text-white pl-3 w-full cursor-pointer py-2 hover:text-orange-600 "
-                                    >
-                                      {item.name}
-                                    </Link>
-                                    <hr className="my-2" />
+                            <div className="text-white">
+                              <ul className="menu mx-auto p-4 w-80 min-h-full bg-base-200 text-base-content px-5">
+                                <h4 className="pb-5">
+                                  Responses ({data?.comments?.length})
+                                </h4>
+                                <div className="w-full max-w-2xl mx-auto">
+                                  <div className="bg-white border rounded-lg p-6 shadow-md">
+                                    <div className="flex items-center">
+                                      <Image
+                                        className="rounded-full w-12 h-12 object-cover"
+                                        width={50}
+                                        height={50}
+                                        src={user?.photoURL || ""}
+                                        alt="comment img"
+                                      />
+                                      <p className="ml-3">
+                                        {user?.displayName}
+                                      </p>
+                                    </div>
+                                    <textarea
+                                      placeholder="What are your thoughts?"
+                                      minLength={0}
+                                      maxLength={maxLength}
+                                      value={text}
+                                      onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                          e.preventDefault();
+                                        }
+                                      }}
+                                      onChange={handleInputChange}
+                                      className="flex-1 h-14 p-2 border-none rounded-md focus:outline-none focus:border-blue-500  resize-none w-full mt-2 align-top"
+                                    />
+                                    <div className="flex justify-between items-center mt-3">
+                                      <span>
+                                        {text.length}/{maxLength}
+                                      </span>
+                                      <button
+                                        disabled={text.trim() === ""}
+                                        onClick={() =>
+                                          handleSubmitComment(data)
+                                        }
+                                        className={` rounded-xl btn-sm ${
+                                          text.trim() === ""
+                                            ? "bg-gray-400 cursor-not-allowed"
+                                            : "bg-[#1A8917]"
+                                        }  text-white px-4  rounded-full`}
+                                      >
+                                        Respond
+                                      </button>
+                                    </div>
+
                                   </div>
-                                ))} */}
+                                  <div className="mt-10">
+                                    {data?.comments?.map((comment) => (
+                                      <div key={comment._id}>
+                                        <div className="flex justify-start items-center gap-3">
+                                          <Image
+                                            width={50}
+                                            height={50}
+                                            className="w-12 h-12 object-cover rounded-full"
+                                            alt="img"
+                                            src={comment.image}
+                                          />
+                                          <div>
+                                            <p className="font-semibold">
+                                              {comment.name}
+                                            </p>
+                                            <span>
+                                              {formatDateAgo(comment.date)}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <p className="my-3">
+                                          {comment.commentText}
+                                        </p>
+                                        <div className="flex justify-between items-center">
+                                          <button className="p-2 hover:bg-gray-300 rounded-full">
+                                            <AiFillLike
+                                              className=" m-1 cursor-pointer"
+                                              fontSize={"1rem"}
+                                            />
+                                          </button>
+                                          <p className="underline cursor-pointer">
+                                            Reply
+                                          </p>
+                                        </div>
+                                        <hr className="my-2" />
+                                      </div>
+                                    ))}
+                                  </div>
+
+                                </div>
                               </ul>
                             </div>
                           </div>
@@ -494,22 +645,28 @@ const SingleArticle = ({ params }) => {
                       </div>
                     ))}
                   </div>
-                  
                 </div>
               )}
 
-               <div className=" mt-[-25px] lg:mt-[-80px] z-5">
-              <Writerized authorEmail={data?.texteditor?.authorEmail} Id={data?._id}/>
-          </div>
-                  
-              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
-           {
-            user?  <Recommendation2 Id={data?._id} authorCategory={data?.texteditor?.category} /> :  <Trending2 />
-           }
+              <div className=" mt-[-25px] lg:mt-[-80px] z-5">
+                <Writerized
+                  authorEmail={data?.texteditor?.authorEmail}
+                  Id={data?._id}
+                />
+              </div>
 
-          </div>
+              <div className=" mt-[-25px] lg:mt-[-80px] z-50">
+                {user ? (
+                  <Recommendation2
+                    Id={data?._id}
+                    authorCategory={data?.texteditor?.category}
+                  />
+                ) : (
+                  <Trending2 />
+                )}
+              </div>
             </div>
-          </div>     
+          </div>
         </div>
         <div className="lg:sticky lg:bottom-0 lg:z-0">
           <Footer />
