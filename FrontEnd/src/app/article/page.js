@@ -130,10 +130,10 @@ const ArticlePage = () => {
 
 
 
-
+  const lastTofirst = data.slice().reverse()
  
 
-  const filteredArticles = data.filter((article) => {
+  const filteredArticles = lastTofirst.filter((article) => {
     const isInCategory = categoryFilter ==="All" || article.texteditor.category === categoryFilter;
     const matchesSearch =
     
@@ -159,7 +159,6 @@ const ArticlePage = () => {
 
         <div className="py-10">
           {filteredArticles
-            .slice(startIdx * 5, startIdx * 5 + 5)
             .map((item, idx) => (
               <div key={idx}>
                 <Article
@@ -173,7 +172,7 @@ const ArticlePage = () => {
                     .map((author) => author.name)}
                   category={item.texteditor.category}
                   title={item.texteditor?.articleTitle}
-                  view={item.likes.length}
+                  // view={item.likes.length}
                   likeCount={item.likes.length}
                   image={item?.texteditor?.thumbnail}
                   authorImage={audience
