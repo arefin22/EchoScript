@@ -20,11 +20,7 @@ const ArticlePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All"); 
-  
-  
-  
-  
+  const [categoryFilter, setCategoryFilter] = useState("All");
 
   const category = [
     {
@@ -89,7 +85,6 @@ const ArticlePage = () => {
     },
   ];
 
-  
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
       Math.min(prevStartIdx + 1, category.length - 5)
@@ -103,7 +98,7 @@ const ArticlePage = () => {
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
-      setLoading(false)
+      setLoading(false);
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -111,10 +106,9 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
-      setLoading(false)
+      setLoading(false);
     });
   }, [axiosSecure]);
-
 
   const handleSearch = (query) => {
     setSearchString(query);
@@ -128,20 +122,26 @@ const ArticlePage = () => {
     setCategoryFilter(category);
   };
 
-
-
-  const lastTofirst = data.slice().reverse()
- 
+  const lastTofirst = data.slice().reverse();
 
   const filteredArticles = lastTofirst.filter((article) => {
-    const isInCategory = categoryFilter ==="All" || article.texteditor.category === categoryFilter;
+    const isInCategory =
+      categoryFilter === "All" ||
+      article.texteditor.category === categoryFilter;
     const matchesSearch =
-    
-    article.texteditor.category.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.thumbnail.toLowerCase().includes(searchString.toLowerCase()) ||
-    article.texteditor.authorEmail.toLowerCase().includes(searchString.toLowerCase()) 
-    
+      article.texteditor.category
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.articleTitle
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.thumbnail
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.authorEmail
+        .toLowerCase()
+        .includes(searchString.toLowerCase());
+
     return isInCategory && matchesSearch;
   });
 
@@ -152,39 +152,37 @@ const ArticlePage = () => {
       </div>
 
       <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
-      <SubHeader  onSearch={handleSearch}
+        <SubHeader
+          onSearch={handleSearch}
           onClose={handleCloseSearchModal}
-          onRecommendationClick={handleRecommendationClick} />
-
+          onRecommendationClick={handleRecommendationClick}
+        />
 
         <div className="py-10">
-          {filteredArticles
-            .map((item, idx) => (
-              <div key={idx}>
-                <Article
-                  data={item}
-                  commentCount={item.comments.length}
-                  key={item._id}
-                  authorName={audience
-                    .filter(
-                      (user) => user.email === item.texteditor.authorEmail
-                    )
-                    .map((author) => author.name)}
-                  category={item.texteditor.category}
-                  title={item.texteditor?.articleTitle}
-                  // view={item.likes.length}
-                  likeCount={item.likes.length}
-                  image={item?.texteditor?.thumbnail}
-                  authorImage={audience
-                    .filter(
-                      (user) => user?.email === item?.texteditor?.authorEmail
-                    )
-                    .map((author) => author?.photoURL)}
-                  date={item.date}
-                  articleId={item._id}
-                />
-              </div>
-            ))}
+          {filteredArticles?.map((item, idx) => (
+            <div key={idx}>
+              <Article
+                data={item}
+                commentCount={item.comments.length}
+                key={item._id}
+                authorName={audience
+                  .filter((user) => user.email === item.texteditor.authorEmail)
+                  .map((author) => author.name)}
+                category={item.texteditor.category}
+                title={item.texteditor?.articleTitle}
+                // view={item.likes.length}
+                likeCount={item.likes.length}
+                image={item?.texteditor?.thumbnail}
+                authorImage={audience
+                  .filter(
+                    (user) => user?.email === item?.texteditor?.authorEmail
+                  )
+                  .map((author) => author?.photoURL)}
+                date={item.date}
+                articleId={item._id}
+              />
+            </div>
+          ))}
         </div>
       </div>
 

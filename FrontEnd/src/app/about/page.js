@@ -132,7 +132,7 @@ const AboutPage = () => {
               <div>
                 <div className="flex justify-center items-center">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                    {serviceLists.map((item) => (
+                    {serviceLists?.map((item) => (
                       <div
                         key={item.id}
                         className="w-[250px]  text-center mx-auto bg-white rounded-2xl shadow-lg space-y-1 py-10 px-4"

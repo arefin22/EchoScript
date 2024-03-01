@@ -26,7 +26,7 @@ const page=({authorEmail,Id}) => {
       setData(res.data);
     });
   }, [axiosSecure]);
-  const datas = data.map((dataa)=>dataa)
+  const datas = data?.map((dataa)=>dataa)
   const other = datas.filter((myEmail)=>myEmail.texteditor.authorEmail ===authoremail)
   const  filterId= other.filter((fil)=> fil._id !==postId)
 //   const fav = filterId.filter((art) => recommend.includes(art.texteditor.category))
@@ -42,7 +42,7 @@ const page=({authorEmail,Id}) => {
         </h2>
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 py-10 lg:px-60">
          {
-          ranDom.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
+          ranDom?.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
           
           <Card
           title= {trend?.texteditor?.articleTitle}

@@ -15,7 +15,7 @@ const Popular = () => {
         (a, b) => b.likes.length - a.likes.length
       );
 // console.log(sortedData);
-      const thumbnails = sortedData.slice(0, 4).map((item) => ({
+      const thumbnails = sortedData?.slice(0, 4).map((item) => ({
         thumbnail: item.texteditor?.thumbnail,
         postId: item._id,
 
@@ -32,7 +32,7 @@ const Popular = () => {
 
   return (
     <div className="bg-white z-1">
-      {thumbnails.map((thumbnail, index) => (
+      {thumbnails?.map((thumbnail, index) => (
         <div key={index} className="sticky top-0 lg:mt-[-100px]">
           <Link href={`/article/${thumbnail.postId}`}>
             <div

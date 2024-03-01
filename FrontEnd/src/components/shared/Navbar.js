@@ -69,7 +69,7 @@ const Navbar = () => {
       <div className="hidden lg:block bg-black text-white rounded-full px-2 py-1">
         {/* middle part */}
         <nav className="flex xl:gap-2 items-center justify-around">
-          {navItem.slice(0, 3).map((item, idx) => (
+          {navItem?.slice(0, 3).map((item, idx) => (
             <Link key={idx} href={item.pathName}>
               <li className="list-none text-lg xl:text-xl font-semibold">
                 {item.route}
@@ -132,7 +132,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 ml-[-50px] z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
             >
-              {navItem.map((item, idx) => (
+              {navItem?.map((item, idx) => (
                 <Link key={idx} href={item.pathName}>
                   <li className="py-2 text-center list-none">{item.route}</li>
                 </Link>

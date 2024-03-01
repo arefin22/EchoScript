@@ -266,7 +266,7 @@ useEffect(() => {
             <div>
               <h2>Likes:</h2>
               <ul className="list-none">
-                {historyData.map((history) =>
+                {historyData?.map((history) =>
                   history.likes
                     .filter((like) => like.email === user.email)
                     .map((like) => (
@@ -290,7 +290,7 @@ useEffect(() => {
             <div>
               <h2>Comments:</h2>
               <ul className="list-none">
-                {historyData.map((history) =>
+                {historyData?.map((history) =>
                   history.comments
                     .filter((comment) => comment.email === user.email)
                     .map((comment) => (

@@ -87,7 +87,7 @@ const Navbar2 = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
               >
-                {navItem.map((item, idx) => (
+                {navItem?.map((item, idx) => (
                   <Link key={idx} href={item.pathName}>
                     <li className="mr-5 py-2">{item.route}</li>
                   </Link>
@@ -124,7 +124,7 @@ const Navbar2 = () => {
            {/* center part */}
         <div className="hidden text-lg font-medium  sm:hidden md:hidden  bg-black w-2/5 text-white rounded-full h-16 mx-auto p-5 lg:flex items-center justify-around">
           <ul className=" flex  justify-around items-start gap-2   px-1">
-            {navItem.slice(0, 3).map((item, idx) => (
+            {navItem?.slice(0, 3).map((item, idx) => (
               <Link key={idx} href={item.pathName}>
                 <li className="mr-1 mt-4 list-none">{item.route}</li>
               </Link>
@@ -155,7 +155,7 @@ const Navbar2 = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow text-white bg-[#282C32] rounded-box w-52"
                 >
-                  {navItem.map((item, idx) => (
+                  {navItem?.map((item, idx) => (
                     <Link key={idx} href={item.pathName}>
                       <li className="mr-5 py-2 list-none">{item.route}</li>
                     </Link>

@@ -182,7 +182,7 @@ const DashNavbar = () => {
                 : loggedInUser?.role === "writer"
                 ? writer
                 : loggedInUser?.role === "reader" && reader
-              ).map((nav, idx) => (
+              )?.map((nav, idx) => (
                 <div key={idx}>
                   <Link
                     className={`${
@@ -214,7 +214,7 @@ const DashNavbar = () => {
                   : loggedInUser?.role === "writer"
                   ? writer
                   : loggedInUser?.role === "reader" && reader
-                ).map((nav, idx) => (
+                )?.map((nav, idx) => (
                   <Link key={idx} href={nav?.path}>
                     <li
                       onClick={() => {

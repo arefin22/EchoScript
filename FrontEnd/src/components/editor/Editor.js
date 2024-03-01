@@ -199,7 +199,7 @@ const Editor = () => {
 
   useEffect(() => {
     if (ejInstance.current === null) {
-      initEditor();
+      // initEditor();
     }
 
     return () => {
@@ -212,7 +212,7 @@ const Editor = () => {
     };
   }, []);
 
-  // initEditor();
+  initEditor();
 
   // Preference part
   const options = [
@@ -462,7 +462,7 @@ const Editor = () => {
                   className="w-full mt-10 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                 />
                 <div className="flex flex-row gap-5 p-5 w-full flex-wrap">
-                  {tags.map((tag, index) => (
+                  {tags?.map((tag, index) => (
                     <div
                       key={index}
                       className="tag bg-gray-300 py-2 px-4 rounded-2xl"

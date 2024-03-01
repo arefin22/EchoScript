@@ -26,7 +26,7 @@ const Trending2 = () => {
       </h2>
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 py-10 lg:px-60">
        {
-        lastTofirst.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
+        lastTofirst?.slice(0,6).map((trend,idx)=><Link key={idx}  href={`/article/${trend._id}`}> 
         
         <Card
         title= {trend?.texteditor?.articleTitle}

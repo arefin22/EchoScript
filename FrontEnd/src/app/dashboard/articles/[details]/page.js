@@ -37,7 +37,7 @@ const page = ({ params }) => {
      /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
    );
 
-   const renderedSegments = segments.map((segment, index) => {
+   const renderedSegments = segments?.map((segment, index) => {
      const parser = new DOMParser();
      const doc = parser.parseFromString(segment, "text/html");
      const link =
@@ -101,7 +101,7 @@ const page = ({ params }) => {
             </div>
             <div className="divider"> </div>
             <div className="mt-10">
-              {articles.texteditor.editorContent.blocks.map((block, index) => (
+              {articles?.texteditor?.editorContent?.blocks?.map((block, index) => (
                 <div key={index} className="block">
                   {block.type === "paragraph" && (
                     <p className="text-xl mb-5">{renderBlockContent(block)}</p>
@@ -124,7 +124,7 @@ const page = ({ params }) => {
                   )}
                   {block.type === "list" && block.data.style === "ordered" && (
                     <ol className="mb-5">
-                      {block.data.items.map((item, i) => (
+                      {block?.data?.items?.map((item, i) => (
                         <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
                       ))}
                     </ol>
@@ -133,7 +133,7 @@ const page = ({ params }) => {
                   {block.type === "list" &&
                     block.data.style === "unordered" && (
                       <ul className="mb-5">
-                        {block.data.items.map((item, i) => (
+                        {block?.data?.items?.map((item, i) => (
                           <li key={i}>
                             <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
                           </li>
@@ -159,7 +159,7 @@ const page = ({ params }) => {
               ))}
             </div>
             <div className="flex gap-2">
-              {articles.texteditor?.tags.map((tag, idx) => (
+              {articles?.texteditor?.tags?.map((tag, idx) => (
                 <div
                   className="border rounded-full mt-4
              bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center"

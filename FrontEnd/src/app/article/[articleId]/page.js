@@ -271,7 +271,7 @@ const SingleArticle = ({ params }) => {
       /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
     );
 
-    const renderedSegments = segments.map((segment, index) => {
+    const renderedSegments = segments?.map((segment, index) => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(segment, "text/html");
       const link =
@@ -558,7 +558,7 @@ const SingleArticle = ({ params }) => {
                         <div>
                           <div className="max-w-3xl mx-auto">
                             <div className="mt-4 lg:mt-10 p-2 lg:p-0">
-                              {data?.texteditor?.editorContent?.blocks.map(
+                              {data?.texteditor?.editorContent?.blocks?.map(
                                 (block, index) => (
                                   <div key={index} className="block">
                                     {block.type === "paragraph" && (
@@ -588,7 +588,7 @@ const SingleArticle = ({ params }) => {
                                     {block.type === "list" &&
                                       block.data.style === "ordered" && (
                                         <ol className="mb-5">
-                                          {block.data.items.map((item, i) => (
+                                          {block?.data?.items?.map((item, i) => (
                                             <li key={i}>
                                               {item?.replace(/&nbsp;/g, " ")}
                                             </li>
@@ -599,7 +599,7 @@ const SingleArticle = ({ params }) => {
                                     {block.type === "list" &&
                                       block.data.style === "unordered" && (
                                         <ul className="mb-5">
-                                          {block.data.items.map((item, i) => (
+                                          {block?.data?.items?.map((item, i) => (
                                             <li key={i}>
                                               <li key={i}>
                                                 {item?.replace(/&nbsp;/g, " ")}

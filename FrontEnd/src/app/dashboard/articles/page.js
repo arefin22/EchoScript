@@ -74,7 +74,7 @@ const Article = () => {
                 </tr>
               </thead>
               <tbody>
-                {articles.map((article, index) => (
+                {articles?.map((article, index) => (
                   <tr key={article._id} className="text-center">
                     <td>{index + 1}</td>
                     <td>
