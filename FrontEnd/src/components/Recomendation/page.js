@@ -25,10 +25,10 @@ const Recomendation=() => {
     });
   }, [axiosSecure]);
   
-  const users = audience?.filter((userss)=>userss.email===user?.email);
-  const userFav =users?.map((fav)=>fav.favourite.map((favo)=>favo.value))
+  const users = audience?.filter((userss)=>userss?.email===user?.email);
+  const userFav =users?.map((fav)=>fav?.favourite?.map((favo)=>favo?.value))
   const datas = data?.map((dataa)=>dataa)
-  const other = datas?.filter((myEmail)=>myEmail.texteditor.authorEmail !==user.email)
+  const other = datas?.filter((myEmail)=>myEmail?.texteditor?.authorEmail !==user?.email)
   const fav = other?.filter((art) => userFav[0]?.includes(art.texteditor.category))
   const ran = fav?.map((f)=>f.texteditor)
   const ranDom = fav?.sort(() => Math.random() - 0.5);

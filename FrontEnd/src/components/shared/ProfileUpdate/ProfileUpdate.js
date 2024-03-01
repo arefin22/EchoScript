@@ -14,8 +14,8 @@ const ProfileUpdate = ({data, id, setUpdate }) => {
         try {
           e.preventDefault();
           const form = e.target;
-          const role = form.role.value;
-          const name = form.name.value;
+          const role = form?.role?.value;
+          const name = form?.name?.value;
           const userData = {  name, role };
           EditData({ id: id, setUpdate: setUpdate, data: userData })
             toast("user updated");
@@ -28,7 +28,7 @@ const ProfileUpdate = ({data, id, setUpdate }) => {
     return (
         <div>
         <button
-          className="text-white "
+          className="text-black "
           onClick={() => document.getElementById(`my_modal_${id}`).showModal()}
         >
           <FaUserEdit />
@@ -62,6 +62,7 @@ const ProfileUpdate = ({data, id, setUpdate }) => {
                   <label htmlFor="role">Role:</label>
                   <select
                     id="role"
+                    defaultValue={data?.value}
                     name="role"
                     className="w-full px-4 py-3 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
                   >

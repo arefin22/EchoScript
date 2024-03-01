@@ -7,7 +7,6 @@ import UserUpdate from "@/components/shared/UserUpdate/UserUpdate";
 
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
 

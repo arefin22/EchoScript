@@ -123,8 +123,7 @@ const page = () => {
         </div>
         <div className="mt-10 text-center">
           <button className="btn btn-md btn-outline btn-primary mr-2">
-            <ProfileUpdate data={myself} id={id} setUpdate={setUpdate} />{" "}
-            <span>EditProfile</span>
+            <ProfileUpdate data={myself} id={id} setUpdate={setUpdate} />
           </button>
         </div>
       </div>
