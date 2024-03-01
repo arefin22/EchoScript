@@ -42,8 +42,6 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.index({ membership: 1 }, { expireAfterSeconds: 10 });
-
 const User = model("user", UserSchema);
 
 module.exports = User;

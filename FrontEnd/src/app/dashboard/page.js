@@ -13,14 +13,15 @@ import {
   LabelList,
   Tooltip,
 } from "recharts";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
 
 const page = () => {
   const [stats, setStats] = useState({});
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/stats").then((data) => {
+    axiosSecure.get("/stats").then((data) => {
       setStats(data?.data);
     });
   }, []);
