@@ -11,6 +11,7 @@ import { MdArticle } from "react-icons/md";
 import { useAuth } from "@/context/authContext";
 import { FaUsers } from "react-icons/fa6";
 import { axiosPublic } from "@/utils/useAxiosPublic";
+
 const DashNavbar = () => {
   const pathname = usePathname();
   const { user } = useAuth();

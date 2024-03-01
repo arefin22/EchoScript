@@ -188,37 +188,126 @@ const SingleArticle = ({ params }) => {
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
   const blocks = data?.texteditor?.editorContent?.blocks;
-  console.log(blocks)
   const onlyText = blocks?.map((block) =>
     block.data.text?.replace(/&nbsp;/g, " ")
   );
 
+  // const renderBlockContent = (block) => {
+  //   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+
+  //   const renderedSegments = segments.map((segment, index) => {
+  //     if (segment.startsWith("<a")) {
+  //       const parser = new DOMParser();
+  //       const doc = parser.parseFromString(segment, "text/html");
+  //       const link = doc.querySelector("a");
+
+  //       return (
+  //         <a
+  //           key={index}
+  //           href={link.getAttribute("href")}
+  //           target="_blank"
+  //           style={{ textDecoration: "underline" }}
+  //         >
+  //           {link.textContent}
+  //         </a>
+  //       );
+  //     } else {
+  //       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+  //     }
+  //   });
+
+  //   return renderedSegments;
+  // };
+
+  
+  // const renderBlockContent = (block) => {
+  //   const segments = block.data.text.split(/(<(a|b|i)[^>]*>.*?<\/\2>)/g);
+
+  //   const renderedSegments = segments
+  //     .map((segment, index) => {
+  //       const parser = new DOMParser();
+  //       const doc = parser.parseFromString(segment, "text/html");
+  //       const link =
+  //         doc.querySelector("a") ||
+  //         doc.querySelector("b") ||
+  //         doc.querySelector("i");
+
+  //       if (link) {
+  //         const Tag = link.tagName.toLowerCase();
+  //         const content = link.textContent;
+
+  //         return (
+  //           <Tag
+  //             key={index}
+  //             href={Tag === "a" ? link.getAttribute("href") : undefined}
+  //             target={Tag === "a" ? "_blank" : undefined}
+  //             style={{
+  //               textDecoration: Tag === "a" ? "underline" : "none",
+  //               fontWeight: Tag === "b" ? "bold" : "normal",
+  //               fontStyle: Tag === "i" ? "italic" : "normal",
+  //             }}
+  //           >
+  //             {content}
+  //           </Tag>
+  //         );
+  //       } else if (segment.startsWith("</")) {
+  //         // Exclude the closing tag from the content
+  //         return null;
+  //       } else {
+  //         return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+  //       }
+  //     })
+  //     .filter((segment) => segment !== null); // Remove null elements from the array
+
+  //   return renderedSegments;
+  // };
+
+
   const renderBlockContent = (block) => {
-    const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+    const segments = block.data.text.split(
+      /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
+    );
 
     const renderedSegments = segments.map((segment, index) => {
-      if (segment.startsWith("<a")) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(segment, "text/html");
-        const link = doc.querySelector("a");
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(segment, "text/html");
+      const link =
+        doc.querySelector("a") ||
+        doc.querySelector("b") ||
+        doc.querySelector("i");
 
-        return (
-          <a
-            key={index}
-            href={link.getAttribute("href")}
-            target="_blank"
-            style={{ textDecoration: "underline" }}
-          >
-            {link.textContent}
-          </a>
-        );
+      if (link) {
+        const Tag = link.tagName.toLowerCase();
+        const content = link.textContent;
+
+        // Check if it's a valid opening tag
+        if (segment.startsWith("<")) {
+          return (
+            <Tag
+              key={index}
+              href={Tag === "a" ? link.getAttribute("href") : undefined}
+              target={Tag === "a" ? "_blank" : undefined}
+              style={{
+                textDecoration: Tag === "a" ? "underline" : "none",
+                fontWeight: Tag === "b" ? "bold" : "normal",
+                fontStyle: Tag === "i" ? "italic" : "normal",
+              }}
+            >
+              {content}
+            </Tag>
+          );
+        } else {
+          return `</${Tag}>`; // Return the closing tag
+        }
       } else {
-        return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+        return <span key={index}>{segment?.replace(/&nbsp;/g, " ")}</span>;
       }
     });
 
     return renderedSegments;
   };
+
+
 
   const handleSearch = (query) => {
     setSearchString(query);
