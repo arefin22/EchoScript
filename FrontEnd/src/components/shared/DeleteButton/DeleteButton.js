@@ -7,7 +7,8 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss'
 
 const DeleteButton = ({api,id,setUpdate}) => {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+    const [forceUpdate, setForceUpdate] = useState(Date.now());
     const handleDelete =  () => {
         try {
           setLoading(true);
@@ -22,7 +23,7 @@ const DeleteButton = ({api,id,setUpdate}) => {
           }).then((result) => {
             if (result.isConfirmed) {
                Delete({api:api,id:id,setUpdate:setUpdate} );
-              
+              setForceUpdate(Date.now());
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",

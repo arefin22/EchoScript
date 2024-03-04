@@ -28,6 +28,7 @@ const Article = () => {
         const response = await axiosSecure.get(
           `/textArticleByEmail?email=${authEmail}`
         );
+        setForceUpdate(Date.now()); 
         const articleCount = response.data.length;
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -44,10 +45,8 @@ const Article = () => {
 
     fetchArticles();
 
-
-  // console.log(articles);
-
-  }, [update]); 
+    // console.log(articles);
+  }, [forceUpdate]); 
 
   // }, [update, currentPage]); 
 
