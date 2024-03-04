@@ -11,7 +11,7 @@ const dashboardLayout = ({ children }) => {
           <DashNavbar />
         </div>
         <div className="flex-1">
-          <div className="min-h-[100vh] p-10 flex justify-center items-center">
+          <div className="min-h-[100vh] p-10">
             {children}
           </div>
         </div>
