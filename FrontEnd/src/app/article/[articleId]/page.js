@@ -220,6 +220,15 @@ const SingleArticle = ({ params }) => {
                   <div className=" text-black text-[20px] lg:text-[40px] mt-7 font-bold p-5 lg:p-0">
                     {data?.texteditor?.articleTitle}
                   </div>
+                  <div className="w-full">
+              <Image
+                src={data?.texteditor?.thumbnail}
+                width={1280}
+                height={600}
+                alt="Thumbnail for article"
+                className="w-full"
+              />
+            </div>
                   <div className=" mt-10 mb-5 px-5">
                     <div>
                       <div className=" flex items-center pl-2 mb-6">
