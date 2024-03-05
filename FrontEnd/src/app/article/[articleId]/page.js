@@ -194,13 +194,11 @@ const SingleArticle = ({ params }) => {
     setCategoryFilter("All");
   };
 
-  // console.log(
-  //   audience.filter(
-  //     (audience) => audience.email === data?.texteditor?.authorEmail
-  //   )
-  // );
-
-  console.log(data?.texteditor?.authorEmail)
+const filter = audience?.filter(
+  (audience) => audience?.email === data?.texteditor?.authorEmail
+)
+const photo= filter?.map((ph)=>ph.photoURL)
+const writerPhoto=photo[0]
 
   return (
     <>
@@ -231,19 +229,14 @@ const SingleArticle = ({ params }) => {
             </div>
                   <div className=" mt-10 mb-5 px-5">
                     <div>
-                      <div className=" flex items-center pl-2 mb-6">
-                        <div className="rounded-full border-2 border-white mr-2">
+                      <div className=" flex items-center pl-2 mb-6 gap-2">
+                        <div className="">
                           <Image
-                            src={audience
-                              ?.filter(
-                                (user) =>
-                                  user?.email === data?.texteditor?.authorEmail
-                              )
-                              ?.map((author) => author?.photoURL || "")}
+                            src={writerPhoto}
                             alt="Author"
-                            width={60}
-                            height={60}
-                            objectFit="cover"
+                            width={40}
+                            height={40}
+                            className="rounded-full  object-cover"
                           />
                         </div>
 

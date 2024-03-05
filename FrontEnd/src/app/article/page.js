@@ -172,14 +172,18 @@ const ArticlePage = () => {
                     .map((author) => author.name)}
                   category={item.texteditor.category}
                   title={item.texteditor?.articleTitle}
-                  // view={item.likes.length}
                   likeCount={item.likes.length}
                   image={item?.texteditor?.thumbnail}
                   authorImage={audience
                     .filter(
-                        (user) => user?.email === item?.texteditor?.authorEmail
+                      (user) => user.email === item.texteditor.authorEmail
                     )
-                    .map((author) => author?.photoURL)}
+                    .map((author) => author.photoURL).toString()}
+                    athhoraltName={audience
+                    .filter(
+                      (user) => user.email === item.texteditor.authorEmail
+                    )
+                    .map((author) => author.name)}
                   date={item.date}
                   articleId={item._id}
                 />
