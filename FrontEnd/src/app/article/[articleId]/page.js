@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
+import person from "@/assets/img/person-removebg-preview.png";
 import { formatDistanceToNow } from "date-fns";
 import {
   FacebookIcon,
@@ -221,10 +222,10 @@ const writerPhoto=photo[0]
                   <div className="w-full">
               <Image
                 src={data?.texteditor?.thumbnail}
-                width={1280}
-                height={600}
+                width={800}
+                height={400}
                 alt="Thumbnail for article"
-                className="w-full"
+                className="rounded-lg mt-4"
               />
             </div>
                   <div className=" mt-10 mb-5 px-5">
@@ -232,7 +233,7 @@ const writerPhoto=photo[0]
                       <div className=" flex items-center pl-2 mb-6 gap-2">
                         <div className="">
                           <Image
-                            src={writerPhoto}
+                            src={writerPhoto || person}
                             alt="Author"
                             width={40}
                             height={40}
