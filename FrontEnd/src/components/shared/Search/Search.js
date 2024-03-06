@@ -26,21 +26,21 @@ const Search = ({ onSearch, onClose, onRecommendationClick }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onClose();
+    
     onSearch(searchString);
-    document.getElementById("my_modal_3").close()
+    
     setSearchString("");
     
     
   };
   const handleRecommendationClick = (category) => {
     onRecommendationClick(category);
-    onClose();
+    
   };
 
   const handleSearch = () => {
     onSearch(searchString);
-    onClose();
+    
   };
   
   const category = [
@@ -124,7 +124,7 @@ const Search = ({ onSearch, onClose, onRecommendationClick }) => {
       >
         <FaSearch className="text-xl xl:text-2xl text-white" />
       </button>
-      <dialog id="my_modal_3" className="modal absolute top-5" style={{ width: "83.333%" }}>
+      <dialog id="my_modal_3" className="modal absolute top-5 left-24" style={{ width: "83.333%" }}>
         <div className="modal-box absolute top-5 left-10   mx-auto w-full" style={{ maxWidth: "calc(100% - 2rem)" }}>
           <form 
           method="dialog" className="relative">
@@ -161,23 +161,18 @@ const Search = ({ onSearch, onClose, onRecommendationClick }) => {
         inputRefs={inputRefs}
         toggleVoiceButtonActive={toggleVoiceButtonActive}
         voiceButtonActive={voiceButtonActive}
+        setSearchString={setSearchString}
       />
     </div>
   </form>
              
             </div>
-            {/* <div className="absolute top-1/2 transform -translate-y-1/2 right-0">
-              <VoiceButton
-                inputRefs={inputRefs}
-                toggleVoiceButtonActive={toggleVoiceButtonActive}
-                voiceButtonActive={voiceButtonActive}
-              />
-            </div> */}
+          
           </div>
           <div className="divider"></div>
           <div className="w-full" >
             <div className="text-center relative flex items-center pt-5">
-              {/* Input */}
+             
             </div>
             <div className="flex gap-5 justify-center pt-3 items-center">
               <button

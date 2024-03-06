@@ -3,22 +3,33 @@
 import React, { useEffect, useState } from 'react';
 import { FaMicrophoneAlt } from 'react-icons/fa';
 
-const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) => {
+const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive, setSearchString }) => {
   const [recognition, setRecognition] = useState(null);
   const [listening, setListening] = useState(false);
-
   useEffect(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
 
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      fillActiveInputField(transcript);
-    };
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        fillActiveInputField(transcript);
+      };
 
-    setRecognition(recognition);
+      setRecognition(recognition);
+    } else {
+      console.error('Speech recognition not supported in this browser.');
+    }
   }, []);
+  useEffect(() => {
+    if (voiceButtonActive) {
+      const activeInputField = inputRefs.find((ref) => ref.current === document.activeElement);
+      if (activeInputField) {
+        activeInputField.current.focus();
+      }
+    }
+  }, [voiceButtonActive]);
 
   const startListening = () => {
     if (recognition) {
@@ -27,7 +38,6 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
       toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
-
   const stopListening = () => {
     if (recognition) {
       recognition.stop();
@@ -35,7 +45,6 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
       toggleVoiceButtonActive(); // Toggle voice button active state
     }
   };
-
   const toggleListening = () => {
     if (listening) {
       stopListening();
@@ -48,6 +57,8 @@ const VoiceButton = ({ inputRefs, toggleVoiceButtonActive, voiceButtonActive }) 
     const activeInputField = inputRefs.find((ref) => ref.current === document.activeElement);
     if (activeInputField) {
       activeInputField.current.value = text;
+      setSearchString(text);
+     
     }
   };
 

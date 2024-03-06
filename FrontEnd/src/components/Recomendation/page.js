@@ -71,6 +71,7 @@ const Recomendation=() => {
         </div> : <Trending />
        }
     </div>
+
   );
 };
 
