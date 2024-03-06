@@ -18,32 +18,32 @@ const payment = ({ price }) => {
 
   const axiosPublic = useAxiosPublic();
   const { payment } = usePayment();
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   // console.log(user?.email)
-  // console.log(payment?.price)
+  // console.log(payment)
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
 
     axiosPublic
-      .post("/create-payment-intent", { amount: parseFloat(payment?.price) , customer: user?.email })
+      .post("/create-payment-intent", {
+        amount: parseFloat(payment?.price),
+        customer: user?.email,
+      })
       .then((data) => {
-        // console.log("pay success")
         setClientSecret(data?.data?.clientSecret);
       });
-      // .then((data) => console.log(data, paymentAmount));
+    // .then((data) => console.log(data, paymentAmount));
     // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // })
   }, []);
 
-
   const appearance = {
-    theme: 'stripe',
+    theme: "stripe",
   };
-
 
   const options = {
     clientSecret,
