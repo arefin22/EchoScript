@@ -15,7 +15,7 @@ const Loader = () => {
         },  };
     return (
         <div className='flex justify-center items-center '>
-              <Lottie options={defaultOptions} height={150} width={150} />;
+             <span className="loading loading-spinner w-32"></span>
         </div>
     );
 };

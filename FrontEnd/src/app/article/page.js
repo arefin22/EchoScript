@@ -8,20 +8,21 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
-import BookmarkButton from "@/components/BookmarkButton/BookmarkButton";
-import Navbar2 from "@/components/shared/Navbar2/Navbar2";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import Loader from "@/components/shared/Loader/Loader";
+import Link from "next/link";
+import LoadingPage from "@/components/shared/LoadingPage/LoadingPage";
 
 const ArticlePage = () => {
-  const [startIdx, setStartIdx] = useState(0);
+  // const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All"); // Add this line
-
-
-  
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [requestsCompleted, setRequestsCompleted] = useState(0); 
 
   const category = [
     {
@@ -86,129 +87,121 @@ const ArticlePage = () => {
     },
   ];
 
-  // const handleCategory = (e) => {
-  //   console.log(e);
-  // };
-
-  const handleNext = () => {
-    setStartIdx((prevStartIdx) =>
-      Math.min(prevStartIdx + 1, category.length - 5)
-    );
-  };
-
-  const handlePrev = () => {
-    setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
-  };
+  
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      setRequestsCompleted((prevCount) => prevCount + 1);
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
-      console.log(res.data);
-
       setAudience(res.data);
+      setRequestsCompleted((prevCount) => prevCount + 1);
     });
   }, [axiosSecure]);
+  useEffect(() => {
+    if (requestsCompleted === 2) { 
+      setLoading(false); 
+    }
+  }, [requestsCompleted]);
+
   const handleSearch = (query) => {
     setSearchString(query);
+    setCategoryFilter("All");
+  };
+  const handleCloseSearchModal = () => {
+    setSearchString("");
   };
 
-  const handleCategoryFilter = (category) => {
+  const handleRecommendationClick = (category) => {
     setCategoryFilter(category);
   };
 
-  const handleCloseSearchModal = () => {
-    setSearchString("");
-    setCategoryFilter("All");
-  };
+  const lastTofirst = data.slice().reverse();
 
-  const filteredArticles = data.filter((article) => {
-    const isInCategory = categoryFilter === "All" || article.texteditor.category === categoryFilter;
+  const filteredArticles = lastTofirst.filter((article) => {
+    const isInCategory =
+      categoryFilter === "All" ||
+      article.texteditor.category === categoryFilter;
     const matchesSearch =
-      article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
-      article.texteditor.category.toLowerCase().includes(searchString.toLowerCase());
+      article.texteditor.category
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.articleTitle
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.thumbnail
+        .toLowerCase()
+        .includes(searchString.toLowerCase()) ||
+      article.texteditor.authorEmail
+        .toLowerCase()
+        .includes(searchString.toLowerCase());
+
     return isInCategory && matchesSearch;
   });
-  
+  if(loading){
+    return (
+      <LoadingPage/>
+    )
+  }
 
   return (
-    <div>
-    <div className="bg-white">
-      {/* <Navbar2/> */}
-      <SubHeader onSearch={handleSearch} onClose={handleCloseSearchModal} />
-      
-      
-      <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[30px] lg:mt-[-85px] z-50">
-        {/* <Navbar2 /> */}
+    <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+      <div className="mx-auto sticky z-50 -mt-7 top-[40px] md:-mt-8 md:top-[40px] lg:-mt-14 lg:w-[45%] lg:top-[65px] xl:w-[35%] xl:top-[60px] xl:-mt-18 2xl:w-[25%]">
         <Navbar />
       </div>
 
-      <div className="text-center relative flex items-center pt-5">
-        {/* <input
-          className="w-2/3 py-5 pl-5 mx-auto border-[#025] outline-none rounded-full border-2"
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search your article here" */}
-        {/* /> */}
-      </div>
-      <div className="flex gap-5 justify-center pt-3 items-center">
-        <button
-          className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
-          onClick={handlePrev}
-        >
-          <MdOutlineKeyboardArrowLeft fontSize={"1.5rem"} />
-        </button>
-        {category?.slice(startIdx, startIdx + 5).map((item) => (
-          <button
-            onClick={() => handleCategory(`${item?.category}`)}
-            className="bg-[#D9D9D9] px-5 py-2 rounded-2xl text-sm hover:bg-[#bdb8b8]"
-            key={item.id}
-          >
-            {item.category}
-          </button>
-        ))}
-        <button
-          className="bg-[#F2F2F2] p-2 rounded-full hover:bg-[#D9D9D9]"
-          onClick={handleNext}
-        >
-          <MdOutlineKeyboardArrowRight fontSize={"1.5rem"} />
-        </button>
-      </div>
-      <div className="py-10">
-      {filteredArticles.slice(startIdx * 5, startIdx * 5 + 5).map((item, idx) => (
-          <div key={idx}>
-            <Article
-              data={item}
-              commentCount={item.comments.length}
-              key={item._id}
-              authorName={audience
-                .filter((user) => user.email === item.texteditor.authorEmail)
-                .map((author) => author.name)}
-              category={item.texteditor.category}
-              title={item.texteditor?.articleTitle}
-              view={item.likes.length}
-              likeCount={item.likes.length}
-              image={item?.texteditor?.thumbnail}
-              authorImage={audience
-                .filter((user) => user?.email === item?.texteditor?.authorEmail)
-                .map((author) => author?.photoURL)}
-              date={item.date}
-              articleId={item._id}
-            />
-          </div>
-        ))}
+      <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
+        <SubHeader
+          onSearch={handleSearch}
+          onClose={handleCloseSearchModal}
+          onRecommendationClick={handleRecommendationClick}
+        />
+
+        <div className="py-10">
+        {filteredArticles.length === 0 ? (
+            <div>
+              <div><p className="text-center">There are no articles according to your search. Please explore more.</p></div>
+              <div className="flex justify-center items-center text-center pt-5 ">
+                <Link href={'/article'}>
+                  <button className="btn btn-primary btn-info btn-outline btn-lg rounded-full"> Go Back</button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            filteredArticles?.map((item, idx) => (
+              <div key={idx}>
+                <Article
+                  data={item}
+                  commentCount={item.comments.length}
+                  key={item._id}
+                  authorName={audience
+                    ?.filter((user) => user.email === item.texteditor.authorEmail)
+                    .map((author) => author.name)}
+                  category={item.texteditor.category}
+                  title={item.texteditor?.articleTitle}
+                  likeCount={item.likes.length}
+                  image={item?.texteditor?.thumbnail}
+                  authorImage={audience
+                    ?.filter(
+                      (user) => user?.email === item?.texteditor?.authorEmail
+                    )
+                    .map((author) => author?.photoURL)}
+                  date={item.date}
+                  articleId={item._id}
+                />
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
       <div className="lg:sticky lg:bottom-0 lg:z-0">
         <Footer />
       </div>
     </div>
-    </div>
   );
-
 };
 export default ArticlePage;

@@ -25,7 +25,7 @@ const FeatureCard = () => {
   ];
   return (
     <div className="flex justify-center gap-5 items-center">
-      {features.map((item) => (
+      {features?.map((item) => (
         <div
           key={item.id}
           className="bg-white w-52 h-52 border rounded-3xl flex justify-center items-center hover:scale-105 transition-all duration-200 hover:bg-[#025] hover:text-white"

@@ -10,6 +10,7 @@ const search = require("./routes/search/index")
 const history = require("./routes/history/index")
 const bookmark = require("./routes/bookmark/index")
 const payment = require("./routes/payment/index")
+const stats = require("./routes/stats/index")
 
 // middlewares
 applyMiddleware(app)
@@ -21,6 +22,7 @@ app.use(search)
 app.use(history)
 app.use(bookmark)
 app.use(payment)
+app.use(stats)
 
 app.get("/", (req, res) => {
   res.send("EchoScript is running...");
