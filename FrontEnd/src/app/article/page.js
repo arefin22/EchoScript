@@ -14,15 +14,18 @@ import Link from "next/link";
 import LoadingPage from "@/components/shared/LoadingPage/LoadingPage";
 
 const ArticlePage = () => {
-  // const [startIdx, setStartIdx] = useState(0);
+  const [startIdx, setStartIdx] = useState(0);
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
+
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [requestsCompleted, setRequestsCompleted] = useState(0); 
+
 
   const category = [
     {
@@ -89,17 +92,23 @@ const ArticlePage = () => {
 
   
 
+
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       const filteredData = res.data.filter(article => article.texteditor.status !== "suspended");
       setData(filteredData);
       setRequestsCompleted((prevCount) => prevCount + 1);
+
     });
   }, [axiosSecure]);
   useEffect(() => {
     axiosSecure.get("/user").then((res) => {
+      console.log(res.data);
+
       setAudience(res.data);
+
       setRequestsCompleted((prevCount) => prevCount + 1);
+
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -107,6 +116,7 @@ const ArticlePage = () => {
       setLoading(false); 
     }
   }, [requestsCompleted]);
+
 
   const handleSearch = (query) => {
     setSearchString(query);
@@ -120,26 +130,20 @@ const ArticlePage = () => {
     setCategoryFilter(category);
   };
 
-  const lastTofirst = data.slice().reverse();
+
+
+  const lastTofirst = data.slice().reverse()
+ 
 
   const filteredArticles = lastTofirst.filter((article) => {
-    const isInCategory =
-      categoryFilter === "All" ||
-      article.texteditor.category === categoryFilter;
+    const isInCategory = categoryFilter ==="All" || article.texteditor.category === categoryFilter;
     const matchesSearch =
-      article.texteditor.category
-        .toLowerCase()
-        .includes(searchString.toLowerCase()) ||
-      article.texteditor.articleTitle
-        .toLowerCase()
-        .includes(searchString.toLowerCase()) ||
-      article.texteditor.thumbnail
-        .toLowerCase()
-        .includes(searchString.toLowerCase()) ||
-      article.texteditor.authorEmail
-        .toLowerCase()
-        .includes(searchString.toLowerCase());
-
+    
+    article.texteditor.category.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.articleTitle.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.thumbnail.toLowerCase().includes(searchString.toLowerCase()) ||
+    article.texteditor.authorEmail.toLowerCase().includes(searchString.toLowerCase()) 
+    
     return isInCategory && matchesSearch;
   });
   if(loading){
@@ -155,13 +159,13 @@ const ArticlePage = () => {
       </div>
 
       <div className=" mx-auto mainContainer bg-white rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px] rounded-bl-[30px] rounded-br-[30px] lg:rounded-bl-[100px] lg:rounded-br-[100px]">
-        <SubHeader
-          onSearch={handleSearch}
+      <SubHeader  onSearch={handleSearch}
           onClose={handleCloseSearchModal}
-          onRecommendationClick={handleRecommendationClick}
-        />
+          onRecommendationClick={handleRecommendationClick} />
+
 
         <div className="py-10">
+
         {filteredArticles.length === 0 ? (
             <div>
               <div><p className="text-center">There are no articles according to your search. Please explore more.</p></div>
@@ -173,29 +177,36 @@ const ArticlePage = () => {
             </div>
           ) : (
             filteredArticles?.map((item, idx) => (
+
               <div key={idx}>
                 <Article
                   data={item}
                   commentCount={item.comments.length}
                   key={item._id}
                   authorName={audience
+
                     ?.filter((user) => user.email === item.texteditor.authorEmail)
+
                     .map((author) => author.name)}
                   category={item.texteditor.category}
                   title={item.texteditor?.articleTitle}
                   likeCount={item.likes.length}
                   image={item?.texteditor?.thumbnail}
                   authorImage={audience
+
                     ?.filter(
                       (user) => user?.email === item?.texteditor?.authorEmail
                     )
                     .map((author) => author?.photoURL)}
+
                   date={item.date}
                   articleId={item._id}
                 />
               </div>
+
             ))
           )}
+
         </div>
       </div>
 

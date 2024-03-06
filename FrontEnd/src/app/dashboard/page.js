@@ -2,17 +2,17 @@
 import { FaUser } from "react-icons/fa";
 import { MdOutlineArticle } from "react-icons/md";
 import { FaPenFancy } from "react-icons/fa";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Legend,
-  LabelList,
-  Tooltip,
-} from "recharts";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   ResponsiveContainer,
+//   Legend,
+//   LabelList,
+//   Tooltip,
+// } from "recharts";
 
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
