@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useAuth } from "@/context/authContext";
 import Swal from "sweetalert2";
+import person from "@/assets/img/person-removebg-preview.png";
 import { formatDistanceToNow } from "date-fns";
 import {
   FacebookIcon,
@@ -194,13 +195,11 @@ const SingleArticle = ({ params }) => {
     setCategoryFilter("All");
   };
 
-  // console.log(
-  //   audience.filter(
-  //     (audience) => audience.email === data?.texteditor?.authorEmail
-  //   )
-  // );
-
-  console.log(data?.texteditor?.authorEmail)
+const filter = audience?.filter(
+  (audience) => audience?.email === data?.texteditor?.authorEmail
+)
+const photo= filter?.map((ph)=>ph.photoURL)
+const writerPhoto=photo[0]
 
   return (
     <>
@@ -220,21 +219,25 @@ const SingleArticle = ({ params }) => {
                   <div className=" text-black text-[20px] lg:text-[40px] mt-7 font-bold p-5 lg:p-0">
                     {data?.texteditor?.articleTitle}
                   </div>
+                  <div className="w-full">
+              <Image
+                src={data?.texteditor?.thumbnail}
+                width={800}
+                height={400}
+                alt="Thumbnail for article"
+                className="rounded-lg mt-4"
+              />
+            </div>
                   <div className=" mt-10 mb-5 px-5">
                     <div>
-                      <div className=" flex items-center pl-2 mb-6">
-                        <div className="rounded-full border-2 border-white mr-2">
+                      <div className=" flex items-center pl-2 mb-6 gap-2">
+                        <div className="">
                           <Image
-                            src={audience
-                              ?.filter(
-                                (user) =>
-                                  user?.email === data?.texteditor?.authorEmail
-                              )
-                              ?.map((author) => author?.photoURL || "")}
+                            src={writerPhoto || person}
                             alt="Author"
-                            width={60}
-                            height={60}
-                            objectFit="cover"
+                            width={40}
+                            height={40}
+                            className="rounded-full  object-cover"
                           />
                         </div>
 
