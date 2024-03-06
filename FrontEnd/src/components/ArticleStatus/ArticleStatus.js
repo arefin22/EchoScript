@@ -1,5 +1,6 @@
 "use client"
-import { axiosPublic } from '@/utils/useAxiosPublic';
+
+import { axiosSecure } from '@/utils/useAxiosSecure';
 import React, {  useState } from 'react';
 import toast from 'react-hot-toast';
 
