@@ -10,6 +10,8 @@ import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Loader from "@/components/shared/Loader/Loader";
+import Link from "next/link";
+import LoadingPage from "@/components/shared/LoadingPage/LoadingPage";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -20,11 +22,16 @@ const ArticlePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
+<<<<<<< HEAD
   const [categoryFilter, setCategoryFilter] = useState("All"); 
   
   
   
   
+=======
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [requestsCompleted, setRequestsCompleted] = useState(0); 
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
 
   const category = [
     {
@@ -90,6 +97,7 @@ const ArticlePage = () => {
   ];
 
   
+<<<<<<< HEAD
   const handleNext = () => {
     setStartIdx((prevStartIdx) =>
       Math.min(prevStartIdx + 1, category.length - 5)
@@ -99,11 +107,17 @@ const ArticlePage = () => {
   const handlePrev = () => {
     setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
   };
+=======
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+<<<<<<< HEAD
       setLoading(false)
+=======
+      setRequestsCompleted((prevCount) => prevCount + 1);
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -111,9 +125,18 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
+<<<<<<< HEAD
       setLoading(false)
+=======
+      setRequestsCompleted((prevCount) => prevCount + 1);
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
     });
   }, [axiosSecure]);
+  useEffect(() => {
+    if (requestsCompleted === 2) { 
+      setLoading(false); 
+    }
+  }, [requestsCompleted]);
 
 
   const handleSearch = (query) => {
@@ -144,6 +167,11 @@ const ArticlePage = () => {
     
     return isInCategory && matchesSearch;
   });
+  if(loading){
+    return (
+      <LoadingPage/>
+    )
+  }
 
   return (
     <div className="mx-auto px-4 lg:px-6 lg:pt-5">
@@ -158,23 +186,42 @@ const ArticlePage = () => {
 
 
         <div className="py-10">
+<<<<<<< HEAD
           {filteredArticles
             .map((item, idx) => (
+=======
+        {filteredArticles.length === 0 ? (
+            <div>
+              <div><p className="text-center">There are no articles according to your search. Please explore more.</p></div>
+              <div className="flex justify-center items-center text-center pt-5 ">
+                <Link href={'/article'}>
+                  <button className="btn btn-primary btn-info btn-outline btn-lg rounded-full"> Go Back</button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            filteredArticles?.map((item, idx) => (
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
               <div key={idx}>
                 <Article
                   data={item}
                   commentCount={item.comments.length}
                   key={item._id}
                   authorName={audience
+<<<<<<< HEAD
                     .filter(
                       (user) => user.email === item.texteditor.authorEmail
                     )
+=======
+                    ?.filter((user) => user.email === item.texteditor.authorEmail)
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
                     .map((author) => author.name)}
                   category={item.texteditor.category}
                   title={item.texteditor?.articleTitle}
                   likeCount={item.likes.length}
                   image={item?.texteditor?.thumbnail}
                   authorImage={audience
+<<<<<<< HEAD
                     .filter(
                       (user) => user.email === item.texteditor.authorEmail
                     )
@@ -184,11 +231,22 @@ const ArticlePage = () => {
                       (user) => user.email === item.texteditor.authorEmail
                     )
                     .map((author) => author.name)}
+=======
+                    ?.filter(
+                      (user) => user?.email === item?.texteditor?.authorEmail
+                    )
+                    .map((author) => author?.photoURL)}
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
                   date={item.date}
                   articleId={item._id}
                 />
               </div>
+<<<<<<< HEAD
             ))}
+=======
+            ))
+          )}
+>>>>>>> 5b2696ae02c15de230aa33d2848eb02b44a7bfbd
         </div>
       </div>
 
