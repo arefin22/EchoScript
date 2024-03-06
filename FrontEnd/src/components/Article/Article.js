@@ -18,6 +18,7 @@ const Article = ({
   image,
   authorImage,
   handleCollectComment,
+  athhoraltName,
   articleId,
   commentCount,
   likeCount,
@@ -29,13 +30,13 @@ const Article = ({
           <div className="flex w-[100%] justify-between items-center">
             <Link href={`/writer`}>
               <div className="flex gap-2 pb-4 items-center">
-                {/* <Image
+                <Image
                   src={authorImage || person}
-                  height={20}
-                  width={20}
+                  height={30}
+                  width={30}
                   className="rounded-full  object-cover"
-                  alt="author image"
-                /> */}
+                  alt={athhoraltName}
+                />
 
                 <p className="text-[12px] lg:text-[16px]">
                   {authorName}
