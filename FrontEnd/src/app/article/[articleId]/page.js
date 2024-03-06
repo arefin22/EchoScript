@@ -130,7 +130,7 @@ const SingleArticle = ({ params }) => {
       await axiosSecure.post("/history", likeDetails);
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        // console.log("History already exists for this article");
+        console.log("History already exists for this article");
       } else {
         console.error("An error occurred:", error);
       }
