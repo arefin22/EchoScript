@@ -9,7 +9,7 @@ const successPage = () => {
   // console.log(payment);
   return (
     <div>
-      <h2>Payment Successful</h2>
+      <h2>${payment} payment Successful</h2>
       <Link href={"/dashboard/profile"} className="btn btn-success text-white">Go back to Profile</Link>
     </div>
   );

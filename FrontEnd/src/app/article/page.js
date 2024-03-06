@@ -10,6 +10,7 @@ import Footer from "@/components/shared/Footer";
 import Article from "@/components/Article/Article";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Loader from "@/components/shared/Loader/Loader";
+import Link from "next/link";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -20,11 +21,10 @@ const ArticlePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [audience, setAudience] = useState([]);
   const [searchString, setSearchString] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All"); 
-  
-  
-  
-  
+
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [requestsCompleted, setRequestsCompleted] = useState(0); 
+
 
   const category = [
     {
@@ -104,6 +104,9 @@ const ArticlePage = () => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
       setLoading(false)
+
+      setRequestsCompleted((prevCount) => prevCount + 1);
+
     });
   }, [axiosSecure]);
   useEffect(() => {
@@ -112,6 +115,9 @@ const ArticlePage = () => {
 
       setAudience(res.data);
       setLoading(false)
+
+      setRequestsCompleted((prevCount) => prevCount + 1);
+
     });
   }, [axiosSecure]);
 
@@ -158,17 +164,28 @@ const ArticlePage = () => {
 
 
         <div className="py-10">
-          {filteredArticles
-            .map((item, idx) => (
+
+        {filteredArticles.length === 0 ? (
+            <div>
+              <div><p className="text-center">There are no articles according to your search. Please explore more.</p></div>
+              <div className="flex justify-center items-center text-center pt-5 ">
+                <Link href={'/article'}>
+                  <button className="btn btn-primary btn-info btn-outline btn-lg rounded-full"> Go Back</button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            filteredArticles?.map((item, idx) => (
+
               <div key={idx}>
                 <Article
                   data={item}
                   commentCount={item.comments.length}
                   key={item._id}
                   authorName={audience
-                    .filter(
-                      (user) => user.email === item.texteditor.authorEmail
-                    )
+
+                    ?.filter((user) => user.email === item.texteditor.authorEmail)
+
                     .map((author) => author.name)}
                   category={item.texteditor.category}
                   title={item.texteditor?.articleTitle}
@@ -188,10 +205,10 @@ const ArticlePage = () => {
                   articleId={item._id}
                 />
               </div>
-            ))}
+            )))}
         </div>
       </div>
-
+     
       <div className="lg:sticky lg:bottom-0 lg:z-0">
         <Footer />
       </div>
