@@ -11,7 +11,6 @@ import Article from "@/components/Article/Article";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import Loader from "@/components/shared/Loader/Loader";
 import Link from "next/link";
-import LoadingPage from "@/components/shared/LoadingPage/LoadingPage";
 
 const ArticlePage = () => {
   const [startIdx, setStartIdx] = useState(0);
@@ -91,11 +90,20 @@ const ArticlePage = () => {
   ];
 
   
+  const handleNext = () => {
+    setStartIdx((prevStartIdx) =>
+      Math.min(prevStartIdx + 1, category.length - 5)
+    );
+  };
 
+  const handlePrev = () => {
+    setStartIdx((prevStartIdx) => Math.max(prevStartIdx - 1, 0));
+  };
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
       setData(res.data);
+      setLoading(false)
 
       setRequestsCompleted((prevCount) => prevCount + 1);
 
@@ -106,16 +114,12 @@ const ArticlePage = () => {
       console.log(res.data);
 
       setAudience(res.data);
+      setLoading(false)
 
       setRequestsCompleted((prevCount) => prevCount + 1);
 
     });
   }, [axiosSecure]);
-  useEffect(() => {
-    if (requestsCompleted === 2) { 
-      setLoading(false); 
-    }
-  }, [requestsCompleted]);
 
 
   const handleSearch = (query) => {
@@ -146,11 +150,6 @@ const ArticlePage = () => {
     
     return isInCategory && matchesSearch;
   });
-  if(loading){
-    return (
-      <LoadingPage/>
-    )
-  }
 
   return (
     <div className="mx-auto px-4 lg:px-6 lg:pt-5">
@@ -193,23 +192,23 @@ const ArticlePage = () => {
                   likeCount={item.likes.length}
                   image={item?.texteditor?.thumbnail}
                   authorImage={audience
-
-                    ?.filter(
-                      (user) => user?.email === item?.texteditor?.authorEmail
+                    .filter(
+                      (user) => user.email === item.texteditor.authorEmail
                     )
-                    .map((author) => author?.photoURL)}
-
-                  date={item.date}
+                    .map((author) => author.photoURL).toString()}
+                    athhoraltName={audience
+                    .filter(
+                      (user) => user.email === item.texteditor.authorEmail
+                    )
+                    .map((author) => author.name)}
+                      date={item.date}
                   articleId={item._id}
                 />
               </div>
-
-            ))
-          )}
-
+            )))}
         </div>
       </div>
-
+     
       <div className="lg:sticky lg:bottom-0 lg:z-0">
         <Footer />
       </div>
