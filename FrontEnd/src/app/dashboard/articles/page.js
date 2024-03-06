@@ -7,6 +7,8 @@ import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
 import DeleteButton from "@/components/shared/DeleteButton/DeleteButton";
 import Loader from "@/components/shared/Loader/Loader";
+import ArticleStatus from "@/components/ArticleStatus/ArticleStatus";
+import Pagination from "@/components/shared/Pagination/Pagination";
 
 const Article = () => {
   const [articles, setArticles] = useState([]);
@@ -26,7 +28,7 @@ const Article = () => {
     const fetchArticles = async () => {
       try {
         const response = await axiosSecure.get(
-          `/textArticleByEmail?email=${authEmail}`
+          `/textArticle`
         );
         setForceUpdate(Date.now()); 
         const articleCount = response.data.length;
@@ -45,10 +47,10 @@ const Article = () => {
 
     fetchArticles();
 
-    // console.log(articles);
-  }, [forceUpdate]); 
+  
+  }, [forceUpdate,update]); 
 
-  // }, [update, currentPage]); 
+  
 
 
   const handleEdit = (article) => {
@@ -69,7 +71,7 @@ const Article = () => {
                   <th>Title</th>
                   <th>Like</th>
                   <th>Comment</th>
-                  <th>Tags</th>
+                  <th>Change Status</th>
                   <th>Details</th>
                 </tr>
               </thead>
@@ -84,7 +86,7 @@ const Article = () => {
                     </td>
                     <td>{article?.likes.length}</td>
                     <td>{article?.comments.length}</td>
-                    <td>{article?.texteditor?.tags.join(", ")}</td>
+                    <td><ArticleStatus article={article} setUpdate={setUpdate}/></td>
                     <td className="flex justify-center items-center">
                       <Link
                         href={`/dashboard/articleEdit/${article._id}`}
@@ -105,6 +107,13 @@ const Article = () => {
                 ))}
               </tbody>
             </table>
+            <div className="flex justify-center items-center mx-auto">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+            </div>
           </div>
         </PrivateRoute>
       )}

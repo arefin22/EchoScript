@@ -91,7 +91,8 @@ const ArticlePage = () => {
 
   useEffect(() => {
     axiosSecure.get("/textArticle").then((res) => {
-      setData(res.data);
+      const filteredData = res.data.filter(article => article.texteditor.status !== "suspended");
+      setData(filteredData);
       setRequestsCompleted((prevCount) => prevCount + 1);
     });
   }, [axiosSecure]);
