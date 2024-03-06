@@ -30,7 +30,7 @@ const CheckoutForm = () => {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      console.log(paymentIntent);
+      console.log(paymentIntent)
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -63,8 +63,8 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        // return_url: "https://echoscript-front.vercel.app/dashboard/payment/success",
-        return_url: "http://localhost:3000/dashboard/payment/success",
+        return_url: "https://echoscript-front.vercel.app/dashboard/payment/success",
+        // return_url: "http://localhost:3000/dashboard/payment/success",
       },
     });
 
@@ -79,6 +79,7 @@ const CheckoutForm = () => {
     } else {
       setMessage("An unexpected error occurred.", error);
     }
+    
 
     setIsLoading(false);
     sendPaymentDataToServer(paymentIntent);
