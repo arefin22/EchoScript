@@ -34,7 +34,7 @@ const Article = ({
                   src={authorImage || person}
                   height={30}
                   width={30}
-                  className="rounded-full  object-cover"
+                  className="rounded-full w-6 h-6 object-cover"
                   alt={athhoraltName}
                 />
 
