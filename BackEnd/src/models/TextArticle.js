@@ -44,6 +44,11 @@ const TextEditorSchema = new Schema(
     },
     comments: [CommentSchema],
     likes: [LikesSchema],
+    status: {
+      type: String,
+      enum: ['active', 'suspend'],
+      default: 'active'
+    }
   },
   { timestamps: true }
 );
