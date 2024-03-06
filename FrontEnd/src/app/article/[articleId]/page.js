@@ -222,10 +222,10 @@ const writerPhoto=photo[0]
                   <div className="w-full">
               <Image
                 src={data?.texteditor?.thumbnail}
-                width={800}
-                height={400}
+                width={1280}
+                height={600}
                 alt="Thumbnail for article"
-                className="rounded-lg mt-4"
+                className="rounded-lg  h-[200px] lg:w-[800px] lg:h-[400px] mt-4"
               />
             </div>
                   <div className=" mt-10 mb-5 px-5">
@@ -237,7 +237,7 @@ const writerPhoto=photo[0]
                             alt="Author"
                             width={40}
                             height={40}
-                            className="rounded-full  object-cover"
+                            className="rounded-full w-8 h-8 object-cover"
                           />
                         </div>
 
