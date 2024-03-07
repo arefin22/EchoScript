@@ -3,6 +3,7 @@
 import { axiosSecure } from "@/utils/useAxiosSecure";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 const Popular = () => {
   const [thumbnails, setThumbnails] = useState([]);
@@ -34,7 +35,7 @@ const Popular = () => {
       </h2>
       {thumbnails?.map((thumbnail, index) => (
         <div key={index} className="sticky top-0 lg:mt-[-100px]">
-          <Link href={`/article/${thumbnail?.thumbnail?.postId}`}>
+          <Link href={`/article/${thumbnail?.postId}`}>
             <div
               className="w-full h-screen rounded-tl-[30px] rounded-tr-[30px] lg:rounded-tl-[100px] lg:rounded-tr-[100px]"
               style={{
@@ -44,7 +45,7 @@ const Popular = () => {
                 backgroundPosition: "center",
               }}
             >
-              <div className="lg:pt-72 pt-24 pl-3 lg:w-1/2 w-2/3 grid grid-rows-1 lg:gap-10 gap-10">
+              <div className="lg:pt-72 pt-24 pl-3 lg:pl-16 lg:w-1/2 w-2/3 grid grid-rows-1 lg:gap-10 gap-10">
                 <div>
                   <p className="text-white font-medium lg:text-xl text-base">
                     {thumbnail?.thumbnail?.category}
@@ -55,11 +56,12 @@ const Popular = () => {
                 </h3>
 
                 <Link
-                  href={`/article/${thumbnail?.thumbnail?.postId}`}
-                  className="text-white"
+                  href={`/article/${thumbnail?.postId}`}
+                  className="text-white underline grid justify-start items-center grid-flow-col gap-4"
                 >
-                  {" "}
-                  See Details{" "}
+
+                  See Details
+                  <FaArrowCircleRight />
                 </Link>
               </div>
             </div>
