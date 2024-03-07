@@ -249,15 +249,13 @@ useEffect(() => {
     <div className="w-full">
       <div className="text-center mx-auto">
         <h1 className="text-[40px]">
-          History of <span className=" text-green-500">{user.displayName}</span>{" "}
+          Activity of <span className=" text-green-500">{user.displayName}</span>{" "}
         </h1>
       </div>
-      <div></div>
-
       <div className="w-[80%] mx-auto mt-9">
         {historyData.length === 0 && (
           <div>
-            <Title title={"No history has been added"} />
+            <Title title={"No Activity has been added"} />
           </div>
         )}
         {historyData.length > 0 && (

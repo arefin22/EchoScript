@@ -17,8 +17,8 @@ const Article = () => {
   const [loading, setLoading] = useState(true);
   const [forceUpdate, setForceUpdate] = useState(Date.now());
   const itemsPerPage = 10;
-  const { user }=useAuth()
-  
+  const { user } = useAuth();
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -26,11 +26,11 @@ const Article = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axiosSecure.get(
-          `/textArticle`
+        const response = await axiosSecure.get(`/textArticle`);
+        const res = response.data.filter(
+          (article) => article.texteditor.authorEmail === user.email
         );
-        const res =response.data.filter(article => article.texteditor.authorEmail === user.email);
-        setForceUpdate(Date.now()); 
+        setForceUpdate(Date.now());
         const articleCount = res.length;
         const totalPagesCount = Math.ceil(articleCount / itemsPerPage);
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -38,7 +38,7 @@ const Article = () => {
         const articleData = res.slice(startIndex, endIndex);
         setTotalPages(totalPagesCount);
         setArticles(articleData);
-        
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching articles:", error);
@@ -47,12 +47,7 @@ const Article = () => {
     };
 
     fetchArticles();
-
-  
-  }, [forceUpdate,update]); 
-
-  
-
+  }, [forceUpdate, update]);
 
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
@@ -60,12 +55,16 @@ const Article = () => {
 
   return (
     <PrivateRoute>
+      <div className="text-center mx-auto">
+        <h1 className="text-[40px]">
+          Articles of{" "}
+          <span className=" text-green-500">{user?.displayName}</span>{" "}
+        </h1>
+      </div>
       {loading ? (
         <Loader />
       ) : articles.length === 0 ? ( // Check if there are no articles
-        <div className="text-center py-4">
-          No articles published by you.
-        </div>
+        <div className="text-center py-4">No articles published by you.</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="table">
@@ -75,7 +74,7 @@ const Article = () => {
                 <th>Title</th>
                 <th>Like</th>
                 <th>Comment</th>
-                
+
                 <th>Details</th>
               </tr>
             </thead>
@@ -90,7 +89,7 @@ const Article = () => {
                   </td>
                   <td>{article?.likes.length}</td>
                   <td>{article?.comments.length}</td>
-                  
+
                   <td className="flex justify-center items-center">
                     <Link
                       href={`/dashboard/articleEdit/${article._id}`}

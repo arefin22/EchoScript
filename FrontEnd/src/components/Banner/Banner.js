@@ -17,7 +17,9 @@ const Banner = () => {
         style={{
           // backgroundImage: "url(https://i.ibb.co/rsGgD7b/banner.jpg)",
           background:
-            "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/wQ4LPrQ/shunya-koide-1em-Wndl-DHs0-unsplash.jpg)",
+            // "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/wQ4LPrQ/shunya-koide-1em-Wndl-DHs0-unsplash.jpg)",
+            // "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/1M9RfkB/georg-eiermann-pz-XXh58-B-ns-unsplash.jpg)",
+            "linear-gradient(rgba(25,25,25,0),rgba(0,0,0,.9)), url(https://i.ibb.co/bWqBRQg/martin-adams-V75-YEq-Jp4p-E-unsplash.jpg)",
           backgroundSize: "cover",
           backgroundSize: "100%",
           backgroundRepeat: "no-repeat",
