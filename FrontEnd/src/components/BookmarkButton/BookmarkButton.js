@@ -38,7 +38,7 @@ const BookmarkButton = ({data}) => {
           // Assuming this API call successfully adds the bookmark, update the local state
           setIsBookmarked(true);
       } catch (error) {
-          toast.error(`${error.message}`);
+          toast.error(`Please login to add the bookmark`);
       } finally {
           setLoading(false);
       }

@@ -34,7 +34,7 @@ const Article = ({
                   src={authorImage || person}
                   height={30}
                   width={30}
-                  className="rounded-full  object-cover"
+                  className="rounded-full w-6 h-6 object-cover"
                   alt={athhoraltName}
                 />
 
@@ -68,26 +68,20 @@ const Article = ({
                 {category}
               </span>
             </div>
-            <div className="flex gap-1">
-              <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <div className="indicator">
-                  <FaRegHeart size={16} />
-                  <span className="badge badge-sm indicator-item">
-                    {likeCount}
-                  </span>
-                </div>
-              </button>
-              <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <div className="indicator">
-                  <FaRegCommentDots size={16} />
-                  <span className="badge badge-sm indicator-item">
-                    {commentCount}
-                  </span>
-                </div>
-              </button>
-              {/* <button className="hover:bg-[#ddd4d4] p-2 rounded-full">
-                <FiShare2 fontSize={"1.5rem"} />
-              </button> */}
+            <div className="flex gap-4">
+              <div className="indicator">
+                <FaRegHeart size={16} />
+                <span className="badge badge-sm indicator-item">
+                  {likeCount}
+                </span>
+              </div>
+
+              <div className="indicator">
+                <FaRegCommentDots size={16} />
+                <span className="badge badge-sm indicator-item">
+                  {commentCount}
+                </span>
+              </div>
             </div>
           </div>
         </div>

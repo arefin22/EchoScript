@@ -44,7 +44,6 @@ const page = () => {
 
   return (
     <div className="">
-      <h1 className="mx-auto text-3xl font-bold my-5">This is overview</h1>
       <div className="flex justify-center items-center mb-20">
         <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-5">
           <div className="lg:w-72 md:w-72 w-64 h-32 bg-gray-200 rounded-xl pl-3">

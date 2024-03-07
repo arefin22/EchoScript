@@ -26,6 +26,7 @@ import SubHeader from "@/components/SubHeader/SubHeader";
 import Trending2 from "@/components/Trending2/Trending2";
 import Writerized from "@/components/Writerized/writerized";
 import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
+import toast from "react-hot-toast";
 
 const SingleArticle = ({ params }) => {
   const axiosSecure = useAxiosSecure();
@@ -60,47 +61,51 @@ const SingleArticle = ({ params }) => {
 
   const Postdate = data?.createdAt?.split("T")[0];
   const handleSubmitComment = async (data) => {
-    try {
-      // article comment
-      const d = new Date();
-      const comment = {
-        email: user?.email,
-        name: user?.displayName,
-        image: user?.photoURL || "",
-        id: data?._id,
-        commentText: text,
-        date: d,
-      };
-      axiosSecure
-        .put(`/textArticle/${data._id}/comment`, comment)
-        .then((res) => {
-          if (res.data.modifiedCount > 0) {
-            setForceUpdate(Date.now());
-            Swal.fire({
-              title: "Good job!",
-              text: "successfylly added a comment!",
-              icon: "success",
-            });
-            setText("");
-          }
-        });
-
-      // add history comment
-      const commentHistory = {
-        email: user?.email,
-        articleId: data._id,
-        articleTitle: data.texteditor.articleTitle,
-        comment: text,
-      };
-      // console.log(commentHistory);
-      await axiosSecure.post("/history", commentHistory);
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // console.log("History already exists for this article");
-      } else {
-        console.error("An error occurred:", error);
+    if(user){
+      try {
+        // article comment
+        const d = new Date();
+        const comment = {
+          email: user?.email,
+          name: user?.displayName,
+          image: user?.photoURL || "",
+          id: data?._id,
+          commentText: text,
+          date: d,
+        };
+        axiosSecure
+          .put(`/textArticle/${data._id}/comment`, comment)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              setForceUpdate(Date.now());
+              Swal.fire({
+                title: "Good job!",
+                text: "successfylly added a comment!",
+                icon: "success",
+              });
+              setText("");
+            }
+          });
+  
+        // add history comment
+        const commentHistory = {
+          email: user?.email,
+          articleId: data._id,
+          articleTitle: data.texteditor.articleTitle,
+          comment: text,
+        };
+        // console.log(commentHistory);
+        await axiosSecure.post("/history", commentHistory);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          console.log("History already exists for this article");
+          console.log("History already exists for this article");
+        } else {
+          console.error("An error occurred:", error);
+        }
       }
     }
+    else {toast.error('Please Login first')}
   };
 
   const handleShare = () => {
@@ -110,31 +115,34 @@ const SingleArticle = ({ params }) => {
   const shareUrl = `https://echoscript-front.vercel.app`;
 
   const handleLike = async (item) => {
-    try {
-      const likeDetails = {
-        email: user?.email,
-        like: 1,
-        articleId: item._id,
-        articleTitle: item.texteditor.articleTitle,
-      };
+    if (user) {
+      try {
+        const likeDetails = {
+          email: user?.email,
+          like: 1,
+          articleId: item._id,
+          articleTitle: item.texteditor.articleTitle,
+        };
 
-      axiosSecure
-        .put(`/textArticle/${item?._id}/like`, likeDetails)
-        .then((res) => {
-          if (res.data.modifiedCount > 0) {
-            setForceUpdate(Date.now());
-          }
-        });
+        axiosSecure
+          .put(`/textArticle/${item?._id}/like`, likeDetails)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              setForceUpdate(Date.now());
+            }
+          });
 
-      // add like to the history
-      await axiosSecure.post("/history", likeDetails);
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // console.log("History already exists for this article");
-      } else {
-        console.error("An error occurred:", error);
+        // add like to the history
+        await axiosSecure.post("/history", likeDetails);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          console.log("History already exists for this article");
+        } else {
+          console.error("An error occurred:", error);
+        }
       }
     }
+    else {toast.error('Please Login first')}
   };
 
   const hasUserLiked = data?.likes?.some((item) => item.email === user?.email);
@@ -195,11 +203,11 @@ const SingleArticle = ({ params }) => {
     setCategoryFilter("All");
   };
 
-const filter = audience?.filter(
-  (audience) => audience?.email === data?.texteditor?.authorEmail
-)
-const photo= filter?.map((ph)=>ph.photoURL)
-const writerPhoto=photo[0]
+  const filter = audience?.filter(
+    (audience) => audience?.email === data?.texteditor?.authorEmail
+  );
+  const photo = filter?.map((ph) => ph.photoURL);
+  const writerPhoto = photo[0];
 
   return (
     <>
@@ -220,14 +228,14 @@ const writerPhoto=photo[0]
                     {data?.texteditor?.articleTitle}
                   </div>
                   <div className="w-full">
-              <Image
-                src={data?.texteditor?.thumbnail}
-                width={800}
-                height={400}
-                alt="Thumbnail for article"
-                className="rounded-lg mt-4"
-              />
-            </div>
+                    <Image
+                      src={data?.texteditor?.thumbnail}
+                      width={1280}
+                      height={600}
+                      alt="Thumbnail for article"
+                      className="rounded-lg  h-[200px] lg:w-[800px] lg:h-[400px] mt-4"
+                    />
+                  </div>
                   <div className=" mt-10 mb-5 px-5">
                     <div>
                       <div className=" flex items-center pl-2 mb-6 gap-2">
@@ -237,7 +245,7 @@ const writerPhoto=photo[0]
                             alt="Author"
                             width={40}
                             height={40}
-                            className="rounded-full  object-cover"
+                            className="rounded-full w-8 h-8 object-cover"
                           />
                         </div>
 

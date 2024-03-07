@@ -21,6 +21,7 @@ const page = () => {
   const [error, setError] = useState(null);
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    setUpdate(Date.now());
   };
   useEffect(() => {
     const fetchUsers = async () => {
@@ -122,7 +123,7 @@ const page = () => {
               </div>
             )}
             <div className="mt-2 flex justify-center">
-              {allUsersData?.length > 9 && (
+              {allUsersData?.length > 2 && (
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}

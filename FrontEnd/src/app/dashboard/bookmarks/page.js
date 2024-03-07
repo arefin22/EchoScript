@@ -75,9 +75,14 @@ const bookmarks = () => {
   return (
     <div className="w-11/12 mx-auto">
       <div className="flex flex-col  w-full">
-        <div className="grid h-20 card min-h-[580px] bg-base-300 rounded-box ">
+        <div className="grid h-20 card min-h-[580px] rounded-box ">
           <div className="w-2/3 h-24 mx-auto">
-            <h1>{user.displayName}&apos;s bookmarked articles:</h1>
+            <div className="text-center mx-auto">
+              <h1 className="text-[40px]">
+                Bookmark of {' '}
+                <span className=" text-green-500">{user.displayName}</span>{" "}
+              </h1>
+            </div>
             {bookmarkedData?.length === 0 && (
               <div>No bookmarked articles found.</div>
             )}

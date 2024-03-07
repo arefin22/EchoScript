@@ -10,16 +10,16 @@ import Link from "next/link";
 
 const SubHeader = ({ onSearch, onClose, onRecommendationClick }) => {
   return (
-    <div className="w-full flex justify-between py-5 px-5 lg:px-10 xl:px-20 lg:pt-10 items-center">
-      <div className="w-[50px] lg:w-[300px] xl:w-full">
+    <div className="w-full flex justify-between py-5 px-5 lg:px-10 xl:px-20 lg:pt-4 items-center">
+      <div className="w-[100px] md:w-[150px] lg:w-[300px] xl:w-full">
         {/* navbar left part */}
         <Link href={"/"}>
           <Image
-            src={"https://i.ibb.co/KWhP3g2/echo-icon.png"}
-            width={20}
-            height={20}
+            src={"https://i.ibb.co/Qk6B1cy/echo-black.png"}
+            width={300}
+            height={200}
             alt="Echo Logo"
-            className="w-[35px] lg:w-[50px]"
+            className="w-[100px] md:w-[150px] lg:w-[200px]"
           />
         </Link>
       </div>

@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const Editor = () => {
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
   const [isDraftExist, setIsDraftExist] = useState(false);
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=78e1a9dbe573d8923a63de7e43c7a68b`;
 
@@ -30,7 +30,7 @@ const Editor = () => {
   const user = useAuth();
   const Router = useRouter();
   const ejInstance = useRef(null);
-  
+
   // const initEditor = () => {
   //   const editor = new EditorJS({
   //     holder: "editorjs",
@@ -166,213 +166,212 @@ const Editor = () => {
   //   });
   // };
 
-    // useEffect(() => {
-    //   if (ejInstance.current === null) {
-    //     // initEditor();
-    //   }
+  // useEffect(() => {
+  //   if (ejInstance.current === null) {
+  //     // initEditor();
+  //   }
 
-    //   return () => {
-    //     // Check if the current route is not the articles route
-    //     if (window.location.pathname !== "/dashboard/articles") {
-    //       saveDraft();
-    //     }
-    //     ejInstance?.current?.destroy();
-    //     ejInstance.current = null;
-    //   };
-    // }, []);
+  //   return () => {
+  //     // Check if the current route is not the articles route
+  //     if (window.location.pathname !== "/dashboard/articles") {
+  //       saveDraft();
+  //     }
+  //     ejInstance?.current?.destroy();
+  //     ejInstance.current = null;
+  //   };
+  // }, []);
 
-    // initEditor();
+  // initEditor();
 
- useEffect(() => {
-   const initEditor = () => {
-     const editor = new EditorJS({
-       holder: "editorjs",
-       minHeight: "200px",
-       onReady: () => {
-         ejInstance.current = editor;
-         loadDraft();
-       },
-       onChange: async () => {
-         saveDraft();
-       },
-       autofocus: true,
-       tools: {
-         header: {
-           class: Header,
-           config: {
-             placeholder: "Enter a header",
-             levels: [1, 2, 3, 4, 5, 6],
-             defaultLevel: 3,
-           },
-         },
-         paragraph: {
-           class: Paragraph,
-           inlineToolbar: true,
-           config: {
-             placeholder: "Enter a Paragraph",
-           },
-         },
-         quote: {
-           class: Quote,
-           inlineToolbar: true,
-           config: {
-             quotePlaceholder: "Enter a quote",
-             captionPlaceholder: "Quote's author",
-           },
-         },
-         list: {
-           class: List,
-           inlineToolbar: true,
-           config: {
-             defaultStyle: "unordered",
-           },
-         },
-         code: CodeTool,
-         image: {
-           class: ImageTool,
-           config: {
-             uploader: {
-               async uploadByFile(file) {
-                 try {
-                   const formData = new FormData();
-                   formData.append("image", file);
-                   const response = await axiosPublic.post(
-                     image_hosting_api,
-                     formData,
-                     {
-                       headers: {
-                         "Content-Type": "multipart/form-data",
-                       },
-                     }
-                   );
-                   if (response.data.success === true) {
-                     return {
-                       success: 1,
-                       file: {
-                         url: response.data.data.display_url,
-                       },
-                     };
-                   } else {
-                     return {
-                       success: 0,
-                       file: {
-                         url: null,
-                       },
-                     };
-                   }
-                 } catch (error) {
-                   console.error("Error uploading image:", error);
-                   return {
-                     success: 0,
-                     file: {
-                       url: null,
-                     },
-                   };
-                 }
-               },
-               async uploadByUrl(url) {
-                 try {
-                   const formData = new FormData();
-                   formData.append("image", url);
-                   const response = await axiosPublic.post(
-                     image_hosting_api,
-                     formData,
-                     {
-                       headers: {
-                         "Content-Type": "multipart/form-data",
-                       },
-                       url,
-                     }
-                   );
+  useEffect(() => {
+    const initEditor = () => {
+      const editor = new EditorJS({
+        holder: "editorjs",
+        minHeight: "200px",
+        onReady: () => {
+          ejInstance.current = editor;
+          loadDraft();
+        },
+        onChange: async () => {
+          saveDraft();
+        },
+        autofocus: true,
+        tools: {
+          header: {
+            class: Header,
+            config: {
+              placeholder: "Enter a header",
+              levels: [1, 2, 3, 4, 5, 6],
+              defaultLevel: 3,
+            },
+          },
+          paragraph: {
+            class: Paragraph,
+            inlineToolbar: true,
+            config: {
+              placeholder: "Enter a Paragraph",
+            },
+          },
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+            config: {
+              quotePlaceholder: "Enter a quote",
+              captionPlaceholder: "Quote's author",
+            },
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+            config: {
+              defaultStyle: "unordered",
+            },
+          },
+          code: CodeTool,
+          image: {
+            class: ImageTool,
+            config: {
+              uploader: {
+                async uploadByFile(file) {
+                  try {
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    const response = await axiosPublic.post(
+                      image_hosting_api,
+                      formData,
+                      {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                      }
+                    );
+                    if (response.data.success === true) {
+                      return {
+                        success: 1,
+                        file: {
+                          url: response.data.data.display_url,
+                        },
+                      };
+                    } else {
+                      return {
+                        success: 0,
+                        file: {
+                          url: null,
+                        },
+                      };
+                    }
+                  } catch (error) {
+                    console.error("Error uploading image:", error);
+                    return {
+                      success: 0,
+                      file: {
+                        url: null,
+                      },
+                    };
+                  }
+                },
+                async uploadByUrl(url) {
+                  try {
+                    const formData = new FormData();
+                    formData.append("image", url);
+                    const response = await axiosPublic.post(
+                      image_hosting_api,
+                      formData,
+                      {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                        url,
+                      }
+                    );
 
-                   if (response.data.success === true) {
-                     return {
-                       success: 1,
-                       file: {
-                         url: response.data.data.display_url,
-                       },
-                     };
-                   } else {
-                     return {
-                       success: 0,
-                       file: {
-                         url: null,
-                       },
-                     };
-                   }
-                 } catch (error) {
-                   console.error("Error uploading image by URL:", error);
-                   return {
-                     success: 0,
-                     file: {
-                       url: null,
-                     },
-                   };
-                 }
-               },
-             },
-             inlineToolbar: true,
-           },
-         },
-       },
-     });
-
-     return editor;
-   };
-
-const loadDraft = () => {
-  const draftContent = localStorage.getItem("editorDraft");
-  if (draftContent && ejInstance.current) {
-    try {
-      const parsedContent = JSON.parse(draftContent);
-      ejInstance.current.render({
-        blocks: parsedContent.blocks,
-        time: parsedContent.time,
-        version: parsedContent.version,
+                    if (response.data.success === true) {
+                      return {
+                        success: 1,
+                        file: {
+                          url: response.data.data.display_url,
+                        },
+                      };
+                    } else {
+                      return {
+                        success: 0,
+                        file: {
+                          url: null,
+                        },
+                      };
+                    }
+                  } catch (error) {
+                    console.error("Error uploading image by URL:", error);
+                    return {
+                      success: 0,
+                      file: {
+                        url: null,
+                      },
+                    };
+                  }
+                },
+              },
+              inlineToolbar: true,
+            },
+          },
+        },
       });
-      setIsDraftExist(parsedContent.blocks.length > 0);
-    } catch (error) {
-      console.error("Error parsing draft content:", error);
+
+      return editor;
+    };
+
+    const loadDraft = () => {
+      const draftContent = localStorage.getItem("editorDraft");
+      if (draftContent && ejInstance.current) {
+        try {
+          const parsedContent = JSON.parse(draftContent);
+          ejInstance.current.render({
+            blocks: parsedContent.blocks,
+            time: parsedContent.time,
+            version: parsedContent.version,
+          });
+          setIsDraftExist(parsedContent.blocks.length > 0);
+        } catch (error) {
+          console.error("Error parsing draft content:", error);
+        }
+      }
+    };
+
+    const saveDraft = async () => {
+      try {
+        if (ejInstance.current) {
+          const content = await ejInstance.current.saver.save();
+          localStorage.setItem("editorDraft", JSON.stringify(content));
+          setIsDraftExist(content.blocks.length > 0);
+        } else {
+          // console.error("Editor instance is undefined. Cannot save draft.");
+        }
+      } catch (error) {
+        console.error("Error saving draft:", error);
+      }
+    };
+
+    if (ejInstance.current === null) {
+      const editorInstance = initEditor();
+      ejInstance.current = editorInstance;
     }
-  }
-};
 
-const saveDraft = async () => {
-  try {
-    if (ejInstance.current) {
-      const content = await ejInstance.current.saver.save();
-      localStorage.setItem("editorDraft", JSON.stringify(content));
-      setIsDraftExist(content.blocks.length > 0);
-    } else {
-      // console.error("Editor instance is undefined. Cannot save draft.");
-    }
-  } catch (error) {
-    console.error("Error saving draft:", error);
-  }
-};
+    return () => {
+      // Check if ejInstance.current is valid before attempting to destroy
+      if (
+        ejInstance.current &&
+        typeof ejInstance.current.destroy === "function"
+      ) {
+        // Check if the current route is not the articles route
+        if (window.location.pathname !== "/dashboard/articles") {
+          saveDraft();
+        }
+        ejInstance.current.destroy();
+        ejInstance.current = null;
+      }
+    };
+  }, []);
 
-   if (ejInstance.current === null) {
-     const editorInstance = initEditor();
-     ejInstance.current = editorInstance;
-   }
-
-   return () => {
-     // Check if ejInstance.current is valid before attempting to destroy
-     if (
-       ejInstance.current &&
-       typeof ejInstance.current.destroy === "function"
-     ) {
-       // Check if the current route is not the articles route
-       if (window.location.pathname !== "/dashboard/articles") {
-         saveDraft();
-       }
-       ejInstance.current.destroy();
-       ejInstance.current = null;
-     }
-   };
- }, []);
-
-  
   // Preference part
   const options = [
     { value: "Tech", label: "Tech" },
@@ -428,18 +427,33 @@ const saveDraft = async () => {
   const animatedComponents = makeAnimated();
 
   // For tags section
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      const tag = inputValue.trim();
-      if (tag) {
-        const updatedTags = [...tags, tag];
-        setTags(updatedTags);
-        setInputValue("");
-        setIsButtonDisabled(false);
-      }
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "Enter" || e.key === ",") {
+  //     e.preventDefault();
+  //     const tag = inputValue.trim();
+  //     if (tag) {
+  //       const updatedTags = [...tags, tag];
+  //       setTags(updatedTags);
+  //       setInputValue("");
+  //       setIsButtonDisabled(false);
+  //     }
+  //   }
+  // };
+const handleKeyDown = (e) => {
+  if (e.key === "Enter" || e.key === ",") {
+    e.preventDefault();
+    const tag = inputValue.trim();
+    if (tag) {
+      const updatedTags = [...tags, tag];
+      setTags(updatedTags);
+      setInputValue("");
+      localStorage.setItem("tags", JSON.stringify(updatedTags)); // Update local storage
+      setIsButtonDisabled(false); // Enable the button
     }
-  };
+  } else {
+    setIsButtonDisabled(inputValue.trim() === ""); // Disable button if input is empty
+  }
+};
 
   const handleRemoveTag = (tagToRemove) => {
     const updatedTags = tags.filter((tag) => tag !== tagToRemove);
@@ -505,20 +519,22 @@ const saveDraft = async () => {
   //   );
   // };
 
-  const checkLocalStorageData = () => {
-    const storedMainTitle = localStorage.getItem("mainTitle");
-    const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
-    const storedCategory = JSON.parse(localStorage.getItem("category"));
-    const storedEditorDraft = localStorage.getItem("editorDraft");
+const checkLocalStorageData = () => {
+  const storedMainTitle = localStorage.getItem("mainTitle");
+  const storedThumbnailUrl = localStorage.getItem("thumbnailUrl");
+  const storedCategory = JSON.parse(localStorage.getItem("category"));
+  const storedTags = JSON.parse(localStorage.getItem("tags"));
+  const storedEditorDraft = localStorage.getItem("editorDraft");
 
-    // Check if all required data is present except for tags
-    return (
-      storedMainTitle &&
-      storedThumbnailUrl &&
-      storedCategory &&
-      storedEditorDraft
-    );
-  };
+  // Check if all required data is present, including tags
+  return (
+    storedMainTitle &&
+    storedThumbnailUrl &&
+    storedCategory &&
+    storedTags && // Check if tags are stored
+    storedEditorDraft
+  );
+};
 
   // Call the checkLocalStorageData function to determine button disabled state
   const isButtonDisabledLocal = !checkLocalStorageData();
@@ -581,8 +597,7 @@ const saveDraft = async () => {
               el.innerHTML = "";
             }
           }}
-        >
-        </div>
+        ></div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
             <h2>Important Info</h2>
