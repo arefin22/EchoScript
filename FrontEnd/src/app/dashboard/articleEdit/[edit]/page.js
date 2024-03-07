@@ -31,153 +31,6 @@ const ArticleEdit = ({ params }) => {
   const user = useAuth();
   const Router = useRouter();
 
-  // const initEditor = () => {
-  //   const editor = new EditorJS({
-  //     holder: "editorjs",
-  //     minHeight: "200px",
-  //     onReady: () => {
-  //       ejInstance.current = editor;
-  //       loadDraft();
-  //     },
-
-  //     onChange: async () => {
-  //       saveDraft();
-  //     },
-  //     autofocus: true,
-  //     tools: {
-  //       header: {
-  //         class: Header,
-  //         config: {
-  //           placeholder: "Enter a header",
-  //           levels: [1, 2, 3, 4, 5, 6],
-  //           defaultLevel: 3,
-  //         },
-  //       },
-  //       paragraph: {
-  //         class: Paragraph,
-  //         inlineToolbar: true,
-  //         config: {
-  //           placeholder: "Enter a Paragraph",
-  //         },
-  //       },
-  //       quote: {
-  //         class: Quote,
-  //         inlineToolbar: true,
-  //         config: {
-  //           quotePlaceholder: "Enter a quote",
-  //           captionPlaceholder: "Quote's author",
-  //         },
-  //       },
-  //       list: {
-  //         class: List,
-  //         inlineToolbar: true,
-  //         config: {
-  //           defaultStyle: "unordered",
-  //         },
-  //       },
-  //       code: CodeTool,
-  //       image: {
-  //         class: ImageTool,
-  //         config: {
-  //           uploader: {
-  //             async uploadByFile(file) {
-  //               try {
-  //                 const formData = new FormData();
-  //                 formData.append("image", file);
-  //                 const response = await axiosPublic.post(
-  //                   image_hosting_api,
-  //                   formData,
-  //                   {
-  //                     headers: {
-  //                       "Content-Type": "multipart/form-data",
-  //                     },
-  //                   }
-  //                 );
-  //                 if (response.data.success === true) {
-  //                   return {
-  //                     success: 1,
-  //                     file: {
-  //                       url: response.data.data.display_url,
-  //                     },
-  //                   };
-  //                 } else {
-  //                   return {
-  //                     success: 0,
-  //                     file: {
-  //                       url: null,
-  //                     },
-  //                   };
-  //                 }
-  //               } catch (error) {
-  //                 console.error("Error uploading image:", error);
-  //                 return {
-  //                   success: 0,
-  //                   file: {
-  //                     url: null,
-  //                   },
-  //                 };
-  //               }
-  //             },
-  //             async uploadByUrl(url) {
-  //               try {
-  //                 const formData = new FormData();
-  //                 formData.append("image", url);
-  //                 const response = await axiosPublic.post(
-  //                   image_hosting_api,
-  //                   formData,
-  //                   {
-  //                     headers: {
-  //                       "Content-Type": "multipart/form-data",
-  //                     },
-  //                     url,
-  //                   }
-  //                 );
-
-  //                 if (response.data.success === true) {
-  //                   return {
-  //                     success: 1,
-  //                     file: {
-  //                       url: response.data.data.display_url,
-  //                     },
-  //                   };
-  //                 } else {
-  //                   return {
-  //                     success: 0,
-  //                     file: {
-  //                       url: null,
-  //                     },
-  //                   };
-  //                 }
-  //               } catch (error) {
-  //                 console.error("Error uploading image by URL:", error);
-  //                 return {
-  //                   success: 0,
-  //                   file: {
-  //                     url: null,
-  //                   },
-  //                 };
-  //               }
-  //             },
-  //           },
-  //           inlineToolbar: true,
-  //         },
-  //       },
-  //     },
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (ejInstance.current === null) {
-  //     initEditor();
-  //   }
-
-  //   return () => {
-  //     saveDraft();
-  //     ejInstance?.current?.destroy();
-  //     ejInstance.current = null;
-  //   };
-  // }, []);
-
   const initEditor = () => {
     const editor = new EditorJS({
       holder: "editorjs",
@@ -230,7 +83,7 @@ const ArticleEdit = ({ params }) => {
                 try {
                   const formData = new FormData();
                   formData.append("image", file);
-                  const response = await axios.post(
+                  const response = await axiosPublic.post(
                     image_hosting_api,
                     formData,
                     {
@@ -268,7 +121,7 @@ const ArticleEdit = ({ params }) => {
                 try {
                   const formData = new FormData();
                   formData.append("image", url);
-                  const response = await axios.post(
+                  const response = await axiosPublic.post(
                     image_hosting_api,
                     formData,
                     {
@@ -420,23 +273,8 @@ const ArticleEdit = ({ params }) => {
   // Category select
   const handleCategory = (selectedOption) => {
     setCategoryEdit(selectedOption);
-    // checkButtonState(selectedOption, tags);
   };
   const animatedComponents = makeAnimated();
-
-  // Function to handle adding a tag
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter" || e.key === ",") {
-  //     e.preventDefault();
-  //     const tag = inputValueEdit.trim();
-  //     if (tag) {
-  //       const updatedTagsEdit = [...tagsEdit, tag];
-  //       setTagsEdit(updatedTagsEdit);
-  //       setInputValueEdit("");
-  //       setIsButtonDisabled(false);
-  //     }
-  //   }
-  // };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === ",") {
@@ -453,7 +291,6 @@ const ArticleEdit = ({ params }) => {
       setIsButtonDisabled(inputValue.trim() === ""); // Disable button if input is empty
     }
   };
-
 
   // Function to handle removing a tag
   const handleRemoveTag = (tagToRemove) => {
@@ -516,7 +353,7 @@ const ArticleEdit = ({ params }) => {
       storedMainTitleEdit &&
       storedThumbnailUrlEdit &&
       storedCategoryEdit &&
-      storedTagsEdit && 
+      storedTagsEdit &&
       storedEditorDraft
     );
   };
