@@ -15,12 +15,28 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      default: "user",
+      default: "reader",
+      required: true,
+      enum: ["admin", "reader", "writer"],
     },
-    favourite: {
+    preference: {
       type: [Object],
       default: [],
       required: true,
+    },
+    membership: {
+      type: Date,
+      default: Date.now,
+    },
+    status: {
+      type: String,
+      enum: ["active", "suspended"],
+      required: true,
+      default: "active",
+    },
+    about: {
+      type: String,
+      maxlength: 250,
     },
   },
   { timestamps: true }

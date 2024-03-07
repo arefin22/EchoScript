@@ -11,7 +11,6 @@ const page = ({ params }) => {
   const { user } = useAuth("");
 
   const id = params.details;
-  console.log(id);
   useEffect(() => {
     const fetchArticleDetails = async () => {
       try {
@@ -21,7 +20,7 @@ const page = ({ params }) => {
         const historyData = { user: user.email, article: articleData };
         if (user) {
           axiosSecure.post("/history", historyData);
-          console.log("Article data saved to history API");
+          // console.log("Article data saved to history API");
         }
       } catch (error) {
         console.error("Error fetching article details:", error);
@@ -34,36 +33,48 @@ const page = ({ params }) => {
   }, [id, user]);
 
  const renderBlockContent = (block) => {
-   const segments = block.data.text.split(/(<a[^>]*>.*?<\/a>)/g);
+   const segments = block.data.text.split(
+     /(<(a|b|i)[^>]*>.*?<\/\2>|<\/?(a|b|i)[^>]*>)/g
+   );
 
-   // Render each segment
-   const renderedSegments = segments.map((segment, index) => {
-     // Check if the segment is an anchor tag
-     if (segment.startsWith("<a")) {
-       // Parse the HTML to create a DOM element
-       const parser = new DOMParser();
-       const doc = parser.parseFromString(segment, "text/html");
-       const link = doc.querySelector("a");
+   const renderedSegments = segments?.map((segment, index) => {
+     const parser = new DOMParser();
+     const doc = parser.parseFromString(segment, "text/html");
+     const link =
+       doc.querySelector("a") ||
+       doc.querySelector("b") ||
+       doc.querySelector("i");
 
-       // Return the anchor tag with proper attributes
-       return (
-         <a
-           key={index}
-           href={link.getAttribute("href")}
-           target="_blank"
-           style={{ textDecoration: "underline" }}
-         >
-           {link.textContent}
-         </a>
-       );
+     if (link) {
+       const Tag = link.tagName.toLowerCase();
+       const content = link.textContent;
+
+       // Check if it's a valid opening tag
+       if (segment.startsWith("<")) {
+         return (
+           <Tag
+             key={index}
+             href={Tag === "a" ? link.getAttribute("href") : undefined}
+             target={Tag === "a" ? "_blank" : undefined}
+             style={{
+               textDecoration: Tag === "a" ? "underline" : "none",
+               fontWeight: Tag === "b" ? "bold" : "normal",
+               fontStyle: Tag === "i" ? "italic" : "normal",
+             }}
+           >
+             {content}
+           </Tag>
+         );
+       } else {
+         return `</${Tag}>`; // Return the closing tag
+       }
      } else {
-       // Replace &nbsp; with an empty string and return the segment
-       return <span key={index}>{segment.replace(/&nbsp;/g, " ")}</span>;
+       return <span key={index}>{segment?.replace(/&nbsp;/g, " ")}</span>;
      }
    });
 
    return renderedSegments;
-  };
+ };
   
   const handleEdit = (article) => {
     localStorage.setItem("editArticle", JSON.stringify(article));
@@ -74,30 +85,24 @@ const page = ({ params }) => {
       {articles && (
         <div>
           <div className="max-w-3xl mx-auto">
+            <div className="w-full">
+              <Image
+                src={articles.texteditor?.thumbnail}
+                width={1280}
+                height={600}
+                alt="Thumbnail for article"
+                className="w-full"
+              />
+            </div>
             <h1>
               {articles?.texteditor?.articleTitle?.replace(/&nbsp;/g, " ")}
             </h1>
-            <div className="flex flex-row w-full items-center mb-10 mt-5">
-              <h6 className="w-1/2">
-                Category:{" "}
-                <span className="font-bold">
-                  {articles.texteditor?.category}
-                </span>
-              </h6>
-              <p className="w-1/2">
-                {articles.texteditor?.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-300 px-3 py-2 rounded-lg mr-2 font-bold"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </p>
+            <div className="border rounded-full mt-4 bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center">
+              {articles.texteditor?.category}
             </div>
             <div className="divider"> </div>
             <div className="mt-10">
-              {articles.texteditor.editorContent.blocks.map((block, index) => (
+              {articles?.texteditor?.editorContent?.blocks?.map((block, index) => (
                 <div key={index} className="block">
                   {block.type === "paragraph" && (
                     <p className="text-xl mb-5">{renderBlockContent(block)}</p>
@@ -120,7 +125,7 @@ const page = ({ params }) => {
                   )}
                   {block.type === "list" && block.data.style === "ordered" && (
                     <ol className="mb-5">
-                      {block.data.items.map((item, i) => (
+                      {block?.data?.items?.map((item, i) => (
                         <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
                       ))}
                     </ol>
@@ -129,7 +134,7 @@ const page = ({ params }) => {
                   {block.type === "list" &&
                     block.data.style === "unordered" && (
                       <ul className="mb-5">
-                        {block.data.items.map((item, i) => (
+                        {block?.data?.items?.map((item, i) => (
                           <li key={i}>
                             <li key={i}>{item?.replace(/&nbsp;/g, " ")}</li>
                           </li>
@@ -141,7 +146,7 @@ const page = ({ params }) => {
                     <div className="mb-5">
                       <Image
                         src={block?.data?.file?.url}
-                        alt={block.data.caption}
+                        alt={block?.data?.caption}
                         className="image mx-auto text-center"
                         width={600}
                         height={600}
@@ -151,6 +156,17 @@ const page = ({ params }) => {
                       </p>
                     </div>
                   )}
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              {articles?.texteditor?.tags?.map((tag, idx) => (
+                <div
+                  className="border rounded-full mt-4
+             bg-gray-200 mx-auto w-40 text-[16px] font-semibold p-[5px] text-center"
+                  key={idx}
+                >
+                  {tag}
                 </div>
               ))}
             </div>

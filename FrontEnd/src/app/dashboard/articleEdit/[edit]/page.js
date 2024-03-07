@@ -31,184 +31,338 @@ const ArticleEdit = ({ params }) => {
   const user = useAuth();
   const Router = useRouter();
 
-  const initEditor = () => {
-    const editor = new EditorJS({
-      holder: "editorjs",
-      minHeight: "200px",
-      onReady: () => {
-        ejInstance.current = editor;
-        loadDraft();
-      },
+  // const initEditor = () => {
+  //   const editor = new EditorJS({
+  //     holder: "editorjs",
+  //     minHeight: "200px",
+  //     onReady: () => {
+  //       ejInstance.current = editor;
+  //       loadDraft();
+  //     },
 
-      onChange: async () => {
-        saveDraft();
-      },
-      autofocus: true,
-      tools: {
-        header: {
-          class: Header,
-          config: {
-            placeholder: "Enter a header",
-            levels: [1, 2, 3, 4, 5, 6],
-            defaultLevel: 3,
-          },
-        },
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-          config: {
-            placeholder: "Enter a Paragraph",
-          },
-        },
-        quote: {
-          class: Quote,
-          inlineToolbar: true,
-          config: {
-            quotePlaceholder: "Enter a quote",
-            captionPlaceholder: "Quote's author",
-          },
-        },
-        list: {
-          class: List,
-          inlineToolbar: true,
-          config: {
-            defaultStyle: "unordered",
-          },
-        },
-        code: CodeTool,
-        image: {
-          class: ImageTool,
-          config: {
-            uploader: {
-              async uploadByFile(file) {
-                try {
-                  const formData = new FormData();
-                  formData.append("image", file);
-                  const response = await axiosPublic.post(
-                    image_hosting_api,
-                    formData,
-                    {
-                      headers: {
-                        "Content-Type": "multipart/form-data",
-                      },
-                    }
-                  );
-                  if (response.data.success === true) {
-                    return {
-                      success: 1,
-                      file: {
-                        url: response.data.data.display_url,
-                      },
-                    };
-                  } else {
-                    return {
-                      success: 0,
-                      file: {
-                        url: null,
-                      },
-                    };
-                  }
-                } catch (error) {
-                  console.error("Error uploading image:", error);
-                  return {
-                    success: 0,
-                    file: {
-                      url: null,
-                    },
-                  };
-                }
-              },
-              async uploadByUrl(url) {
-                try {
-                  const formData = new FormData();
-                  formData.append("image", url);
-                  const response = await axiosPublic.post(
-                    image_hosting_api,
-                    formData,
-                    {
-                      headers: {
-                        "Content-Type": "multipart/form-data",
-                      },
-                      url,
-                    }
-                  );
+  //     onChange: async () => {
+  //       saveDraft();
+  //     },
+  //     autofocus: true,
+  //     tools: {
+  //       header: {
+  //         class: Header,
+  //         config: {
+  //           placeholder: "Enter a header",
+  //           levels: [1, 2, 3, 4, 5, 6],
+  //           defaultLevel: 3,
+  //         },
+  //       },
+  //       paragraph: {
+  //         class: Paragraph,
+  //         inlineToolbar: true,
+  //         config: {
+  //           placeholder: "Enter a Paragraph",
+  //         },
+  //       },
+  //       quote: {
+  //         class: Quote,
+  //         inlineToolbar: true,
+  //         config: {
+  //           quotePlaceholder: "Enter a quote",
+  //           captionPlaceholder: "Quote's author",
+  //         },
+  //       },
+  //       list: {
+  //         class: List,
+  //         inlineToolbar: true,
+  //         config: {
+  //           defaultStyle: "unordered",
+  //         },
+  //       },
+  //       code: CodeTool,
+  //       image: {
+  //         class: ImageTool,
+  //         config: {
+  //           uploader: {
+  //             async uploadByFile(file) {
+  //               try {
+  //                 const formData = new FormData();
+  //                 formData.append("image", file);
+  //                 const response = await axiosPublic.post(
+  //                   image_hosting_api,
+  //                   formData,
+  //                   {
+  //                     headers: {
+  //                       "Content-Type": "multipart/form-data",
+  //                     },
+  //                   }
+  //                 );
+  //                 if (response.data.success === true) {
+  //                   return {
+  //                     success: 1,
+  //                     file: {
+  //                       url: response.data.data.display_url,
+  //                     },
+  //                   };
+  //                 } else {
+  //                   return {
+  //                     success: 0,
+  //                     file: {
+  //                       url: null,
+  //                     },
+  //                   };
+  //                 }
+  //               } catch (error) {
+  //                 console.error("Error uploading image:", error);
+  //                 return {
+  //                   success: 0,
+  //                   file: {
+  //                     url: null,
+  //                   },
+  //                 };
+  //               }
+  //             },
+  //             async uploadByUrl(url) {
+  //               try {
+  //                 const formData = new FormData();
+  //                 formData.append("image", url);
+  //                 const response = await axiosPublic.post(
+  //                   image_hosting_api,
+  //                   formData,
+  //                   {
+  //                     headers: {
+  //                       "Content-Type": "multipart/form-data",
+  //                     },
+  //                     url,
+  //                   }
+  //                 );
 
-                  if (response.data.success === true) {
-                    return {
-                      success: 1,
-                      file: {
-                        url: response.data.data.display_url,
-                      },
-                    };
-                  } else {
-                    return {
-                      success: 0,
-                      file: {
-                        url: null,
-                      },
-                    };
-                  }
-                } catch (error) {
-                  console.error("Error uploading image by URL:", error);
-                  return {
-                    success: 0,
-                    file: {
-                      url: null,
-                    },
-                  };
-                }
-              },
-            },
-            inlineToolbar: true,
-          },
-        },
-      },
-    });
-  };
+  //                 if (response.data.success === true) {
+  //                   return {
+  //                     success: 1,
+  //                     file: {
+  //                       url: response.data.data.display_url,
+  //                     },
+  //                   };
+  //                 } else {
+  //                   return {
+  //                     success: 0,
+  //                     file: {
+  //                       url: null,
+  //                     },
+  //                   };
+  //                 }
+  //               } catch (error) {
+  //                 console.error("Error uploading image by URL:", error);
+  //                 return {
+  //                   success: 0,
+  //                   file: {
+  //                     url: null,
+  //                   },
+  //                 };
+  //               }
+  //             },
+  //           },
+  //           inlineToolbar: true,
+  //         },
+  //       },
+  //     },
+  //   });
+  // };
 
-  const saveDraft = async () => {
-    try {
-      if (ejInstance.current) {
-        const content = await ejInstance.current.saver.save();
-        localStorage.setItem("editArticle", JSON.stringify(content));
-        setIsDraftExist(content.blocks.length > 0);
-      } else {
-        // console.error("Editor instance is undefined. Cannot save draft.");
-      }
-    } catch (error) {
-      console.error("Error saving draft:", error);
-    }
-  };
+  
 
-  const loadDraft = () => {
-    const draftContent = localStorage.getItem("editArticle");
 
-    if (draftContent && ejInstance.current) {
-      try {
-        const parsedContent = JSON.parse(draftContent);
-        setMainTitleEdit(parsedContent.articleTitle);
-        setThumbnailUrlEdit(parsedContent.thumbnail);
-        const formattedCategory = {
-          value: parsedContent.category,
-          label: parsedContent.category,
-        };
-        setCategoryEdit(formattedCategory);
-        setTagsEdit(parsedContent.tags);
-        ejInstance.current.render({
-          blocks: parsedContent.editorContent.blocks,
-          time: parsedContent.editorContent.time,
-          version: parsedContent.editorContent.version,
-        });
-        setIsDraftExist(parsedContent.editorContent.blocks.length > 0);
-      } catch (error) {
-        console.error("Error parsing draft content:", error);
-      }
-    }
-  };
+
+  // useEffect(() => {
+  //   if (ejInstance.current === null) {
+  //     initEditor();
+  //   }
+
+  //   return () => {
+  //     saveDraft();
+  //     ejInstance?.current?.destroy();
+  //     ejInstance.current = null;
+  //   };
+  // }, []);
+
 
   useEffect(() => {
+    const initEditor = () => {
+      const editor = new EditorJS({
+        holder: "editorjs",
+        minHeight: "200px",
+        onReady: () => {
+          ejInstance.current = editor;
+          loadDraft();
+        },
+        onChange: async () => {
+          saveDraft();
+        },
+        autofocus: true,
+        tools: {
+          header: {
+            class: Header,
+            config: {
+              placeholder: "Enter a header",
+              levels: [1, 2, 3, 4, 5, 6],
+              defaultLevel: 3,
+            },
+          },
+          paragraph: {
+            class: Paragraph,
+            inlineToolbar: true,
+            config: {
+              placeholder: "Enter a Paragraph",
+            },
+          },
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+            config: {
+              quotePlaceholder: "Enter a quote",
+              captionPlaceholder: "Quote's author",
+            },
+          },
+          list: {
+            class: List,
+            inlineToolbar: true,
+            config: {
+              defaultStyle: "unordered",
+            },
+          },
+          code: CodeTool,
+          image: {
+            class: ImageTool,
+            config: {
+              uploader: {
+                async uploadByFile(file) {
+                  try {
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    const response = await axios.post(
+                      image_hosting_api,
+                      formData,
+                      {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                      }
+                    );
+                    if (response.data.success === true) {
+                      return {
+                        success: 1,
+                        file: {
+                          url: response.data.data.display_url,
+                        },
+                      };
+                    } else {
+                      return {
+                        success: 0,
+                        file: {
+                          url: null,
+                        },
+                      };
+                    }
+                  } catch (error) {
+                    console.error("Error uploading image:", error);
+                    return {
+                      success: 0,
+                      file: {
+                        url: null,
+                      },
+                    };
+                  }
+                },
+                async uploadByUrl(url) {
+                  try {
+                    const formData = new FormData();
+                    formData.append("image", url);
+                    const response = await axios.post(
+                      image_hosting_api,
+                      formData,
+                      {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                        url,
+                      }
+                    );
+
+                    if (response.data.success === true) {
+                      return {
+                        success: 1,
+                        file: {
+                          url: response.data.data.display_url,
+                        },
+                      };
+                    } else {
+                      return {
+                        success: 0,
+                        file: {
+                          url: null,
+                        },
+                      };
+                    }
+                  } catch (error) {
+                    console.error("Error uploading image by URL:", error);
+                    return {
+                      success: 0,
+                      file: {
+                        url: null,
+                      },
+                    };
+                  }
+                },
+              },
+              inlineToolbar: true,
+            },
+          },
+        },
+      });
+
+      return editor;
+    };
+
+      const loadDraft = () => {
+        const draftContent = localStorage.getItem("editArticle");
+
+        if (draftContent && ejInstance.current) {
+          try {
+            const parsedContent = JSON.parse(draftContent);
+            setMainTitleEdit(parsedContent.articleTitle);
+            setThumbnailUrlEdit(parsedContent.thumbnail);
+            const formattedCategory = {
+              value: parsedContent.category,
+              label: parsedContent.category,
+            };
+            setCategoryEdit(formattedCategory);
+            setTagsEdit(parsedContent.tags);
+            ejInstance.current.render({
+              blocks: parsedContent.editorContent.blocks,
+              time: parsedContent.editorContent.time,
+              version: parsedContent.editorContent.version,
+            });
+            setIsDraftExist(parsedContent.editorContent.blocks.length > 0);
+          } catch (error) {
+            console.error("Error parsing draft content:", error);
+          }
+        }
+      };
+
+    const saveDraft = async () => {
+      try {
+        if (ejInstance.current) {
+          const content = await ejInstance.current.saver.save();
+          localStorage.setItem("editArticle", JSON.stringify(content));
+          setIsDraftExist(content.blocks.length > 0);
+        } else {
+          // console.error("Editor instance is undefined. Cannot save draft.");
+        }
+      } catch (error) {
+        console.error("Error saving draft:", error);
+      }
+    };
+
     if (ejInstance.current === null) {
-      initEditor();
+      const editorInstance = initEditor();
+      ejInstance.current = editorInstance;
     }
 
     return () => {
@@ -217,8 +371,6 @@ const ArticleEdit = ({ params }) => {
       ejInstance.current = null;
     };
   }, []);
-
-  // initEditor();
 
   // Preference part
   const options = [
@@ -340,22 +492,39 @@ const ArticleEdit = ({ params }) => {
   }, [thumbnailEdit]);
 
   // Function to check if all required data is present in local storage
-  const checkLocalStorageData = () => {
-    const storedMainTitleEdit = localStorage.getItem("mainTitleEdit");
-    const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
-    const storedCategoryEdit = JSON.parse(localStorage.getItem("categoryEdit"));
-    const storedTagsEdit = JSON.parse(localStorage.getItem("tagsEdit"));
-    const storedEditorDraft = localStorage.getItem("editArticle");
+  // const checkLocalStorageData = () => {
+  //   const storedMainTitleEdit = localStorage.getItem("mainTitleEdit");
+  //   const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
+  //   const storedCategoryEdit = JSON.parse(localStorage.getItem("categoryEdit"));
+  //   const storedTagsEdit = JSON.parse(localStorage.getItem("tagsEdit"));
+  //   const storedEditorDraft = localStorage.getItem("editArticle");
 
-    // Check if all required data is present
-    return (
-      storedMainTitleEdit &&
-      storedThumbnailUrlEdit &&
-      storedCategoryEdit &&
-      storedTagsEdit &&
-      storedEditorDraft
-    );
-  };
+  //   // Check if all required data is present
+  //   return (
+  //     storedMainTitleEdit &&
+  //     storedThumbnailUrlEdit &&
+  //     storedCategoryEdit &&
+  //     storedTagsEdit &&
+  //     storedEditorDraft
+  //   );
+  // };
+
+    const checkLocalStorageData = () => {
+       const storedMainTitleEdit = localStorage.getItem("mainTitleEdit");
+       const storedThumbnailUrlEdit = localStorage.getItem("thumbnailUrlEdit");
+       const storedCategoryEdit = JSON.parse(
+         localStorage.getItem("categoryEdit")
+       );
+       const storedEditorDraft = localStorage.getItem("editArticle");
+
+      // Check if all required data is present except for tags
+      return (
+        storedMainTitleEdit &&
+        storedThumbnailUrlEdit &&
+        storedCategoryEdit &&
+        storedEditorDraft
+      );
+    };
 
   // Call the checkLocalStorageData function to determine button disabled state
   const isButtonDisabledLocal = !checkLocalStorageData();
@@ -412,7 +581,18 @@ const ArticleEdit = ({ params }) => {
   return (
     <>
       <div className="flex flex-col lg:flex-row lg:gap-10 w-full mb-40">
-        <div id="editorjs" className="lg:w-2/3"></div>
+        {/* <div id="editorjs" className="lg:w-2/3"></div> */}
+        <div
+          id="editorjs"
+          className="lg:w-2/3"
+          ref={(el) => {
+            if (el && !el.innerHTML.trim()) {
+              el.innerHTML = "";
+            }
+          }}
+        >
+          {/* Editor will be initialized here */}
+        </div>
         <div className="lg:w-1/3">
           <div className="lg:sticky top-0 ...">
             <h2>Important Info</h2>

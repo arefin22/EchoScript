@@ -6,6 +6,7 @@ const deleteATextArticle = require("../../controllers/textArticle/deleteATextArt
 const updateATextArticle = require("../../controllers/textArticle/updateATextArticle");
 const addAComment = require("../../controllers/textArticle/putComment");
 const putLikes = require("../../controllers/textArticle/putLikes");
+const deleteComment = require("../../controllers/textArticle/deleteComment");
 
 
 const router = require("express").Router();
@@ -18,5 +19,9 @@ router.get("/textArticle/:id", getTextArticleById);
 router.get("/textArticleByEmail", getTextArticleByEmail);
 router.delete("/textArticle/:id", deleteATextArticle);
 router.put("/textArticle/update/:id", updateATextArticle);
+
+// router.delete("/textArticle/comment/:id", deleteComment);
+router.delete("/textArticle/comment/:articleId/:commentId", deleteComment);
+
 
 module.exports = router

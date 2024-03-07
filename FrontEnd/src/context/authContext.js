@@ -109,7 +109,7 @@ const facebookLogIn = async () => {
       googleLogIn,facebookLogIn,
       createUser,twitterLogIn,
       logIn,
-      logout,loader,handleUpdateProfile
+      logout,loader,handleUpdateProfile, setLoader
     };
   
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -83,7 +83,7 @@ const Preference = () => {
         const texteditor = { editorContent, ...articleInfo };
       // Send data to the server
       const response = await axiosPublic.post("/textArticle", { texteditor });
-      console.log(response);
+      // console.log(response);
       // Handle response
         if (response.status === 200) {
           Swal.fire({
@@ -152,7 +152,7 @@ const Preference = () => {
           className="w-full mt-10 p-4 border-2 rounded-3xl border-[#ccc] text-black hover:border-[#4C2F17]"
         />
         <div className="flex flex-row gap-5 p-5 w-full flex-wrap">
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <div key={index} className="tag bg-gray-300 py-2 px-4 rounded-2xl">
               {tag}
               <button onClick={() => handleRemoveTag(tag)} className="ml-3">

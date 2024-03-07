@@ -1,6 +1,7 @@
 "use client";
 
 import CheckoutForm from "@/components/Payment/CheckoutForm";
+import { useAuth } from "@/context/authContext";
 import { usePayment } from "@/context/paymentContext";
 import useAxiosPublic from "@/utils/useAxiosPublic";
 import { Elements } from "@stripe/react-stripe-js";
@@ -13,28 +14,40 @@ const stripePromise = loadStripe(
 
 const payment = ({ price }) => {
   const [clientSecret, setClientSecret] = useState("");
-  const [paymentAmount, setPaymentAmount] = useState(1);
+  // const [paymentAmount, setPaymentAmount] = useState(1);
 
   const axiosPublic = useAxiosPublic();
   const { payment } = usePayment();
+  const { user } = useAuth();
 
+  // console.log(user?.email)
   // console.log(payment)
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
 
     axiosPublic
-      .post("/create-payment-intent", { amount: parseFloat(payment) })
-      .then((data) => setClientSecret(data?.data?.clientSecret));
-      // .then((data) => console.log(data, paymentAmount));
+      .post("/create-payment-intent", {
+        amount: parseFloat(payment?.price),
+        customer: user?.email,
+      })
+      .then((data) => {
+        setClientSecret(data?.data?.clientSecret);
+      });
+    // .then((data) => console.log(data, paymentAmount));
     // fetch("https://back-end-roan-nu.vercel.app/create-payment-intent", {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // })
   }, []);
 
+  const appearance = {
+    theme: "stripe",
+  };
+
   const options = {
     clientSecret,
+    appearance,
   };
 
   // console.log(clientSecret)

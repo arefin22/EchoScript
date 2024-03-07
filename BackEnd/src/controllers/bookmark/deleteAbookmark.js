@@ -8,7 +8,7 @@ const deleteBookmark = async (req, res, next) => {
       return res
         .status(404)
         .json({ message: "No bookmark found with that ID" });
-    res.status(200).json(bookmark);
+    res.status(200).json("deleted successfully");
   } catch (err) {
     next(err);
   }

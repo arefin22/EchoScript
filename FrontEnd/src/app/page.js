@@ -6,14 +6,15 @@ import Popular from "@/components/Popular/Popular";
 import Recomendation from "@/components/Recomendation/page";
 import Trending from "@/components/Trending/Trending";
 import Footer from "@/components/shared/Footer";
-
 import Navbar from "@/components/shared/Navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-
+import { useAuth } from "@/context/authContext";
+import StickyNavbar from "@/components/StickyNavbar/StickyNavbar";
 
 const page = () => {
+ const {user} = useAuth()
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -33,22 +34,16 @@ const page = () => {
 
 
     return (
-      <div className="container">
-        <div className="w-[80%] mx-auto sticky top-[50px] md:top-[60px] lg:top-[70px] lg:-mt-6 z-50">
-          <Navbar />
-        </div>
+      <div className="mx-auto px-4 lg:px-6 lg:pt-5">
+        <StickyNavbar />
+
         <div className="mainContainer">
           <Banner />
 
           <div className="mt-[-25px] lg:mt-[-80px] z-50">
-            <Trending />
+            {user ? <Recomendation /> : <Trending />}
           </div>
-          <div className="mt-[-25px] lg:mt-[-80px] z-50">
-          <Recomendation />
-          </div>
-          
           <Popular />
-
           <Contact />
         </div>
 
