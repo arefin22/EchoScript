@@ -84,8 +84,8 @@ const DashNavbar = () => {
       icon: GrOverview,
     },
     {
-      path: "/dashboard/articles",
-      route: "Articles",
+      path: "/dashboard/AllArticles",
+      route: "AllArticles",
       icon: GrArticle,
     },
     {
