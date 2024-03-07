@@ -56,4 +56,6 @@ To contribute to this project please follow these steps:
 Please make sure to update tests if appropriate.
 
 
-# [Live Site Link](https://echoscript-front.vercel.app/)
+
+# To Visit Live Preview
+## [Live Site Link](https://echoscript-front.vercel.app/)
