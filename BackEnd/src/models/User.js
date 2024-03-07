@@ -24,10 +24,6 @@ const UserSchema = new Schema(
       default: [],
       required: true,
     },
-    membership: {
-      type: Date,
-      default: Date.now,
-    },
     status: {
       type: String,
       enum: ["active", "suspended"],
